@@ -10,7 +10,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5434:5433"
   pgadmin:
     image: dpage/pgadmin4
     container_name: velo_pgadmin
