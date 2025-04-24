@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    container_name: velo_db
+    env_file:
+      - .env
+    environment:
+      TZ: Europe/Amsterdam
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: velo_pgadmin
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+  web:
+    build: .
+    container_name: velo_web
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+volumes:
+  postgres_data:
+  pgadmin_data:
