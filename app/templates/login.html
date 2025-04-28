@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+          <!-- Auth0 Lock Script -->
+  <script src="https://cdn.auth0.com/js/lock/11.30/lock.min.js"></script>
+
+    <!-- Auth0 Lock Script -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+
+</head>
+<body>
+
+<h1>welkom op de index</h1>
+
+
+<div id="auth0-login-box"></div>
+
+
+
+
+
+
+
+
+  <!-- Auth0 Script (NE PAS TOUCHER) -->
+  <script>
+    var lock = new Auth0Lock('{{ auth0_client_id }}', '{{ auth0_domain }}', {
+      container: "auth0-login-box",
+      auth: {
+        redirect: true,
+        redirectUrl: 'http://localhost:8000/'
+,
+        responseType: 'token id_token',
+        params: {
+          scope: 'openid profile email',
+          audience: 'https://void-app.com/api/orders',
+
+        }
+      },
+      allowedConnections: ['Username-Password-Authentication', 'google-oauth2', 'facebook', 'linkedin'],
+
+
+      theme: {
+        primaryColor: '#000000',
+        backgroundColor: '#000000',
+        logo: 'LOGO'
+      },
+      languageDictionary: {
+        title: "Logo.png"
+      },
+      allowSignUp: true,
+      allowLogin: true,
+      closable: false
+    });
+
+    lock.show();
+
+lock.on("authenticated", function(authResult) {
+  console.log("✅ Ingelogd:", authResult);
+
+  lock.getUserInfo(authResult.accessToken, function(error, profile) {
+    if (error) {
+      console.error("❌ Fout bij ophalen profiel:", error);
+      return;
+    }
+
+    console.log("👤 Gebruiker:", profile);
+
+    // 🔁 Stuur access token naar je Flask backend
+    fetch("/auth/process", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        access_token: authResult.accessToken
+      })
+    }).then((res) => {
+      if (res.ok) {
+        // ✅ Succes! Ga door naar beveiligde pagina
+        window.location.href = "/intro";
+
+      } else {
+        console.error("❌ Backend verwerkte token niet correct");
+      }
+    });
+  });
+});
+
+
+    function logout() {
+      localStorage.removeItem("accessToken");
+      window.location.reload();
+    }
+  </script>
+
+<script>
+  document.querySelector('.arrow-link').addEventListener('click', function(e) {
+    e.preventDefault(); // voorkom standaard springen
+    document.querySelector('#more-info').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+</script>
+
+
+
+
+</body>
+</html>
