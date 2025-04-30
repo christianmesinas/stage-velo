@@ -9,8 +9,10 @@ services:
       TZ: Europe/Amsterdam
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./db_scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
     ports:
-      - "5434:5433"
+      - "5433:5432"
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: velo_pgadmin
@@ -22,6 +24,7 @@ services:
       - pgadmin_data:/var/lib/pgadmin
     depends_on:
       - db
+
   web:
     build: .
     container_name: velo_web
@@ -31,6 +34,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+
 volumes:
   postgres_data:
   pgadmin_data:
