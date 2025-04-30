@@ -7,7 +7,7 @@ from app.database.models import Base
 from app.routes import routes
 from authlib.integrations.flask_client import OAuth
 
-# ✅ Laad .env-bestand
+# ✅ Laad .ENV-bestand
 load_dotenv()
 
 # ✅ Initialiseer Flask

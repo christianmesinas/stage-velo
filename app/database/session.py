@@ -13,3 +13,7 @@ if not DATABASE_URL:
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# 👇 Dit zorgt dat je tabellen aangemaakt worden
+from app.database.models import Base  # of: from .models import Base als je in hetzelfde pakket zit
+Base.metadata.create_all(bind=engine)

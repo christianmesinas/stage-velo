@@ -11,7 +11,7 @@ from app.database import SessionLocal
 
 routes = Blueprint("routes", __name__)
 
-# Laad .env
+# Laad .ENV
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
@@ -31,11 +31,10 @@ oauth.register(
 
 @routes.route("/")
 def index():
-    if 'user' in session:
-        return redirect(url_for('routes.profile'))
     return render_template("index.html",
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
-                           auth0_domain=env.get("AUTH0_DOMAIN"))
+                           auth0_domain=env.get("AUTH0_DOMAIN"),
+                           user=session.get("user"))
 
 @routes.route("/auth/process", methods=["POST"])
 def process_auth():
@@ -88,11 +87,11 @@ def logout():
 @routes.route("/profile")
 def profile():
     if 'user' not in session:
-        return redirect(url_for("routes.index"))
-    return render_template("profile.html")
+        return redirect(url_for("routes.login"))
+    return render_template("profile.html", user=session.get("user"))
 
-#@routes.route("/intro")
-#def intro():
-    #return render_template("intro.html")
-
-
+@routes.route("/login")
+def login():
+    return render_template("login.html",
+                           auth0_client_id=env.get("AUTH0_CLIENT_ID"),
+                           auth0_domain=env.get("AUTH0_DOMAIN"))

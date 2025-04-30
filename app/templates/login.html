@@ -1,47 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+{% extends "base.html" %}
 
-          <!-- Auth0 Lock Script -->
-  <script src="https://cdn.auth0.com/js/lock/11.30/lock.min.js"></script>
+{% block head %}
+<script src="https://cdn.auth0.com/js/lock/11.30/lock.min.js"></script>
 
-    <!-- Auth0 Lock Script -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block content %}
 
 
-</head>
-<body>
-
-<h1>welkom op de index</h1>
+<h1>welkom op de login test</h1>
 
 
 <div id="auth0-login-box"></div>
 
+{% endblock %}
 
 
 
 
 
 
+{% block scripts %}
 
-  <!-- Auth0 Script (NE PAS TOUCHER) -->
+
+<!-- Auth0 Script (NE PAS TOUCHER) -->
   <script>
     var lock = new Auth0Lock('{{ auth0_client_id }}', '{{ auth0_domain }}', {
       container: "auth0-login-box",
       auth: {
-        redirect: true,
-        redirectUrl: 'http://localhost:8000/'
-,
+        redirect: false,
+
         responseType: 'token id_token',
+
         params: {
           scope: 'openid profile email',
-          audience: 'https://void-app.com/api/orders',
+          audience: 'https://dev-b522ltua566kmhdh.us.auth0.com/api/v2/',
+
 
         }
       },
-      allowedConnections: ['Username-Password-Authentication', 'google-oauth2', 'facebook', 'linkedin'],
+      allowedConnections: ['Username-Password-Authentication', 'google-oauth2', 'facebook', 'apple'],
 
 
       theme: {
@@ -82,7 +81,7 @@ lock.on("authenticated", function(authResult) {
     }).then((res) => {
       if (res.ok) {
         // ✅ Succes! Ga door naar beveiligde pagina
-        window.location.href = "/intro";
+        window.location.href = "/profile";
 
       } else {
         console.error("❌ Backend verwerkte token niet correct");
@@ -98,18 +97,6 @@ lock.on("authenticated", function(authResult) {
     }
   </script>
 
-<script>
-  document.querySelector('.arrow-link').addEventListener('click', function(e) {
-    e.preventDefault(); // voorkom standaard springen
-    document.querySelector('#more-info').scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  });
-</script>
+{% endblock %}
 
 
-
-
-</body>
-</html>
