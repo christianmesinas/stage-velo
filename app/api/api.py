@@ -35,6 +35,7 @@ stations_info = get_info()
 
 def print_alle_date():
     if stations_info:
+        stations = []
         for station in stations_info:
             print(f"ID: {station['id']}")
             print(f"Naam: {station['name']}")
@@ -43,8 +44,13 @@ def print_alle_date():
             print(f"heeft zoveel vrije plaatsen: {station['empty_slots']}")
             print(f"bij adress: {station['extra']['adress']}")
             print("-" * 50)
+            stations.append({station['id'], station['name'], station['location']['latitude'], station['location']['longitude'], station['free_bikes'],station['empty_slots'], station['extra']['adress']})
+    return stations
 
 def zoek_lege_slots():
     for station in stations_info:
         if station['empty_slots'] > 0:
             print(f"er zijn {station['empty_slots']} lege slots bij de station op {station['extra']['adress']}")
+
+data = print_alle_date()
+print(data)
