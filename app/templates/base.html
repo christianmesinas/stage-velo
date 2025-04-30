@@ -1,21 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-    <script src="https://cdn.auth0.com/js/lock/11.30/lock.min.js"></script>
-
+  <meta charset="UTF-8">
+  <title>{% block title %}Velo App{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  {% block head %}{% endblock %}
 </head>
 <body>
 
+<header>
+  <div class="logo">LOGO</div>
 
+  <nav class="nav-links">
+    <a href="#">Hoe het werkt</a>
+    <a href="#">Tarieven</a>
+    <a href="#">Vind een fiets</a>
+    <a href="#">Help</a>
+    <a href="#">Contact</a>
+    <div class="dropdown">
+      <a href="#">Meer ▼</a>
+      <div class="dropdown-menu">
+        <a href="#">Over ons</a><br>
+        <a href="#">Jobs</a>
+      </div>
+    </div>
+  </nav>
 
+  <div class="nav-buttons">
+    <a href="/login" class="login">LOGIN</a>
+    <a href="/register" class="register">REGISTER</a>
+  </div>
+</header>
 
-<!-- Hoofdgedeelte -->
-{% block content %}{% endblock %}
-
-
+<main>
+  {% block content %}{% endblock %}
+</main>
 
 {% block scripts %}{% endblock %}
 </body>
