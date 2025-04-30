@@ -66,4 +66,4 @@ lege_slots = zoek_lege_slots()
 alle_stations = get_alle_stations()
 
 
-print(lege_slots)
+print(alle_stations)
