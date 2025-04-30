@@ -1,0 +1,10 @@
+/* === AUTH0 BOX === */
+.auth0-lock-widget {
+  border: 2px solid #ffffff;
+  border-radius: 16px !important;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+}
+

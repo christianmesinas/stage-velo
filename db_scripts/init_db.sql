@@ -18,6 +18,7 @@ CREATE TABLE "stations" (
   "free_bikes" INT,
   "empty_slots" INT,
   "capaciteit" INT
+
 );
 
 CREATE TABLE "bikes" (

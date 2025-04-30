@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   db:
     image: postgres:15
@@ -34,6 +35,9 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    volumes:
+      - .:/app  # ✅ Zorg voor live reload van alle projectbestanden
+    command: python app.py  # ✅ Start de app handmatig zodat debug werkt
 
 volumes:
   postgres_data:
