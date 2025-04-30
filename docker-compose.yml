@@ -5,7 +5,7 @@ services:
     image: postgres:15
     container_name: velo_db
     env_file:
-      - .env
+      - .ENV
     environment:
       TZ: Europe/Amsterdam
     volumes:
@@ -18,7 +18,7 @@ services:
     image: dpage/pgadmin4
     container_name: velo_pgadmin
     env_file:
-      - .env
+      - .ENV
     ports:
       - "80:80"
     volumes:
@@ -30,7 +30,7 @@ services:
     build: .
     container_name: velo_web
     env_file:
-      - .env
+      - .ENV
     ports:
       - "8000:8000"
     depends_on:

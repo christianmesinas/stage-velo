@@ -15,9 +15,10 @@ CREATE TABLE "stations" (
   "adres" VARCHAR,
   "latitude" DECIMAL,
   "longitude" DECIMAL,
-  "capaciteit" INT,
-  "free_slots" INT,
-  "parked_bikes" INT,
+  "free_bikes" INT,
+  "empty_slots" INT,
+  "capaciteit" INT
+
 );
 
 CREATE TABLE "bikes" (
