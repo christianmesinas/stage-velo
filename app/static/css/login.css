@@ -1,0 +1,16 @@
+.background{
+    margin: 10px !important;
+    background-image: url(../img/login-bg.png) !important;
+    background-size: contain;
+    min-height: 770px;
+    background-repeat: no-repeat;
+}
+
+#auth0-login-box{
+    margin-left: 35rem;
+    padding-top: 1.2rem;
+}
+
+.auth0-lock-content-wrapper{
+        border: solid 5px;
+}
