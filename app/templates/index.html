@@ -1,26 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+{% extends "base.html" %}
 
-      <!-- Auth0 Lock Script -->
-  <script src="https://cdn.auth0.com/js/lock/11.30/lock.min.js"></script>
+{% block head %}
+<script src="https://cdn.auth0.com/js/lock/11.30/lock.min.js"></script>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
 
 
-</head>
-<body>
+<h1>welkom op de login test</h1>
 
 
+<h1>index pagina</h1>
 
-
-<h1>welkom op de index</h1>
+{% endblock %}
 
 
 
 
-</body>
-</html>
+
+
+{% block scripts %}
