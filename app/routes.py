@@ -96,3 +96,14 @@ def login():
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"))
 
+@routes.route("/maps")
+def markers():
+    markers = [
+        {
+            'lat': 51,
+            'lon': 4,
+            'popup': 'This is the middle of the map.'
+        }
+    ]
+    return render_template('maps.html', markers=markers)
+
