@@ -95,3 +95,4 @@ def login():
     return render_template("login.html",
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"))
+
