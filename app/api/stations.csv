@@ -1,317 +1,317 @@
-id,name,address,latitude,longitude,free_bikes,empty_slots,total_capacity
-00be2a1d4c88a8b85e8ab5ae2ddfeaa5,316 - D.E. Van Damme,Dokter Emiel Van Dammestraat,51.18174,4.35805,10,26,36
-0130d63640e42ef29594fd32cdc77843,077- Blauwtorenplein,Frankrijklei - Blauwtorenplein,51.21275,4.40947,17,19,36
-0223de16b14b05373cdd9cdc1d5c2687,112- Pretoriastraat,Uitbreidingstraat,51.20345,4.43684,19,17,36
-02413c0a6096e2d8810878fce8e5db6f,005- Centraal Station / Kievit,Lange Kievitstraat,51.21301,4.42173,23,12,35
-030fd5f36fa2d26c6a98695f58ab8852,261- Brilschans,Henri Prostlaan,51.18863,4.42959,14,22,36
-03c36f67747e0089c1d09ad8c7dec052,049- Tolhuis,Sint-Pietersvliet - Tolhuis,51.22576,4.40092,11,16,27
-0547d3801b3801ccdc2ad3ffee01d3f5,157- Borsbeeksebrug,Borsbeekbrug tegenover masterbuilding politie,51.20145,4.4354,8,25,33
-059a6574cc7d8abdc618ae333fa98dd2,315 - Elsdonk,Elsdoncklaan,51.16985,4.42363,20,15,35
-065cef555be618888cc9987516bfe99f,310 - Sporthal Sorghvliedt,Krijgsbaan,51.16719,4.35356,8,28,36
-090155d66c38be867ed9790225d52a88,011- Roosevelt,Osystraat,51.22203,4.4184,8,28,36
-09336f472de65551754ae30e8d434d53,142- Esmoreitlaan,Esmoreitlaan,51.23344,4.38254,3,32,35
-09582319d3b27c1340c7261533c8b0ae,091- Hemelstraat,Mechelsesteenweg n° 66,51.20882,4.4083,1,17,18
-0ad9f7c160cdb6e661dcad5ed56e8c09,081- Justitiepaleis,Bolivarplaats rechts van het gerechtsgebouw,51.20468,4.38767,14,13,27
-0b9c2d22781ee47d5d69e0395a216336,033- Hessenhuis,Hessenplein n° 2,51.22622,4.40965,7,13,20
-0be1283288ecad3358b7b82ec2a14c03,260- Ter Schrieck,Hof ter Schriecklaan,51.18964,4.42166,1,26,27
-0f0458db3b6fdead4268f6dc39a48408,208- Ringlaan Atheneum,Ringlaan,51.25451,4.45469,14,22,36
-109a52b179b67b931bf86f2c19056380,017- Groenplaats,Groenplaats n° 7,51.21888,4.4012,5,13,18
-11e13c5a03d7257eb6c817bdb0fb53a7,167 - Fod Financiën 2 ,Italielei,51.22845,4.41339,7,21,28
-125437e303065a8c16da8550cc89ff69,272- Groenenborger,Groenenborgerlaan,51.17786,4.42165,6,24,30
-152b68117dffea62d338d746536b71f7,298- Koornbloem,Valkstraat,51.1719,4.38237,14,13,27
-15a73b415d7e3c56b529d81c52a367da,326 - Krugerbrug,Krugerbrug tov Lageweg 342,51.18744,4.36347,23,13,36
-1700961d3df2042766cbeab4efa7bb38,248- De Schans,De Schans,51.20598,4.44925,9,25,34
-17b3f821c6a8c4fd1d99f57fec74641c,202- Squarepark,Dublinstraat,51.25727,4.42164,9,15,24
-17f0bde7eec81ec1bf09dd7b905e7dbb,040- Desguinlei,Desguinlei to 246,51.19676,4.39662,32,3,35
-18716b0cdb5e7ec327fcbd38c7587840,080- Montigny,Amerikalei/Graaf Van Hoornestraat,51.20607,4.39339,2,34,36
-18819acb33f24f6af898b365f8f93a4c,099- Generaal Leman,Generaal Lemanstraat - Karel Oomsstraat,51.1973,4.41048,0,22,22
-18c99ad3b5b7e5a496a068c8495d792d,185 - Kwadevelden,Winterkoningstraat,51.25848,4.44179,4,26,30
-18e6b31c435ecfdbc8257f6f5a461ba8,104- Mercator,Provinciestraat - Mercatorstraat,51.20821,4.42429,5,13,18
-194021868cfc92dac14c65338ba5dd49,132- Montgomery,Maarschalk Montgomeryplein ro n° 4,51.21177,4.43779,1,17,18
-19bdfc8539c70ec8b155b73b0b4d2093,174- Offerande,Korte Winkelhaakstraat - Offerandestraat,51.21954,4.4233,7,29,36
-19bf0dc41e363f1ab30da6d95b9c63dc,280- Marmotteke,Bosheidelaan,51.17672,4.38242,22,13,35
-1b69087883141a40de3c3bfdefeac237,304 - Campinia,Campiniastraat,51.24007,4.4338,14,22,36
-1bf4875468b53cf2ede63be668cc27d9,161 - Hospitaalplein,Henri La Fontainestraat,51.20356,4.42566,0,32,32
-1cbe05a7a5803d03e4f2efa50852ada9,165- Den Roscam,Paardenmarkt,51.22516,4.40899,1,34,35
-1cffe37fc0f7627b8e89cab902d53ee9,060- Grote Markt,Wisselstraat 9,51.22166,4.40056,27,6,33
-1ee31ae13b925f21c18fe2006b202f5e,323 - Sint-Augustinus,Oosterveldlaan,51.17535,4.41892,15,21,36
-1ff77d266e5fb8c5edcbfb00d012d323,163 - Pluvier,Galgenweellaan,51.21748,4.37798,8,28,36
-204e32c51e13444aa10a355331106bf6,227- Amstel,Van Amstelstraat,51.23276,4.44433,13,11,24
-204f8e64062ab333586d227bf53d54f6,288- Draaiboom,Draaiboomstraat,51.17732,4.35972,13,22,35
-2056be50d93d1f9912740572ad42ee5e,186 - Universiteitsplein,Krijgslaan,51.16362,4.40032,17,19,36
-20a867464a5bcd268680ef2f52cdbaf6,006- Premetro Plantin,Mercatorstraat ,51.21032,4.42218,18,6,24
-259d1217376db18a9a68ac054c155f1e,222- Cadix Oost,Binnenvaartstraat,51.23334,4.41391,0,36,36
-25c06e3fc2cdffc1eccdc1ef1bd9e350,203- Venezuelastraat,Venezuelastraat,51.25361,4.42317,8,28,36
-263cf7673067fa157a45a25347fd11cb,097- Cuperus,Cuperusstraat ro Lange Leemstraat,51.20278,4.42883,3,17,20
-2689889245fb0a1eceddcad8658d5165,155- Statielei,Statielei,51.2162,4.44564,9,27,36
-26b2dc2b0eab6d16ca5b1a24df4ebf53,110- Dageraadplaats,Dageraadplaats,51.20694,4.4301,16,20,36
-26eab3c2e17c8f488088985a9dac032a,023- Hopland,Hopland - Meistraat,51.21649,4.41042,18,17,35
-27190c4af0eb870f1494042bf702194a,096- Stadspark,Rubenslei – Louiza – Marialei ,51.21328,4.41311,16,8,24
-274e4da5a453dc8f40ef3c681021ded1,027- Lange Nieuwstraat,Lange Nieuwstraat 101,51.2195,4.41195,21,15,36
-2862be4fc377115e12cd305373f4b059,319 - Schaliemolen,Schaliemolenstraat,51.17284,4.40517,10,20,30
-289bfc9f0e8bd5eaf4a89e43498b1847,105- Plantin en Moretus,Lange van Ruusbroekstraat,51.20902,4.43157,19,14,33
-29a39ccd84ae9a4e90cf5e31e6b5215a,318 - De Burlet,De Burletlaan,51.17082,4.42902,24,6,30
-2a36bbe236e10b35ff9d7cff85f2323d,152- Blancefloerlaan,Blancefloerlaan,51.22007,4.37559,13,23,36
-2b83e47cd5acdb6094c047b5ec4c4499,242- Te Boelaerlei,Te Boelaerlei,51.21043,4.45251,13,22,35
-2bf256f629552625bc7ed2dfda069acd,076- Prekersplein,Nationalestraat/Lange Vlierstraat,51.21404,4.39809,11,11,22
-2c0d792ac6e3537760112bcd63b250e6,121- Stuivenbergplein,Stuivenbergplein ro n° 36-1,51.22746,4.43053,9,21,30
-2e0b15174b33ee3bffe4f69d56102aa1,282- De Letter,Letterkundestraat 61,51.18023,4.38087,9,26,35
-2e9ef8f7333ca5fb7b1f33a90ef32176,337 - Verenigde Naties,Verenigde Natieslaan,51.16379,4.35336,10,13,23
-2eb5f0368c69a86a39bc00fab246233a,333 - Frans Adriaenssen / Joma,Frans Adriaenssensst,51.25457,4.44173,8,22,30
-2ef3f43c1a26a374fbf24770683c541a,235- Cogelsplein,Cogelsplein,51.21994,4.45501,13,23,36
-31894b4b5ad4b804ebff0d7be19302d9,126- Lange Dijk,Lange Dijkstraat 46/ Van Aerdtstraat,51.22805,4.41902,11,24,35
-32867a80cd6a8458b3719c44c8e951e6,251- Te Boelaerpark Noord,Arthur Matthyslaan,51.20397,4.45209,8,21,29
-328792ab7004e85e9ac62073065c4421,223- Red Star Line,Montevideostraat,51.23335,4.40311,11,25,36
-33f34b77295cdf6aecc9746e96fbac11,125- Sint-Norbertus,Sint-Norbertusstraat/Van Kerckhovenstraat,51.22596,4.42347,18,18,36
-348411447635ba3f6d0ce88c42b16712,245- AZ Monica,Florent Pauwelslei,51.20681,4.47132,12,24,36
-351a811981297d10c93e9cd388ad889d,002- Centraal Station - Astrid 2,Koningin Astridplein,51.21756,4.42073,24,12,36
-3595794104e6fdac2c20c0ff5279d7a9,101- Premetro Handel,Lange Stuivenbergstraat ,51.2241,4.432,18,17,35
-35f8e2b768966f98a20e5f0e9341cdb4,173 - Franklin Roosevelt,Operaplein,51.2202,4.41706,20,16,36
-36ba2d8b108238b02f9b4e1a0e694b26,278- Oversnes,Oversneslaan,51.16533,4.39394,9,27,36
-36e25cb0bf37c14e396e0d37e44b34ae,094- Paleisstraat,Paleisstraat ,51.2048,4.3961,8,25,33
-37bbcb3936349cd07cc666a102b60171,216- Zwembad Merksem,Van Heybeeckstraat,51.24727,4.44902,13,17,30
-38daa96efdde0b7bd3a8d48a046d0674,307 - Baron Sadoin,Baron Sadoinestraat,51.17206,4.33825,5,31,36
-398c00ab8a126b129e5b7d2ea9f9a119,054- Ossenmarkt,Pieter Van Hobokenstraat n° 19,51.22186,4.41299,5,16,21
-3a38ba74f5b1e4e7338bbcd1972ffd75,210- Maantjessteenweg,Maantjessteenweg,51.25523,4.43576,21,15,36
-3a70adcc9ba2b83b665c8fcdc41a3e8d,336 -Sneeuwbeslaan,Sneeuwbeslaan/Laarstraat,51.17571,4.39622,7,28,35
-3abb1721b2af6ee54eef3a71fff6df0c,180 - P&R LO 1,Blancefloer - P&R Linkeroever,51.21933,4.34921,14,21,35
-3b8aab62c9537ca3b3db6c1503853356,087- Lange Elzen,Lange Elzenstraat n° 56,51.20066,4.39424,2,13,15
-3bce7bf4e60511c07cd65b1330272d74,009- NMBS Oost,Vandenpeereboomstraat - Plantin Moretuslei,51.20906,4.43602,9,20,29
-3c915b1b99b1951ddf7d8e0d5dc2a842,303-Kambala,Kambalastraat,51.23793,4.40959,15,21,36
-3c98f8053c94d3942e7764e23ec1e9a1,022- Statie,Statiestraat 162,51.19992,4.43099,32,1,33
-3d6bd13252c152c6497a3d91fd155207,293- Edgard Castelein,Edgard Casteleinstraat,51.18852,4.39095,21,15,36
-3e400836d7b4a1264310c817d5154d80,069- Fonteinstraat,Fonteinstraat tov 72,51.21116,4.44196,8,28,36
-3f125ce09bda9f78e8320a3a543d083d,238- Ertbrugge,Ertbruggelaan,51.22373,4.47563,20,4,24
-3f490431fc832258e55eb48f6a20a79a,322 - Malisgoed,Malisgoed,51.16695,4.38213,6,18,24
-3fefc4bec572452d1876fd4e8d8d31f6,106- Draakplaats,Draakplaats,51.20561,4.43221,5,28,33
-40e07983f1c64959e7c62d2c02fccaae,225- Verbindingsdok Eilandje,Verbindingsdok/Oostkaai,51.23048,4.40769,11,24,35
-416a150e925755db157ee811062f1f1d,063- Slachthuis,Lange Lobroekstraat tov huisnr 49/51 kruising Twee stierenstraat,51.2293,4.43307,10,26,36
-41dbc111c1d8790d8ff002871b3b64a7,156- Gasstraat,Van Kerckhovenstraat 74-76,51.22603,4.42551,4,26,30
-42472a4068a5bcd937160934f4b9b058,204- Luchtbal winkelcentrum,Noorderlaan,51.24996,4.4209,17,19,36
-428a83e5c596a6e07ded9b37ea7f6fab,297- Tentoonstellingswijk,Tentoonstellingslaan,51.19062,4.38893,18,18,36
-45079d89920a2b0f22ef112caedde9b5,289- Broydenborgpark,Walstraat,51.17355,4.35228,12,21,33
-45b15e096422d34b6b2c13f3e8e35e1e,042- Harmonie,Mechelsesteenweg - Ingang Harmoniepark,51.20228,4.41207,27,7,34
-465e099ec59162e3849e2024c3b960d4,255- Van den Haute,Van den Hautelei,51.20414,4.46764,8,28,36
-468204b91eb6fec30cb6e6ba518febf6,296- Mastvest,Eric Sassenlaan,51.19408,4.39304,6,23,29
-46d3e7f3e0e1876998a2f97d06395a6e,273- Campus Groenenborger,Oosterveldlaan,51.17582,4.41283,9,27,36
-47111c581fb8af317e7760b2200c64df,029- Lozana,Lange Lozanastraat n° 149,51.20178,4.40606,6,29,35
-471fa2008789a2d734fbb4eeb9deb6fe,136- Spoor Noord Skatebowl,Hardenvoort,51.23176,4.42101,0,36,36
-47e80cf1c75fbda6849ac49e3349b878,007- NMBS Berchem ,Binnensingel ingang station Berchem,51.20108,4.43395,23,13,36
-48380ff4011d176ed72af6d5fa3ad0f4,062- Station Dam,Damplein/Lange lobroekstraat ro n° 222,51.23183,4.42698,0,23,23
-48b1eab61dc5aa5d1a0ff51a952b12ca,050- Klapdorp,Sint-Paulusstraat/ Lange Koepoortstraat,51.22373,4.40302,4,17,21
-4a35eab0da109d7dd0c338303c5d3517,044- Belgielei,Belgiëlei 99,51.20572,4.41819,2,34,36
-4aae273c7c3b0b54e6487ad801ae3b5e,312 - Graspolder,Graspolderlaan,51.18474,4.34251,22,14,36
-4c127904f68ae1380a9152fe7f64aad7,030- Het Laar,Laar,51.21634,4.43334,0,24,24
-4ce87cb0d765acc411d976d945afbf84,263- Fruithoflaan 2,Fruithoflaan - Jos Ratinckxstraat,51.18453,4.44104,15,21,36
-4d00b67757a4a3f2adc0941dd05f051c,018- Meirbrug,Meir n° 18,51.21819,4.40617,32,1,33
-4d091f91939a3e3f14bfb387a8ed99da,072- Tropisch Instituut,Kronenburgstraat ro n° 82,51.21189,4.39894,8,27,35
-4d7c311433f7fb2fc8ffc0d31084a583,145- De Coster,August Vermeylenlaan/ Charles de Costerlaan,51.22784,4.37855,2,21,23
-4da13a1ac347be9613a61f971715c311,231- den Antwerp,Ter Heydenlaan,51.22922,4.46783,4,32,36
-4e37f39ebcf6d2667f805d884ebc0139,183 - Veer LO,Thonetlaan - Veerpont,51.22495,4.39009,25,11,36
-4f248efd69b531e3f3658b75f41b4073,065- Plantinkaai,Sint Michielskaai ro nr.5,51.21619,4.39343,6,27,33
-511d48adf36a77afc0bb56c50f5867d4,325 - Paul Vekemans,Paul Vekemanslaan,51.17488,4.35993,13,17,30
-512c269ef950cf15f17e030de4c0b08f,239- Zwarte Arend,Alfons schneiderlaan,51.22126,4.47948,11,18,29
-525ca38772df71e463f4a94f0cae6de0,137- Sint-Laureiskaai,napeleonkaai/Nassaustraat ,51.22978,4.40575,8,27,35
-526f1ecb92adce2ccad72d532294adbd,139- Londenstraat,Londenstraat,51.23105,4.41267,2,19,21
-5276d56532d12bc99b67749364415d4b,232- Wim Saerens,Wim Saerensplein,51.22849,4.47867,18,18,36
-52f557af4589cdff97d934948cdc75b9,209- Melgeshof,Korte Bremstraat,51.25644,4.44715,16,20,36
-54dd111e10f1cbf66917da1069146c2d,247- ZNA Sint Erasmus,Luitenant Lippenslaan,51.20832,4.44595,25,10,35
-54e8129eb73fbee75a2b440ef5fbd28e,241- Kerkendijk,Collegelaan ,51.21333,4.45333,3,33,36
-55f406d3e5482d93936e9c9847bc66e4,207- P&R Merksem,Bredabaan,51.25812,4.46196,4,32,36
-58f495a8d55f23369af7b8f213964c49,166 - Schoenmarkt,Schoenmarkt,51.21831,4.40331,12,21,33
-5904c8f722781fcd65a41587562264b1,230- Bosuil,Bosuil,51.22909,4.46191,12,24,36
-5982204a7ce11d9dcf4be892b2d963a9,314 - Schoonselhof,Sint-Bernardsesteenweg,51.1691,4.36328,8,26,34
-5c038aabd16839dc3a8bb25cf636f7fa,313 - Eksterlaar,Constant Jorislaan,51.20051,4.47024,21,14,35
-5c805ff364bfa86799de97c352c48d06,309 - De Torekens,Paul Henri Spaaklaan,51.17089,4.3496,12,24,36
-5cb627281b82723cd7c40b2d9a36773b,067- Oudaan,Oudaan n° 14,51.21578,4.40314,35,1,36
-5ce86c7724471b85eb1c542f3f7c911e,084- Elzenveld,Lange Gasthuisstraat ro n° 3,51.21344,4.40497,18,15,33
-5d46f188be4295466ec7ff02b9f1bb01,330 - Meerlenhof,Meerlenhoflaan,51.17234,4.35626,6,30,36
-5e0e6138ee09b376285afc0bd51aaa04,013- De Singel 1,Jan van rijswijcklaan aan bedrijf DE SINGEL,51.19388,4.40225,25,11,36
-5e452c2fad32d31111a4fdc8e17478d4,234- Deurne Atheneum,Jan Brochovenstraat,51.2222,4.46118,25,9,34
-5e99fdf4609a9b8e802338cb573d484f,141- Sint-Anna,Gloriantlaan/Kastanjedreef,51.23525,4.38688,7,28,35
-5f07b9d91b23b834d7e818bbc9a892e9,240- Park Groot Schijn,Ruggeveldlaan,51.21757,4.48212,28,7,35
-60cad86e79ead03c0b9fa34654619f7b,048- De Keyserlei 2,De Keyserlei,51.2173,4.42015,22,9,31
-6117743623f657278e654147472aa23e,257- Hofstade,Hofstadestraat,51.19233,4.44875,5,28,33
-621c71eb492fbdb89d11ec2d589bc40c,279- Ieperman,Doornstraat,51.16868,4.39438,8,28,36
-633818b891c26a1a080c815a9dc8a59f,217- Joske Vermeulen,Bredabaan,51.24917,4.45468,16,14,30
-63c6c42e264d3e80f120e8c6211baa1d,311 - Cockerillhof,Cockerillplaats,51.17455,4.34423,9,26,35
-63cbc0a8fad4092cf835b4df9e36e546,055- Zonnebloemstraat,Vredestraat/Zonnebloemstraat,51.19698,4.42823,9,24,33
-6439056b4dfacb555c9cbae1546c8c2a,175 - Asiadok,Asiadok-oostkaai / Noorderlaan,51.23518,4.4202,9,27,36
-648365195aa1700e3b8066816842e125,113- Helmstraat,Vercammenstraat - Helmstraat,51.21861,4.43862,8,28,36
-64ce845b3881bc9bd9b10da5f568fba1,146- Reinaartlaan,Gloriantlaan/Reinaartlaan,51.22778,4.38589,5,27,32
-6576bcb7887a0c72e2e6c010c4020f43,219- Districtshuis Merksem,Borrewaterstraat,51.24216,4.44252,8,25,33
-661195665ea44edfe9e7564551ccebf3,340 - Dokter Donny,Dokter Donnyplein,51.16813,4.40497,15,20,35
-6671c205995d3ab44ec15081850c63cd,270- Dikke Mee,Eglantierlaan,51.18645,4.40427,16,20,36
-66efed4f054fcd95d121faebbd5a21eb,302- Rozenkrans,Rozenkrans,51.17904,4.39048,14,16,30
-6708bace5283ce2ea7dd3396b78ceffc,294- Den Tir,Eugeen Laermansstraat,51.19102,4.37669,17,19,36
-670e2836abf87ddc702ad790abaf8f10,001- Centraal Station - Astrid,Koningin Astridplein,51.21782,4.42065,25,7,32
-691dde9eab0070cd406da413c200fdc1,254- Sint-Jozef,Boekenberglei,51.19754,4.4596,17,12,29
-69975746acf69b86fae8587d23e3cad0,187 - Krijgslaan,Krijgslaan,51.16286,4.3902,11,19,30
-69dc3aff7ece47fdf65f0ca088961d26,095- Quinten Matsijslei,Quinten Mathijslei n° 12,51.21415,4.41632,8,21,29
-6ea293d44961c0e6a7c1326a328692f9,059- Het Steen,Ernest Van Dijckkaai ro n° 13 - Zuiderterras,51.2211,4.3968,20,16,36
-6fdfcee8284090de4be898a7c807a505,134- MAS,Godefriduskaai - Oostendekaai,51.22827,4.40557,14,22,36
-6ff5f0193cd5c5395e93a27c7b8cd512,014- Markgrave,Jan Van Rijswijcklaan,51.19681,4.40569,5,31,36
-703e63470bb80d6944ee33be90073f4b,086- Troonplaats,Broederminstraat 59,51.20335,4.39235,6,20,26
-70cf466855ae998df6b83263d2f4b312,037- Theater,Tabakvest - Ibis Hotel,51.21559,4.41237,14,16,30
-71131387aa459f9a0dc87c74e9ff6a9f,012- Brussel,De Singel/ Brederodestraat,51.19931,4.39014,11,25,36
-720b5226e95ede4ce30fe8a7974c681c,331 - Zaatlaan,Zaatlaan,51.1754,4.33873,24,12,36
-75702eb9ff78063a1710953432d9b846,079- Nationale Bank,Britselei - Mechelsesteenweg,51.21103,4.40726,0,35,35
-75af6b66fdc79d43bfdec154cf7e6a6d,201- P&R Luchtbal,Ekersesteenweg,51.26263,4.41869,18,13,31
-779a60c5efae69566378a6e77f0bf93b,135- Loodswezen,Sint-Aldegondiskaai,51.22797,4.40203,23,13,36
-77eced5b137d690ed0fec1f83ff2e77c,275- Sneeuwbes,Groenenborgerlaan 17,51.17437,4.40334,6,30,36
-796daa047a9b5d20ba6d577e36e0ef45,162 - Regatta 1,Blancefloerlaan,51.21993,4.36874,14,22,36
-7a3b23c26be3dd38043c36f83de62edc,109- Kerkstraat,Kerkstraat n° 58,51.21858,4.43051,0,33,33
-7a4620a2c4f70c716fe7b0b1b64359df,071- Sint-Michielskaai,Sint-Michielskaai ro n° 26,51.21456,4.39205,6,24,30
-7b97ca37fe669bb28a96bc285bd3c65c,047- Militair Hospitaal,Boomgaardstraat/Marialei,51.20141,4.42371,1,35,36
-7c4f1f69d876d25f7d71f592cc00fce5,236- Districtshuis Deurne,Maurice Dequeeckerplein,51.21916,4.46007,7,26,33
-7cc97751ec977d34fc265b65aa88732c,093- Sint Vincentius,sint vincentius,51.20541,4.41356,3,27,30
-7e78903b7b17c654b5b76f9ee06ae645,243- Mestputteke,Herentalsebaan,51.20954,4.45816,20,16,36
-80aaae43d2c56ab69f1a55fc784ff327,103- Oude Kerk Berchem,Uitbreidingsstraat 184,51.19256,4.42146,22,14,36
-81304c323bd15611c59874af1fa0522b,268- ZNA Middelheim,Lindendreef,51.18296,4.41849,14,22,36
-8130787cce6e7a71d4c8ba505d5969e9,221-Havenhuis,Mexicostraat,51.24048,4.40799,14,22,36
-828841632d36eb7b6078c89e29d7c309,321 - Monnikenplein,Monnikenplein,51.17508,4.43003,4,31,35
-835a8096e5db49b5cce6aa0ed6e6660f,291- Braem blokken,Maurits Sabbelaan,51.1885,4.3727,21,15,36
-85ee0622640af9eef2620ec6f227ba20,276- Corbusier,Kruishofstraat,51.18351,4.39388,7,29,36
-8668428a462e90f518525ec26e1c9307,116- Loosplaats,Van Eycklei ro n° 48,51.2101,4.41722,0,18,18
-872933972121218320c0fa807ac76429,259- Posthofbrug,Posthofbrug,51.19332,4.43703,15,20,35
-8742b2a9d8bd0d1d8d9befd7f6377c14,170-Quellin,Quellinstraat 6-8,51.21736,4.41654,20,1,21
-8813b4490c2b24778e4955667dbc0def,111- Van Der Meyden,Plantin en Moretuslei,51.21018,4.42776,0,30,30
-883066b15a885b451c67145b483214f2,153- Beatrijslaan,Beatrijslaan,51.21853,4.38571,6,29,35
-8884b71afe21f2a8dacd898c38b6fd17,031- Wezenberg,Karel Oomsstraat - Binnensingel,51.19312,4.40803,27,8,35
-899205df37c5282a70f1caf2d9a2ef83,324 - Dordrechlaan,Dordrechtlaan,51.2043,4.46131,8,15,23
-8a65354e4a5c263918b5f4ea75b1aa77,327 - Ridderveld,Ridderveld,51.17721,4.37488,9,18,27
-8ada453e8e90af099f45737052d88835,215- Nieuwdreef,Nieuwdreef,51.24671,4.44015,12,24,36
-8b7d3761cee84d31d345af09e1e51100,122- Schijnpoort,Pothoekstraat ro n° 124,51.22462,4.4366,9,12,21
-8c50415dacbbf4b8458d0744777847b9,124- Park Spoor Noord 1,Ellermansstraat – Fuggerstraat,51.22996,4.41961,6,24,30
-8db06025b0010745e60a9ba913a63b6a,128- ZNA Cadix,Kempenstraat,51.23177,4.41729,7,23,30
-8dd308dda9c59d018ff09d050fa9c0f0,226- Noordschippersdok,Noordschippersdok 41,51.2339,4.42974,5,31,36
-8e1c97b70813df9b1b47e1d73c1c28cd,015- Schone Kunsten,Beeldhouwersstraat - Admiraal De Boisotstraat,51.20782,4.39439,7,26,33
-8e1e8e770f7ff5543d32e93e80ff7a88,220- 't Dokske,Sint-Bartholomeusstraat,51.24315,4.4474,11,19,30
-8fa269470fcc3d90cd08cb2939f82457,334 - Den Haas,August van de Wielelei,51.21979,4.48317,15,21,36
-905cf18912f5f2e54322bb6e442a3c0b,233- Gallifort,Gallifortlei,51.2251,4.46617,14,22,36
-90eaa6d7da61bfb3f9fb6cc6dbd187fb,332 - Valkstraat,Michel Geysemansstraat,51.16751,4.38542,18,17,35
-912b9caa1031f913542ea88408300890,138- Amsterdamstraat,Amsterdamstraat,51.2312,4.40355,15,9,24
-91d61d90f024535e8012c2f51d787f72,114- ZNA Stuivenberg,Pesthofstraat ro n° 5,51.22199,4.43384,10,26,36
-92e775115a2b2e9904e899cf8e31320e,140- Jachthaven LO,Goethestraat/Thoneth,51.23142,4.39163,8,28,36
-9326677581e93c5fdea47cc410fdb023,244- Waterbaan,Herentalsebaan,51.20764,4.46532,5,31,36
-9326a23d306fa791c6cd6d7133c83282,151- Van Cauwelaert,Blancefloerlaan/Halewijnlaan,51.22031,4.37841,15,15,30
-93c1f1bc8964a9d4d33ae8daa10936c7,212- Rode Loop,Rodeloopstraat,51.25091,4.44231,14,22,36
-93e4a30d0903d9db9f18262b17a0e11a,211- Cultuurcentrum,Rodeloopstraat,51.25131,4.43732,17,19,36
-941ae02d4cdeac47d1cb734910d5c02d,008- NMBS Berchem 2,Ryckaertplein,51.20109,4.43396,26,4,30
-944b8a22e2a427095c6fc000286f45e2,160- Vlinderpaleis,Brusselstraat,51.20338,4.3888,12,24,36
-956397d3ea9af512caf2fe356e47664e,061- Victor Jacobslei,Statiestraat - Victor Jacobslei,51.19781,4.42541,2,31,33
-9587fd8065ee4d9a484e4bfb13e16e5f,074- Vismijn,Scheldestraat - Kronenburgstraat,51.21233,4.39402,2,26,28
-96ca89d8ac353ccf1583dd35da75ac9a,004- De Keyserlei,De Keyserlei,51.21736,4.42009,1,19,20
-97ddc06d57fbcce999103e21b268b0db,129- Godefriduskaai,Godefriduskaai Qpark,51.22808,4.40888,17,18,35
-986f605721eb02cd48ed40e3c1343231,010- NMBS Zuid,Desguinlei - Montignystraat,51.19847,4.39072,4,31,35
-9a69a32d1d2ce3fd345b5123402618e3,039- Koxplein,Betogingstraat tov3,51.21106,4.4341,3,33,36
-9a900c0be6ac8f1d8540f8a7749fef27,287- Kioskplaats/Centrum,Berkenrodelei,51.17774,4.35,14,22,36
-9b035bd926222b0f61137720e4d5136a,224- Indiestraat,Indiestraat,51.23439,4.40958,0,36,36
-9b8e9301367dda36c482e1065a22726f,229- Jozef Nellens,Jozef Nellenslei,51.22616,4.45199,6,29,35
-9c1f018a7b16edfcf6799b5e44ecb0eb,214- Kerkhofblommen,Kerkhofblommenstraat,51.2481,4.43234,18,18,36
-9d2e57320ca151e15eab08464e148bb5,269- Middelheim,Elisabethlaan,51.18309,4.42431,19,11,30
-9db7ec7fff8d0ec9bc5a7b8b35a8f465,028- Keizerstraat,Keizerstraat ro n° 56,51.22149,4.40866,0,23,23
-9dbc4eb321019e292c6e8aea07af2d90,119- Ploeg,Provinciestraat (plein),51.21537,4.42537,0,24,24
-9ee0bcdeca56985092a70005a92df3b2,205- Kinepolis,Groenendaallaan,51.24478,4.41434,19,17,36
-9f789cb8f373fdbb01a13623c43bb8fa,264- Filip Williotstraat,Filip Williotstraat,51.18765,4.4351,28,8,36
-9fae63fc0d57410165dc4b5c1513842d,158- Zuidervelodroom,Zuidervelodroom,51.20193,4.39839,0,36,36
-a01694b2c46930405f6a2b967722ad7a,228- Van Heetvelde,Van Heetveldelei,51.22984,4.45141,13,10,23
-a16d8bb478af3e535eeadb4491baf856,246- Arena,Arenaplein,51.20695,4.45833,18,17,35
-a335fe6ffe5b2853ab64148a38b5b5dc,016- Marnixplaats,Karel Rogierstraat ,51.21016,4.39661,15,12,27
-a3fc987b920fb9b990852081961577af,284- Steynsstraat,Steynsstraat,51.18323,4.36413,15,20,35
-a4068718264718d3a30589f25d014e5c,266- Fruithoflaan 1,Fruithoflaan - Sint-Theresiastraat,51.18076,4.43471,1,35,36
-a5559bf3dbd334ea0a80f909bc510417,252- Te Boelaerpark/Gitschotellei,Karel de Preterlei,51.20001,4.45028,0,31,31
-a643ab863215cfc06579529000623afb,150- Waterhoenlaan,Waterhoenlaan,51.22007,4.38172,8,16,24
-a6680509950500373334fafe6e522e71,035- Cockerillkaai,cockerillkaai,51.21032,4.3877,11,25,36
-a737e3604a0de6ba455228ce543987dd,237- Ter Rivieren,Ter Rivierenlaan,51.22033,4.46925,10,25,35
-a7800f88a37a4716cbeba7b664bf1305,118- Dambrugge,Trapstraat n° 10,51.22714,4.42225,4,17,21
-a8d4ef7a5918e46fc41afebe42bfaa18,159- Den Bell 2,Boudewijnsstraat,51.2056,4.39928,3,27,30
-aae19e5af4a28c05d3ed3ad294f7da7e,317 - Distelhoek,Sluitberg,51.25207,4.43311,6,18,24
-ac611a78c5db38cea7ab65867af6ee0f,285- Hoge Beuken,Commandant Weynsstraat,51.18379,4.35296,9,15,24
-ac6581f6edc582bde54f6e8ef60d9a0b,277- Ahornen,Ahornenlaan ,51.17708,4.39973,16,20,36
-add906f09d34c6035958e97675c7e695,127- FOD Financiën,Italiëlei n° 4,51.22827,4.41352,15,13,28
-ae7c1017494b86c212bdc6b7674eb289,070- Sint Andries,Sint Andriesplaats n° 24,51.21485,4.39634,16,14,30
-af5e625f9f65dfac89e06a225b4bf2e3,073- Maarschalk Gérard,Maarschalk Gerardstraat/schermersstraat,51.21231,4.40372,0,35,35
-afe5e0d6fad5382ed774b70e30b4885a,089- Hof van Leysen,Van Schoonbekestraat - Markgravelei,51.19843,4.40223,16,20,36
-b0cbd4e66e59e18d702777e9af3f9814,068-  Turnhoutsepoort,Turnhoutsebaan/Stenenbrug ,51.21457,4.44368,7,22,29
-b11c01405decdaf5e9f35c810b5699ed,182 - Mediahuis,Blancefloerlaan t.o.v. Mediahuis (overkant),51.21929,4.36003,8,28,36
-b24406132903a177ba5c15dba754767e,274- De Bist,Bist,51.17039,4.39485,8,22,30
-b2acfe7b9e3bda03e55d231e25e1069f,290- Coöperatielaan,Schoonselhoflei,51.17621,4.3677,9,26,35
-b322e497a23711bd1aad3e8a0bb89d9c,300- Wilrijksepleinen,Vogelzanglaan,51.18875,4.3977,7,29,36
-b36fd799e11ee5b1e2bf804c282f0798,088- Haantjeslei,Van Trierstraat - Haantjeslei,51.20114,4.40221,4,17,21
-b4f8d0afab4a94dadfc4dbf0dc2e7a49,052- Waaslandtunnel,Entrepotkaai,51.22802,4.41169,8,28,36
-b8cfce3214108318e78549397081fd76,107- Moorkensplein,Moorkensplein ro n° 33A,51.21338,4.43381,5,29,34
-b8da668dae417fa67a190e678d391676,021- Driekoningen,Grotesteenweg 150/Driekoningenstraat,51.19548,4.41919,9,17,26
-b8f93e07534b7f0cd62b3462a09c6b70,271- Middelheimmuseum,Beukenlaan,51.18069,4.40899,9,27,36
-b96cfdabefc1973f6cab7ec9a60da333,342 - Nieuw Zuid,Jos Smolderenstraat,51.20626,4.38345,1,35,36
-ba2dae2cd21908ebe36d4e53dff38fcc,003- Centraal station Kievit 2,Kievitplein,51.21309,4.42177,23,13,36
-ba82cdac84dbc156daf51a09a6ba6f0c,133- Willemdok,Entrepotkaai n° 1,51.22958,4.41135,11,13,24
-bb0bfbbf9c2e26ddf1ef8ca4e8fb247d,335- Speelplein,Speelpleinstraat / Terlindenhofstraat,51.24822,4.44424,19,17,36
-bb89b9f38700c49b2583359b8bc56eea,092- Sint-Thomas,Mechelsesteenweg n° 180,51.20451,4.41063,2,19,21
-bc77d05d3423ec98b782d8b87b522b72,115- Metro Elisabeth,Sint Elisabethstraat - Greinstraat,51.22275,4.42418,3,18,21
-bcd14a2b55f710fd03c755387648b698,043- Grétrystraat,Belgiëlei/Gretrystraat,51.20368,4.41528,3,27,30
-be92335b7849403ec71c34d009577878,256- Zillebeek,Helderstraat,51.19546,4.44223,16,11,27
-c09d980fe92a92f26bb3f054a9e5ce8a,024- Opera,Anneessensstraat,51.21796,4.41795,8,22,30
-c175ce102f37383ce3bb235973c136f5,100- Van Hombeeckplein,Frans Van Hombeeckplein 25,51.19485,4.4166,7,26,33
-c36a3ff3328f05d2995f61047dc109ae,328 - Oude Terminus,Schotensesteenweg,51.21915,4.47506,17,19,36
-c37f331332ceb1fa09d8394f74796efb,034- M HKA,Waalsekaai ,51.21101,4.39073,7,29,36
-c405b98c057ed1960a7ddff1863f767f,102- Duinstraat,Duinstraat,51.22246,4.43026,0,35,35
-c5de30160be136393ac26fbfa08a7c05,190 - De Singel 2,Jan Van Rijswijcklaan aan de Singel,51.19382,4.40216,17,19,36
-c60acd65c9cf4c8a06eb2e501067e4e0,295- Sporthal Kiel,Emiel Vloorstraat,51.19428,4.37909,11,25,36
-c7d63a5cde7f230e6ea2efb341592dfa,164 - AP Ellermanstraat,Ellermanstraat,51.22993,4.41499,4,32,36
-c9b29054b3a381914653da9b1d53c707,250- Borsbeekbrug,Diksmuidelaan,51.20111,4.439,6,30,36
-cb05817dcd845e7597e20a43cd3cb693,075- Vlaamsekaai,Vlaamsekaai,51.21031,4.3913,18,18,36
-cc4746ce5ec3b7fc633eda065a3f5c39,026- Meir-Antoon Van Dijck,Meir 84,51.21823,4.41248,35,1,36
-cce9873c19abe222d616145c31dcfe21,301- Luchthaven ,Luchthaven ,51.18884,4.45039,11,18,29
-cceb58a4416554febf76f548c4ac4159,057- Wolstraat,Wolstraat - Korte Koepoortstraat 2,51.22154,4.40267,14,7,21
-ce4c272830dc2b997d0b2d59f1b8f161,292- Kielpark,Jacob le Mairestraat,51.19081,4.38101,29,6,35
-ce7d68266cd2a145e5c95f95bf78fe3e,143- Melis Stokelaan,Gloriantlaan/Melis Stokelaan 24  ,51.23122,4.38531,3,33,36
-d07e8bd79085f1a5c480b9d0870d15cf,299- Antwerp expo,C.Huysmanslaan,51.19196,4.39835,12,24,36
-d46621259dfff705aadd9f733f7aca94,258- Hof van Nauwelaerts,Lodewijk van Berckenlaan,51.1975,4.44373,10,19,29
-d52c097c262f979cf444f7147e572e3e,213- Kroonplein,Kroonplein,51.25148,4.44805,22,8,30
-d6a36675e1d5bae1c060a2b4701ca02b,144- August Vermeylenlaan,August Vermeylenlaan,51.23127,4.37867,15,21,36
-d6fe165a324daf98c9625789ce0cf58e,262- Hoogveld,Hoogveld,51.18932,4.43561,12,23,35
-d77060676c1604b25bdf38337bb00c83,249- Frans De Vriend,Frans de Vriendstraat,51.20381,4.44422,17,13,30
-d7e4ab47fa3274e89cbcc52b1d147646,320 - Den Brem,Den Brem,51.17406,4.37563,19,17,36
-d9136cdc472b394aeca248aa479290a1,025- Teniersplaats,Leysstraat,51.21819,4.41431,33,1,34
-d9ae5ef9902efab8479cb8205cc15267,188 - Regatta 2,Kielzoglaan / leo J. Krynlaan - Maria De lannoyplein,51.21795,4.3643,12,23,35
-dd4857a91f9ea6cd48b7823d66ab5a58,184 - Jan Palfijn,Lange Bremstraat thv 79,51.25793,4.45307,36,0,36
-dda7ca37a10dcc95b98438fd21d3ebcb,283- Hollebeek,Hollebeekstraat,51.18167,4.37203,18,18,36
-de9d3ff75aceaae64e269e73e6a8a11e,108- Krugerpark,Delaraystraat ro n° 13,51.21602,4.43997,6,27,33
-debbcc223164a482546d5e7c9d672586,329 - Prosper de Wit,Prosper de Wittestraat,51.2261,4.47064,8,19,27
-df13c70be44c32e96c5e8a354ce58b1b,179 - Den Bleek,Borgerhoutsestraat,51.21306,4.42862,2,28,30
-e15abbbec91329de49e0d43ee546bb82,064- Zuiderterras,Plantinkaai ro Jansvliet (Zuiderterras),51.21907,4.39495,20,13,33
-e1961b4cc4b7c7da8b3bc6732607268f,041- Van Eyck,Van Eycklei/Edelinckstraat 24 ,51.2108,4.41161,8,18,26
-e1b70e99408b2f7988befccbf18e5e26,123- Park Spoor Noord 2,Viséstraat 16,51.22904,4.42494,0,18,18
-e1b86dee86f05079852592bbdd9955c8,045- Falconplein,Oude Leeuwenrui n° 2,51.22688,4.4055,16,20,36
-e376255f76c639f36d58977ca9af7af3,172 - Centraal Station 4,Koningin Astridplein,51.2179,4.42066,12,0,12
-e4ccd83c664e3161947376dcd60e768a,130- Lamoriniere,Lamorinièrestraat,51.2038,4.4208,1,17,18
-e4e90cbff7ba058b779005dbb54fe2c8,171 - Centraal Station 3 ,Koningin Astridplein,51.21788,4.42061,10,1,11
-e5898964895bda94798f491831c26f0e,083- Brederode,Amerikalei n° 82,51.20775,4.39851,6,21,27
-e6459c2578a969c8e141ec50c7d599f3,131- De Wittestraat,De wittestraat - Generaal Lemanstraat,51.19376,4.41215,7,14,21
-e6bfc29124dabf1d963d8b599873e3ac,066- Modemuseum,Drukkerijstraat n° 26,51.21709,4.39925,9,14,23
-e89114c14757ba729c19063f07ab9cd3,082- Fotografiemuseum,Verviersstraat - Waalsekaai,51.20862,4.38747,9,27,36
-e94b0775c59571d38f53d87dd989a32c,032- Permeke,De Conickplein ro n° 26,51.22173,4.42071,15,12,27
-ea2a668b6df790181e1f8c33da23cd4f,117- Sint Jansplein,Sint Jansplein ro n° 17,51.22542,4.4184,14,14,28
-ea393e00cf2fa301c30ae08c5da9f7f2,053- Paardenmarkt,Paardenmarkt - Kleine Kauwenberg,51.22501,4.41223,6,15,21
-eac795a24f5dfe84dbd186505260d910,149- Van Eedenplein,Blancefloerlaan tov Frederik van Eedenplein,51.22061,4.38633,20,16,36
-ebdaa116e2ddfb4a3010a2847e69f60f,020- Groenplaats 2,Groenkerkhofstraat/Nationalestraat,51.2188,4.401,14,13,27
-ebfcfc796951bd06950c89c1575a7b5f,038- Pastorijstraat,Pastorijstraat tov huisnr28,51.22016,4.43264,21,0,21
-ec8e2061bbb67d804789916aeeb34b6e,253- Vosplein,Vosstraat,51.19806,4.45322,16,20,36
-ed787de7960d6669544fce320882189c,078- Oud Gerechtshof,Britselei n° 82,51.2092,4.40301,0,27,27
-ee9529823298c4ffb1fcc466dca47d6e,056- Minderbroedersrui,Minderbroederrui n° 46,51.22219,4.40459,13,17,30
-efbeb9ce519debee5034d3b2c9f07df9,206- Station Luchtbal,Bermstraat,51.2445,4.42309,15,16,31
-efef38d0004a5a24d903d5d89d004700,281- Hof van Tichelen,Hof van Tichelen,51.18248,4.3854,13,23,36
-f2286759aef10f0dcb1dca179bb33e0b,147- Halewijnlaan,Halewijnlaan,51.22392,4.37788,3,20,23
-f4626650bc81597d985d3847a0c3d3a7,154- Terloplein,Terloplein,51.21907,4.44436,7,26,33
-f4883f6370820a30cfa9932c7237da00,051- Mutsaardplein,Mutsaardplein,51.2229,4.40611,9,26,35
-f60bd3bf669c655d956a3c2f7381c98c,308 - KDG Campus Hoboken,Majoor Maelfaitplein,51.17107,4.36717,19,16,35
-f86fefc6e8702fa7f5decb784e088f94,085- Den Bell,Boudewijnsstraat tegenover n° 19-21,51.20585,4.39866,17,19,36
-f9168158909909ec71c2acd2f2d3709a,305 - Ter Nieuwerbrugge,Ter Nieuwerbrugge,51.19131,4.4435,13,22,35
-f97ab06cfbdb805afec6f39cbbf6062f,046- De Merode,Grotesteenweg/Boomgaardstraat,51.19939,4.41502,8,27,35
-f9fbf8d76aec1dbdb56ecfde4b065fdf,148- Verhaerenlaan,Frederik Van Eedenstraa,51.2232,4.38622,14,22,36
-fbd343bc1d5dbac1ebb7ab1e84b69bf7,058- Noorderterras,Jordaenskaai ro Saucierstraat,51.22439,4.3991,16,14,30
-fc6680a5f31fea2af1008d1d10408081,218- Groenendaalcollege,Gagelveldenstraat,51.24302,4.43569,8,28,36
-fc858dd606fb3d2f434f92c1c9d62595,036- Bourla,Arenbergstraat,51.21534,4.4088,14,15,29
-fcbc8c6e04b30655ba2d8c0f04bee4a1,120- Eendracht,Schijnpoortweg ,51.22753,4.43904,13,10,23
-fe4d31fb6877d2f85733a7a583393788,265- Pulhof,Pulhoflaan,51.18514,4.43204,8,22,30
+"id","naam","adres","latitude","longitude","capaciteit","free_slots","parked_bikes"
+"00be2a1d4c88a8b85e8ab5ae2ddfeaa5","316 - D.E. Van Damme","Dokter Emiel Van Dammestraat",51.18174,4.35805,36,32,4
+"0130d63640e42ef29594fd32cdc77843","077- Blauwtorenplein","Frankrijklei - Blauwtorenplein",51.21275,4.40947,33,24,9
+"0223de16b14b05373cdd9cdc1d5c2687","112- Pretoriastraat","Uitbreidingstraat",51.20345,4.43684,36,23,13
+"02413c0a6096e2d8810878fce8e5db6f","005- Centraal Station / Kievit","Lange Kievitstraat",51.21301,4.42173,36,18,18
+"030fd5f36fa2d26c6a98695f58ab8852","261- Brilschans","Henri Prostlaan",51.18863,4.42959,36,20,16
+"03c36f67747e0089c1d09ad8c7dec052","049- Tolhuis","Sint-Pietersvliet - Tolhuis",51.22576,4.40092,25,11,14
+"0547d3801b3801ccdc2ad3ffee01d3f5","157- Borsbeeksebrug","Borsbeekbrug tegenover masterbuilding politie",51.20145,4.4354,33,11,22
+"059a6574cc7d8abdc618ae333fa98dd2","315 - Elsdonk","Elsdoncklaan",51.16985,4.42363,36,14,22
+"065cef555be618888cc9987516bfe99f","310 - Sporthal Sorghvliedt","Krijgsbaan",51.16719,4.35356,35,22,13
+"090155d66c38be867ed9790225d52a88","011- Roosevelt","Osystraat",51.22203,4.4184,35,33,2
+"09336f472de65551754ae30e8d434d53","142- Esmoreitlaan","Esmoreitlaan",51.23344,4.38254,36,28,8
+"09582319d3b27c1340c7261533c8b0ae","091- Hemelstraat","Mechelsesteenweg n° 66",51.20882,4.4083,18,12,6
+"0ad9f7c160cdb6e661dcad5ed56e8c09","081- Justitiepaleis","Bolivarplaats rechts van het gerechtsgebouw",51.20468,4.38767,26,0,26
+"0b9c2d22781ee47d5d69e0395a216336","033- Hessenhuis","Hessenplein n° 2",51.22622,4.40965,21,15,6
+"0be1283288ecad3358b7b82ec2a14c03","260- Ter Schrieck","Hof ter Schriecklaan",51.18964,4.42166,27,17,10
+"0f0458db3b6fdead4268f6dc39a48408","208- Ringlaan Atheneum","Ringlaan",51.25451,4.45469,36,23,13
+"109a52b179b67b931bf86f2c19056380","017- Groenplaats","Groenplaats n° 7",51.21888,4.4012,18,6,12
+"11e13c5a03d7257eb6c817bdb0fb53a7","167 - Fod Financiën 2","Italielei",51.22845,4.41339,30,6,24
+"125437e303065a8c16da8550cc89ff69","272- Groenenborger","Groenenborgerlaan",51.17786,4.42165,30,20,10
+"152b68117dffea62d338d746536b71f7","298- Koornbloem","Valkstraat",51.1719,4.38237,27,12,15
+"15a73b415d7e3c56b529d81c52a367da","326 - Krugerbrug","Krugerbrug tov Lageweg 342",51.18744,4.36347,35,25,10
+"1700961d3df2042766cbeab4efa7bb38","248- De Schans","De Schans",51.20598,4.44925,34,30,4
+"17b3f821c6a8c4fd1d99f57fec74641c","202- Squarepark","Dublinstraat",51.25727,4.42164,24,16,8
+"17f0bde7eec81ec1bf09dd7b905e7dbb","040- Desguinlei","Desguinlei to 246",51.19676,4.39662,33,29,4
+"18716b0cdb5e7ec327fcbd38c7587840","080- Montigny","Amerikalei/Graaf Van Hoornestraat",51.20607,4.39339,35,24,11
+"18819acb33f24f6af898b365f8f93a4c","099- Generaal Leman","Generaal Lemanstraat - Karel Oomsstraat",51.1973,4.41048,23,9,14
+"18c99ad3b5b7e5a496a068c8495d792d","185 - Kwadevelden","Winterkoningstraat",51.25848,4.44179,30,29,1
+"18e6b31c435ecfdbc8257f6f5a461ba8","104- Mercator","Provinciestraat - Mercatorstraat",51.20821,4.42429,18,8,10
+"194021868cfc92dac14c65338ba5dd49","132- Montgomery","Maarschalk Montgomeryplein ro n° 4",51.21177,4.43779,18,14,4
+"19bdfc8539c70ec8b155b73b0b4d2093","174- Offerande","Korte Winkelhaakstraat - Offerandestraat",51.21954,4.4233,34,23,11
+"19bf0dc41e363f1ab30da6d95b9c63dc","280- Marmotteke","Bosheidelaan",51.17672,4.38242,34,28,6
+"1b69087883141a40de3c3bfdefeac237","304 - Campinia","Campiniastraat",51.24007,4.4338,36,33,3
+"1bf4875468b53cf2ede63be668cc27d9","161 - Hospitaalplein","Henri La Fontainestraat",51.20356,4.42566,32,30,2
+"1cbe05a7a5803d03e4f2efa50852ada9","165- Den Roscam","Paardenmarkt",51.22516,4.40899,36,7,29
+"1cffe37fc0f7627b8e89cab902d53ee9","060- Grote Markt","Wisselstraat 9",51.22166,4.40056,31,20,11
+"1ee31ae13b925f21c18fe2006b202f5e","323 - Sint-Augustinus","Oosterveldlaan",51.17535,4.41892,35,18,17
+"1ff77d266e5fb8c5edcbfb00d012d323","163 - Pluvier","Galgenweellaan",51.21748,4.37798,36,19,17
+"204e32c51e13444aa10a355331106bf6","227- Amstel","Van Amstelstraat",51.23276,4.44433,24,10,14
+"204f8e64062ab333586d227bf53d54f6","288- Draaiboom","Draaiboomstraat",51.17732,4.35972,35,20,15
+"2056be50d93d1f9912740572ad42ee5e","186 - Universiteitsplein","Krijgslaan",51.16362,4.40032,36,7,29
+"20a867464a5bcd268680ef2f52cdbaf6","006- Premetro Plantin","Mercatorstraat",51.21032,4.42218,23,3,20
+"259d1217376db18a9a68ac054c155f1e","222- Cadix Oost","Binnenvaartstraat",51.23334,4.41391,36,11,25
+"25c06e3fc2cdffc1eccdc1ef1bd9e350","203- Venezuelastraat","Venezuelastraat",51.25361,4.42317,36,27,9
+"263cf7673067fa157a45a25347fd11cb","097- Cuperus","Cuperusstraat ro Lange Leemstraat",51.20278,4.42883,18,16,2
+"2689889245fb0a1eceddcad8658d5165","155- Statielei","Statielei",51.2162,4.44564,36,34,2
+"26b2dc2b0eab6d16ca5b1a24df4ebf53","110- Dageraadplaats","Dageraadplaats",51.20694,4.4301,35,33,2
+"26eab3c2e17c8f488088985a9dac032a","023- Hopland","Hopland - Meistraat",51.21649,4.41042,35,4,31
+"27190c4af0eb870f1494042bf702194a","096- Stadspark","Rubenslei - Louiza - Marialei",51.21328,4.41311,24,4,20
+"274e4da5a453dc8f40ef3c681021ded1","027- Lange Nieuwstraat","Lange Nieuwstraat 101",51.2195,4.41195,36,0,36
+"2862be4fc377115e12cd305373f4b059","319 - Schaliemolen","Schaliemolenstraat",51.17284,4.40517,29,18,11
+"289bfc9f0e8bd5eaf4a89e43498b1847","105- Plantin en Moretus","Lange van Ruusbroekstraat",51.20902,4.43157,33,20,13
+"29a39ccd84ae9a4e90cf5e31e6b5215a","318 - De Burlet","De Burletlaan",51.17082,4.42902,30,18,12
+"2a36bbe236e10b35ff9d7cff85f2323d","152- Blancefloerlaan","Blancefloerlaan",51.22007,4.37559,36,22,14
+"2b83e47cd5acdb6094c047b5ec4c4499","242- Te Boelaerlei","Te Boelaerlei",51.21043,4.45251,35,28,7
+"2bf256f629552625bc7ed2dfda069acd","076- Prekersplein","Nationalestraat/Lange Vlierstraat",51.21404,4.39809,23,15,8
+"2c0d792ac6e3537760112bcd63b250e6","121- Stuivenbergplein","Stuivenbergplein ro n° 36-1",51.22746,4.43053,29,23,6
+"2e0b15174b33ee3bffe4f69d56102aa1","282- De Letter","Letterkundestraat 61",51.18023,4.38087,35,31,4
+"2e9ef8f7333ca5fb7b1f33a90ef32176","337 - Verenigde Naties","Verenigde Natieslaan",51.16379,4.35336,22,9,13
+"2eb5f0368c69a86a39bc00fab246233a","333 - Frans Adriaenssen / Joma","Frans Adriaenssensst",51.25457,4.44173,30,22,8
+"2ef3f43c1a26a374fbf24770683c541a","235- Cogelsplein","Cogelsplein",51.21994,4.45501,35,11,24
+"31894b4b5ad4b804ebff0d7be19302d9","126- Lange Dijk","Lange Dijkstraat 46/ Van Aerdtstraat",51.22805,4.41902,35,18,17
+"32867a80cd6a8458b3719c44c8e951e6","251- Te Boelaerpark Noord","Arthur Matthyslaan",51.20397,4.45209,30,27,3
+"328792ab7004e85e9ac62073065c4421","223- Red Star Line","Montevideostraat",51.23335,4.40311,34,1,33
+"33f34b77295cdf6aecc9746e96fbac11","125- Sint-Norbertus","Sint-Norbertusstraat/Van Kerckhovenstraat",51.22596,4.42347,35,27,8
+"348411447635ba3f6d0ce88c42b16712","245- AZ Monica","Florent Pauwelslei",51.20681,4.47132,36,27,9
+"351a811981297d10c93e9cd388ad889d","002- Centraal Station - Astrid 2","Koningin Astridplein",51.21756,4.42073,32,31,1
+"3595794104e6fdac2c20c0ff5279d7a9","101- Premetro Handel","Lange Stuivenbergstraat",51.2241,4.432,36,34,2
+"35f8e2b768966f98a20e5f0e9341cdb4","173 - Franklin Roosevelt","Operaplein",51.2202,4.41706,34,26,8
+"36ba2d8b108238b02f9b4e1a0e694b26","278- Oversnes","Oversneslaan",51.16533,4.39394,36,27,9
+"36e25cb0bf37c14e396e0d37e44b34ae","094- Paleisstraat","Paleisstraat",51.2048,4.3961,33,19,14
+"37bbcb3936349cd07cc666a102b60171","216- Zwembad Merksem","Van Heybeeckstraat",51.24727,4.44902,29,16,13
+"38daa96efdde0b7bd3a8d48a046d0674","307 - Baron Sadoin","Baron Sadoinestraat",51.17206,4.33825,36,26,10
+"398c00ab8a126b129e5b7d2ea9f9a119","054- Ossenmarkt","Pieter Van Hobokenstraat n° 19",51.22186,4.41299,21,0,21
+"3a38ba74f5b1e4e7338bbcd1972ffd75","210- Maantjessteenweg","Maantjessteenweg",51.25523,4.43576,35,19,16
+"3a70adcc9ba2b83b665c8fcdc41a3e8d","336 -Sneeuwbeslaan","Sneeuwbeslaan/Laarstraat",51.17571,4.39622,36,30,6
+"3abb1721b2af6ee54eef3a71fff6df0c","180 - P&R LO 1","Blancefloer - P&R Linkeroever",51.21933,4.34921,35,24,11
+"3b8aab62c9537ca3b3db6c1503853356","087- Lange Elzen","Lange Elzenstraat n° 56",51.20066,4.39424,16,15,1
+"3bce7bf4e60511c07cd65b1330272d74","009- NMBS Oost","Vandenpeereboomstraat - Plantin Moretuslei",51.20906,4.43602,30,21,9
+"3c915b1b99b1951ddf7d8e0d5dc2a842","303-Kambala","Kambalastraat",51.23793,4.40959,36,24,12
+"3c98f8053c94d3942e7764e23ec1e9a1","022- Statie","Statiestraat 162",51.19992,4.43099,31,30,1
+"3d6bd13252c152c6497a3d91fd155207","293- Edgard Castelein","Edgard Casteleinstraat",51.18852,4.39095,35,26,9
+"3e400836d7b4a1264310c817d5154d80","069- Fonteinstraat","Fonteinstraat tov 72",51.21116,4.44196,36,34,2
+"3f125ce09bda9f78e8320a3a543d083d","238- Ertbrugge","Ertbruggelaan",51.22373,4.47563,24,14,10
+"3f490431fc832258e55eb48f6a20a79a","322 - Malisgoed","Malisgoed",51.16695,4.38213,24,22,2
+"3fefc4bec572452d1876fd4e8d8d31f6","106- Draakplaats","Draakplaats",51.20561,4.43221,31,18,13
+"40e07983f1c64959e7c62d2c02fccaae","225- Verbindingsdok Eilandje","Verbindingsdok/Oostkaai",51.23048,4.40769,36,6,30
+"416a150e925755db157ee811062f1f1d","063- Slachthuis","Lange Lobroekstraat tov huisnr 49/51 kruising Twee stierenstraat",51.2293,4.43307,36,6,30
+"41dbc111c1d8790d8ff002871b3b64a7","156- Gasstraat","Van Kerckhovenstraat 74-76",51.22603,4.42551,28,11,17
+"42472a4068a5bcd937160934f4b9b058","204- Luchtbal winkelcentrum","Noorderlaan",51.24996,4.4209,36,14,22
+"428a83e5c596a6e07ded9b37ea7f6fab","297- Tentoonstellingswijk","Tentoonstellingslaan",51.19062,4.38893,34,27,7
+"45079d89920a2b0f22ef112caedde9b5","289- Broydenborgpark","Walstraat",51.17355,4.35228,33,14,19
+"45b15e096422d34b6b2c13f3e8e35e1e","042- Harmonie","Mechelsesteenweg - Ingang Harmoniepark",51.20228,4.41207,34,11,23
+"465e099ec59162e3849e2024c3b960d4","255- Van den Haute","Van den Hautelei",51.20414,4.46764,36,35,1
+"468204b91eb6fec30cb6e6ba518febf6","296- Mastvest","Eric Sassenlaan",51.19408,4.39304,30,17,13
+"46d3e7f3e0e1876998a2f97d06395a6e","273- Campus Groenenborger","Oosterveldlaan",51.17582,4.41283,36,1,35
+"47111c581fb8af317e7760b2200c64df","029- Lozana","Lange Lozanastraat n° 149",51.20178,4.40606,36,33,3
+"471fa2008789a2d734fbb4eeb9deb6fe","136- Spoor Noord Skatebowl","Hardenvoort",51.23176,4.42101,36,25,11
+"47e80cf1c75fbda6849ac49e3349b878","007- NMBS Berchem","Binnensingel ingang station Berchem",51.20108,4.43395,35,21,14
+"48380ff4011d176ed72af6d5fa3ad0f4","062- Station Dam","Damplein/Lange lobroekstraat ro n° 222",51.23183,4.42698,22,12,10
+"48b1eab61dc5aa5d1a0ff51a952b12ca","050- Klapdorp","Sint-Paulusstraat/ Lange Koepoortstraat",51.22373,4.40302,21,1,20
+"4a35eab0da109d7dd0c338303c5d3517","044- Belgielei","Belgiëlei 99",51.20572,4.41819,36,35,1
+"4aae273c7c3b0b54e6487ad801ae3b5e","312 - Graspolder","Graspolderlaan",51.18474,4.34251,36,21,15
+"4c127904f68ae1380a9152fe7f64aad7","030- Het Laar","Laar",51.21634,4.43334,24,23,1
+"4ce87cb0d765acc411d976d945afbf84","263- Fruithoflaan 2","Fruithoflaan - Jos Ratinckxstraat",51.18453,4.44104,36,27,9
+"4d00b67757a4a3f2adc0941dd05f051c","018- Meirbrug","Meir n° 18",51.21819,4.40617,34,5,29
+"4d091f91939a3e3f14bfb387a8ed99da","072- Tropisch Instituut","Kronenburgstraat ro n° 82",51.21189,4.39894,36,4,32
+"4d7c311433f7fb2fc8ffc0d31084a583","145- De Coster","August Vermeylenlaan/ Charles de Costerlaan",51.22784,4.37855,23,11,12
+"4da13a1ac347be9613a61f971715c311","231- den Antwerp","Ter Heydenlaan",51.22922,4.46783,36,23,13
+"4e37f39ebcf6d2667f805d884ebc0139","183 - Veer LO","Thonetlaan - Veerpont",51.22495,4.39009,36,23,13
+"4f248efd69b531e3f3658b75f41b4073","065- Plantinkaai","Sint Michielskaai ro nr.5",51.21619,4.39343,33,29,4
+"511d48adf36a77afc0bb56c50f5867d4","325 - Paul Vekemans","Paul Vekemanslaan",51.17488,4.35993,30,19,11
+"512c269ef950cf15f17e030de4c0b08f","239- Zwarte Arend","Alfons schneiderlaan",51.22126,4.47948,29,19,10
+"525ca38772df71e463f4a94f0cae6de0","137- Sint-Laureiskaai","napeleonkaai/Nassaustraat",51.22978,4.40575,35,5,30
+"526f1ecb92adce2ccad72d532294adbd","139- Londenstraat","Londenstraat",51.23105,4.41267,21,10,11
+"5276d56532d12bc99b67749364415d4b","232- Wim Saerens","Wim Saerensplein",51.22849,4.47867,36,31,5
+"52f557af4589cdff97d934948cdc75b9","209- Melgeshof","Korte Bremstraat",51.25644,4.44715,36,19,17
+"54dd111e10f1cbf66917da1069146c2d","247- ZNA Sint Erasmus","Luitenant Lippenslaan",51.20832,4.44595,35,24,11
+"54e8129eb73fbee75a2b440ef5fbd28e","241- Kerkendijk","Collegelaan",51.21333,4.45333,36,34,2
+"55f406d3e5482d93936e9c9847bc66e4","207- P&R Merksem","Bredabaan",51.25812,4.46196,36,22,14
+"58f495a8d55f23369af7b8f213964c49","166 - Schoenmarkt","Schoenmarkt",51.21831,4.40331,33,17,16
+"5904c8f722781fcd65a41587562264b1","230- Bosuil","Bosuil",51.22909,4.46191,35,22,13
+"5982204a7ce11d9dcf4be892b2d963a9","314 - Schoonselhof","Sint-Bernardsesteenweg",51.1691,4.36328,35,30,5
+"5c038aabd16839dc3a8bb25cf636f7fa","313 - Eksterlaar","Constant Jorislaan",51.20051,4.47024,34,34,0
+"5c805ff364bfa86799de97c352c48d06","309 - De Torekens","Paul Henri Spaaklaan",51.17089,4.3496,34,20,14
+"5cb627281b82723cd7c40b2d9a36773b","067- Oudaan","Oudaan n° 14",51.21578,4.40314,36,15,21
+"5ce86c7724471b85eb1c542f3f7c911e","084- Elzenveld","Lange Gasthuisstraat ro n° 3",51.21344,4.40497,33,12,21
+"5d46f188be4295466ec7ff02b9f1bb01","330 - Meerlenhof","Meerlenhoflaan",51.17234,4.35626,36,33,3
+"5e0e6138ee09b376285afc0bd51aaa04","013- De Singel 1","Jan van rijswijcklaan aan bedrijf DE SINGEL",51.19388,4.40225,36,14,22
+"5e452c2fad32d31111a4fdc8e17478d4","234- Deurne Atheneum","Jan Brochovenstraat",51.2222,4.46118,34,18,16
+"5e99fdf4609a9b8e802338cb573d484f","141- Sint-Anna","Gloriantlaan/Kastanjedreef",51.23525,4.38688,36,23,13
+"5f07b9d91b23b834d7e818bbc9a892e9","240- Park Groot Schijn","Ruggeveldlaan",51.21757,4.48212,33,24,9
+"60cad86e79ead03c0b9fa34654619f7b","048- De Keyserlei 2","De Keyserlei",51.2173,4.42015,33,28,5
+"6117743623f657278e654147472aa23e","257- Hofstade","Hofstadestraat",51.19233,4.44875,36,36,0
+"621c71eb492fbdb89d11ec2d589bc40c","279- Ieperman","Doornstraat",51.16868,4.39438,36,31,5
+"633818b891c26a1a080c815a9dc8a59f","217- Joske Vermeulen","Bredabaan",51.24917,4.45468,30,9,21
+"63c6c42e264d3e80f120e8c6211baa1d","311 - Cockerillhof","Cockerillplaats",51.17455,4.34423,35,28,7
+"63cbc0a8fad4092cf835b4df9e36e546","055- Zonnebloemstraat","Vredestraat/Zonnebloemstraat",51.19698,4.42823,33,30,3
+"6439056b4dfacb555c9cbae1546c8c2a","175 - Asiadok","Asiadok-oostkaai / Noorderlaan",51.23518,4.4202,35,35,0
+"648365195aa1700e3b8066816842e125","113- Helmstraat","Vercammenstraat - Helmstraat",51.21861,4.43862,34,32,2
+"64ce845b3881bc9bd9b10da5f568fba1","146- Reinaartlaan","Gloriantlaan/Reinaartlaan",51.22778,4.38589,33,31,2
+"6576bcb7887a0c72e2e6c010c4020f43","219- Districtshuis Merksem","Borrewaterstraat",51.24216,4.44252,32,14,18
+"661195665ea44edfe9e7564551ccebf3","340 - Dokter Donny","Dokter Donnyplein",51.16813,4.40497,35,20,15
+"6671c205995d3ab44ec15081850c63cd","270- Dikke Mee","Eglantierlaan",51.18645,4.40427,35,22,13
+"66efed4f054fcd95d121faebbd5a21eb","302- Rozenkrans","Rozenkrans",51.17904,4.39048,29,24,5
+"6708bace5283ce2ea7dd3396b78ceffc","294- Den Tir","Eugeen Laermansstraat",51.19102,4.37669,36,28,8
+"670e2836abf87ddc702ad790abaf8f10","001- Centraal Station - Astrid","Koningin Astridplein",51.21782,4.42065,32,27,5
+"691dde9eab0070cd406da413c200fdc1","254- Sint-Jozef","Boekenberglei",51.19754,4.4596,30,26,4
+"69975746acf69b86fae8587d23e3cad0","187 - Krijgslaan","Krijgslaan",51.16286,4.3902,30,11,19
+"69dc3aff7ece47fdf65f0ca088961d26","095- Quinten Matsijslei","Quinten Mathijslei n° 12",51.21415,4.41632,30,4,26
+"6ea293d44961c0e6a7c1326a328692f9","059- Het Steen","Ernest Van Dijckkaai ro n° 13 - Zuiderterras",51.2211,4.3968,35,12,23
+"6fdfcee8284090de4be898a7c807a505","134- MAS","Godefriduskaai - Oostendekaai",51.22827,4.40557,36,9,27
+"6ff5f0193cd5c5395e93a27c7b8cd512","014- Markgrave","Jan Van Rijswijcklaan",51.19681,4.40569,36,36,0
+"703e63470bb80d6944ee33be90073f4b","086- Troonplaats","Broederminstraat 59",51.20335,4.39235,24,18,6
+"70cf466855ae998df6b83263d2f4b312","037- Theater","Tabakvest - Ibis Hotel",51.21559,4.41237,30,15,15
+"71131387aa459f9a0dc87c74e9ff6a9f","012- Brussel","De Singel/ Brederodestraat",51.19931,4.39014,36,36,0
+"720b5226e95ede4ce30fe8a7974c681c","331 - Zaatlaan","Zaatlaan",51.1754,4.33873,36,19,17
+"75702eb9ff78063a1710953432d9b846","079- Nationale Bank","Britselei - Mechelsesteenweg",51.21103,4.40726,34,15,19
+"75af6b66fdc79d43bfdec154cf7e6a6d","201- P&R Luchtbal","Ekersesteenweg",51.26263,4.41869,32,19,13
+"779a60c5efae69566378a6e77f0bf93b","135- Loodswezen","Sint-Aldegondiskaai",51.22797,4.40203,34,3,31
+"77eced5b137d690ed0fec1f83ff2e77c","275- Sneeuwbes","Groenenborgerlaan 17",51.17437,4.40334,34,15,19
+"796daa047a9b5d20ba6d577e36e0ef45","162 - Regatta 1","Blancefloerlaan",51.21993,4.36874,36,24,12
+"7a3b23c26be3dd38043c36f83de62edc","109- Kerkstraat","Kerkstraat n° 58",51.21858,4.43051,33,30,3
+"7a4620a2c4f70c716fe7b0b1b64359df","071- Sint-Michielskaai","Sint-Michielskaai ro n° 26",51.21456,4.39205,28,26,2
+"7b97ca37fe669bb28a96bc285bd3c65c","047- Militair Hospitaal","Boomgaardstraat/Marialei",51.20141,4.42371,35,19,16
+"7c4f1f69d876d25f7d71f592cc00fce5","236- Districtshuis Deurne","Maurice Dequeeckerplein",51.21916,4.46007,34,24,10
+"7cc97751ec977d34fc265b65aa88732c","093- Sint Vincentius","sint vincentius",51.20541,4.41356,29,13,16
+"7e78903b7b17c654b5b76f9ee06ae645","243- Mestputteke","Herentalsebaan",51.20954,4.45816,35,24,11
+"80aaae43d2c56ab69f1a55fc784ff327","103- Oude Kerk Berchem","Uitbreidingsstraat 184",51.19256,4.42146,36,8,28
+"81304c323bd15611c59874af1fa0522b","268- ZNA Middelheim","Lindendreef",51.18296,4.41849,36,0,36
+"8130787cce6e7a71d4c8ba505d5969e9","221-Havenhuis","Mexicostraat",51.24048,4.40799,36,0,36
+"828841632d36eb7b6078c89e29d7c309","321 - Monnikenplein","Monnikenplein",51.17508,4.43003,35,30,5
+"835a8096e5db49b5cce6aa0ed6e6660f","291- Braem blokken","Maurits Sabbelaan",51.1885,4.3727,35,27,8
+"85ee0622640af9eef2620ec6f227ba20","276- Corbusier","Kruishofstraat",51.18351,4.39388,36,36,0
+"8668428a462e90f518525ec26e1c9307","116- Loosplaats","Van Eycklei ro n° 48",51.2101,4.41722,17,7,10
+"872933972121218320c0fa807ac76429","259- Posthofbrug","Posthofbrug",51.19332,4.43703,36,16,20
+"8742b2a9d8bd0d1d8d9befd7f6377c14","170-Quellin","Quellinstraat 6-8",51.21736,4.41654,21,20,1
+"8813b4490c2b24778e4955667dbc0def","111- Van Der Meyden","Plantin en Moretuslei",51.21018,4.42776,30,29,1
+"883066b15a885b451c67145b483214f2","153- Beatrijslaan","Beatrijslaan",51.21853,4.38571,35,30,5
+"8884b71afe21f2a8dacd898c38b6fd17","031- Wezenberg","Karel Oomsstraat - Binnensingel",51.19312,4.40803,32,12,20
+"899205df37c5282a70f1caf2d9a2ef83","324 - Dordrechlaan","Dordrechtlaan",51.2043,4.46131,23,22,1
+"8a65354e4a5c263918b5f4ea75b1aa77","327 - Ridderveld","Ridderveld",51.17721,4.37488,29,14,15
+"8ada453e8e90af099f45737052d88835","215- Nieuwdreef","Nieuwdreef",51.24671,4.44015,36,29,7
+"8b7d3761cee84d31d345af09e1e51100","122- Schijnpoort","Pothoekstraat ro n° 124",51.22462,4.4366,21,8,13
+"8c50415dacbbf4b8458d0744777847b9","124- Park Spoor Noord 1","Ellermansstraat - Fuggerstraat",51.22996,4.41961,30,22,8
+"8db06025b0010745e60a9ba913a63b6a","128- ZNA Cadix","Kempenstraat",51.23177,4.41729,30,3,27
+"8dd308dda9c59d018ff09d050fa9c0f0","226- Noordschippersdok","Noordschippersdok 41",51.2339,4.42974,36,19,17
+"8e1c97b70813df9b1b47e1d73c1c28cd","015- Schone Kunsten","Beeldhouwersstraat - Admiraal De Boisotstraat",51.20782,4.39439,33,30,3
+"8e1e8e770f7ff5543d32e93e80ff7a88","220- 't Dokske","Sint-Bartholomeusstraat",51.24315,4.4474,30,22,8
+"8fa269470fcc3d90cd08cb2939f82457","334 - Den Haas","August van de Wielelei",51.21979,4.48317,35,28,7
+"905cf18912f5f2e54322bb6e442a3c0b","233- Gallifort","Gallifortlei",51.2251,4.46617,35,30,5
+"90eaa6d7da61bfb3f9fb6cc6dbd187fb","332 - Valkstraat","Michel Geysemansstraat",51.16751,4.38542,36,16,20
+"912b9caa1031f913542ea88408300890","138- Amsterdamstraat","Amsterdamstraat",51.2312,4.40355,23,3,20
+"91d61d90f024535e8012c2f51d787f72","114- ZNA Stuivenberg","Pesthofstraat ro n° 5",51.22199,4.43384,36,24,12
+"92e775115a2b2e9904e899cf8e31320e","140- Jachthaven LO","Goethestraat/Thoneth",51.23142,4.39163,36,25,11
+"9326677581e93c5fdea47cc410fdb023","244- Waterbaan","Herentalsebaan",51.20764,4.46532,36,23,13
+"9326a23d306fa791c6cd6d7133c83282","151- Van Cauwelaert","Blancefloerlaan/Halewijnlaan",51.22031,4.37841,30,15,15
+"93c1f1bc8964a9d4d33ae8daa10936c7","212- Rode Loop","Rodeloopstraat",51.25091,4.44231,36,21,15
+"93e4a30d0903d9db9f18262b17a0e11a","211- Cultuurcentrum","Rodeloopstraat",51.25131,4.43732,35,12,23
+"941ae02d4cdeac47d1cb734910d5c02d","008- NMBS Berchem 2","Ryckaertplein",51.20109,4.43396,28,15,13
+"944b8a22e2a427095c6fc000286f45e2","160- Vlinderpaleis","Brusselstraat",51.20338,4.3888,33,2,31
+"956397d3ea9af512caf2fe356e47664e","061- Victor Jacobslei","Statiestraat - Victor Jacobslei",51.19781,4.42541,31,23,8
+"9587fd8065ee4d9a484e4bfb13e16e5f","074- Vismijn","Scheldestraat - Kronenburgstraat",51.21233,4.39402,26,26,0
+"96ca89d8ac353ccf1583dd35da75ac9a","004- De Keyserlei","De Keyserlei",51.21736,4.42009,20,20,0
+"97ddc06d57fbcce999103e21b268b0db","129- Godefriduskaai","Godefriduskaai Qpark",51.22808,4.40888,36,5,31
+"986f605721eb02cd48ed40e3c1343231","010- NMBS Zuid","Desguinlei - Montignystraat",51.19847,4.39072,35,35,0
+"9a69a32d1d2ce3fd345b5123402618e3","039- Koxplein","Betogingstraat tov3",51.21106,4.4341,36,36,0
+"9a900c0be6ac8f1d8540f8a7749fef27","287- Kioskplaats/Centrum","Berkenrodelei",51.17774,4.35,36,20,16
+"9b035bd926222b0f61137720e4d5136a","224- Indiestraat","Indiestraat",51.23439,4.40958,36,19,17
+"9b8e9301367dda36c482e1065a22726f","229- Jozef Nellens","Jozef Nellenslei",51.22616,4.45199,36,28,8
+"9c1f018a7b16edfcf6799b5e44ecb0eb","214- Kerkhofblommen","Kerkhofblommenstraat",51.2481,4.43234,36,20,16
+"9d2e57320ca151e15eab08464e148bb5","269- Middelheim","Elisabethlaan",51.18309,4.42431,30,20,10
+"9db7ec7fff8d0ec9bc5a7b8b35a8f465","028- Keizerstraat","Keizerstraat ro n° 56",51.22149,4.40866,19,19,0
+"9dbc4eb321019e292c6e8aea07af2d90","119- Ploeg","Provinciestraat (plein)",51.21537,4.42537,24,23,1
+"9ee0bcdeca56985092a70005a92df3b2","205- Kinepolis","Groenendaallaan",51.24478,4.41434,36,29,7
+"9f789cb8f373fdbb01a13623c43bb8fa","264- Filip Williotstraat","Filip Williotstraat",51.18765,4.4351,36,10,26
+"9fae63fc0d57410165dc4b5c1513842d","158- Zuidervelodroom","Zuidervelodroom",51.20193,4.39839,35,33,2
+"a01694b2c46930405f6a2b967722ad7a","228- Van Heetvelde","Van Heetveldelei",51.22984,4.45141,24,23,1
+"a16d8bb478af3e535eeadb4491baf856","246- Arena","Arenaplein",51.20695,4.45833,36,24,12
+"a335fe6ffe5b2853ab64148a38b5b5dc","016- Marnixplaats","Karel Rogierstraat",51.21016,4.39661,27,21,6
+"a3fc987b920fb9b990852081961577af","284- Steynsstraat","Steynsstraat",51.18323,4.36413,35,26,9
+"a4068718264718d3a30589f25d014e5c","266- Fruithoflaan 1","Fruithoflaan - Sint-Theresiastraat",51.18076,4.43471,36,36,0
+"a5559bf3dbd334ea0a80f909bc510417","252- Te Boelaerpark/Gitschotellei","Karel de Preterlei",51.20001,4.45028,30,29,1
+"a643ab863215cfc06579529000623afb","150- Waterhoenlaan","Waterhoenlaan",51.22007,4.38172,23,15,8
+"a6680509950500373334fafe6e522e71","035- Cockerillkaai","cockerillkaai",51.21032,4.3877,35,16,19
+"a737e3604a0de6ba455228ce543987dd","237- Ter Rivieren","Ter Rivierenlaan",51.22033,4.46925,35,20,15
+"a7800f88a37a4716cbeba7b664bf1305","118- Dambrugge","Trapstraat n° 10",51.22714,4.42225,21,21,0
+"a8d4ef7a5918e46fc41afebe42bfaa18","159- Den Bell 2","Boudewijnsstraat",51.2056,4.39928,30,5,25
+"aae19e5af4a28c05d3ed3ad294f7da7e","317 - Distelhoek","Sluitberg",51.25207,4.43311,24,21,3
+"ac611a78c5db38cea7ab65867af6ee0f","285- Hoge Beuken","Commandant Weynsstraat",51.18379,4.35296,25,5,20
+"ac6581f6edc582bde54f6e8ef60d9a0b","277- Ahornen","Ahornenlaan",51.17708,4.39973,36,28,8
+"add906f09d34c6035958e97675c7e695","127- FOD Financiën","Italiëlei n° 4",51.22827,4.41352,30,7,23
+"ae7c1017494b86c212bdc6b7674eb289","070- Sint Andries","Sint Andriesplaats n° 24",51.21485,4.39634,28,20,8
+"af5e625f9f65dfac89e06a225b4bf2e3","073- Maarschalk Gérard","Maarschalk Gerardstraat/schermersstraat",51.21231,4.40372,35,15,20
+"afe5e0d6fad5382ed774b70e30b4885a","089- Hof van Leysen","Van Schoonbekestraat - Markgravelei",51.19843,4.40223,36,28,8
+"b0cbd4e66e59e18d702777e9af3f9814","068-  Turnhoutsepoort","Turnhoutsebaan/Stenenbrug",51.21457,4.44368,29,19,10
+"b11c01405decdaf5e9f35c810b5699ed","182 - Mediahuis","Blancefloerlaan t.o.v. Mediahuis (overkant)",51.21929,4.36003,36,25,11
+"b24406132903a177ba5c15dba754767e","274- De Bist","Bist",51.17039,4.39485,30,17,13
+"b2acfe7b9e3bda03e55d231e25e1069f","290- Coöperatielaan","Schoonselhoflei",51.17621,4.3677,35,17,18
+"b322e497a23711bd1aad3e8a0bb89d9c","300- Wilrijksepleinen","Vogelzanglaan",51.18875,4.3977,35,22,13
+"b36fd799e11ee5b1e2bf804c282f0798","088- Haantjeslei","Van Trierstraat - Haantjeslei",51.20114,4.40221,20,10,10
+"b4f8d0afab4a94dadfc4dbf0dc2e7a49","052- Waaslandtunnel","Entrepotkaai",51.22802,4.41169,35,14,21
+"b8cfce3214108318e78549397081fd76","107- Moorkensplein","Moorkensplein ro n° 33A",51.21338,4.43381,36,32,4
+"b8da668dae417fa67a190e678d391676","021- Driekoningen","Grotesteenweg 150/Driekoningenstraat",51.19548,4.41919,27,19,8
+"b8f93e07534b7f0cd62b3462a09c6b70","271- Middelheimmuseum","Beukenlaan",51.18069,4.40899,36,30,6
+"b96cfdabefc1973f6cab7ec9a60da333","342 - Nieuw Zuid","Jos Smolderenstraat",51.20626,4.38345,34,23,11
+"ba2dae2cd21908ebe36d4e53dff38fcc","003- Centraal station Kievit 2","Kievitplein",51.21309,4.42177,36,29,7
+"ba82cdac84dbc156daf51a09a6ba6f0c","133- Willemdok","Entrepotkaai n° 1",51.22958,4.41135,24,1,23
+"bb0bfbbf9c2e26ddf1ef8ca4e8fb247d","335- Speelplein","Speelpleinstraat / Terlindenhofstraat",51.24822,4.44424,36,14,22
+"bb89b9f38700c49b2583359b8bc56eea","092- Sint-Thomas","Mechelsesteenweg n° 180",51.20451,4.41063,19,14,5
+"bc77d05d3423ec98b782d8b87b522b72","115- Metro Elisabeth","Sint Elisabethstraat - Greinstraat",51.22275,4.42418,20,17,3
+"bcd14a2b55f710fd03c755387648b698","043- Grétrystraat","Belgiëlei/Gretrystraat",51.20368,4.41528,30,26,4
+"be92335b7849403ec71c34d009577878","256- Zillebeek","Helderstraat",51.19546,4.44223,25,13,12
+"c09d980fe92a92f26bb3f054a9e5ce8a","024- Opera","Anneessensstraat",51.21796,4.41795,30,29,1
+"c175ce102f37383ce3bb235973c136f5","100- Van Hombeeckplein","Frans Van Hombeeckplein 25",51.19485,4.4166,33,27,6
+"c36a3ff3328f05d2995f61047dc109ae","328 - Oude Terminus","Schotensesteenweg",51.21915,4.47506,35,12,23
+"c37f331332ceb1fa09d8394f74796efb","034- M HKA","Waalsekaai",51.21101,4.39073,36,23,13
+"c405b98c057ed1960a7ddff1863f767f","102- Duinstraat","Duinstraat",51.22246,4.43026,35,25,10
+"c5de30160be136393ac26fbfa08a7c05","190 - De Singel 2","Jan Van Rijswijcklaan aan de Singel",51.19382,4.40216,35,14,21
+"c60acd65c9cf4c8a06eb2e501067e4e0","295- Sporthal Kiel","Emiel Vloorstraat",51.19428,4.37909,36,16,20
+"c7d63a5cde7f230e6ea2efb341592dfa","164 - AP Ellermanstraat","Ellermanstraat",51.22993,4.41499,36,14,22
+"c9b29054b3a381914653da9b1d53c707","250- Borsbeekbrug","Diksmuidelaan",51.20111,4.439,36,32,4
+"cb05817dcd845e7597e20a43cd3cb693","075- Vlaamsekaai","Vlaamsekaai",51.21031,4.3913,36,27,9
+"cc4746ce5ec3b7fc633eda065a3f5c39","026- Meir-Antoon Van Dijck","Meir 84",51.21823,4.41248,35,15,20
+"cce9873c19abe222d616145c31dcfe21","301- Luchthaven","Luchthaven",51.18884,4.45039,30,3,27
+"cceb58a4416554febf76f548c4ac4159","057- Wolstraat","Wolstraat - Korte Koepoortstraat 2",51.22154,4.40267,21,9,12
+"ce4c272830dc2b997d0b2d59f1b8f161","292- Kielpark","Jacob le Mairestraat",51.19081,4.38101,34,10,24
+"ce7d68266cd2a145e5c95f95bf78fe3e","143- Melis Stokelaan","Gloriantlaan/Melis Stokelaan 24",51.23122,4.38531,36,33,3
+"d07e8bd79085f1a5c480b9d0870d15cf","299- Antwerp expo","C.Huysmanslaan",51.19196,4.39835,36,35,1
+"d46621259dfff705aadd9f733f7aca94","258- Hof van Nauwelaerts","Lodewijk van Berckenlaan",51.1975,4.44373,30,30,0
+"d52c097c262f979cf444f7147e572e3e","213- Kroonplein","Kroonplein",51.25148,4.44805,29,24,5
+"d6a36675e1d5bae1c060a2b4701ca02b","144- August Vermeylenlaan","August Vermeylenlaan",51.23127,4.37867,36,28,8
+"d6fe165a324daf98c9625789ce0cf58e","262- Hoogveld","Hoogveld",51.18932,4.43561,36,17,19
+"d77060676c1604b25bdf38337bb00c83","249- Frans De Vriend","Frans de Vriendstraat",51.20381,4.44422,29,27,2
+"d7e4ab47fa3274e89cbcc52b1d147646","320 - Den Brem","Den Brem",51.17406,4.37563,36,24,12
+"d9136cdc472b394aeca248aa479290a1","025- Teniersplaats","Leysstraat",51.21819,4.41431,34,26,8
+"d9ae5ef9902efab8479cb8205cc15267","188 - Regatta 2","Kielzoglaan / leo J. Krynlaan - Maria De lannoyplein",51.21795,4.3643,35,16,19
+"dd4857a91f9ea6cd48b7823d66ab5a58","184 - Jan Palfijn","Lange Bremstraat thv 79",51.25793,4.45307,36,9,27
+"dda7ca37a10dcc95b98438fd21d3ebcb","283- Hollebeek","Hollebeekstraat",51.18167,4.37203,36,21,15
+"de9d3ff75aceaae64e269e73e6a8a11e","108- Krugerpark","Delaraystraat ro n° 13",51.21602,4.43997,36,35,1
+"debbcc223164a482546d5e7c9d672586","329 - Prosper de Wit","Prosper de Wittestraat",51.2261,4.47064,27,18,9
+"df13c70be44c32e96c5e8a354ce58b1b","179 - Den Bleek","Borgerhoutsestraat",51.21306,4.42862,28,22,6
+"e15abbbec91329de49e0d43ee546bb82","064- Zuiderterras","Plantinkaai ro Jansvliet (Zuiderterras)",51.21907,4.39495,34,25,9
+"e1961b4cc4b7c7da8b3bc6732607268f","041- Van Eyck","Van Eycklei/Edelinckstraat 24",51.2108,4.41161,27,18,9
+"e1b70e99408b2f7988befccbf18e5e26","123- Park Spoor Noord 2","Viséstraat 16",51.22904,4.42494,18,16,2
+"e1b86dee86f05079852592bbdd9955c8","045- Falconplein","Oude Leeuwenrui n° 2",51.22688,4.4055,36,10,26
+"e376255f76c639f36d58977ca9af7af3","172 - Centraal Station 4","Koningin Astridplein",51.2179,4.42066,12,12,0
+"e4ccd83c664e3161947376dcd60e768a","130- Lamoriniere","Lamorinièrestraat",51.2038,4.4208,17,15,2
+"e4e90cbff7ba058b779005dbb54fe2c8","171 - Centraal Station 3","Koningin Astridplein",51.21788,4.42061,11,11,0
+"e5898964895bda94798f491831c26f0e","083- Brederode","Amerikalei n° 82",51.20775,4.39851,27,25,2
+"e6459c2578a969c8e141ec50c7d599f3","131- De Wittestraat","De wittestraat - Generaal Lemanstraat",51.19376,4.41215,21,6,15
+"e6bfc29124dabf1d963d8b599873e3ac","066- Modemuseum","Drukkerijstraat n° 26",51.21709,4.39925,23,21,2
+"e89114c14757ba729c19063f07ab9cd3","082- Fotografiemuseum","Verviersstraat - Waalsekaai",51.20862,4.38747,34,9,25
+"e94b0775c59571d38f53d87dd989a32c","032- Permeke","De Conickplein ro n° 26",51.22173,4.42071,25,21,4
+"ea2a668b6df790181e1f8c33da23cd4f","117- Sint Jansplein","Sint Jansplein ro n° 17",51.22542,4.4184,29,29,0
+"ea393e00cf2fa301c30ae08c5da9f7f2","053- Paardenmarkt","Paardenmarkt - Kleine Kauwenberg",51.22501,4.41223,20,5,15
+"eac795a24f5dfe84dbd186505260d910","149- Van Eedenplein","Blancefloerlaan tov Frederik van Eedenplein",51.22061,4.38633,36,23,13
+"ebdaa116e2ddfb4a3010a2847e69f60f","020- Groenplaats 2","Groenkerkhofstraat/Nationalestraat",51.2188,4.401,26,14,12
+"ebfcfc796951bd06950c89c1575a7b5f","038- Pastorijstraat","Pastorijstraat tov huisnr28",51.22016,4.43264,21,21,0
+"ec8e2061bbb67d804789916aeeb34b6e","253- Vosplein","Vosstraat",51.19806,4.45322,34,23,11
+"ed787de7960d6669544fce320882189c","078- Oud Gerechtshof","Britselei n° 82",51.2092,4.40301,26,21,5
+"ee9529823298c4ffb1fcc466dca47d6e","056- Minderbroedersrui","Minderbroederrui n° 46",51.22219,4.40459,29,21,8
+"efbeb9ce519debee5034d3b2c9f07df9","206- Station Luchtbal","Bermstraat",51.2445,4.42309,32,30,2
+"efef38d0004a5a24d903d5d89d004700","281- Hof van Tichelen","Hof van Tichelen",51.18248,4.3854,36,24,12
+"f2286759aef10f0dcb1dca179bb33e0b","147- Halewijnlaan","Halewijnlaan",51.22392,4.37788,23,17,6
+"f4626650bc81597d985d3847a0c3d3a7","154- Terloplein","Terloplein",51.21907,4.44436,31,22,9
+"f4883f6370820a30cfa9932c7237da00","051- Mutsaardplein","Mutsaardplein",51.2229,4.40611,36,7,29
+"f60bd3bf669c655d956a3c2f7381c98c","308 - KDG Campus Hoboken","Majoor Maelfaitplein",51.17107,4.36717,34,20,14
+"f86fefc6e8702fa7f5decb784e088f94","085- Den Bell","Boudewijnsstraat tegenover n° 19-21",51.20585,4.39866,34,10,24
+"f9168158909909ec71c2acd2f2d3709a","305 - Ter Nieuwerbrugge","Ter Nieuwerbrugge",51.19131,4.4435,36,20,16
+"f97ab06cfbdb805afec6f39cbbf6062f","046- De Merode","Grotesteenweg/Boomgaardstraat",51.19939,4.41502,36,27,9
+"f9fbf8d76aec1dbdb56ecfde4b065fdf","148- Verhaerenlaan","Frederik Van Eedenstraa",51.2232,4.38622,36,20,16
+"fbd343bc1d5dbac1ebb7ab1e84b69bf7","058- Noorderterras","Jordaenskaai ro Saucierstraat",51.22439,4.3991,29,4,25
+"fc6680a5f31fea2af1008d1d10408081","218- Groenendaalcollege","Gagelveldenstraat",51.24302,4.43569,36,21,15
+"fc858dd606fb3d2f434f92c1c9d62595","036- Bourla","Arenbergstraat",51.21534,4.4088,30,9,21
+"fcbc8c6e04b30655ba2d8c0f04bee4a1","120- Eendracht","Schijnpoortweg",51.22753,4.43904,23,6,17
+"fe4d31fb6877d2f85733a7a583393788","265- Pulhof","Pulhoflaan",51.18514,4.43204,29,27,2
