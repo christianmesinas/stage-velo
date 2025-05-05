@@ -102,11 +102,12 @@ def markers():
     markers = []
     for location in api.get_alle_stations():
         markers.append({
-                'lat':  location[3],
-                'lon':  location[4],
+                'lat':  location[4],
+                'lon':  location[5],
                 'name': location[1],
-                'free-bikes': location[5],
-                'empty-slots': location[6],
+                'free-bikes': location[6],
+                'empty-slots': location[7],
+                'status': location[2],
         })
     return render_template('maps.html', markers=markers)
 
