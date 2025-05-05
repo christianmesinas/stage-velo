@@ -17,45 +17,39 @@
 
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
-    <script>
-        {% for marker in markers %}
-            // Bepaal de marker op basis van free-bikes en empty-slots
-            var customIcon;
-            if ({{ marker['free-bikes'] }} === 0) {
-                // Gebruik de rode marker voor geen fietsen
-                customIcon = L.icon({
-                    iconUrl: '{{ url_for("static", filename="images/marker-blue.png") }}',
-                    iconSize: [35, 41], // Google Maps-achtige pin grootte
-                    iconAnchor: [12, 41], // Ankerpunt (onderkant van de pin)
-                    popupAnchor: [1, -34], // Pop-up positie
-                    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
-                    shadowSize: [41, 41]
-                });
-         } else if ({{ marker['empty-slots'] }} === 0) {
-                // Gele marker voor geen lege slots
-                customIcon = L.icon({
-                    iconUrl: '{{ url_for("static", filename="images/marker-yellow.png") }}',
-                    iconSize: [35, 41],
-                    iconAnchor: [12, 41],
-                    popupAnchor: [1, -34],
-                    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
-                    shadowSize: [41, 41]
-                });
-            } else {
-                // Groene marker voor beide beschikbaar
-                customIcon = L.icon({
-                    iconUrl: '{{ url_for("static", filename="images/marker-green.png") }}',
-                    iconSize: [35, 41],
-                    iconAnchor: [12, 41],
-                    popupAnchor: [1, -34],
-                    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
-                    shadowSize: [41, 41]
-                });
-            }
+ <script>
+    // Functie om het juiste icoon te kiezen
+    function createCustomIcon(status, freeBikes, emptySlots) {
+        let iconUrl;
+        if (status !== 'OPN') {
+            iconUrl = '{{ url_for("static", filename="images/marker-red.png") }}';
+        } else if (freeBikes === 0) {
+            iconUrl = '{{ url_for("static", filename="images/marker-blue.png") }}';
+        } else if (emptySlots === 0) {
+            iconUrl = '{{ url_for("static", filename="images/marker-yellow.png") }}';
+        } else {
+            iconUrl = '{{ url_for("static", filename="images/marker-green.png") }}';
+        }
 
-            // Voeg de marker toe aan de kaart met de aangepaste icon
-            L.marker([{{ marker['lat'] }}, {{ marker['lon'] }}], { icon: customIcon }).addTo(map)
-                .bindPopup("{{ marker['name'] | escape }}<br><img src='/static/images/bike.png' alt='bike' style='height: 16px; vertical-align: middle;'> {{ marker['free-bikes'] | escape }}   <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> {{ marker['empty-slots'] | escape }}");
-        {% endfor %}
-    </script>
+        return L.icon({
+            iconUrl: iconUrl,
+            iconSize: [35, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+            shadowSize: [41, 41]
+        });
+    }
+
+    // Markerdata van Flask
+    const markers = {{ markers | tojson }};
+
+    // Loop door markers en voeg ze toe aan de kaart
+    markers.forEach(function(marker) {
+        let customIcon = createCustomIcon(marker.status, marker['free-bikes'], marker['empty-slots']);
+        L.marker([marker.lat, marker.lon], { icon: customIcon })
+            .addTo(map)
+            .bindPopup(`${marker.name}<br><img src='/static/images/bike.png' alt='bike' style='height: 16px; vertical-align: middle;'> ${marker['free-bikes']} <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> ${marker['empty-slots']}`);
+    });
+</script>
 {% endblock %}
