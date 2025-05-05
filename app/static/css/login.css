@@ -1,0 +1,29 @@
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(../img/login-bg.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 90vw;
+    height: 90vh;
+}
+
+
+
+
+#auth0-login-box{
+    margin-left: 40rem;
+    padding-top: 1.2rem;
+}
+
+.auth0-lock-content-wrapper{
+        border: solid 5px;
+        border-color: #2b2d42;
+
+}
