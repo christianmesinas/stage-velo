@@ -21,6 +21,7 @@ def get_info():
                 'empty_slots': station['empty_slots'],
                 'extra': {
                     'adress': station['extra']['address'],
+                    'status': station['extra']['status'],
                 }
 
             }
@@ -46,6 +47,7 @@ def get_alle_stations():
                 station['id'],
                 station['name'],
                 station['extra']['adress'],
+                station['extra']['status'],
                 station['location']['latitude'],
                 station['location']['longitude'],
                 free_bikes,
@@ -68,8 +70,8 @@ def zoek_lege_slots():
         station_met_slots.append(())
 
 
-lege_slots = zoek_lege_slots()
-alle_stations = get_alle_stations()
+#lege_slots = zoek_lege_slots()
+#alle_stations = get_alle_stations()
 
 
-print(alle_stations)
+

@@ -5,6 +5,7 @@ from urllib.parse import quote_plus, urlencode
 from os import environ as env
 import requests
 import os
+from app.api import api as api
 
 from app.database.models import Usertable
 from app.database import SessionLocal
@@ -95,4 +96,18 @@ def login():
     return render_template("login.html",
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"))
+
+@routes.route("/maps")
+def markers():
+    markers = []
+    for location in api.get_alle_stations():
+        markers.append({
+                'lat':  location[4],
+                'lon':  location[5],
+                'name': location[1],
+                'free-bikes': location[6],
+                'empty-slots': location[7],
+                'status': location[3],
+        })
+    return render_template('maps.html', markers=markers)
 

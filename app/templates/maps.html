@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/maps.css') }}">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+{% endblock %}
+
+{% block content %}
+    <div id="map"></div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
+ <script>
+    // Functie om het juiste icoon te kiezen
+    function createCustomIcon(status, freeBikes, emptySlots) {
+        let iconUrl;
+        if (status !== 'OPN') {
+            iconUrl = '{{ url_for("static", filename="images/marker-red.png") }}';
+        } else if (freeBikes === 0) {
+            iconUrl = '{{ url_for("static", filename="images/marker-blue.png") }}';
+        } else if (emptySlots === 0) {
+            iconUrl = '{{ url_for("static", filename="images/marker-yellow.png") }}';
+        } else {
+            iconUrl = '{{ url_for("static", filename="images/marker-green.png") }}';
+        }
+
+        return L.icon({
+            iconUrl: iconUrl,
+            iconSize: [35, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+            shadowSize: [41, 41]
+        });
+    }
+
+    // Markerdata van Flask
+    const markers = {{ markers | tojson }};
+
+    // Loop door markers en voeg ze toe aan de kaart
+    markers.forEach(function(marker) {
+        let customIcon = createCustomIcon(marker.status, marker['free-bikes'], marker['empty-slots']);
+        L.marker([marker.lat, marker.lon], { icon: customIcon })
+            .addTo(map)
+            .bindPopup(`${marker.name}<br><img src='/static/images/bike.png' alt='bike' style='height: 16px; vertical-align: middle;'> ${marker['free-bikes']} <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> ${marker['empty-slots']}`);
+    });
+</script>
+{% endblock %}
