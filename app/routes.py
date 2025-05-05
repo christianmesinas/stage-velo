@@ -107,7 +107,7 @@ def markers():
                 'name': location[1],
                 'free-bikes': location[6],
                 'empty-slots': location[7],
-                'status': location[2],
+                'status': location[3],
         })
     return render_template('maps.html', markers=markers)
 
