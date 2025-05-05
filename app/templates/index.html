@@ -7,9 +7,40 @@
 
 {% block content %}
 
-
+<div class="div1">
+  <div class="text-spot">
+    <span class="bigtext">ANTWERPEN <span style="color: red">BEWEEGT.</span> <br>JIJ <span style="color: red">OOK?</span></span>
+    <span class="smoltext">Jouw rit, jouw stad, jouw tempo.<br>
+we need more tekst here, Make some Vélocity <br>
+Gebruik Velo voor een dag, een week of een jaar.</span>
+    <img style="margin-top: 5px" src="../static/images/component1.svg">
+  </div>
+</div>
 
 <h1>index pagina</h1>
+
+<div class="div2">
+  <div class="blog-slider">hi</div>
+</div>
+    <img style="margin-top: 5px" src="../static/images/component1.svg">
+  </div>
+</div>
+
+<script>
+  var swiper = new Swiper('.blog-slider', {
+      spaceBetween: 30,
+      effect: 'fade',
+      loop: true,
+      mousewheel: {
+        invert: false,
+      },
+      // autoHeight: true,
+      pagination: {
+        el: '.blog-slider__pagination',
+        clickable: true,
+      }
+    });
+</script>
 
 <footer>
   <div class="footerwrapper">
