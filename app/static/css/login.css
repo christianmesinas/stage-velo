@@ -1,24 +1,22 @@
 .background {
+    background: url(../images/login_background.svg);
+    background-position: left;
     display: flex;
-    justify-content: center;
     align-items: center;
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-image: url(../img/login-bg.png);
-    background-size: contain;
+    color: white;
+    width: auto;
+    height: 80vh;
     background-repeat: no-repeat;
-    background-position: center;
-    width: 90vw;
-    height: 90vh;
+    margin: 20px;
+    background-color: white;
+    border-radius: 20px;
 }
 
 
 
 
 #auth0-login-box{
-    margin-left: 40rem;
+    margin-left: 70rem;
     padding-top: 1.2rem;
 }
 
