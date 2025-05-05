@@ -70,8 +70,8 @@ def zoek_lege_slots():
         station_met_slots.append(())
 
 
-lege_slots = zoek_lege_slots()
-alle_stations = get_alle_stations()
+#lege_slots = zoek_lege_slots()
+#alle_stations = get_alle_stations()
 
 
 
