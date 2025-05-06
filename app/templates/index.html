@@ -3,13 +3,15 @@
 {% block head %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<!--SwiperJS gebruiken, das free en open-source :D-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 {% endblock %}
 
 {% block content %}
 
 <div class="div1">
   <div class="text-spot">
-    <span class="bigtext">ANTWERPEN <span style="color: red">BEWEEGT.</span> <br>JIJ <span style="color: red">OOK?</span></span>
+    <span class="bigtext">ANTWERPEN <span class="clr-red">BEWEEGT.</span> <br>JIJ <span class="clr-red">OOK?</span></span>
     <span class="smoltext">Jouw rit, jouw stad, jouw tempo.<br>
 we need more tekst here, Make some Vélocity <br>
 Gebruik Velo voor een dag, een week of een jaar.</span>
@@ -19,28 +21,82 @@ Gebruik Velo voor een dag, een week of een jaar.</span>
 
 <h1>index pagina</h1>
 
-<div class="div2">
-  <div class="blog-slider">hi</div>
+<div class="div2 swiper">
+  <div class="card-wrapper">
+  <ul class="card-slider swiper-wrapper">
+    <li class="card-item swiper-slide">
+      <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" alt="idk lmao" class="card-image">
+      <div class="card-item__content">
+        <h1 class="card-item__title">FORMULES EN <span class="clr-red">TARIEVEN</span></h1>
+        <img style="width: 90%;" src="../static/images/component1.svg">
+        <p class="card-item__text">lorum ipsum and all that good stuff. We got tarifs, we got bikes!
+What more could you need? What i need right now is more text here.
+I could just put lorum ipsum here but thats boring.
+Nothing beats a good copywriting in the morning, yup.
+Whoever is reading this, i'm sorry for wasting 3 minutes of your time.
+But thanks anyways! :D </p>
+        <a href="#"><button class="card-slider__button">KIES JE FORMULE</button></a>
+      </div>
+      <button class="card-button">-></button>
+    </li>
+    <li class="card-item swiper-slide">
+      <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" alt="idk lmao" class="card-image">
+      <div class="card-item__content">
+        <h1 class="card-item__title">FORMULES EN <span class="clr-red">TARIEVEN</span></h1>
+        <img style="width: 90%;" src="../static/images/component1.svg">
+        <p class="card-item__text">lorum ipsum and all that good stuff. We got tarifs, we got bikes!
+What more could you need? What i need right now is more text here.
+I could just put lorum ipsum here but thats boring.
+Nothing beats a good copywriting in the morning, yup.
+Whoever is reading this, i'm sorry for wasting 3 minutes of your time.
+But thanks anyways! :D </p>
+        <button class="card-slider__button">KIES JE FORMULE</button>
+      </div>
+      <button class="card-button">-></button>
+    </li>
+    <li class="card-item swiper-slide">
+      <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" alt="idk lmao" class="card-image">
+      <div class="card-item__content">
+        <h1 class="card-item__title">FORMULES EN <span class="clr-red">TARIEVEN</span></h1>
+        <img style="width: 90%;" src="../static/images/component1.svg">
+        <p class="card-item__text">lorum ipsum and all that good stuff. We got tarifs, we got bikes!
+What more could you need? What i need right now is more text here.
+I could just put lorum ipsum here but thats boring.
+Nothing beats a good copywriting in the morning, yup.
+Whoever is reading this, i'm sorry for wasting 3 minutes of your time.
+But thanks anyways! :D </p>
+        <a href="#"><button class="card-slider__button">KIES JE FORMULE</button></a>
+      </div>
+      <button class="card-button">-></button>
+    </li>
+  </ul>
 </div>
-    <img style="margin-top: 5px" src="../static/images/component1.svg">
-  </div>
+  <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+    <div class="swiper-scrollbar"></div>
 </div>
 
 <script>
-  var swiper = new Swiper('.blog-slider', {
-      spaceBetween: 30,
-      effect: 'fade',
-      loop: true,
-      mousewheel: {
-        invert: false,
-      },
-      // autoHeight: true,
-      pagination: {
-        el: '.blog-slider__pagination',
-        clickable: true,
-      }
-    });
+  const button = document.querySelector('.card-slider__button');
+  const wrapper = document.querySelector('.card-item');
+
+  button.addEventListener('mousedown', () => {
+    wrapper.classList.add('pressed');
+  });
+
+  button.addEventListener('mouseup', () => {
+    wrapper.classList.remove('pressed');
+  });
+
+  button.addEventListener('mouseleave', () => {
+    wrapper.classList.remove('pressed');
+  });
 </script>
+
+<!--ook script van SwiperJS toevoegen natuurlijk-->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="../static/js/swiper.js"></script>
 
 <footer>
   <div class="footerwrapper">

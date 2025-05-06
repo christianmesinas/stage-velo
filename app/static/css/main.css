@@ -16,19 +16,6 @@
   padding-left: 2rem;
 }
 
-.blog-slider {
-  width: 95%;
-  position: relative;
-  max-width: 800px;
-  margin: auto;
-  background: #fff;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  padding: 25px;
-  border-radius: 25px;
-  height: 400px;
-  transition: all .3s;
-}
-
 .bigtext{
   font-family: 'Segoe UI';
   font-weight: bolder;
@@ -41,18 +28,115 @@
   margin-top: 2rem;
 }
 
+.div2{
+  height: 35rem;
+}
+
+.card-wrapper{
+  max-width: 1100px;
+  margin: 0 60px 35px;
+  padding: 20px;
+}
+
+.card-slider .card-item {
+  width: 95%;
+  position: relative;
+  max-width: 65rem;
+  /*margin: auto; WAAROM WERKT DIT NI??? DA ZOU MOETEN WERKENNN AAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
+  background: #fff;
+  box-shadow: 0px 10px 10px rgba(34, 35, 58, 0.2);
+  padding: 25px;
+  border-radius: 25px;
+  height: 400px;
+  border: 2px solid transparent;
+  transition: 0.2s ease;
+}
+
+.card-slider .card-item{
+  width: 500px;
+  display: block;
+  list-style: none;
+}
+
+.card-item__content{
+  margin-left: 24rem;
+}
+
+.card-item__title{
+  font-size: 38px;
+}
+
+.card-item{
+  margin-right: 8rem;
+}
+
+.card-button{
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  color: #e698a7;
+  border: 3px solid #e698a7;
+  transition: 0.5s ease;
+}
+
+.card-button:hover{
+  border-color: #D41444;
+  color: #D41444;
+}
+
+.card-slider.pressed {
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
+.card-image{
+  width: 40%;
+  height: 80%;
+  position: absolute;
+  left: -5%;
+  border-radius: 20px;
+}
+
+.card-slider__button{
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bolder;
+  border: 3px solid #2B2D42;
+  color: #2B2D42;
+  background: none;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.card-slider__button:hover{
+  border-color: #D41444;
+  color: #D41444;
+}
+
+.card-slider .card-item.pressed {
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
 /* Footer / Contactbalk */
 .footerwrapper {
   background: url(../images/footerbalk.png);
   background-size: 100vw;
   background-position: bottom;
-    display: flex;
-    align-items: center;
-    color: white;
-    width: auto;
-    height: 80vh;
-    background-repeat: no-repeat;
-    margin: 20px;
-    background-color: white;
-    border-radius: 20px;
+  display: flex;
+  align-items: center;
+  color: white;
+  width: auto;
+  height: 80vh;
+  background-repeat: no-repeat;
+  margin: 20px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+
+.clr-red{
+  color: #D41444;
 }
