@@ -138,6 +138,7 @@
   background-size: 100vw;
   background-position: bottom;
   display: flex;
+  position: relative;
   align-items: center;
   color: white;
   width: auto;
@@ -146,6 +147,50 @@
   margin: 20px;
   background-color: white;
   border-radius: 20px;
+}
+
+.socials {
+  position: absolute;
+  margin-right: 20px;
+  bottom: 0;
+  right: 0;
+}
+
+.socials img {
+  width: 50px;
+}
+
+.socials ul {
+  display: flex;
+  gap: 15px;
+  marker: none;
+}
+
+.copyright {
+  position: absolute;
+  bottom: 2rem;
+  left: 3rem;
+  margin-left: 20px;
+  color: #4d4d4d;
+}
+
+.contact {
+  position: absolute;
+  text-align: right;
+  font-weight: bold;
+  right: 20px;
+  bottom: 150px;
+  color: #4d4d4d;
+}
+
+.footerfiets {
+  position: relative;
+  left: 2rem;
+}
+
+
+ul li {
+  list-style: none;
 }
 
 
