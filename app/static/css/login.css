@@ -1,23 +1,29 @@
 .background {
-    background: url(../images/login_background.svg);
-    background-position: left;
+    background: url(../images/Group7@2x.png), url(../images/MaskGroup6@2x.png);
+    background-size: contain;
+    background-position: -3px center, right bottom;
+
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     color: white;
     width: auto;
     height: 80vh;
     background-repeat: no-repeat;
     margin: 20px;
-    background-color: white;
+    background-color: blue;
     border-radius: 20px;
+
 }
 
 
 
 
-#auth0-login-box{
-    margin-left: 70rem;
+#auth0-login-box {
     padding-top: 1.2rem;
+    width: 300px; /* of een percentage zoals 30% */
+    max-width: 90vw;
+    margin-right: 20rem; /* een beetje ruimte van de rechterrand */
 }
 
 .auth0-lock-content-wrapper{
