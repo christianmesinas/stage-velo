@@ -4,6 +4,7 @@
     background-position: -3px center, right bottom;
 
     display: flex;
+    justify-content: center;
     align-items: center;
     justify-content: flex-end;
     color: white;
@@ -19,7 +20,8 @@
 
 
 
-#auth0-login-box {
+#auth0-login-box{
+    margin-left: 70rem;
     padding-top: 1.2rem;
     width: 300px; /* of een percentage zoals 30% */
     max-width: 90vw;
