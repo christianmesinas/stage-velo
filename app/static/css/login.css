@@ -30,6 +30,7 @@
   padding: 20px;
   box-sizing: border-box;
   margin-right: 26%; /* duwt de box naar rechts in zijn container */
+    z-index: 50;
 }
 
 
