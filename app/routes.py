@@ -6,6 +6,7 @@ from os import environ as env
 import requests
 import os
 
+import app.routes
 from app.api import api as api
 from app.database.models import Usertable
 from app.database import SessionLocal
@@ -195,6 +196,31 @@ def jaarkaart():
 
     return render_template("tarieven/jaarkaart.html")
 
-@app.route("/instellingen")
+@routes.route("/instellingen", methods=["GET", "POST"])
 def instellingen():
-    return render_template("instellingen.html")
+    if "user" not in session:
+        return redirect(url_for("routes.login"))
+
+    if request.method == "POST":
+        nieuwe_naam = request.form.get("naam")
+        nieuwe_email = request.form.get("email")
+        taal = request.form.get("taal")
+        darkmode = True if request.form.get("darkmode") else False
+
+        db = SessionLocal()
+        user = db.query(Usertable).filter_by(id=session["user"]["id"]).first()
+        if user:
+            user.name = nieuwe_naam
+            user.email = nieuwe_email
+            user.taal = taal
+            user.darkmode = darkmode
+            db.commit()
+
+            # update ook de sessie
+            session["user"]["name"] = nieuwe_naam
+            session["user"]["email"] = nieuwe_email
+
+        db.close()
+        return redirect(url_for("routes.instellingen"))
+
+    return render_template("instellingen.html", user=session.get("user"))
