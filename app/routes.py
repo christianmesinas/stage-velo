@@ -194,3 +194,7 @@ def jaarkaart():
         return render_template("tarieven/bedankt.html", data=data)
 
     return render_template("tarieven/jaarkaart.html")
+
+@app.route("/instellingen")
+def instellingen():
+    return render_template("instellingen.html")
