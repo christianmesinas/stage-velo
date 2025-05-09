@@ -1,15 +1,8 @@
-import os
-import json
 import random
 import pandas as pd
 from faker import Faker
 
 fake = Faker()
-
-# Bestandsnamen
-USERS_FILE = "gebruikers.json"
-BIKES_FILE = "fietsen.json"
-STATIONS_FILE = "stations.json"
 
 # CSV inlezen voor een reële simulatie
 stations_df = pd.read_csv("velo.csv")
@@ -128,36 +121,11 @@ def genereer_geschiedenis(aantal_ritten, gebruikers, fietsen, stations):
             })
     return geschiedenis
 
-# Controleer of JSON-bestanden bestaan en genereer/laad gegevens
-if os.path.exists(USERS_FILE) and os.path.exists(BIKES_FILE) and os.path.exists(STATIONS_FILE):
-    keuze = input("Gegevens gevonden. Opnieuw genereren (j/n): ").strip().lower()
-else:
-    keuze = "j"
-
-if keuze == "j":
-    gebruikers = genereer_gebruikers(58000)
-    fietsen = genereer_fietsen(10000, stations)
-    with open(USERS_FILE, "w") as f:
-        json.dump(gebruikers, f, indent=2)
-    with open(BIKES_FILE, "w") as f:
-        json.dump(fietsen, f, indent=2)
-    with open(STATIONS_FILE, "w") as f:
-        json.dump(stations, f, indent=2)
-    print("Simulatie aangemaakt en opgeslagen.")
-else:
-    with open(USERS_FILE) as f:
-        gebruikers = json.load(f)
-    with open(BIKES_FILE) as f:
-        fietsen = json.load(f)
-    with open(STATIONS_FILE) as f:
-        stations = json.load(f)
-    print("Bestaande gegevens geladen.")
-
+#functies callen zodat we geschiedenis kunnen genereren
+gebruikers = genereer_gebruikers(58000)
+fietsen = genereer_fietsen(10000, stations)
 # Genereer geschiedenis
 geschiedenis = genereer_geschiedenis(10000, gebruikers, fietsen, stations)
 
-# Sla geschiedenis op in JSON
-with open("geschiedenis.json", "w") as f:
-    json.dump(geschiedenis, f, indent=2)
 
 print("Geschiedenis gesimuleerd!")
