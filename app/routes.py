@@ -5,19 +5,21 @@ from urllib.parse import quote_plus, urlencode
 from os import environ as env
 import requests
 import os
-from app.api import api as api
 
+from app.api import api as api
 from app.database.models import Usertable
 from app.database import SessionLocal
 
 routes = Blueprint("routes", __name__)
 
-# Laad .ENV
+# ======================
+# .env en Auth0 configuratie
+# ======================
+
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
 
-# Auth0 setup
 oauth = OAuth()
 oauth.register(
     "auth0",
@@ -30,12 +32,9 @@ oauth.register(
     server_metadata_url=f"https://{env.get('AUTH0_DOMAIN')}/.well-known/openid-configuration"
 )
 
-@routes.route("/")
-def index():
-    return render_template("index.html",
-                           auth0_client_id=env.get("AUTH0_CLIENT_ID"),
-                           auth0_domain=env.get("AUTH0_DOMAIN"),
-                           user=session.get("user"))
+# ======================
+# AUTH ROUTES
+# ======================
 
 @routes.route("/auth/process", methods=["POST"])
 def process_auth():
@@ -85,11 +84,16 @@ def logout():
         }, quote_plus)
     )
 
-@routes.route("/profile")
-def profile():
-    if 'user' not in session:
-        return redirect(url_for("routes.login"))
-    return render_template("profile.html", user=session.get("user"))
+# ======================
+# ALGEMENE ROUTES
+# ======================
+
+@routes.route("/")
+def index():
+    return render_template("index.html",
+                           auth0_client_id=env.get("AUTH0_CLIENT_ID"),
+                           auth0_domain=env.get("AUTH0_DOMAIN"),
+                           user=session.get("user"))
 
 @routes.route("/login")
 def login():
@@ -97,17 +101,96 @@ def login():
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"))
 
+@routes.route("/profile")
+def profile():
+    if 'user' not in session:
+        return redirect(url_for("routes.login"))
+    return render_template("profile.html", user=session.get("user"))
+
 @routes.route("/maps")
 def markers():
     markers = []
     for location in api.get_alle_stations():
         markers.append({
-                'lat':  location[4],
-                'lon':  location[5],
-                'name': location[1],
-                'free-bikes': location[6],
-                'empty-slots': location[7],
-                'status': location[3],
+            'lat': location[4],
+            'lon': location[5],
+            'name': location[1],
+            'free-bikes': location[6],
+            'empty-slots': location[7],
+            'status': location[3],
         })
-    return render_template('maps.html', markers=markers)
+    return render_template("maps.html", markers=markers)
 
+# ======================
+# TARIEVEN ROUTES
+# ======================
+
+@routes.route("/tarieven")
+def tarieven():
+    return render_template("tarieven.html", user=session.get("user"))
+
+@routes.route("/tarieven/dagpas", methods=["GET", "POST"])
+def dagpas():
+    if request.method == "POST":
+        pincode = request.form.get("pincode")
+        bevestig_pincode = request.form.get("bevestig_pincode")
+
+        if pincode != bevestig_pincode:
+            foutmelding = "De pincodes komen niet overeen."
+            return render_template("tarieven/dagpas.html", foutmelding=foutmelding)
+
+        data = {
+            "voornaam": request.form.get("voornaam"),
+            "achternaam": request.form.get("achternaam"),
+            "email": request.form.get("email"),
+            "telefoon": request.form.get("telefoon"),
+            "geboortedatum": request.form.get("geboortedatum"),
+            "pincode": pincode
+        }
+        return render_template("tarieven/bedankt.html", data=data)
+
+    return render_template("tarieven/dagpas.html")
+
+@routes.route("/tarieven/weekpas", methods=["GET", "POST"])
+def weekpass():
+    if request.method == "POST":
+        pincode = request.form.get("pincode")
+        bevestig_pincode = request.form.get("bevestig_pincode")
+
+        if pincode != bevestig_pincode:
+            foutmelding = "De pincodes komen niet overeen."
+            return render_template("tarieven/weekpas.html", foutmelding=foutmelding)
+
+        data = {
+            "voornaam": request.form.get("voornaam"),
+            "achternaam": request.form.get("achternaam"),
+            "email": request.form.get("email"),
+            "telefoon": request.form.get("telefoon"),
+            "geboortedatum": request.form.get("geboortedatum"),
+            "pincode": pincode
+        }
+        return render_template("tarieven/bedankt.html", data=data)
+
+    return render_template("tarieven/weekpas.html")
+
+@routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
+def jaarkaart():
+    if request.method == "POST":
+        if not request.form.get("voorwaarden"):
+            foutmelding = "Je moet akkoord gaan met de algemene voorwaarden."
+            return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding)
+
+        data = {
+            "voornaam": request.form.get("voornaam"),
+            "achternaam": request.form.get("achternaam"),
+            "email": request.form.get("email"),
+            "telefoon": request.form.get("telefoon"),
+            "geboortedatum": request.form.get("geboortedatum"),
+            "postcode": request.form.get("postcode"),
+            "gemeente": request.form.get("gemeente"),
+            "betaalmethode": request.form.get("betaalmethode"),
+            "ontleenmodus": "velo_app"
+        }
+        return render_template("tarieven/bedankt.html", data=data)
+
+    return render_template("tarieven/jaarkaart.html")
