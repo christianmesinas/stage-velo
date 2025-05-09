@@ -1,0 +1,26 @@
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tarief {
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.dag-layout {
+    background-color: #eaf6ff;
+    border: 2px solid #2196F3;
+}
+
+.week-layout {
+    background-color: #eaffee;
+    border: 2px solid #4CAF50;
+}
+
+.jaar-layout {
+    background-color: #fff6e5;
+    border: 2px solid #FFC107;
+}

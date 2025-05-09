@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Weekpas Aanvragen{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock %}
+
+{% block content %}
+<h2>Weekpas Aanvragen</h2>
+
+{% if foutmelding %}
+  <p style="color: red;">{{ foutmelding }}</p>
+{% endif %}
+
+<form method="POST" action="/tarieven/weekpas" class="form-container">
+  <label for="voornaam">Voornaam:</label>
+  <input type="text" name="voornaam" required>
+
+  <label for="achternaam">Achternaam:</label>
+  <input type="text" name="achternaam" required>
+
+  <label for="email">E-mailadres:</label>
+  <input type="email" name="email" required>
+
+  <label for="telefoon">Telefoonnummer:</label>
+  <input type="tel" name="telefoon" required>
+
+  <label for="geboortedatum">Geboortedatum:</label>
+  <input type="date" name="geboortedatum" required>
+
+  <label for="pincode">Pincode (4 cijfers):</label>
+  <input type="password" name="pincode" pattern="\d{4}" required>
+
+  <label for="bevestig_pincode">Bevestig Pincode:</label>
+  <input type="password" name="bevestig_pincode" pattern="\d{4}" required>
+
+  <label>
+    <input type="checkbox" name="voorwaarden" required>
+    Ik ga akkoord met de <a href="/algemene-voorwaarden" target="_blank">algemene voorwaarden</a>
+  </label>
+
+  <button type="submit">Aanvragen</button>
+</form>
+{% endblock %}

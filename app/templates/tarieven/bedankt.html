@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Bedankt voor je aanvraag{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bedankt.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="bedankt-container">
+  <h2>🎉 Bedankt voor je aanvraag!</h2>
+  <p>We hebben je gegevens goed ontvangen.</p>
+
+  <ul>
+    <li><strong>Voornaam:</strong> {{ data.voornaam }}</li>
+    <li><strong>Achternaam:</strong> {{ data.achternaam }}</li>
+    <li><strong>E-mail:</strong> {{ data.email }}</li>
+    <li><strong>Telefoonnummer:</strong> {{ data.telefoon }}</li>
+    <li><strong>Geboortedatum:</strong> {{ data.geboortedatum }}</li>
+  </ul>
+
+  <p>Je gekozen pincode is veilig opgeslagen. Je kunt nu gebruik maken van je pas!</p>
+
+  <a href="/" class="terug-btn">Ga terug naar startpagina</a>
+</div>
+{% endblock %}
