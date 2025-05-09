@@ -24,7 +24,9 @@ for _, row in stations_df.iterrows():
         "straat": row.get("Straatnaam", ""),
         "postcode": row.get("Postcode", ""),
         "capaciteit": row.get("Aantal_plaatsen", 0),
-        "status": row.get("Gebruik", "ONBEKEND")
+        "status": row.get("Gebruik", "ONBEKEND"),
+        "free_bikes": 0,
+        "free_slots": row.get("Aantal_plaatsen", 0)
     })
 
 #random gebruikers genereren
@@ -43,44 +45,63 @@ def genereer_fietsen(aantal, stations):
     fiets_id = 1
     station_slots = {station["id"]: station["capaciteit"] for station in stations}
     station_ids = list(station_slots.keys())
-
-    # Verdeel stations in 3 groepen:
-    # - Vol (geen vrije slots)
-    # - Leeg (0 fietsen)
-    # - Gedeeltelijk gevuld (1 tot capaciteit - 1)
     random.shuffle(station_ids)
+
     totaal = len(station_ids)
-    n_vol = max(1, totaal // 3)
-    n_leeg = max(1, totaal // 3)
+    n_vol = round(totaal * 0.30)
+    n_leeg = max(1, round(totaal * 0.02))
     n_partial = totaal - n_vol - n_leeg
 
     stations_vol = station_ids[:n_vol]
     stations_leeg = station_ids[n_vol:n_vol + n_leeg]
     stations_partial = station_ids[n_vol + n_leeg:]
 
-    # Bepaal hoeveel fietsen er per station mogen komen
+    # Extra kans dat een gedeeltelijk station toch vol is
+    extra_vol_kans = 0.10  # 10% van de partial stations
+
     max_per_station = {}
     for sid in stations_vol:
-        max_per_station[sid] = station_slots[sid]  # Vol
+        max_per_station[sid] = station_slots[sid]
     for sid in stations_leeg:
-        max_per_station[sid] = 0  # Leeg
+        max_per_station[sid] = 0
     for sid in stations_partial:
-        max_per_station[sid] = random.randint(1, station_slots[sid] - 1)  # Tussen 1 en capaciteit - 1
+        cap = station_slots[sid]
+        if cap > 1:
+            if random.random() < extra_vol_kans:
+                max_per_station[sid] = cap  # maak toch vol
+            else:
+                max_per_station[sid] = random.randint(1, cap - 1)
+        else:
+            max_per_station[sid] = 0  # capaciteit te klein voor partial
 
-    # Toewijzing van fietsen
+    # Reset free_bikes en free_slots
+    station_lookup = {s["id"]: s for s in stations}
+    for s in stations:
+        s["free_bikes"] = 0
+        s["free_slots"] = s["capaciteit"]
+
+    # Fietsen toewijzen
     for sid in station_ids:
         toewijsbaar = min(max_per_station[sid], aantal - len(fietsen))
         for _ in range(toewijsbaar):
+            status = random.choice(["beschikbaar", "onderhoud"])
             fietsen.append({
                 "id": fiets_id,
                 "station_id": sid,
-                "status": random.choice(["beschikbaar", "onderhoud"])
+                "status": status
             })
+            if status == "beschikbaar":
+                station_lookup[sid]["free_bikes"] += 1
             fiets_id += 1
+
+        # Update vrije slots
+        station = station_lookup[sid]
+        station["free_slots"] = max(station["capaciteit"] - station["free_bikes"], 0)
+
         if len(fietsen) >= aantal:
             break
 
-    # Voeg resterende fietsen toe als "onderweg"
+    # Resterende fietsen zijn "onderweg"
     while len(fietsen) < aantal:
         fietsen.append({
             "id": fiets_id,
@@ -91,11 +112,12 @@ def genereer_fietsen(aantal, stations):
 
     return fietsen
 
+
 #testen van de code en steken in json files
 if os.path.exists(USERS_FILE) and os.path.exists(BIKES_FILE) and os.path.exists(STATIONS_FILE):
     keuze = input("Gegevens gevonden. Opnieuw genereren (j/n): ").strip().lower()
 else:
-    keuze = "j"
+   keuze = "j"
 
 if keuze == "j":
     gebruikers = genereer_gebruikers(58000)
@@ -111,39 +133,13 @@ if keuze == "j":
     print("simulatie aangemaakt en opgeslagen.")
 
 else:
-    print("Bestaande gegevens worden gebruikt.")
-    with open(USERS_FILE) as f:
+   print("Bestaande gegevens worden gebruikt.")
+   with open(USERS_FILE) as f:
         gebruikers = json.load(f)
-    with open(BIKES_FILE) as f:
+   with open(BIKES_FILE) as f:
         fietsen = json.load(f)
-    with open(STATIONS_FILE) as f:
+   with open(STATIONS_FILE) as f:
         stations = json.load(f)
-
-#genereer free-bikes en free-slots per station
-from collections import defaultdict
-
-# tellen van beschikbare fietsen én bezette slots
-beschikbare_fietsen = defaultdict(int)
-bezettingsgraad = defaultdict(int)
-
-for fiets in fietsen:
-    sid = fiets["station_id"]
-    if sid is None:
-        continue
-    bezettingsgraad[sid] += 1
-    if fiets["status"] == "beschikbaar":
-        beschikbare_fietsen[sid] += 1
-
-for station in stations:
-    sid = station["id"]
-    free_bikes = beschikbare_fietsen.get(sid, 0)
-    bezet = bezettingsgraad.get(sid, 0)
-    station["free_bikes"] = free_bikes
-    station["free_slots"] = max(station["capaciteit"] - bezet, 0)
-
-#stations data in json steken
-with open(STATIONS_FILE, "w") as f:
-    json.dump(stations, f, indent=2)
 
 print("beschikbare fietsen en vrije sloten data toegevoegd aan stationsdata")
 
@@ -166,6 +162,7 @@ def genereer_geschiedenis(aantal_ritten, gebruikers,fietsen, stations):
                 "duur_minuten": random.randint(2, 30)
             })
     return geschiedenis
+
 
 geschiedenis = genereer_geschiedenis(10000, gebruikers,fietsen,stations)
 
