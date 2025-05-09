@@ -5,7 +5,9 @@
     "straat": "Godefriduskaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 29
   },
   {
     "id": 85161,
@@ -13,7 +15,9 @@
     "straat": "Koningin Astridplein",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 22,
+    "free_slots": 0
   },
   {
     "id": 85162,
@@ -21,7 +25,9 @@
     "straat": "Meir",
     "postcode": 2000,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 16,
+    "free_slots": 3
   },
   {
     "id": 85163,
@@ -29,7 +35,9 @@
     "straat": "Eiermarkt",
     "postcode": 2000,
     "capaciteit": 24,
-    "status": "BUITEN_GEBRUIK"
+    "status": "BUITEN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 0
   },
   {
     "id": 85164,
@@ -37,7 +45,9 @@
     "straat": "Groenkerkhofstraat",
     "postcode": 2000,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 0
   },
   {
     "id": 85165,
@@ -45,7 +55,9 @@
     "straat": "Cockerillkaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85166,
@@ -53,7 +65,9 @@
     "straat": "Paleisstraat",
     "postcode": 2018,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 4,
+    "free_slots": 24
   },
   {
     "id": 85167,
@@ -61,7 +75,9 @@
     "straat": "Singel",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 0
   },
   {
     "id": 85168,
@@ -69,7 +85,9 @@
     "straat": "Lange Nieuwstraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85169,
@@ -77,7 +95,9 @@
     "straat": "Belgi\u00eblei",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85170,
@@ -85,7 +105,9 @@
     "straat": "Mercatorstraat",
     "postcode": 2018,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 15
   },
   {
     "id": 85171,
@@ -93,7 +115,9 @@
     "straat": "Van Der Meydenstraat",
     "postcode": 2140,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 5,
+    "free_slots": 17
   },
   {
     "id": 85172,
@@ -101,7 +125,9 @@
     "straat": "Lange Stuivenbergstraat",
     "postcode": 2060,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85173,
@@ -109,7 +135,9 @@
     "straat": "Schijnpoortweg",
     "postcode": 2060,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 0
   },
   {
     "id": 85174,
@@ -117,7 +145,9 @@
     "straat": "August Vermeylenlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 21,
+    "free_slots": 0
   },
   {
     "id": 85175,
@@ -125,7 +155,9 @@
     "straat": "August Vermeylenlaan",
     "postcode": 2050,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 24
   },
   {
     "id": 85176,
@@ -133,7 +165,9 @@
     "straat": "Beatrijslaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 20,
+    "free_slots": 3
   },
   {
     "id": 85177,
@@ -141,7 +175,9 @@
     "straat": "Blancefloerlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 19,
+    "free_slots": 0
   },
   {
     "id": 85178,
@@ -149,7 +185,9 @@
     "straat": "Blancefloerlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 8,
+    "free_slots": 13
   },
   {
     "id": 85179,
@@ -157,7 +195,9 @@
     "straat": "Esmoreitlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 22,
+    "free_slots": 0
   },
   {
     "id": 85180,
@@ -165,7 +205,9 @@
     "straat": "Frederik Van Eedenplein",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 6
   },
   {
     "id": 85181,
@@ -173,7 +215,9 @@
     "straat": "Bouvaertlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85182,
@@ -181,7 +225,9 @@
     "straat": "Gloriantlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 8,
+    "free_slots": 18
   },
   {
     "id": 85183,
@@ -189,7 +235,9 @@
     "straat": "Thonetlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 21,
+    "free_slots": 1
   },
   {
     "id": 85184,
@@ -197,7 +245,9 @@
     "straat": "Halewijnlaan",
     "postcode": 2050,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 13,
+    "free_slots": 0
   },
   {
     "id": 85185,
@@ -205,7 +255,9 @@
     "straat": "Reinaartlaan",
     "postcode": 2050,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 1
   },
   {
     "id": 85186,
@@ -213,7 +265,9 @@
     "straat": "Waterhoenlaan",
     "postcode": 2050,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 23
   },
   {
     "id": 85187,
@@ -221,7 +275,9 @@
     "straat": "Amsterdamstraat",
     "postcode": 2000,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 24
   },
   {
     "id": 85188,
@@ -229,7 +285,9 @@
     "straat": "Londenstraat",
     "postcode": 2000,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 21
   },
   {
     "id": 85189,
@@ -237,7 +295,9 @@
     "straat": "Sint-Laureiskaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85190,
@@ -245,7 +305,9 @@
     "straat": "Wisselstraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85191,
@@ -253,7 +315,9 @@
     "straat": "Itali\u00eblei",
     "postcode": 2000,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 0
   },
   {
     "id": 85192,
@@ -261,7 +325,9 @@
     "straat": "Jan Van Rijswijcklaan",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85193,
@@ -269,7 +335,9 @@
     "straat": "Sint-Paulusstraat",
     "postcode": 2000,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 21
   },
   {
     "id": 85194,
@@ -277,7 +345,9 @@
     "straat": "Oudevaartplaats",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 16,
+    "free_slots": 12
   },
   {
     "id": 85195,
@@ -285,7 +355,9 @@
     "straat": "Amerikalei",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85196,
@@ -293,7 +365,9 @@
     "straat": "Desguinlei",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85197,
@@ -301,7 +375,9 @@
     "straat": "Duinstraat",
     "postcode": 2060,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85198,
@@ -309,7 +385,9 @@
     "straat": "Lange Dijkstraat",
     "postcode": 2060,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85199,
@@ -317,7 +395,9 @@
     "straat": "Nationalestraat",
     "postcode": 2000,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 24
   },
   {
     "id": 85200,
@@ -325,7 +405,9 @@
     "straat": "Belgi\u00eblei",
     "postcode": 2018,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 6,
+    "free_slots": 12
   },
   {
     "id": 85201,
@@ -333,7 +415,9 @@
     "straat": "Burgemeester E. Ryckaertsplein",
     "postcode": 2600,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 18
   },
   {
     "id": 85202,
@@ -341,7 +425,9 @@
     "straat": "Uitbreidingstraat",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 17,
+    "free_slots": 0
   },
   {
     "id": 85203,
@@ -349,7 +435,9 @@
     "straat": "Karel Rogierstraat",
     "postcode": 2000,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 3,
+    "free_slots": 21
   },
   {
     "id": 85204,
@@ -357,7 +445,9 @@
     "straat": "Fonteinstraat",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 16,
+    "free_slots": 0
   },
   {
     "id": 85205,
@@ -365,7 +455,9 @@
     "straat": "Blancefloerlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 23,
+    "free_slots": 0
   },
   {
     "id": 85206,
@@ -373,7 +465,9 @@
     "straat": "De Keyserlei",
     "postcode": 2018,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 26
   },
   {
     "id": 85207,
@@ -381,7 +475,9 @@
     "straat": "Grotesteenweg",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "BUITEN_GEBRUIK"
+    "status": "BUITEN_GEBRUIK",
+    "free_bikes": 24,
+    "free_slots": 0
   },
   {
     "id": 85208,
@@ -389,7 +485,9 @@
     "straat": "Boomgaardstraat",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85209,
@@ -397,7 +495,9 @@
     "straat": "Provinciestraat",
     "postcode": 2018,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 0
   },
   {
     "id": 85210,
@@ -405,7 +505,9 @@
     "straat": "Van Kerckhovenstraat",
     "postcode": 2060,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85211,
@@ -413,7 +515,9 @@
     "straat": "Mutsaardstraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85212,
@@ -421,7 +525,9 @@
     "straat": "Fransenplaats",
     "postcode": 2018,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 6,
+    "free_slots": 8
   },
   {
     "id": 85213,
@@ -429,7 +535,9 @@
     "straat": "Vredestraat",
     "postcode": 2600,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 19,
+    "free_slots": 0
   },
   {
     "id": 85214,
@@ -437,7 +545,9 @@
     "straat": "Kievitplein",
     "postcode": 2018,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 13,
+    "free_slots": 10
   },
   {
     "id": 85215,
@@ -445,7 +555,9 @@
     "straat": "Dageraadplaats",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 5,
+    "free_slots": 28
   },
   {
     "id": 85216,
@@ -453,7 +565,9 @@
     "straat": "Statiestraat",
     "postcode": 2600,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 1,
+    "free_slots": 28
   },
   {
     "id": 85217,
@@ -461,7 +575,9 @@
     "straat": "Grotesteenweg",
     "postcode": 2600,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85218,
@@ -469,7 +585,9 @@
     "straat": "Statiestraat",
     "postcode": 2600,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 0
   },
   {
     "id": 85219,
@@ -477,7 +595,9 @@
     "straat": "Laar",
     "postcode": 2140,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 9
   },
   {
     "id": 85220,
@@ -485,7 +605,9 @@
     "straat": "Betogingstraat",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 19
   },
   {
     "id": 85221,
@@ -493,7 +615,9 @@
     "straat": "Krugerplein",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 33
   },
   {
     "id": 85222,
@@ -501,7 +625,9 @@
     "straat": "De Keyserlei",
     "postcode": 2018,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 8,
+    "free_slots": 0
   },
   {
     "id": 85223,
@@ -509,7 +635,9 @@
     "straat": "Keizerstraat",
     "postcode": 2000,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 20
   },
   {
     "id": 85224,
@@ -517,7 +645,9 @@
     "straat": "Lamorini\u00e8restraat",
     "postcode": 2018,
     "capaciteit": 18,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 18
   },
   {
     "id": 85225,
@@ -525,7 +655,9 @@
     "straat": "Sint-Vincentiusstraat",
     "postcode": 2018,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 3,
+    "free_slots": 22
   },
   {
     "id": 85226,
@@ -533,7 +665,9 @@
     "straat": "Van Schoonbekestraat",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 4,
+    "free_slots": 29
   },
   {
     "id": 85227,
@@ -541,7 +675,9 @@
     "straat": "Boudewijnsstraat",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85228,
@@ -549,7 +685,9 @@
     "straat": "Rubenslei",
     "postcode": 2018,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 24
   },
   {
     "id": 85229,
@@ -557,7 +695,9 @@
     "straat": "Plantinkaai",
     "postcode": 2000,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 0
   },
   {
     "id": 85230,
@@ -565,7 +705,9 @@
     "straat": "Groenplaats",
     "postcode": 2000,
     "capaciteit": 18,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 10,
+    "free_slots": 0
   },
   {
     "id": 85231,
@@ -573,7 +715,9 @@
     "straat": "Pieter Van Hobokenstraat",
     "postcode": 2000,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 13,
+    "free_slots": 0
   },
   {
     "id": 85232,
@@ -581,7 +725,9 @@
     "straat": "Trapstraat",
     "postcode": 2060,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 6,
+    "free_slots": 15
   },
   {
     "id": 85233,
@@ -589,7 +735,9 @@
     "straat": "Stuivenbergplein",
     "postcode": 2060,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 11
   },
   {
     "id": 85234,
@@ -597,7 +745,9 @@
     "straat": "Binnensingel",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 5,
+    "free_slots": 19
   },
   {
     "id": 85235,
@@ -605,7 +755,9 @@
     "straat": "Karel Oomsstraat",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 20,
+    "free_slots": 0
   },
   {
     "id": 85236,
@@ -613,7 +765,9 @@
     "straat": "De Wittestraat",
     "postcode": 2600,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 1,
+    "free_slots": 13
   },
   {
     "id": 85237,
@@ -621,7 +775,9 @@
     "straat": "Frans Van Hombeeckplein",
     "postcode": 2600,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 20,
+    "free_slots": 0
   },
   {
     "id": 85238,
@@ -629,7 +785,9 @@
     "straat": "Generaal Lemanstraat",
     "postcode": 2018,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 24
   },
   {
     "id": 85239,
@@ -637,7 +795,9 @@
     "straat": "Desguinlei",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85240,
@@ -645,7 +805,9 @@
     "straat": "Boomgaardstraat",
     "postcode": 2018,
     "capaciteit": 21,
-    "status": "BUITEN_GEBRUIK"
+    "status": "BUITEN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 21
   },
   {
     "id": 85241,
@@ -653,7 +815,9 @@
     "straat": "Lange Elzenstraat",
     "postcode": 2018,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 0
   },
   {
     "id": 85242,
@@ -661,7 +825,9 @@
     "straat": "Burgemeester E. Ryckaertsplein",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 9,
+    "free_slots": 15
   },
   {
     "id": 85243,
@@ -669,7 +835,9 @@
     "straat": "Vandenpeereboomstraat",
     "postcode": 2140,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 8
   },
   {
     "id": 85244,
@@ -677,7 +845,9 @@
     "straat": "Van Trierstraat",
     "postcode": 2018,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 0
   },
   {
     "id": 85245,
@@ -685,7 +855,9 @@
     "straat": "Lange Lozanastraat",
     "postcode": 2018,
     "capaciteit": 18,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 18
   },
   {
     "id": 85246,
@@ -693,7 +865,9 @@
     "straat": "Mechelsesteenweg",
     "postcode": 2018,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 8,
+    "free_slots": 3
   },
   {
     "id": 85247,
@@ -701,7 +875,9 @@
     "straat": "Stanleystraat",
     "postcode": 2018,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 0
   },
   {
     "id": 85248,
@@ -709,7 +885,9 @@
     "straat": "Troonplaats",
     "postcode": 2018,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 10,
+    "free_slots": 8
   },
   {
     "id": 85249,
@@ -717,7 +895,9 @@
     "straat": "Mechelsesteenweg",
     "postcode": 2018,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 10,
+    "free_slots": 0
   },
   {
     "id": 85250,
@@ -725,7 +905,9 @@
     "straat": "Vinkenstraat",
     "postcode": 2018,
     "capaciteit": 18,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 10,
+    "free_slots": 0
   },
   {
     "id": 85251,
@@ -733,7 +915,9 @@
     "straat": "Bolivarplaats",
     "postcode": 2000,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 17,
+    "free_slots": 2
   },
   {
     "id": 85252,
@@ -741,7 +925,9 @@
     "straat": "Draakplaats",
     "postcode": 2600,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 33
   },
   {
     "id": 85253,
@@ -749,7 +935,9 @@
     "straat": "Amerikalei",
     "postcode": 2000,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 0
   },
   {
     "id": 85254,
@@ -757,7 +945,9 @@
     "straat": "Beeldhouwersstraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 15
   },
   {
     "id": 85255,
@@ -765,7 +955,9 @@
     "straat": "Provinciestraat",
     "postcode": 2018,
     "capaciteit": 18,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 11
   },
   {
     "id": 85256,
@@ -773,7 +965,9 @@
     "straat": "Waalsekaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85257,
@@ -781,7 +975,9 @@
     "straat": "Mechelsesteenweg",
     "postcode": 2018,
     "capaciteit": 18,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 7
   },
   {
     "id": 85258,
@@ -789,7 +985,9 @@
     "straat": "Lange Van Ruusbroecstraat",
     "postcode": 2018,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 3,
+    "free_slots": 27
   },
   {
     "id": 85259,
@@ -797,7 +995,9 @@
     "straat": "Britselei",
     "postcode": 2000,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 27
   },
   {
     "id": 85260,
@@ -805,7 +1005,9 @@
     "straat": "Vlaamsekaai",
     "postcode": 2000,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 0
   },
   {
     "id": 85261,
@@ -813,7 +1015,9 @@
     "straat": "Van Eycklei",
     "postcode": 2018,
     "capaciteit": 18,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 4,
+    "free_slots": 0
   },
   {
     "id": 85262,
@@ -821,7 +1025,9 @@
     "straat": "Waalsekaai",
     "postcode": 2000,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 0
   },
   {
     "id": 85263,
@@ -829,7 +1035,9 @@
     "straat": "Britselei",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85264,
@@ -837,7 +1045,9 @@
     "straat": "Maarschalk Montgomeryplein",
     "postcode": 2140,
     "capaciteit": 18,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 1,
+    "free_slots": 15
   },
   {
     "id": 85265,
@@ -845,7 +1055,9 @@
     "straat": "Kronenburgstraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85266,
@@ -853,7 +1065,9 @@
     "straat": "Kloosterstraat",
     "postcode": 2000,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85267,
@@ -861,7 +1075,9 @@
     "straat": "Kievitplein",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85268,
@@ -869,7 +1085,9 @@
     "straat": "Lange Gasthuisstraat",
     "postcode": 2000,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 15
   },
   {
     "id": 85269,
@@ -877,7 +1095,9 @@
     "straat": "Moorkensplein",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 19,
+    "free_slots": 0
   },
   {
     "id": 85270,
@@ -885,7 +1105,9 @@
     "straat": "Tabakvest",
     "postcode": 2000,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85271,
@@ -893,7 +1115,9 @@
     "straat": "Quinten Matsijslei",
     "postcode": 2018,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85272,
@@ -901,7 +1125,9 @@
     "straat": "Sint-Andriesplaats",
     "postcode": 2000,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85273,
@@ -909,7 +1135,9 @@
     "straat": "Sint-Michielskaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85274,
@@ -917,7 +1145,9 @@
     "straat": "Oudaan",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 0
   },
   {
     "id": 85275,
@@ -925,7 +1155,9 @@
     "straat": "Arenbergstraat",
     "postcode": 2000,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 0
   },
   {
     "id": 85276,
@@ -933,7 +1165,9 @@
     "straat": "Meistraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 4
   },
   {
     "id": 85277,
@@ -941,7 +1175,9 @@
     "straat": "Drukkerijstraat",
     "postcode": 2000,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 24
   },
   {
     "id": 85278,
@@ -949,7 +1185,9 @@
     "straat": "Koningin Astridplein",
     "postcode": 2018,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 16,
+    "free_slots": 0
   },
   {
     "id": 85279,
@@ -957,7 +1195,9 @@
     "straat": "Meir",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85280,
@@ -965,7 +1205,9 @@
     "straat": "Leysstraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85281,
@@ -973,7 +1215,9 @@
     "straat": "Kerkstraat",
     "postcode": 2060,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 33
   },
   {
     "id": 85282,
@@ -981,7 +1225,9 @@
     "straat": "Vercammenstraat",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85283,
@@ -989,7 +1235,9 @@
     "straat": "Plantinkaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85284,
@@ -997,7 +1245,9 @@
     "straat": "Osystraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 4,
+    "free_slots": 30
   },
   {
     "id": 85285,
@@ -1005,7 +1255,9 @@
     "straat": "Ernest Van Dijckkaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 16,
+    "free_slots": 0
   },
   {
     "id": 85286,
@@ -1013,7 +1265,9 @@
     "straat": "Wolstraat",
     "postcode": 2000,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 10,
+    "free_slots": 0
   },
   {
     "id": 85287,
@@ -1021,7 +1275,9 @@
     "straat": "De Coninckplein",
     "postcode": 2060,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 8,
+    "free_slots": 0
   },
   {
     "id": 85288,
@@ -1029,7 +1285,9 @@
     "straat": "Pesthofstraat",
     "postcode": 2060,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85289,
@@ -1037,7 +1295,9 @@
     "straat": "Minderbroedersrui",
     "postcode": 2000,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 13
   },
   {
     "id": 85290,
@@ -1045,7 +1305,9 @@
     "straat": "Sint-Elisabethstraat",
     "postcode": 2060,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 19
   },
   {
     "id": 85291,
@@ -1053,7 +1315,9 @@
     "straat": "Jordaenskaai",
     "postcode": 2000,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85292,
@@ -1061,7 +1325,9 @@
     "straat": "Paardenmarkt",
     "postcode": 2000,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 8,
+    "free_slots": 0
   },
   {
     "id": 85293,
@@ -1069,7 +1335,9 @@
     "straat": "Pothoekstraat",
     "postcode": 2060,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 17
   },
   {
     "id": 85294,
@@ -1077,7 +1345,9 @@
     "straat": "Sint-Jansplein",
     "postcode": 2060,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 26
   },
   {
     "id": 85295,
@@ -1085,7 +1355,9 @@
     "straat": "Entrepotkaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 12
   },
   {
     "id": 85296,
@@ -1093,7 +1365,9 @@
     "straat": "Sint-Pietersvliet",
     "postcode": 2000,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 27
   },
   {
     "id": 85297,
@@ -1101,7 +1375,9 @@
     "straat": "Hessenplein",
     "postcode": 2000,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 21
   },
   {
     "id": 85298,
@@ -1109,7 +1385,9 @@
     "straat": "Sint-Aldegondiskaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 4,
+    "free_slots": 28
   },
   {
     "id": 85299,
@@ -1117,7 +1395,9 @@
     "straat": "Oudeleeuwenrui",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85300,
@@ -1125,7 +1405,9 @@
     "straat": "Godefriduskaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85301,
@@ -1133,7 +1415,9 @@
     "straat": "Vis\u00e9straat",
     "postcode": 2060,
     "capaciteit": 18,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 9,
+    "free_slots": 0
   },
   {
     "id": 85302,
@@ -1141,7 +1425,9 @@
     "straat": "Entrepotplaats",
     "postcode": 2000,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 0
   },
   {
     "id": 85303,
@@ -1149,7 +1435,9 @@
     "straat": "Ellermanstraat",
     "postcode": 2060,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 10,
+    "free_slots": 8
   },
   {
     "id": 85304,
@@ -1157,7 +1445,9 @@
     "straat": "Turnhoutsebaan",
     "postcode": 2140,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 16
   },
   {
     "id": 85305,
@@ -1165,7 +1455,9 @@
     "straat": "Lange Lobroekstraat",
     "postcode": 2060,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 10,
+    "free_slots": 0
   },
   {
     "id": 85306,
@@ -1173,7 +1465,9 @@
     "straat": "Lange Lobroekstraat",
     "postcode": 2060,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 21,
+    "free_slots": 0
   },
   {
     "id": 85307,
@@ -1181,7 +1475,9 @@
     "straat": "Pastorijstraat",
     "postcode": 2060,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 13,
+    "free_slots": 0
   },
   {
     "id": 85308,
@@ -1189,7 +1485,9 @@
     "straat": "Maarschalk G\u00e9rardstraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85309,
@@ -1197,7 +1495,9 @@
     "straat": "Jan Van Rijswijcklaan",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85310,
@@ -1205,7 +1505,9 @@
     "straat": "De Keyserlei",
     "postcode": 2018,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 13,
+    "free_slots": 0
   },
   {
     "id": 85311,
@@ -1213,7 +1515,9 @@
     "straat": "Hardenvoort",
     "postcode": 2060,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 3
   },
   {
     "id": 85312,
@@ -1221,7 +1525,9 @@
     "straat": "Terloplein",
     "postcode": 2140,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 9,
+    "free_slots": 15
   },
   {
     "id": 85313,
@@ -1229,7 +1535,9 @@
     "straat": "Statielei",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 19
   },
   {
     "id": 85315,
@@ -1237,7 +1545,9 @@
     "straat": "Zuidervelodroom",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 0
   },
   {
     "id": 85316,
@@ -1245,7 +1555,9 @@
     "straat": "Boudewijnssteeg",
     "postcode": 2018,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 13,
+    "free_slots": 0
   },
   {
     "id": 85317,
@@ -1253,7 +1565,9 @@
     "straat": "Brusselstraat",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 9,
+    "free_slots": 25
   },
   {
     "id": 85318,
@@ -1261,7 +1575,9 @@
     "straat": "Havanastraat",
     "postcode": 2030,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 32
   },
   {
     "id": 85319,
@@ -1269,7 +1585,9 @@
     "straat": "Houstonstraat",
     "postcode": 2030,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 0
   },
   {
     "id": 85320,
@@ -1277,7 +1595,9 @@
     "straat": "Columbiastraat",
     "postcode": 2030,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 20,
+    "free_slots": 0
   },
   {
     "id": 85321,
@@ -1285,7 +1605,9 @@
     "straat": "Noorderlaan",
     "postcode": 2030,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85322,
@@ -1293,7 +1615,9 @@
     "straat": "Groenendaallaan",
     "postcode": 2030,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 19
   },
   {
     "id": 85323,
@@ -1301,7 +1625,9 @@
     "straat": "Bermstraat",
     "postcode": 2030,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 3,
+    "free_slots": 24
   },
   {
     "id": 85324,
@@ -1309,7 +1635,9 @@
     "straat": "Van Praetlei",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 32
   },
   {
     "id": 85325,
@@ -1317,7 +1645,9 @@
     "straat": "Ringlaan",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 32
   },
   {
     "id": 85326,
@@ -1325,7 +1655,9 @@
     "straat": "Korte Bremstraat",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 4,
+    "free_slots": 26
   },
   {
     "id": 85327,
@@ -1333,7 +1665,9 @@
     "straat": "Maantjessteenweg",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85328,
@@ -1341,7 +1675,9 @@
     "straat": "Rodeloopstraat",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85329,
@@ -1349,7 +1685,9 @@
     "straat": "Rodeloopstraat",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85330,
@@ -1357,7 +1695,9 @@
     "straat": "Kroonplein",
     "postcode": 2170,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 1,
+    "free_slots": 26
   },
   {
     "id": 85331,
@@ -1365,7 +1705,9 @@
     "straat": "Lambrechtshoekenlaan",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85332,
@@ -1373,7 +1715,9 @@
     "straat": "Nieuwdreef",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85333,
@@ -1381,7 +1725,9 @@
     "straat": "Van Heybeeckstraat",
     "postcode": 2170,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 3,
+    "free_slots": 25
   },
   {
     "id": 85334,
@@ -1389,7 +1735,9 @@
     "straat": "Bredabaan",
     "postcode": 2170,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 8
   },
   {
     "id": 85335,
@@ -1397,7 +1745,9 @@
     "straat": "Ullenshofstraat",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 6,
+    "free_slots": 22
   },
   {
     "id": 85336,
@@ -1405,7 +1755,9 @@
     "straat": "Borrewaterstraat",
     "postcode": 2170,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 4,
+    "free_slots": 24
   },
   {
     "id": 85337,
@@ -1413,7 +1765,9 @@
     "straat": "Sint-Bartholomeusstraat",
     "postcode": 2170,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85338,
@@ -1421,7 +1775,9 @@
     "straat": "Binnenvaartstraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 4
   },
   {
     "id": 85339,
@@ -1429,7 +1785,9 @@
     "straat": "Rijnkaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85340,
@@ -1437,7 +1795,9 @@
     "straat": "Indi\u00ebstraat",
     "postcode": 2030,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 6,
+    "free_slots": 26
   },
   {
     "id": 85341,
@@ -1445,7 +1805,9 @@
     "straat": "Verbindingsdok-Oostkaai",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 21,
+    "free_slots": 0
   },
   {
     "id": 85342,
@@ -1453,7 +1815,9 @@
     "straat": "Noordschippersdok",
     "postcode": 2060,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 16,
+    "free_slots": 0
   },
   {
     "id": 85343,
@@ -1461,7 +1825,9 @@
     "straat": "Van Cortbeemdelei",
     "postcode": 2100,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 24
   },
   {
     "id": 85344,
@@ -1469,7 +1835,9 @@
     "straat": "Van Deynsestraat",
     "postcode": 2100,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 8,
+    "free_slots": 0
   },
   {
     "id": 85345,
@@ -1477,7 +1845,9 @@
     "straat": "Jozef Nellenslei",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 17,
+    "free_slots": 8
   },
   {
     "id": 85346,
@@ -1485,7 +1855,9 @@
     "straat": "Sint-Fredegandusstraat",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 21,
+    "free_slots": 0
   },
   {
     "id": 85347,
@@ -1493,7 +1865,9 @@
     "straat": "Gallifortlei",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 13,
+    "free_slots": 0
   },
   {
     "id": 85348,
@@ -1501,7 +1875,9 @@
     "straat": "Wim Saerensplein",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 19,
+    "free_slots": 0
   },
   {
     "id": 85349,
@@ -1509,7 +1885,9 @@
     "straat": "Gallifortlei",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 27
   },
   {
     "id": 85350,
@@ -1517,7 +1895,9 @@
     "straat": "Jan Brochovenstraat",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85351,
@@ -1525,7 +1905,9 @@
     "straat": "Cogelsplein",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85352,
@@ -1533,7 +1915,9 @@
     "straat": "Maurice Dequeeckerplein",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 17
   },
   {
     "id": 85353,
@@ -1541,7 +1925,9 @@
     "straat": "Ter Rivierenlaan",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85354,
@@ -1549,7 +1935,9 @@
     "straat": "Ertbruggelaan",
     "postcode": 2100,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 10,
+    "free_slots": 11
   },
   {
     "id": 85355,
@@ -1557,7 +1945,9 @@
     "straat": "Ruggeveldlaan",
     "postcode": 2100,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 13,
+    "free_slots": 0
   },
   {
     "id": 85356,
@@ -1565,7 +1955,9 @@
     "straat": "Ruggeveldlaan",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 16,
+    "free_slots": 0
   },
   {
     "id": 85357,
@@ -1573,7 +1965,9 @@
     "straat": "Collegelaan",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 6,
+    "free_slots": 21
   },
   {
     "id": 85358,
@@ -1581,7 +1975,9 @@
     "straat": "Luitenant Lippenslaan",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 31
   },
   {
     "id": 85359,
@@ -1589,7 +1985,9 @@
     "straat": "Herentalsebaan",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 5,
+    "free_slots": 19
   },
   {
     "id": 85360,
@@ -1597,7 +1995,9 @@
     "straat": "Herentalsebaan",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 1
   },
   {
     "id": 85361,
@@ -1605,7 +2005,9 @@
     "straat": "Florent Pauwelslei",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 0
   },
   {
     "id": 85362,
@@ -1613,7 +2015,9 @@
     "straat": "Arenaplein",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 7
   },
   {
     "id": 85363,
@@ -1621,7 +2025,9 @@
     "straat": "Luitenant Lippenslaan",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85364,
@@ -1629,7 +2035,9 @@
     "straat": "Berchemlei",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 13
   },
   {
     "id": 85365,
@@ -1637,7 +2045,9 @@
     "straat": "Frans De Vriendtstraat",
     "postcode": 2140,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85366,
@@ -1645,7 +2055,9 @@
     "straat": "Diksmuidelaan",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 19,
+    "free_slots": 0
   },
   {
     "id": 85367,
@@ -1653,7 +2065,9 @@
     "straat": "Arthur Matthyslaan",
     "postcode": 2140,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 4,
+    "free_slots": 24
   },
   {
     "id": 85368,
@@ -1661,7 +2075,9 @@
     "straat": "Karel De Preterlei",
     "postcode": 2140,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 9,
+    "free_slots": 11
   },
   {
     "id": 85369,
@@ -1669,7 +2085,9 @@
     "straat": "Vosstraat",
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 5,
+    "free_slots": 26
   },
   {
     "id": 85370,
@@ -1677,7 +2095,9 @@
     "straat": "Boekenberglei",
     "postcode": 2100,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 16,
+    "free_slots": 0
   },
   {
     "id": 85371,
@@ -1685,7 +2105,9 @@
     "straat": "Van Den Hautelei",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 0
   },
   {
     "id": 85372,
@@ -1693,7 +2115,9 @@
     "straat": "Helderstraat",
     "postcode": 2600,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 27
   },
   {
     "id": 85373,
@@ -1701,7 +2125,9 @@
     "straat": "Hofstadestraat",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85374,
@@ -1709,7 +2135,9 @@
     "straat": "Lodewijk Van Berckenlaan",
     "postcode": 2600,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85375,
@@ -1717,7 +2145,9 @@
     "straat": "Posthofbrug",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 17,
+    "free_slots": 0
   },
   {
     "id": 85376,
@@ -1725,7 +2155,9 @@
     "straat": "Hof Ter Schriecklaan",
     "postcode": 2600,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 0
   },
   {
     "id": 85377,
@@ -1733,7 +2165,9 @@
     "straat": "Henri Prostlaan",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 9,
+    "free_slots": 0
   },
   {
     "id": 85378,
@@ -1741,7 +2175,9 @@
     "straat": "Rooi",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85379,
@@ -1749,7 +2185,9 @@
     "straat": "Fruithoflaan",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 0
   },
   {
     "id": 85380,
@@ -1757,7 +2195,9 @@
     "straat": "Filip Williotstraat",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85381,
@@ -1765,7 +2205,9 @@
     "straat": "Pulhoflaan",
     "postcode": 2600,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85382,
@@ -1773,7 +2215,9 @@
     "straat": "Fruithoflaan",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85383,
@@ -1781,7 +2225,9 @@
     "straat": "Prins Leopoldlaan",
     "postcode": 2600,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 5,
+    "free_slots": 15
   },
   {
     "id": 85384,
@@ -1789,7 +2235,9 @@
     "straat": "Lindendreef",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 7
   },
   {
     "id": 85385,
@@ -1797,7 +2245,9 @@
     "straat": "Troyentenhoflaan",
     "postcode": 2600,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 1
   },
   {
     "id": 85386,
@@ -1805,7 +2255,9 @@
     "straat": "Eglantierlaan",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85387,
@@ -1813,7 +2265,9 @@
     "straat": "Beukenlaan",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 19,
+    "free_slots": 0
   },
   {
     "id": 85388,
@@ -1821,7 +2275,9 @@
     "straat": "Groenenborgerlaan",
     "postcode": 2020,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 2,
+    "free_slots": 26
   },
   {
     "id": 85389,
@@ -1829,7 +2285,9 @@
     "straat": "Oosterveldlaan",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 20,
+    "free_slots": 0
   },
   {
     "id": 85390,
@@ -1837,7 +2295,9 @@
     "straat": "Bist",
     "postcode": 2610,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85391,
@@ -1845,7 +2305,9 @@
     "straat": "Groenenborgerlaan",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85392,
@@ -1853,7 +2315,9 @@
     "straat": "Kruishofstraat",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85393,
@@ -1861,7 +2325,9 @@
     "straat": "Ahornenlaan",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85394,
@@ -1869,7 +2335,9 @@
     "straat": "Oversneslaan",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85395,
@@ -1877,7 +2345,9 @@
     "straat": "Doornstraat",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 25,
+    "free_slots": 0
   },
   {
     "id": 85396,
@@ -1885,7 +2355,9 @@
     "straat": "Bosheidelaan",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 17,
+    "free_slots": 0
   },
   {
     "id": 85397,
@@ -1893,7 +2365,9 @@
     "straat": "Hof Van Tichelen",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 20,
+    "free_slots": 0
   },
   {
     "id": 85398,
@@ -1901,7 +2375,9 @@
     "straat": "Letterkundestraat",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 9
   },
   {
     "id": 85399,
@@ -1909,7 +2385,9 @@
     "straat": "Hollebeekstraat",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85400,
@@ -1917,7 +2395,9 @@
     "straat": "Steynstraat",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 23,
+    "free_slots": 0
   },
   {
     "id": 85401,
@@ -1925,7 +2405,9 @@
     "straat": "Berkenrodelei",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "BUITEN_GEBRUIK"
+    "status": "BUITEN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85402,
@@ -1933,7 +2415,9 @@
     "straat": "Berkenrodelei",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 13,
+    "free_slots": 0
   },
   {
     "id": 85403,
@@ -1941,7 +2425,9 @@
     "straat": "Draaiboomstraat",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 11,
+    "free_slots": 12
   },
   {
     "id": 85404,
@@ -1949,7 +2435,9 @@
     "straat": "Walstraat",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85405,
@@ -1957,7 +2445,9 @@
     "straat": "Sint-Bernardsesteenweg",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85406,
@@ -1965,7 +2455,9 @@
     "straat": "Maurits Sabbelaan",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85407,
@@ -1973,7 +2465,9 @@
     "straat": "Jacob Le Mairestraat",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 20,
+    "free_slots": 0
   },
   {
     "id": 85408,
@@ -1981,7 +2475,9 @@
     "straat": "Pol De Montstraat",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85409,
@@ -1989,7 +2485,9 @@
     "straat": "Valerius De Saedeleerstraat",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85410,
@@ -1997,7 +2495,9 @@
     "straat": "Emiel Vloorsstraat",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85411,
@@ -2005,7 +2505,9 @@
     "straat": "Eric Sasselaan",
     "postcode": 2020,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85412,
@@ -2013,7 +2515,9 @@
     "straat": "Jan De Voslei",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 0
   },
   {
     "id": 85413,
@@ -2021,7 +2525,9 @@
     "straat": "Valkstraat",
     "postcode": 2610,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 17,
+    "free_slots": 0
   },
   {
     "id": 85414,
@@ -2029,7 +2535,9 @@
     "straat": "Camille Huysmanslaan",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85415,
@@ -2037,7 +2545,9 @@
     "straat": "Vogelzanglaan",
     "postcode": 2020,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 21,
+    "free_slots": 0
   },
   {
     "id": 85416,
@@ -2045,7 +2555,9 @@
     "straat": "Luchthavenlei",
     "postcode": 2100,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85417,
@@ -2053,7 +2565,9 @@
     "straat": "Rozenkransplein",
     "postcode": 2610,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 3,
+    "free_slots": 20
   },
   {
     "id": 85418,
@@ -2061,7 +2575,9 @@
     "straat": "Commandant Weynsstraat",
     "postcode": 2660,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 9,
+    "free_slots": 8
   },
   {
     "id": 85419,
@@ -2069,7 +2585,9 @@
     "straat": "Mexicostraat",
     "postcode": 2030,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 20,
+    "free_slots": 0
   },
   {
     "id": 85420,
@@ -2077,7 +2595,9 @@
     "straat": "Kambalastraat",
     "postcode": 2030,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 9,
+    "free_slots": 20
   },
   {
     "id": 85421,
@@ -2085,7 +2605,9 @@
     "straat": "Campiniastraat",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 7
   },
   {
     "id": 85422,
@@ -2093,7 +2615,9 @@
     "straat": "Van Kerckhovenstraat",
     "postcode": 2060,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85423,
@@ -2101,7 +2625,9 @@
     "straat": "Lange Leemstraat",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 5,
+    "free_slots": 29
   },
   {
     "id": 85424,
@@ -2109,7 +2635,9 @@
     "straat": "Ter Nieuwerbrugge",
     "postcode": 2600,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85425,
@@ -2117,7 +2645,9 @@
     "straat": "Baron Sadoinestraat",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 23,
+    "free_slots": 0
   },
   {
     "id": 85426,
@@ -2125,7 +2655,9 @@
     "straat": "Majoor Maelfaitplein",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 22,
+    "free_slots": 0
   },
   {
     "id": 85427,
@@ -2133,7 +2665,9 @@
     "straat": "Paul Henri Spaaklaan",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85428,
@@ -2141,7 +2675,9 @@
     "straat": "Krijgsbaan",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85429,
@@ -2149,7 +2685,9 @@
     "straat": "Cockerillplaats",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85430,
@@ -2157,7 +2695,9 @@
     "straat": "Graspolderlaan",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 14
   },
   {
     "id": 85431,
@@ -2165,7 +2705,9 @@
     "straat": "Sint Bernaardsestwg",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85432,
@@ -2173,7 +2715,9 @@
     "straat": "Den Brem",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 5
   },
   {
     "id": 85433,
@@ -2181,7 +2725,9 @@
     "straat": "Galgenweellaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 8
   },
   {
     "id": 85434,
@@ -2189,7 +2735,9 @@
     "straat": "Ganzemate",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 19,
+    "free_slots": 0
   },
   {
     "id": 85435,
@@ -2197,7 +2745,9 @@
     "straat": "Dokter Emiel Van Dammestraat",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85436,
@@ -2205,7 +2755,9 @@
     "straat": "Malisgoed",
     "postcode": 2610,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 8,
+    "free_slots": 0
   },
   {
     "id": 85437,
@@ -2213,7 +2765,9 @@
     "straat": "Monnikenplein",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85438,
@@ -2221,7 +2775,9 @@
     "straat": "Blancefloerlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 21,
+    "free_slots": 0
   },
   {
     "id": 85439,
@@ -2229,7 +2785,9 @@
     "straat": "Paul Vekemanslaan",
     "postcode": 2660,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 0
   },
   {
     "id": 85440,
@@ -2237,7 +2795,9 @@
     "straat": NaN,
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 21,
+    "free_slots": 0
   },
   {
     "id": 85441,
@@ -2245,7 +2805,9 @@
     "straat": "Ridderveld",
     "postcode": 2610,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 12,
+    "free_slots": 0
   },
   {
     "id": 85442,
@@ -2253,7 +2815,9 @@
     "straat": "Schotensesteenweg",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85443,
@@ -2261,7 +2825,9 @@
     "straat": "Oosterveldlaan",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85444,
@@ -2269,7 +2835,9 @@
     "straat": "Dordrechtlaan",
     "postcode": 2100,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 24
   },
   {
     "id": 85445,
@@ -2277,7 +2845,9 @@
     "straat": "Prosper De Witstraat",
     "postcode": 2100,
     "capaciteit": 27,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 10,
+    "free_slots": 0
   },
   {
     "id": 85446,
@@ -2285,7 +2855,9 @@
     "straat": "Meerlenhoflaan",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85447,
@@ -2293,7 +2865,9 @@
     "straat": "Zaatlaan",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 23,
+    "free_slots": 0
   },
   {
     "id": 85448,
@@ -2301,7 +2875,9 @@
     "straat": "Michel Geysemansstraat",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 3,
+    "free_slots": 32
   },
   {
     "id": 85449,
@@ -2309,7 +2885,9 @@
     "straat": "Frans Adriaenssensstraat",
     "postcode": 2170,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 5,
+    "free_slots": 17
   },
   {
     "id": 85450,
@@ -2317,7 +2895,9 @@
     "straat": "Speelpleinstraat",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85451,
@@ -2325,7 +2905,9 @@
     "straat": "Dokter Donnyplein",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 8,
+    "free_slots": 23
   },
   {
     "id": 85452,
@@ -2333,7 +2915,9 @@
     "straat": "August Van de Wielelei",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85453,
@@ -2341,7 +2925,9 @@
     "straat": "Sneeuwbeslaan",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85454,
@@ -2349,7 +2935,9 @@
     "straat": "Verenigde Natieslaan",
     "postcode": 2660,
     "capaciteit": 24,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 7,
+    "free_slots": 0
   },
   {
     "id": 85455,
@@ -2357,7 +2945,9 @@
     "straat": "Leo Bosschartlaan",
     "postcode": 2660,
     "capaciteit": 36,
-    "status": "BUITEN_GEBRUIK"
+    "status": "BUITEN_GEBRUIK",
+    "free_bikes": 17,
+    "free_slots": 0
   },
   {
     "id": 85456,
@@ -2365,7 +2955,9 @@
     "straat": "Eksterlaar",
     "postcode": 2100,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85457,
@@ -2373,7 +2965,9 @@
     "straat": "Elsdonklaan",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 18,
+    "free_slots": 0
   },
   {
     "id": 85458,
@@ -2381,7 +2975,9 @@
     "straat": "Schaliemolenstraat",
     "postcode": 2610,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85459,
@@ -2389,7 +2985,9 @@
     "straat": "Kempenstraat",
     "postcode": 2030,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85460,
@@ -2397,7 +2995,9 @@
     "straat": "Jos Smolderenstraat",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 16,
+    "free_slots": 4
   },
   {
     "id": 85461,
@@ -2405,7 +3005,9 @@
     "straat": "Ellermanstraat",
     "postcode": 2060,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 21,
+    "free_slots": 0
   },
   {
     "id": 85462,
@@ -2413,7 +3015,9 @@
     "straat": "Itali\u00eblei",
     "postcode": 2000,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85463,
@@ -2421,7 +3025,9 @@
     "straat": "Schoenmarkt",
     "postcode": 2000,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 9,
+    "free_slots": 13
   },
   {
     "id": 85464,
@@ -2429,7 +3035,9 @@
     "straat": "Koningin Astridplein",
     "postcode": 2018,
     "capaciteit": 12,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 5
   },
   {
     "id": 85465,
@@ -2437,7 +3045,9 @@
     "straat": "Paardenmarkt",
     "postcode": 2000,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 14,
+    "free_slots": 6
   },
   {
     "id": 85466,
@@ -2445,7 +3055,9 @@
     "straat": "Koningin Astridplein",
     "postcode": 2018,
     "capaciteit": 12,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 12
   },
   {
     "id": 85467,
@@ -2453,7 +3065,9 @@
     "straat": NaN,
     "postcode": 2140,
     "capaciteit": 36,
-    "status": "BUITEN_GEBRUIK"
+    "status": "BUITEN_GEBRUIK",
+    "free_bikes": 19,
+    "free_slots": 0
   },
   {
     "id": 85468,
@@ -2461,7 +3075,9 @@
     "straat": NaN,
     "postcode": 2030,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85469,
@@ -2469,7 +3085,9 @@
     "straat": "Franklin Rooseveltplaats",
     "postcode": 2060,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85470,
@@ -2477,7 +3095,9 @@
     "straat": "Quellinstraat",
     "postcode": 2018,
     "capaciteit": 21,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 3,
+    "free_slots": 13
   },
   {
     "id": 85471,
@@ -2485,7 +3105,9 @@
     "straat": "Thonetlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 10
   },
   {
     "id": 85472,
@@ -2493,7 +3115,9 @@
     "straat": "Katwilgweg",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85473,
@@ -2501,7 +3125,9 @@
     "straat": "Blancefloerlaan",
     "postcode": 2050,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   },
   {
     "id": 85474,
@@ -2509,7 +3135,9 @@
     "straat": "De Burletlaan",
     "postcode": 2610,
     "capaciteit": 33,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 33
   },
   {
     "id": 85475,
@@ -2517,7 +3145,9 @@
     "straat": "Kwadeveldenplein",
     "postcode": 2170,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 30
   },
   {
     "id": 85476,
@@ -2525,7 +3155,9 @@
     "straat": "Lange Bremstraat",
     "postcode": 2170,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 1,
+    "free_slots": 35
   },
   {
     "id": 85477,
@@ -2533,7 +3165,9 @@
     "straat": "Kielzoglaan",
     "postcode": 2050,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 19,
+    "free_slots": 0
   },
   {
     "id": 85478,
@@ -2541,7 +3175,9 @@
     "straat": "Borgerhoutsestraat",
     "postcode": 2140,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 13,
+    "free_slots": 8
   },
   {
     "id": 85479,
@@ -2549,7 +3185,9 @@
     "straat": "Krijgslaan",
     "postcode": 2610,
     "capaciteit": 30,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 15,
+    "free_slots": 0
   },
   {
     "id": 85480,
@@ -2557,7 +3195,9 @@
     "straat": "Krijgslaan",
     "postcode": 2610,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 23,
+    "free_slots": 0
   },
   {
     "id": 85481,
@@ -2565,6 +3205,8 @@
     "straat": "Jan Van Rijswijcklaan",
     "postcode": 2018,
     "capaciteit": 36,
-    "status": "IN_GEBRUIK"
+    "status": "IN_GEBRUIK",
+    "free_bikes": 0,
+    "free_slots": 36
   }
 ]
