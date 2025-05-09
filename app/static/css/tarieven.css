@@ -24,3 +24,102 @@
     background-color: #fff6e5;
     border: 2px solid #FFC107;
 }
+
+.div2{
+  height: 35rem;
+}
+
+/* nodig?
+.card-wrapper{
+  max-width: 1100px;
+  margin: 0 60px 35px;
+  padding: 20px;
+}*/
+
+.card-slider .card-item{
+  width: auto;
+  display: block;
+  list-style: none;
+}
+
+.card-slider .card-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  max-width: 90rem;
+  margin: 50px;
+  background: #fff;
+  box-shadow: 0px 10px 10px rgba(34, 35, 58, 0.2);
+  padding: 25px;
+  border-radius: 25px;
+  height: 300px;
+  border: 2px solid transparent;
+  transition: 0.2s ease;
+}
+
+/*
+.card-item__content {
+  margin-left: 20rem;
+  flex: 1;
+} */
+
+.card-item__content {
+  margin-left: 20rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.card-item__title{
+    font-size: 38px;
+}
+
+.streep {
+  width: 60px;
+  height: 4px;
+  margin-top: 8px; /* space between title and streep */
+  border-radius: 2px;
+}
+
+.card-item{
+  margin-right: 8rem;
+}
+
+.card-image {
+  width: 20%;
+  height: 80%;
+  position: absolute;
+  left: -2%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 20px;
+}
+
+.card-slider__button{
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bolder;
+  border: 3px solid #2B2D42;
+  color: #2B2D42;
+  background: none;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.card-slider__button:hover{
+  border-color: #D41444;
+  color: #D41444;
+}
+
+.card-slider .card-item.pressed {
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
+/*
+.card-slider.pressed {
+  box-shadow: none;
+  transform: translateY(2px);
+} */
