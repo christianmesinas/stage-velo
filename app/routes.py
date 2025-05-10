@@ -92,8 +92,7 @@ def logout():
 def index():
     return render_template("index.html",
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
-                           auth0_domain=env.get("AUTH0_DOMAIN"),
-                           user=session.get("user"))
+                           auth0_domain=env.get("AUTH0_DOMAIN"))
 
 @routes.route("/login")
 def login():
@@ -105,7 +104,7 @@ def login():
 def profile():
     if 'user' not in session:
         return redirect(url_for("routes.login"))
-    return render_template("profile.html", user=session.get("user"))
+    return render_template("profile.html")
 
 @routes.route("/maps")
 def markers():
@@ -121,13 +120,9 @@ def markers():
         })
     return render_template("maps.html", markers=markers)
 
-# ======================
-# TARIEVEN ROUTES
-# ======================
-
 @routes.route("/tarieven")
 def tarieven():
-    return render_template("tarieven.html", user=session.get("user"))
+    return render_template("tarieven.html")
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
