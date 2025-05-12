@@ -9,11 +9,11 @@
 <body>
 
 <header>
-  <a href="./"><div class="logo"><img src="../static/images/LOGO2.png" alt="vrouw op fiets" width="100" height="50"></div></a>
+  <a href="/"><div class="logo"><img src="../static/images/LOGO2.png" alt="vrouw op fiets" width="100" height="50"></div></a>
 
   <nav class="nav-links">
     <a href="#">Hoe het werkt</a>
-    <a href="#card-wrapper">Tarieven</a>
+    <a href="/tarieven">Tarieven</a>
     <a href="maps">Vind een fiets</a>
     <a href="#">Help</a>
     <a href="#footer">Contact</a>
@@ -26,10 +26,16 @@
     </div>
   </nav>
 
-  <div class="nav-buttons">
-    <a href="/login" class="login">LOGIN</a>
-    <a href="/login" class="register">REGISTER</a>
-  </div>
+<div class="nav-buttons">
+    {% if user %}
+      <a href="{{ url_for('routes.profile') }}" class="profile">Profiel</a>
+      <a href="{{ url_for('routes.logout') }}" class="logout">Uitloggen</a>
+    {% else %}
+      <a href="{{ url_for('routes.login') }}" class="login">Inloggen</a>
+      <a href="{{ url_for('routes.login') }}" class="register">Account aanmaken</a>
+    {% endif %}
+</div>
+
 </header>
 
 

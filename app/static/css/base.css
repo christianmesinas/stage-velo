@@ -147,3 +147,25 @@ a{
   text-decoration: none;
 }
 
+
+.profile {
+
+color: white;
+  background: transparent;
+
+}
+
+.nav-buttons .profile:hover {
+  background-color: #f8d7da;
+}
+
+.logout {
+
+  background: white;
+  color: #D1003C;
+
+}
+
+.nav-buttons .logout:hover {
+  background-color: #f8d7da;
+}
