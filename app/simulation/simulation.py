@@ -1,5 +1,7 @@
 import random
 import pandas as pd
+import sys
+import time
 from faker import Faker
 
 fake = Faker()
@@ -125,7 +127,54 @@ def genereer_geschiedenis(aantal_ritten, gebruikers, fietsen, stations):
 gebruikers = genereer_gebruikers(58000)
 fietsen = genereer_fietsen(10000, stations)
 # Genereer geschiedenis
-geschiedenis = genereer_geschiedenis(10000, gebruikers, fietsen, stations)
+#geschiedenis = genereer_geschiedenis(10000, gebruikers, fietsen, stations)
 
+def simulatie(stations, gebruikers, fietsen, versnelling=60, interval=1, duur=10):
+    ###
+    # simulatie met tijdsversnelling, versnelling op 1 = realtime en versnelling op 60 = 1 minuut per seconde
+    # interval : tijd tussen stappen van de simulatie, duur: aantal simulatiestappen.
+    # duur : aantal minuten dat de simulatie zal draaien. dus met een versnelling van 60 interval van 1 en duur van 10 minuten.
+    # zal de simulatie 10 seconden duren.
+    ###
+    geschiedenis = []
+    station_lookup = {s["id"]: s for s in stations}
+    beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
 
-print("Geschiedenis gesimuleerd!")
+    for simulatie_stap in range(duur):
+        print(f"Simulatiestap {simulatie_stap + 1 / duur}")
+        tijd_start = time.time()
+
+        #ritten simuleren
+        for _ in range(random.randint(5,20)):
+            if not beschikbare_fietsen:
+                print("Geen beschikbare fietsen op dit moment.")
+                break
+
+            fiets = random.choice(beschikbare_fietsen)
+            gebruiker = random.choice(gebruikers)
+            begin_station = station_lookup.get(fiets["station_id"])
+            eind_station = random.choice([s for s in stations if s["id"] != begin_station["id"]])
+
+            #rit toevoegen
+            geschiedenis.append({
+                "gebruiker_id": gebruiker["id"],
+                "fiets_id": fiets["id"],
+                "begin_station_id": begin_station["id"],
+                "eind_station_id": eind_station["id"],
+                "duur_minuten": random.randint(2, 30)
+            })
+            #we moeten ook de fietsstatus updaten
+            fiets["station_id"] = eind_station["id"]
+            begin_station["free_bikes"] = max(0, begin_station["free_bikes"] - 1)
+            begin_station["free_slots"] += 1
+            eind_station["free_bikes"] += 1
+            eind_station["free_slots"] = max(0, eind_station["free_slots"] - 1)
+            print(f"- Fiets {fiets['id']} verplaatst van {begin_station['name']} naar {eind_station['name']}")
+
+        tijd_einde = time.time()
+        wachttijd = max(0, interval - (tijd_einde - tijd_start))
+        time.sleep(wachttijd)
+    print(f"\n Simulatie voltooid met {len(geschiedenis)} ritten.")
+    return geschiedenis
+
+simulatie(stations,gebruikers,fietsen, 60,1,30)
