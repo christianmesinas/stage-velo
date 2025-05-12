@@ -58,7 +58,7 @@ def process_auth():
     profile_picture = user_info.get("picture", "img/default.png")
 
     session["user"] = {
-        "id": user_id,
+        "user_id": user_id,
         "email": email,
         "name": name
     }
@@ -193,8 +193,9 @@ def jaarkaart():
 
 @routes.route("/instellingen", methods=["GET", "POST"])
 def instellingen():
-    if "user" not in session:
+    if "user" not in session or "user_id" not in session["user"]:
         return redirect(url_for("routes.login"))
+
 
     if request.method == "POST":
         nieuwe_naam = request.form.get("naam")
@@ -203,7 +204,7 @@ def instellingen():
         darkmode = True if request.form.get("darkmode") else False
 
         db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(id=session["user"]["id"]).first()
+        gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
         if gebruiker:
             gebruiker.name = nieuwe_naam
             gebruiker.email = nieuwe_email
@@ -214,6 +215,8 @@ def instellingen():
             # Werk ook de sessie bij
             session["user"]["name"] = nieuwe_naam
             session["user"]["email"] = nieuwe_email
+            session["user"]["taal"] = taal
+            session["user"]["darkmode"] = darkmode
 
         db.close()
         return redirect(url_for("routes.instellingen"))
@@ -225,7 +228,7 @@ def delete_account():
         return redirect(url_for("routes.login"))
 
     db = SessionLocal()
-    gebruiker = db.query(Usertable).filter_by(id=session["user"]["id"]).first()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
     if gebruiker:
         db.delete(gebruiker)
         db.commit()
