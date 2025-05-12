@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 from dotenv import load_dotenv
 from os import getenv
 
@@ -37,6 +37,12 @@ with app.app_context():
     Base.metadata.create_all(bind=db.bind)
     db.close()
     print("✅ Tabellen automatisch aangemaakt bij opstart!")
+
+
+@app.context_processor
+def inject_user():
+    return dict(user=session.get("user"))
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
