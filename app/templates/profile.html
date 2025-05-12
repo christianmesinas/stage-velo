@@ -1,30 +1,23 @@
 {% extends "base.html" %}
 
-{% block head %}
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/') }}">
-
-{% endblock %}
-
-
-
-
-
-
 {% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Profiel</h2>
 
-<h1>Pagina profiel<hr></h1>
+    {% if user.profile_picture %}
+    <div class="mb-4">
+        <label class="form-label">Profielfoto:</label><br>
+        <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Uw profielfoto" class="img-thumbnail" style="max-width: 200px;">
+    </div>
+    {% else %}
+    <div class="mb-4">
+        <label class="form-label">Profielfoto:</label><br>
+        <img src="{{ url_for('static', filename='img/default.png') }}" alt="Geen profielfoto" class="img-thumbnail" style="max-width: 200px;">
+    </div>
+    {% endif %}
 
     <a href="{{ url_for('routes.instellingen') }}">
-  <button type="submit">Instellingen</button>
-</a>
-
-{% endblock %}
-# knop instellingen
-
-
-
-
-
-{% block scripts %}
+        <button type="button" class="btn btn-primary">Instellingen</button>
+    </a>
+</div>
 {% endblock %}

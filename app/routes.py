@@ -1,3 +1,4 @@
+from werkzeug.utils import secure_filename,redirect
 from flask import Blueprint, render_template, session, redirect, url_for, request
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
@@ -191,6 +192,7 @@ def jaarkaart():
 
     return render_template("tarieven/jaarkaart.html")
 
+
 @routes.route("/instellingen", methods=["GET", "POST"])
 def instellingen():
     if "user" not in session or "user_id" not in session["user"]:
@@ -198,10 +200,19 @@ def instellingen():
 
 
     if request.method == "POST":
+
+
         nieuwe_naam = request.form.get("naam")
         nieuwe_email = request.form.get("email")
         taal = request.form.get("taal")
         darkmode = True if request.form.get("darkmode") else False
+        file = request.files.get("profile_picture")
+        filename = None
+
+        if file and file.filename:
+            filename = secure_filename(file.filename)
+            upload_path = os.path.join("app", "static", "uploads", filename)
+            file.save(upload_path)
 
         db = SessionLocal()
         gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
@@ -210,6 +221,9 @@ def instellingen():
             gebruiker.email = nieuwe_email
             gebruiker.taal = taal
             gebruiker.darkmode = darkmode
+            if filename:
+                gebruiker.profile_picture = f"uploads/{filename}"
+
             db.commit()
 
             # Werk ook de sessie bij
@@ -222,6 +236,9 @@ def instellingen():
         return redirect(url_for("routes.instellingen"))
 
     return render_template("instellingen.html", user=session.get("user"))
+
+
+
 @routes.route("/delete_account", methods=["POST"])
 def delete_account():
     if "user" not in session:
