@@ -195,6 +195,31 @@ def jaarkaart():
 
     return render_template("tarieven/jaarkaart.html")
 
-@app.route("/instellingen")
+@routes.route("/instellingen", methods=["GET", "POST"])
 def instellingen():
-    return render_template("instellingen.html")
+    if "user" not in session:
+        return redirect(url_for("routes.login"))
+
+    if request.method == "POST":
+        nieuwe_naam = request.form.get("naam")
+        nieuwe_email = request.form.get("email")
+        taal = request.form.get("taal")
+        darkmode = True if request.form.get("darkmode") else False
+
+        db = SessionLocal()
+        gebruiker = db.query(Usertable).filter_by(id=session["user"]["id"]).first()
+        if gebruiker:
+            gebruiker.name = nieuwe_naam
+            gebruiker.email = nieuwe_email
+            gebruiker.taal = taal
+            gebruiker.darkmode = darkmode
+            db.commit()
+
+            # Werk ook de sessie bij
+            session["user"]["name"] = nieuwe_naam
+            session["user"]["email"] = nieuwe_email
+
+        db.close()
+        return redirect(url_for("routes.instellingen"))
+
+    return render_template("instellingen.html", user=session.get("user"))
