@@ -105,6 +105,29 @@ def genereer_fietsen(aantal, stations):
 
     return fietsen
 
+gebruikers = genereer_gebruikers(58000)
+fietsen = genereer_fietsen(10000, stations)
+
+def genereer_geschiedenis(aantal_ritten, gebruikers, fietsen, stations):
+    geschiedenis = []
+    for i in range(aantal_ritten):
+        gebruiker = random.choice(gebruikers)
+        fiets = random.choice([f for f in fietsen if f["status"] == "beschikbaar"])
+        begin_station = next((s for s in stations if s["id"] == fiets["station_id"]), None)
+        eind_station = random.choice(stations)
+
+        if begin_station and eind_station and begin_station["id"] != eind_station["id"]:
+            geschiedenis.append({
+                "gebruiker_id": gebruiker["id"],
+                "fiets_id": fiets["id"],
+                "begin_station_id": begin_station["id"],
+                "eind_station_id": eind_station["id"],
+                "duur_minuten": random.randint(2, 30)
+            })
+    return geschiedenis
+
+
+
 # Simuleer ritten over tijd
 def simulatie(stations, gebruikers, fietsen, versnelling=60, interval=1, duur=10):
     geschiedenis = []
@@ -148,13 +171,8 @@ def simulatie(stations, gebruikers, fietsen, versnelling=60, interval=1, duur=10
     return geschiedenis
 
 
-gebruikers = genereer_gebruikers(58000)
-fietsen = genereer_fietsen(10000, stations)
-geschiedenis = gener
-#simulatie(stations,gebruikers,fietsen, 60,1,30)
-print(gebruikers[1])
-print(stations[1])
-print(fietsen[1])
+
+simulatie(stations,gebruikers,fietsen, 60,1,30)
 
 # Alleen uitvoeren als script direct wordt gestart
 #if __name__ == "__main__":
