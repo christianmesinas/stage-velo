@@ -2,6 +2,8 @@ import random
 import pandas as pd
 import sys
 import time
+
+import psycopg2
 from faker import Faker
 import os
 
@@ -183,3 +185,74 @@ simulatie(stations,gebruikers,fietsen, 60,1,30)
 #        simulatie(stations, gebruikers, fietsen, versnelling=60, interval=1, duur=30)
 #    else:
 #        print("Gebruik '-s' om de simulatie te starten.")
+
+
+conn = psycopg2.connect(
+    dbname="velo_community",
+    user="admin",
+    password="Velo123",
+    host="localhost",
+    port="5433"
+)
+cur = conn.cursor()
+
+for gebruiker in gebruikers:
+    cur.execute("""
+        INSERT INTO users (id, voornaam, achternaam, email, abonnementstype, registratie_datum, postcode, stad)
+        VALUES (%s, %s, %s, %s, %s, NOW(), %s, %s)
+    """, (
+        gebruiker["id"],
+        gebruiker["voornaam"],
+        gebruiker["achternaam"],
+        f"{gebruiker['voornaam']}.{gebruiker['achternaam']}@example.com".lower(),
+        random.choice(["Basis", "Premium", "Flex"]),
+        fake.postcode(),
+        fake.city()
+    ))
+
+for fiets in fietsen:
+    cur.execute("""
+        INSERT INTO bikes (id, type, status) VALUES (%s, %s, %s)
+    """, (
+        fiets["id"],
+        random.choice(["stadsfiets", "elektrisch"]),
+        fiets["status"]
+    ))
+
+for station in stations:
+    cur.execute("""
+        INSERT INTO stations (id, naam, adres, latitude, longitude, capaciteit, free_slots, parked_bikes)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+    """, (
+        station["id"],
+        station["name"],
+        station["straat"],
+        fake.latitude(),
+        fake.longitude(),
+        station["capaciteit"],
+        station["free_slots"],
+        station["free_bikes"]
+    ))
+
+from datetime import datetime, timedelta
+
+for rit in genereer_geschiedenis(10000, gebruikers, fietsen, stations):
+    starttijd = datetime.now() - timedelta(minutes=rit["duur_minuten"])
+    eindtijd = datetime.now()
+
+    cur.execute("""
+        INSERT INTO rentals (user_id, bike_id, start_station_id, eind_station_id, starttijd, eindtijd, prijs)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (
+        rit["gebruiker_id"],
+        rit["fiets_id"],
+        rit["begin_station_id"],
+        rit["eind_station_id"],
+        starttijd,
+        eindtijd,
+        round(rit["duur_minuten"] * 0.15, 2)  # voorbeeldprijs
+    ))
+
+conn.commit()
+cur.close()
+conn.close()
