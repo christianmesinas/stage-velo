@@ -6,6 +6,7 @@ from os import environ as env
 import requests
 import os
 
+import app.routes
 from app.api import api as api
 from app.database.models import Usertable
 from app.database import SessionLocal
