@@ -150,7 +150,11 @@ def simulatie(stations, gebruikers, fietsen, versnelling=60, interval=1, duur=10
 
 gebruikers = genereer_gebruikers(58000)
 fietsen = genereer_fietsen(10000, stations)
-simulatie(stations,gebruikers,fietsen, 60,1,30)
+geschiedenis = gener
+#simulatie(stations,gebruikers,fietsen, 60,1,30)
+print(gebruikers[1])
+print(stations[1])
+print(fietsen[1])
 
 # Alleen uitvoeren als script direct wordt gestart
 #if __name__ == "__main__":
