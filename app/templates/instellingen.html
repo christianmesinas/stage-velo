@@ -1,8 +1,63 @@
 {% extends "base.html" %}
-
 {% block content %}
-  <div class="container">
-    <h1>Instellingenpagina</h1>
-    <p>Hier kun je je profielinstellingen wijzigen.</p>
-  </div>
+<div class="container mt-5">
+  <h2 class="mb-4">Instellingen</h2>
+
+  <form method="POST" action="{{ url_for('routes.instellingen') }}" enctype="multipart/form-data">
+
+    <div class="mb-3">
+      <label for="naam" class="form-label">Uw naam</label>
+      <input type="text" class="form-control" id="naam" name="naam" value="{{ user.name }}">
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">E-mailadres</label>
+      <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+    </div>
+
+    <div class="mb-3">
+      <label for="profile_picture" class="form-label">Profielfoto</label>
+      <input class="form-control" type="file" id="profile_picture" name="profile_picture">
+    </div>
+
+    <hr>
+
+    <h4>Wachtwoord aanpassen</h4>
+    <div class="mb-3">
+      <input type="password" class="form-control" name="old_password" placeholder="Oud wachtwoord" disabled>
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" name="new_password" placeholder="Nieuw wachtwoord" disabled>
+    </div>
+    <small class="text-muted">Wachtwoord wijzigen is momenteel niet actief.</small>
+
+    <hr>
+
+    <h4>Voorkeuren</h4>
+    <div class="mb-3">
+      <label for="taal" class="form-label">Taalkeuze</label>
+      <select class="form-select" id="taal" name="taal">
+        <option value="nl" {% if user.taal == 'nl' %}selected{% endif %}>Nederlands</option>
+        <option value="en" {% if user.taal == 'en' %}selected{% endif %}>Engels</option>
+      </select>
+    </div>
+
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" id="darkmode" name="darkmode" {% if user.darkmode %}checked{% endif %}>
+      <label class="form-check-label" for="darkmode">
+        Donkere modus inschakelen
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Instellingen opslaan</button>
+  </form>
+
+  <hr class="my-5">
+
+  <form method="POST" action="{{ url_for('routes.delete_account') }}">
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Zijt ge zeker dat ge uw account wilt verwijderen? Dat kunt ge niet meer terugdraaien.')">
+      Account verwijderen
+    </button>
+  </form>
+</div>
 {% endblock %}

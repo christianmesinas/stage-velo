@@ -208,15 +208,15 @@ def instellingen():
         darkmode = True if request.form.get("darkmode") else False
 
         db = SessionLocal()
-        user = db.query(Usertable).filter_by(id=session["user"]["id"]).first()
-        if user:
-            user.name = nieuwe_naam
-            user.email = nieuwe_email
-            user.taal = taal
-            user.darkmode = darkmode
+        gebruiker = db.query(Usertable).filter_by(id=session["user"]["id"]).first()
+        if gebruiker:
+            gebruiker.name = nieuwe_naam
+            gebruiker.email = nieuwe_email
+            gebruiker.taal = taal
+            gebruiker.darkmode = darkmode
             db.commit()
 
-            # update ook de sessie
+            # Werk ook de sessie bij
             session["user"]["name"] = nieuwe_naam
             session["user"]["email"] = nieuwe_email
 
