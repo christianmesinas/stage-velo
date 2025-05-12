@@ -219,3 +219,18 @@ def instellingen():
         return redirect(url_for("routes.instellingen"))
 
     return render_template("instellingen.html", user=session.get("user"))
+@routes.route("/delete_account", methods=["POST"])
+def delete_account():
+    if "user" not in session:
+        return redirect(url_for("routes.login"))
+
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(id=session["user"]["id"]).first()
+    if gebruiker:
+        db.delete(gebruiker)
+        db.commit()
+    db.close()
+
+    session.clear()
+    return redirect(url_for("routes.index"))
+

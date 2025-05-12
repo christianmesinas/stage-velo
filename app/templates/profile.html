@@ -6,20 +6,21 @@
 
 {% endblock %}
 
-# knop instellingen
-<form action="{{ url_for('instellingen') }}">
-  <button type="submit">Instellingen</button>
-</form>
+
 
 
 
 
 {% block content %}
 
-<h1>pagina profiel</h1>
+<h1>Pagina profiel<hr></h1>
+
+    <a href="{{ url_for('routes.instellingen') }}">
+  <button type="submit">Instellingen</button>
+</a>
 
 {% endblock %}
-
+# knop instellingen
 
 
 
