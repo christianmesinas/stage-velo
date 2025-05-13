@@ -106,7 +106,12 @@ def login():
 def profile():
     if 'user' not in session:
         return redirect(url_for("routes.login"))
-    return render_template("profile.html")
+
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
+    db.close()
+
+    return render_template("profile.html",user=gebruiker)
 
 @routes.route("/maps")
 def markers():
@@ -222,7 +227,7 @@ def instellingen():
             gebruiker.taal = taal
             gebruiker.darkmode = darkmode
             if filename:
-                gebruiker.profile_picture = f"uploads/{filename}"
+                gebruiker.profile_picture = filename
 
             db.commit()
 

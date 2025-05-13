@@ -12,7 +12,8 @@
     {% else %}
     <div class="mb-4">
         <label class="form-label">Profielfoto:</label><br>
-        <img src="{{ url_for('static', filename='img/default.png') }}" alt="Geen profielfoto" class="img-thumbnail" style="max-width: 200px;">
+        <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Uw profielfoto" class="img-thumbnail" style="max-width: 200px;">
+
     </div>
     {% endif %}
 

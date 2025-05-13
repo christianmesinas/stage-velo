@@ -3,12 +3,13 @@
 <div class="container mt-5">
   <h2 class="mb-4">Instellingen</h2>
 
-  {% if user.profile_picture %}
-    <div class="mb-4">
-      <label class="form-label">Huidige profielfoto:</label><br>
-      <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Uw profielfoto" class="img-thumbnail" style="max-width: 200px;">
-    </div>
-  {% endif %}
+{% if user.profile_picture %}
+  <div class="mb-4">
+    <label class="form-label">Huidige profielfoto:</label><br>
+    <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Uw profielfoto" class="img-thumbnail" style="max-width: 200px;">
+  </div>
+{% endif %}
+
 
   <form method="POST" action="{{ url_for('routes.instellingen') }}" enctype="multipart/form-data">
 
