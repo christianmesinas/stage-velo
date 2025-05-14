@@ -1,0 +1,23 @@
+.background {
+    display: flex;
+
+    align-items: center;
+    width: auto;
+    height: 80vh;
+    background-repeat: no-repeat;
+    margin: 20px;
+    background-color: white;
+    border-radius: 20px;
+
+}
+
+
+
+.container_mt-6 {
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: 5rem;
+    text-align: left;
+}

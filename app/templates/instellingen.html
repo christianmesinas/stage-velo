@@ -1,7 +1,16 @@
 {% extends "base.html" %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/instellingen.css') }}">
+
+{% endblock %}
+
+
 {% block content %}
-<div class="container mt-5">
-  <h2 class="mb-4">Instellingen</h2>
+
+    <div class="background">
+    <div class="container_mt-6">
 
 {% if user.profile_picture %}
   <div class="mb-4">
@@ -28,18 +37,19 @@
       <input class="form-control" type="file" id="profile_picture" name="profile_picture">
     </div>
 
-    <hr>
-
-    <h4>Wachtwoord aanpassen</h4>
-    <div class="mb-3">
-      <input type="password" class="form-control" name="old_password" placeholder="Oud wachtwoord" disabled>
-    </div>
-    <div class="mb-3">
-      <input type="password" class="form-control" name="new_password" placeholder="Nieuw wachtwoord" disabled>
-    </div>
-    <small class="text-muted">Wachtwoord wijzigen is momenteel niet actief.</small>
-
-    <hr>
+{# De code--> Wachtwoord aanpassen is momenteel niet actief.#}
+{#    <hr>#}
+{##}
+{#    <h4>Wachtwoord aanpassen</h4>#}
+{#    <div class="mb-3">#}
+{#      <input type="password" class="form-control" name="old_password" placeholder="Oud wachtwoord" disabled>#}
+{#    </div>#}
+{#    <div class="mb-3">#}
+{#      <input type="password" class="form-control" name="new_password" placeholder="Nieuw wachtwoord" disabled>#}
+{#    </div>#}
+{#    <small class="text-muted">Wachtwoord wijzigen is momenteel niet actief.</small>#}
+{##}
+{#    <hr>#}
 
     <h4>Voorkeuren</h4>
     <div class="mb-3">
@@ -67,5 +77,8 @@
       Account verwijderen
     </button>
   </form>
+
+    </div>
+
 </div>
 {% endblock %}
