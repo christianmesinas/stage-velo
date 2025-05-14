@@ -162,53 +162,55 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
 
                 fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
     return geschiedenis
-print(genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28))
 
 
 # Simuleer ritten over tijd
-def simulatie(stations, gebruikers, fietsen,  interval=1, duur=10):
+def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=4):
     geschiedenis = []
     station_lookup = {s["id"]: s for s in stations}
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
+    vandaag = datetime.today().date()
 
-    for simulatie_stap in range(duur):
-        print(f"Simulatiestap {simulatie_stap + 1} / {duur}")
-        tijd_start = time.time()
+    for dag_offset in range(dagen):
+        datum = vandaag - timedelta(days=dag_offset)
+        print(f"\bSimulatie voor {datum}...")
 
-        for _ in range(random.randint(5, 20)):
-            if not beschikbare_fietsen:
-                print("Geen beschikbare fietsen op dit moment.")
-                break
 
-            fiets = random.choice(beschikbare_fietsen)
-            gebruiker = random.choice(gebruikers)
-            begin_station = station_lookup.get(fiets["station_id"])
-            eind_station = random.choice([s for s in stations if s["id"] != begin_station["id"]])
+        for fiets in beschikbare_fietsen:
+            for _ in range(ritten_per_fiets_per_dag):
+                gebruiker = random.choice(gebruikers)
+                begin_station = station_lookup.get(fiets["station_id"])
+                bepaling_eind_station = [s for s in stations if s["id"] != begin_station["id"]]
+                if not begin_station or not bepaling_eind_station:
+                    continue
 
-            geschiedenis.append({
-                "gebruiker_id": gebruiker["id"],
-                "fiets_id": fiets["id"],
-                "begin_station_id": begin_station["id"],
-                "eind_station_id": eind_station["id"],
-                "duur_minuten": random.randint(2, 30)
-            })
+                eind_station = random.choice(bepaling_eind_station)
+                duur = random.randint(2,30)
+                starttijd = gewogen_starttijd(datum)
+                eindtijd = starttijd + timedelta(minutes=duur)
 
-            fiets["station_id"] = eind_station["id"]
-            begin_station["free_bikes"] = max(0, begin_station["free_bikes"] - 1)
-            begin_station["free_slots"] += 1
-            eind_station["free_bikes"] += 1
-            eind_station["free_slots"] = max(0, eind_station["free_slots"] - 1)
-            print(f"- Fiets {fiets['id']} verplaatst van {begin_station['name']} naar {eind_station['name']}")
+                geschiedenis.append({
+                    "gebruiker_id": gebruiker["id"],
+                    "fiets_id": fiets["id"],
+                    "begin_station_id": begin_station["id"],
+                    "eind_station_id": eind_station["id"],
+                    "starttijd": starttijd.strftime("%Y-%m-%d %H:%M:%S"),
+                    "eindtijd": eindtijd.strftime("%Y-%m-%d %H:%M:%S"),
+                    "duur_minuten": duur
+                })
 
-        tijd_einde = time.time()
-        wachttijd = max(0, interval - (tijd_einde - tijd_start))
-        time.sleep(wachttijd)
+                fiets["station_id"] = eind_station["id"]
+                begin_station["free_bikes"] = max(0, begin_station["free_bikes"] - 1)
+                begin_station["free_slots"] += 1
+                eind_station["free_bikes"] += 1
+                eind_station["free_slots"] = max(0, eind_station["free_slots"] - 1)
+                print(f"- {starttijd.strftime('%H:%M')} Fiets {fiets['id']} van {begin_station['name']} naar {eind_station['name']} ({duur} min)")
 
-    print(f"\nSimulatie voltooid met {len(geschiedenis)} ritten.")
+    print(f"Simulatie voltooid met {len(geschiedenis)} ritten over {dagen}")
     return geschiedenis
 
 
 
-#simulatie(stations,gebruikers,fietsen, 0.1,200)
+simulatie(stations,gebruikers,fietsen, 60)
 
 
