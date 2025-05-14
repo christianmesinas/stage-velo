@@ -8,12 +8,9 @@
 
 {% block content %}
 
-
-<h1>welkom op de login test</h1>
-<h2>dees is een testje voor git branches</h2>
+<div class="background"><div id="auth0-login-box"></div></div>
 
 
-<div id="auth0-login-box"></div>
 
 {% endblock %}
 
@@ -30,22 +27,21 @@
     var lock = new Auth0Lock('{{ auth0_client_id }}', '{{ auth0_domain }}', {
       container: "auth0-login-box",
       auth: {
-        redirect: false,
+        redirect: true,
+        redirectUrl: 'http://127.0.0.1:8000/login',
 
         responseType: 'token id_token',
 
-        params: {
-          scope: 'openid profile email',
-          audience: 'https://dev-b522ltua566kmhdh.us.auth0.com/api/v2/',
+            params: {
+                scope: 'openid profile email',
 
-
-        }
-      },
-      allowedConnections: ['Username-Password-Authentication', 'google-oauth2', 'facebook', 'apple'],
+}
+                    },
+      allowedConnections: ['database-velo', 'google-oauth2', 'facebook', 'apple'],
 
 
       theme: {
-        primaryColor: '#000000',
+        primaryColor: '#2b2d42',
         backgroundColor: '#000000',
         logo: 'LOGO'
       },

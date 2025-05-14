@@ -1,0 +1,18 @@
+#map{
+    width: 768px;
+    height: 600px;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 3%;
+}
+.info.legend {
+    background: white;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 18px;
+    color: #333;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+

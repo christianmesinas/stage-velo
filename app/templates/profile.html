@@ -1,14 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-<h1>Pagina profile</h1>
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/') }}">
+
+{% endblock %}
 
 
 
-</body>
-</html>
+
+
+{% block content %}
+
+<h1>pagina profiel</h1>
+
+{% endblock %}
+
+
+
+
+
+
+{% block scripts %}
+{% endblock %}
