@@ -1,7 +1,6 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String
+# from sqlalchemy.ext.declarative import declarative_base
 
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, DECIMAL
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, DECIMAL,Boolean
 from sqlalchemy.orm import relationship, declarative_base
 from datetime import datetime
 
@@ -14,12 +13,20 @@ class Usertable(Base):
     email = Column(String, unique=True, nullable=False)
     name = Column(String)
     profile_picture = Column(String, nullable=False, default="img/default.png")
+    is_admin = Column(Boolean, nullable=False, default=False)
+
 
     @classmethod
-    def get_or_create(cls, db, user_id, email, name, profile_picture):
+    def get_or_create(cls, db, user_id, email, name, profile_picture, is_admin=False):
         user = db.query(cls).filter_by(user_id=user_id).first()
         if not user:
-            user = cls(user_id=user_id, email=email, name=name, profile_picture=profile_picture)
+            user = cls(
+                user_id=user_id,
+                email=email,
+                name=name,
+                profile_picture=profile_picture,
+                is_admin=is_admin
+            )
             db.add(user)
             db.commit()
         return user
