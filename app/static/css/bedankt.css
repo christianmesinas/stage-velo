@@ -1,3 +1,81 @@
+/* Basis reset voor marges en padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* Submitknop stijl */
+button[type="submit"] {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bolder;
+  border: 3px solid #2B2D42;
+  color: #2B2D42;
+  background: none;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  border-color: #D41444;
+  color: #D41444;
+}
+
+/* Div2 hoogte instelling */
+.div2 {
+  height: 35rem;
+}
+
+/* Specifieke stijl voor voornaam veld */
+.voornaam {
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+/* Stijl voor de kaartslider */
+.card-slider .card-item {
+  /*display: flex;*/
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 90%;
+  margin: 50px auto;
+  background: #fff;
+  box-shadow: 0 10px 10px rgba(34, 35, 58, 0.2);
+  padding: 30px;
+  border-radius: 25px;
+  min-height: 300px;
+  border: 2px solid transparent;
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+/* Inhoud van de kaart */
+.card-item__content {
+  margin-left: 20rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Titel van de kaart */
+.card-item__title {
+  font-size: 38px;
+}
+
+/* Ruimte voor de kaart */
+.card-item {
+  margin-right: 8rem;
+}
+
 .bedankt-container {
   max-width: 600px;
   margin: auto;
@@ -7,13 +85,15 @@
   text-align: center;
 }
 
-.bedankt-container ul {
+.card-slider ul {
   text-align: left;
-  list-style: none;
+  margin: auto;
   padding: 0;
+  width: fit-content;
 }
 
 .terug-btn {
+  margin-top: 20px;
   padding: 6px 14px;
   border-radius: 20px;
   font-weight: bolder;
