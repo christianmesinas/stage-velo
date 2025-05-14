@@ -1,0 +1,24 @@
+.background {
+    display: flex;
+
+
+    justify-content: flex-end;
+    color: white;
+    width: auto;
+    height: 80vh;
+    background-repeat: no-repeat;
+    margin: 20px;
+    background-color: white;
+    border-radius: 20px;
+
+}
+
+
+
+.container_mt-5 {
+    margin: auto;
+
+
+
+
+}
