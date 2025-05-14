@@ -1,7 +1,23 @@
 {% extends "base.html" %}
 
+
+{% block head %}
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+
+
+
+
+
 {% block content %}
-<div class="container mt-5">
+
+    <div class="background">
+
+
+    <div class="container_mt-5">
     <h2 class="mb-4">Profiel</h2>
 
     {% if user.profile_picture %}
@@ -21,4 +37,16 @@
         <button type="button" class="btn btn-primary">Instellingen</button>
     </a>
 </div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
 {% endblock %}
