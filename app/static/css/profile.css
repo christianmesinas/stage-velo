@@ -3,7 +3,6 @@
 
 
     justify-content: flex-end;
-    color: white;
     width: auto;
     height: 80vh;
     background-repeat: no-repeat;
@@ -15,10 +14,21 @@
 
 
 
-.container_mt-5 {
-    margin: auto;
+.mt-5 {
+    margin-top: 2rem;
+    display: flex;
+    gap: 30px;
 
 
 
+}
 
+.mb-4{
+    margin-right: 30px;
+}
+
+.btn-primary{
+    position: absolute;
+    right: 3rem;
+    margin-top: 1.5rem;
 }

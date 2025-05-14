@@ -1,52 +1,78 @@
 {% extends "base.html" %}
 
-
 {% block head %}
-
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 {% endblock %}
 
-
-
-
-
-
 {% block content %}
-
-    <div class="background">
-
-
-    <div class="container_mt-5">
-    <h2 class="mb-4">Profiel</h2>
-
-    {% if user.profile_picture %}
-    <div class="mb-4">
-        <label class="form-label">Profielfoto:</label><br>
-        <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Uw profielfoto" class="img-thumbnail" style="max-width: 200px;">
+<div class="background">
+    <div>
+        <!-- Instellingen knop -->
+        <a href="{{ url_for('routes.instellingen') }}">
+            <button type="button" class="btn btn-primary">Instellingen</button>
+        </a>
     </div>
-    {% else %}
-    <div class="mb-4">
-        <label class="form-label">Profielfoto:</label><br>
-        <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Uw profielfoto" class="img-thumbnail" style="max-width: 200px;">
+    <div class="container mt-5">
+        <h2 class="mb-4">Profiel</h2>
 
+        <!-- Profielfoto -->
+        <div class="mb-4">
+            <label class="form-label">Profielfoto:</label><br>
+            {% if user.profile_picture %}
+                <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Uw profielfoto" class="img-thumbnail" style="max-width: 200px;">
+            {% else %}
+                <img src="{{ url_for('static', filename='img/default.png') }}" alt="Standaard profielfoto" class="img-thumbnail" style="max-width: 200px;">
+            {% endif %}
+        </div>
+
+        <!-- Gebruikersinformatie -->
+        <div class="mb-4">
+            <h4>Persoonlijke Gegevens</h4>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Voornaam:</strong> {{ user_data.voornaam or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Achternaam:</strong> {{ user_data.achternaam or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Email:</strong> {{ user_data.email or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Abonnementstype:</strong> {{ user_data.abonnementstype or 'Geen abonnement' }}</li>
+                <li class="list-group-item"><strong>Registratiedatum:</strong> {{ user_data.registratie_datum.strftime('%d-%m-%Y %H:%M') if user_data.registratie_datum else 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Postcode:</strong> {{ user_data.postcode or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Stad:</strong> {{ user_data.stad or 'Niet ingesteld' }}</li>
+            </ul>
+        </div>
+
+        <!-- Fietsgeschiedenis -->
+        <div class="mb-4">
+            <h4>Fietsgeschiedenis</h4>
+            {% if rentals %}
+                <table> class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Fiets-ID</th>
+                            <th>Startstation</th>
+                            <th>Eindstation</th>
+                            <th>Starttijd</th>
+                            <th>Eindtijd</th>
+                            <th>Prijs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rental in rentals %}
+                            <tr>
+                                <td>{{ rental.bike_id }}</td>
+                                <td>{{ rental.start_station.naam if rental.start_station else 'Onbekend' }}</td>
+                                <td>{{ rental.end_station.naam if rental.end_station else 'Onbekend' }}</td>
+                                <td>{{ rental.starttijd.strftime('%d-%m-%Y %H:%M') if rental.starttijd else 'N/A' }}</td>
+                                <td>{{ rental.eindtijd.strftime('%d-%m-%Y %H:%M') if rental.eindtijd else 'N/A' }}</td>
+                                <td>€{{ "%.2f"|format(rental.prijs) if rental.prijs else 'N/A' }}</td>
+                            </nm>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                table>
+            {% else %}
+                <p>Geen fietsgeschiedenis beschikbaar.</p>
+            {% endif %}
+            </table>
+        </div>
     </div>
-    {% endif %}
-
-    <a href="{{ url_for('routes.instellingen') }}">
-        <button type="button" class="btn btn-primary">Instellingen</button>
-    </a>
 </div>
-
-
-
-
-
-
-
-
-
-    </div>
-
-
 {% endblock %}

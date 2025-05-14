@@ -9,7 +9,7 @@ import os
 
 import app.routes
 from app.api import api as api
-from app.database.models import Usertable
+from app.database.models import Usertable, User, Rental
 from app.database import SessionLocal
 
 routes = Blueprint("routes", __name__)
@@ -108,10 +108,12 @@ def profile():
         return redirect(url_for("routes.login"))
 
     db = SessionLocal()
-    gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
+    user_table = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
+    user_data = db.query(User).filter_by(email=session["user"]["email"]).first()
+    rentals = db.query(Rental).filter_by(user_id=user_data.id if user_data else None).all()
     db.close()
 
-    return render_template("profile.html",user=gebruiker)
+    return render_template("profile.html", user=user_table, user_data=user_data, rentals=rentals)
 
 @routes.route("/maps")
 def markers():
