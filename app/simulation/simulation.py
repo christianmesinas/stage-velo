@@ -29,7 +29,6 @@ for _, row in stations_df.iterrows():
         "free_slots": row.get("Aantal_plaatsen", 0)
     })
 
-
 # Genereer gebruikers
 def genereer_gebruikers(aantal):
     gebruikers = []
@@ -40,7 +39,6 @@ def genereer_gebruikers(aantal):
             "achternaam": fake.last_name(),
         })
     return gebruikers
-
 
 # Genereer fietsen en wijs ze toe aan stations
 def genereer_fietsen(aantal, stations):
@@ -110,7 +108,6 @@ def genereer_fietsen(aantal, stations):
 
     return fietsen
 
-
 gebruikers = genereer_gebruikers(58000)
 fietsen = genereer_fietsen(10000, stations)
 
@@ -164,6 +161,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
     return geschiedenis
 
 
+
 # Simuleer ritten over tijd
 def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=4):
     geschiedenis = []
@@ -175,6 +173,10 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
         datum = vandaag - timedelta(days=dag_offset)
         print(f"\bSimulatie voor {datum}...")
 
+        for _ in range(random.randint(5, 20)):
+            if not beschikbare_fietsen:
+                print("Geen beschikbare fietsen op dit moment.")
+                break
 
         for fiets in beschikbare_fietsen:
             for _ in range(ritten_per_fiets_per_dag):
@@ -210,7 +212,5 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     return geschiedenis
 
 
-
 simulatie(stations,gebruikers,fietsen, 60)
-
 
