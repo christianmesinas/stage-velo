@@ -125,14 +125,18 @@ def tarieven():
     return render_template("tarieven.html")
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
-def dagpas():
+def dagpass():
     if request.method == "POST":
         pincode = request.form.get("pincode")
         bevestig_pincode = request.form.get("bevestig_pincode")
 
         if pincode != bevestig_pincode:
-            foutmelding = "De pincodes komen niet overeen."
-            return render_template("tarieven/dagpas.html", foutmelding=foutmelding)
+            foutmelding = "De pincodes komen niet overeen!"
+            return render_template(
+                "tarieven/dagpas.html",
+                foutmelding=foutmelding,
+                formdata=request.form
+            )
 
         data = {
             "voornaam": request.form.get("voornaam"),
@@ -144,7 +148,7 @@ def dagpas():
         }
         return render_template("tarieven/bedankt.html", data=data)
 
-    return render_template("tarieven/dagpas.html")
+    return render_template("tarieven/dagpas.html", formdata={})
 
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
 def weekpass():
@@ -153,8 +157,12 @@ def weekpass():
         bevestig_pincode = request.form.get("bevestig_pincode")
 
         if pincode != bevestig_pincode:
-            foutmelding = "De pincodes komen niet overeen."
-            return render_template("tarieven/weekpas.html", foutmelding=foutmelding)
+            foutmelding = "De pincodes komen niet overeen!"
+            return render_template(
+                "tarieven/weekpas.html",
+                foutmelding=foutmelding,
+                formdata=request.form
+            )
 
         data = {
             "voornaam": request.form.get("voornaam"),
@@ -166,14 +174,21 @@ def weekpass():
         }
         return render_template("tarieven/bedankt.html", data=data)
 
-    return render_template("tarieven/weekpas.html")
+    return render_template("tarieven/weekpas.html", formdata={})
 
 @routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
 def jaarkaart():
     if request.method == "POST":
-        if not request.form.get("voorwaarden"):
-            foutmelding = "Je moet akkoord gaan met de algemene voorwaarden."
-            return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding)
+        pincode = request.form.get("pincode")
+        bevestig_pincode = request.form.get("bevestig_pincode")
+
+        if pincode != bevestig_pincode:
+            foutmelding = "De pincodes komen niet overeen!"
+            return render_template(
+                "tarieven/jaarkaart.html",
+                foutmelding=foutmelding,
+                formdata=request.form
+            )
 
         data = {
             "voornaam": request.form.get("voornaam"),
@@ -181,11 +196,8 @@ def jaarkaart():
             "email": request.form.get("email"),
             "telefoon": request.form.get("telefoon"),
             "geboortedatum": request.form.get("geboortedatum"),
-            "postcode": request.form.get("postcode"),
-            "gemeente": request.form.get("gemeente"),
-            "betaalmethode": request.form.get("betaalmethode"),
-            "ontleenmodus": "velo_app"
+            "pincode": pincode
         }
         return render_template("tarieven/bedankt.html", data=data)
 
-    return render_template("tarieven/jaarkaart.html")
+    return render_template("tarieven/jaarkaart.html", formdata={})

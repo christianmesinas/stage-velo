@@ -14,11 +14,17 @@
 }
 
 .terug-btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007BFF;
-  color: white;
-  border-radius: 5px;
-  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bolder;
+  border: 3px solid #2B2D42;
+  color: #2B2D42;
+  background: none;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.terug-btn:hover {
+  border-color: #D41444;
+  color: #D41444;
 }
