@@ -1,6 +1,7 @@
 import random
 import pandas as pd
 import sys
+from datetime import datetime, timedelta
 import time
 from faker import Faker
 import os
@@ -45,9 +46,11 @@ def genereer_fietsen(aantal, stations):
     fiets_id = 1
     station_slots = {station["id"]: station["capaciteit"] for station in stations}
     station_ids = list(station_slots.keys())
-    random.shuffle(station_ids)
+    random.shuffle(station_ids) #random toewijzing van stations
 
     totaal = len(station_ids)
+    #een gecontroleerde random choice waar 20 procent van de stations vol zijn, 1 procent volledig leeg zijn.
+    #de resterdende 71 procent heeft dan een willekeurig aantal fietsen en vrije slots.
     n_vol = round(totaal * 0.2)
     n_leeg = max(1, round(totaal * 0.01))
     n_partial = totaal - n_vol - n_leeg
@@ -108,78 +111,106 @@ def genereer_fietsen(aantal, stations):
 gebruikers = genereer_gebruikers(58000)
 fietsen = genereer_fietsen(10000, stations)
 
-def genereer_geschiedenis(aantal_ritten, gebruikers, fietsen, stations):
-    geschiedenis = []
-    for i in range(aantal_ritten):
-        gebruiker = random.choice(gebruikers)
-        fiets = random.choice([f for f in fietsen if f["status"] == "beschikbaar"])
-        begin_station = next((s for s in stations if s["id"] == fiets["station_id"]), None)
-        eind_station = random.choice(stations)
 
-        if begin_station and eind_station and begin_station["id"] != eind_station["id"]:
-            geschiedenis.append({
-                "gebruiker_id": gebruiker["id"],
-                "fiets_id": fiets["id"],
-                "begin_station_id": begin_station["id"],
-                "eind_station_id": eind_station["id"],
-                "duur_minuten": random.randint(2, 30)
-            })
+def gewogen_starttijd(datum):
+    #we moeten a.d.h. van de uur van de dag beslissen hoe groot de kans is dat op die moment een fiets gepakt wordt.
+    gewichten = []
+    for uur in range(24):
+        if 8 <= uur < 18: #spitsuur, piekuren
+            gewichten += [uur] * 5 #hoogste activiteit
+        elif 6 <= uur < 8 or 18 <= uur < 20: #mensen die vroeger naar en later van werk vertrekken.
+            gewichten += [uur] * 2
+        else:
+            gewichten += [uur] #daluren
+    gekozen_uur = random.choice(gewichten)
+    gekozen_minuten = random.randint(0,59)
+    return datetime.combine(datum, datetime.min.time()) + timedelta(hours=gekozen_uur,minutes=gekozen_minuten)
+
+
+def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fiets_per_dag=4): #velo gemiddelde is 4 ritten/fiets/dag
+    geschiedenis = []
+    vandaag = datetime.today().date() #simulatie telt terug van de dag van vandaag, als default de voorbije 28dagen (1maand)
+    beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
+
+    for dag_offset in range(dagen):
+        datum = vandaag - timedelta(days=dag_offset)
+        for fiets in beschikbare_fietsen:
+            for _ in range(ritten_per_fiets_per_dag):
+                gebruiker = random.choice(gebruikers)
+                begin_station = next((s for s in stations if s["id"] == fiets["station_id"]), None)
+                eind_station = random.choice([s for s in stations if s["id"] != fiets["station_id"]])
+
+                if not begin_station or not eind_station:
+                    continue
+
+                duur = random.randint(2,30)
+                starttijd = gewogen_starttijd(datum)
+                eindtijd = starttijd + timedelta(minutes=duur)
+
+                geschiedenis.append({
+                    "gebruiker_id": gebruiker["id"],
+                    "fiets_id": fiets["id"],
+                    "begin_station_id": begin_station["id"],
+                    "eind_station_id": eind_station["id"],
+                    "starttijd": starttijd.strftime("%Y-%m-%d %H:%M:%S"),
+                    "eindtijd": eindtijd.strftime("%Y-%m-%d %H:%M:%S"),
+                    "duur_minuten": duur
+                })
+
+                fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
     return geschiedenis
 
 
 
 # Simuleer ritten over tijd
-def simulatie(stations, gebruikers, fietsen, versnelling=60, interval=1, duur=10):
+def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=4):
     geschiedenis = []
     station_lookup = {s["id"]: s for s in stations}
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
+    vandaag = datetime.today().date()
 
-    for simulatie_stap in range(duur):
-        print(f"Simulatiestap {simulatie_stap + 1} / {duur}")
-        tijd_start = time.time()
+    for dag_offset in range(dagen):#de simulatie telt de voorbije aantal dagen.
+        datum = vandaag - timedelta(days=dag_offset)
+        print(f"\bSimulatie voor {datum}...")
 
         for _ in range(random.randint(5, 20)):
             if not beschikbare_fietsen:
                 print("Geen beschikbare fietsen op dit moment.")
                 break
 
-            fiets = random.choice(beschikbare_fietsen)
-            gebruiker = random.choice(gebruikers)
-            begin_station = station_lookup.get(fiets["station_id"])
-            eind_station = random.choice([s for s in stations if s["id"] != begin_station["id"]])
+        for fiets in beschikbare_fietsen:
+            for _ in range(ritten_per_fiets_per_dag):
+                gebruiker = random.choice(gebruikers)
+                begin_station = station_lookup.get(fiets["station_id"])
+                bepaling_eind_station = [s for s in stations if s["id"] != begin_station["id"]] #de eindstation mag niet hetzelfde zijn als waar de fiets wordt genomen.
+                if not begin_station or not bepaling_eind_station:
+                    continue
 
-            geschiedenis.append({
-                "gebruiker_id": gebruiker["id"],
-                "fiets_id": fiets["id"],
-                "begin_station_id": begin_station["id"],
-                "eind_station_id": eind_station["id"],
-                "duur_minuten": random.randint(2, 30)
-            })
+                eind_station = random.choice(bepaling_eind_station) #de eind_station (eindpunt van rit) moet random bepaalt worden.
+                duur = random.randint(2,30)
+                starttijd = gewogen_starttijd(datum)
+                eindtijd = starttijd + timedelta(minutes=duur)
 
-            fiets["station_id"] = eind_station["id"]
-            begin_station["free_bikes"] = max(0, begin_station["free_bikes"] - 1)
-            begin_station["free_slots"] += 1
-            eind_station["free_bikes"] += 1
-            eind_station["free_slots"] = max(0, eind_station["free_slots"] - 1)
-            print(f"- Fiets {fiets['id']} verplaatst van {begin_station['name']} naar {eind_station['name']}")
+                geschiedenis.append({
+                    "gebruiker_id": gebruiker["id"],
+                    "fiets_id": fiets["id"],
+                    "begin_station_id": begin_station["id"],
+                    "eind_station_id": eind_station["id"],
+                    "starttijd": starttijd.strftime("%Y-%m-%d %H:%M:%S"),
+                    "eindtijd": eindtijd.strftime("%Y-%m-%d %H:%M:%S"),
+                    "duur_minuten": duur
+                })
 
-        tijd_einde = time.time()
-        wachttijd = max(0, interval - (tijd_einde - tijd_start))
-        time.sleep(wachttijd)
+                fiets["station_id"] = eind_station["id"] #de fiets moet gelinkt worden aan de eindstation.
+                begin_station["free_bikes"] = max(0, begin_station["free_bikes"] - 1)
+                begin_station["free_slots"] += 1 #er komt een slot vrij bij de station waar de fiets wordt gepakt.
+                eind_station["free_bikes"] += 1 #er komt een fiets erbij bij de station waar de fiets wordt achter gelaten.
+                eind_station["free_slots"] = max(0, eind_station["free_slots"] - 1)
+                print(f"- {starttijd.strftime('%H:%M')} Fiets {fiets['id']} van {begin_station['name']} naar {eind_station['name']} ({duur} min)")
 
-    print(f"\nSimulatie voltooid met {len(geschiedenis)} ritten.")
+    print(f"Simulatie voltooid met {len(geschiedenis)} ritten over {dagen}")
     return geschiedenis
 
 
+simulatie(stations,gebruikers,fietsen, 60)
 
-simulatie(stations,gebruikers,fietsen, 60,1,30)
-
-# Alleen uitvoeren als script direct wordt gestart
-#if __name__ == "__main__":
- #   gebruikers = genereer_gebruikers(58000)
- #   fietsen = genereer_fietsen(10000, stations)
-
-#    if "-s" in sys.argv:
-#        simulatie(stations, gebruikers, fietsen, versnelling=60, interval=1, duur=30)
-#    else:
-#        print("Gebruik '-s' om de simulatie te starten.")
