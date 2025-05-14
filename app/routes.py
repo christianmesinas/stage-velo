@@ -9,6 +9,8 @@ import os
 from app.api import api as api
 from app.database.models import Usertable
 from app.database import SessionLocal
+from app.simulation import simulation
+
 
 routes = Blueprint("routes", __name__)
 
@@ -106,6 +108,12 @@ def profile():
         return redirect(url_for("routes.login"))
     return render_template("profile.html")
 
+@routes.route("/help")
+def help():
+    return render_template("help.html")
+
+
+
 @routes.route("/maps")
 def markers():
     markers = []
@@ -189,3 +197,39 @@ def jaarkaart():
         return render_template("tarieven/bedankt.html", data=data)
 
     return render_template("tarieven/jaarkaart.html")
+
+
+
+
+# ======================
+# ADMIN ROUTE
+# ======================
+
+
+
+@routes.route("/admin", methods=["GET", "POST"])
+def admin():
+    boodschap = None
+    ritten = []
+
+    if request.method == "POST":
+        try:
+            gebruikers_aantal = int(request.form.get("gebruikers"))
+            fietsen_aantal = int(request.form.get("fietsen"))
+            duur = int(request.form.get("duur"))
+            interval = int(request.form.get("interval"))
+            versnelling = int(request.form.get("versnelling"))
+
+            gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
+            fietsen = simulation.genereer_fietsen(fietsen_aantal, simulation.stations)
+            ritten = simulation.simulatie(simulation.stations, gebruikers, fietsen, versnelling, interval, duur)
+
+            boodschap = f"✅ Simulatie is gestart met {len(ritten)} ritten."
+
+        except Exception as e:
+            boodschap = f"❌ Fout bij simulatie: {str(e)}"
+
+    return render_template("admin.html", boodschap=boodschap, ritten=ritten)
+
+
+

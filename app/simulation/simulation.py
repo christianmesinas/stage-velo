@@ -171,8 +171,10 @@ def simulatie(stations, gebruikers, fietsen, versnelling=60, interval=1, duur=10
     return geschiedenis
 
 
-
-simulatie(stations,gebruikers,fietsen, 60,1,30)
+if __name__ == "__main__":
+    gebruikers = genereer_gebruikers(58000)
+    fietsen = genereer_fietsen(10000, stations)
+    simulatie(stations, gebruikers, fietsen, 60, 1, 30)
 
 # Alleen uitvoeren als script direct wordt gestart
 #if __name__ == "__main__":

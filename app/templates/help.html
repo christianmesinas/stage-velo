@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/help.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="background">
+
+    <h1>FAQs</h1>
+
+    <div class="wrapper">
+
+      <div class="container">
+        <div class="question">
+          How do I verify my email?
+        </div>
+        <div class="answercont">
+          <div class="answer">
+            Click the link in the verification email from verify@codepen.io (be sure to check your spam folder or other email tabs if it's not in your inbox).<br><br>
+            <a href="https://blog.codepen.io/documentation/features/email-verification/#how-do-i-verify-my-email-2">How to Verify Email Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="question">
+          My Pen loads infinitely or crashes the browser.
+        </div>
+        <div class="answercont">
+          <div class="answer">
+            Add ?turn_off_js=true to the URL to disable JavaScript temporarily.<br><br>
+            <a href="https://blog.codepen.io/documentation/features/turn-off-javascript-in-previews/">How to Disable JavaScript Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="question">
+          How do I contact the creator of a Pen?
+        </div>
+        <div class="answercont">
+          <div class="answer">
+            Leave a comment on the Pen or use the Details page.<br><br>
+            <a href="https://blog.codepen.io/documentation/faq/how-do-i-contact-the-creator-of-a-pen/">How to Contact Creator of a Pen Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="question">
+          What version of [library] does CodePen use?
+        </div>
+        <div class="answercont">
+          <div class="answer">
+            Current library versions can be found <a href="https://codepen.io/versions">here</a>.
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="question">
+          What are forks?
+        </div>
+        <div class="answercont">
+          <div class="answer">
+            A fork is a complete copy of a Pen or Project that you can modify.<br><br>
+            <a href="https://blog.codepen.io/documentation/features/forks/">Learn More About Forks</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+
+    <script>
+        let question = document.querySelectorAll(".question");
+
+question.forEach(question => {
+  question.addEventListener("click", event => {
+    const active = document.querySelector(".question.active");
+    if(active && active !== question ) {
+      active.classList.toggle("active");
+      active.nextElementSibling.style.maxHeight = 0;
+    }
+    question.classList.toggle("active");
+    const answer = question.nextElementSibling;
+    if(question.classList.contains("active")){
+      answer.style.maxHeight = answer.scrollHeight + "px";
+    } else {
+      answer.style.maxHeight = 0;
+    }
+  })
+})
+
+
+
+
+
+    </script>
+{% endblock %}

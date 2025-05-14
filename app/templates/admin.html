@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <h1>Welkom Admin</h1>
+
+    <h2>📊 Fietsenstatistiek</h2>
+    <ul>
+        <li>Totaal fietsen: 10000</li>
+        <li>Beschikbaar: 8200</li>
+        <li>In onderhoud: 500</li>
+        <li>Onderweg: 1300</li>
+    </ul>
+
+    <h2>📍 Stationsoverzicht</h2>
+    <ul>
+        <li>Groenplaats – 24 fietsen – 6 vrije plaatsen</li>
+        <li>Berchem – 18 fietsen – 12 vrije plaatsen</li>
+        <li>Meir – 15 fietsen – 5 vrije plaatsen</li>
+    </ul>
+
+    <h2>🛠 Simulatie starten</h2>
+
+    {% if boodschap %}
+        <div style="margin-top: 20px; background-color: #e1f5e1; padding: 10px; border-radius: 5px;">
+            {{ boodschap }}
+        </div>
+    {% endif %}
+
+    <form method="post" action="/admin">
+        <label>Aantal gebruikers:<br><input type="number" name="gebruikers" value="58000"></label><br>
+        <label>Aantal fietsen:<br><input type="number" name="fietsen" value="10000"></label><br>
+        <label>Simulatieduur (stappen):<br><input type="number" name="duur" value="30"></label><br>
+        <label>Interval (seconden):<br><input type="number" name="interval" value="1"></label><br>
+        <label>Versnelling:<br><input type="number" name="versnelling" value="60"></label><br>
+        <button type="submit">Start simulatie</button>
+    </form>
+
+{% if ritten %}
+    <h2>📋 Resultaten van simulatie</h2>
+    <ul>
+        {% for rit in ritten %}
+            <li>
+                Gebruiker {{ rit.gebruiker_id }} reed met fiets {{ rit.fiets_id }}
+                van station {{ rit.begin_station_id }} naar {{ rit.eind_station_id }}
+                ({{ rit.duur_minuten }} min)
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+
+</body>
+</html>
