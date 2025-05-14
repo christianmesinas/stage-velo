@@ -2,7 +2,7 @@ import random
 import pandas as pd
 import sys
 import time
-
+from datetime import datetime, timedelta
 import psycopg2
 from faker import Faker
 import os
@@ -211,17 +211,7 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     return geschiedenis
 
 
-
 simulatie(stations,gebruikers,fietsen, 60)
-# Alleen uitvoeren als script direct wordt gestart
-#if __name__ == "__main__":
- #   gebruikers = genereer_gebruikers(58000)
- #   fietsen = genereer_fietsen(10000, stations)
-
-#    if "-s" in sys.argv:
-#        simulatie(stations, gebruikers, fietsen, versnelling=60, interval=1, duur=30)
-#    else:
-#        print("Gebruik '-s' om de simulatie te starten.")
 
 
 conn = psycopg2.connect(
