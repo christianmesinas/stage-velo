@@ -171,7 +171,7 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
     vandaag = datetime.today().date()
 
-    for dag_offset in range(dagen):
+    for dag_offset in range(dagen):#de simulatie telt de voorbije aantal dagen.
         datum = vandaag - timedelta(days=dag_offset)
         print(f"\bSimulatie voor {datum}...")
 
@@ -180,11 +180,11 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
             for _ in range(ritten_per_fiets_per_dag):
                 gebruiker = random.choice(gebruikers)
                 begin_station = station_lookup.get(fiets["station_id"])
-                bepaling_eind_station = [s for s in stations if s["id"] != begin_station["id"]]
+                bepaling_eind_station = [s for s in stations if s["id"] != begin_station["id"]] #de eindstation mag niet hetzelfde zijn als waar de fiets wordt genomen.
                 if not begin_station or not bepaling_eind_station:
                     continue
 
-                eind_station = random.choice(bepaling_eind_station)
+                eind_station = random.choice(bepaling_eind_station) #de eind_station (eindpunt van rit) moet random bepaalt worden.
                 duur = random.randint(2,30)
                 starttijd = gewogen_starttijd(datum)
                 eindtijd = starttijd + timedelta(minutes=duur)
@@ -199,10 +199,10 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
                     "duur_minuten": duur
                 })
 
-                fiets["station_id"] = eind_station["id"]
+                fiets["station_id"] = eind_station["id"] #de fiets moet gelinkt worden aan de eindstation.
                 begin_station["free_bikes"] = max(0, begin_station["free_bikes"] - 1)
-                begin_station["free_slots"] += 1
-                eind_station["free_bikes"] += 1
+                begin_station["free_slots"] += 1 #er komt een slot vrij bij de station waar de fiets wordt gepakt.
+                eind_station["free_bikes"] += 1 #er komt een fiets erbij bij de station waar de fiets wordt achter gelaten.
                 eind_station["free_slots"] = max(0, eind_station["free_slots"] - 1)
                 print(f"- {starttijd.strftime('%H:%M')} Fiets {fiets['id']} van {begin_station['name']} naar {eind_station['name']} ({duur} min)")
 
