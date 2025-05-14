@@ -95,3 +95,8 @@ def login():
     return render_template("login.html",
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"))
+
+
+@routes.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
