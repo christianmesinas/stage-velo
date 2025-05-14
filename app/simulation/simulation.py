@@ -161,7 +161,6 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
     return geschiedenis
 
 
-
 # Simuleer ritten over tijd
 def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=4):
     geschiedenis = []
@@ -212,5 +211,5 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     return geschiedenis
 
 
-simulatie(stations,gebruikers,fietsen, 60)
+#simulatie(stations,gebruikers,fietsen, 60)
 

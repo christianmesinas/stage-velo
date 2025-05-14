@@ -216,13 +216,10 @@ def admin():
         try:
             gebruikers_aantal = int(request.form.get("gebruikers"))
             fietsen_aantal = int(request.form.get("fietsen"))
-            duur = int(request.form.get("duur"))
-            interval = int(request.form.get("interval"))
-            versnelling = int(request.form.get("versnelling"))
-
+            dagen = int(request.form.get("dagen"))
             gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
             fietsen = simulation.genereer_fietsen(fietsen_aantal, simulation.stations)
-            ritten = simulation.simulatie(simulation.stations, gebruikers, fietsen, versnelling, interval, duur)
+            ritten = simulation.simulatie(simulation.stations, gebruikers, fietsen, dagen)
 
             boodschap = f"✅ Simulatie is gestart met {len(ritten)} ritten."
 
