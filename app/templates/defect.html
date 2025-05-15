@@ -2,7 +2,7 @@
 
 {% block head %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/defect') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/defect.css') }}">
 
 {% endblock %}
 
@@ -12,8 +12,13 @@
 
 {% block content %}
 
-<h1>Fiets defect?</h1>
-<p>Pech</p>
+<div class="card-slider">
+    <div class="card-item">
+     <h2 style="margin:auto; width:fit-content">Fiets defect?</h2>
+        <p style="margin:auto; width:fit-content">PECH</p>
+    </div>
+</div>
+
 {% endblock %}
 
 
