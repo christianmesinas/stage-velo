@@ -18,11 +18,14 @@
         <!-- Profielfoto -->
         <div class="mb-4">
             <label class="form-label">Profielfoto:</label><br>
-            {% if user.profile_picture %}
-                <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Uw profielfoto" class="img-thumbnail" style="max-width: 200px;">
+            {% if user.titel == 'vrouw' %}
+              <img src="{{ url_for('static', filename='img/vrouw_fiets.png') }}" alt="Vrouw op fiets" class="img-thumbnail">
+            {% elif user.titel == 'heer' %}
+              <img src="{{ url_for('static', filename='img/heer_fiets.png') }}" alt="Heer op fiets" class="img-thumbnail">
             {% else %}
-                <img src="{{ url_for('static', filename='img/default.png') }}" alt="Standaard profielfoto" class="img-thumbnail" style="max-width: 200px;">
+              <img src="{{ url_for('static', filename='img/default.png') }}" alt="Standaard profielfoto" class="img-thumbnail">
             {% endif %}
+
         </div>
 
         <!-- Gebruikersinformatie -->

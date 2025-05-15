@@ -1,19 +1,24 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String
-
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, DECIMAL
-from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, DECIMAL, create_engine
+from sqlalchemy.orm import declarative_base, relationship
 from datetime import datetime
 
 Base = declarative_base()
 
 class Usertable(Base):
     __tablename__ = "inlog_gegevens"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(String, unique=True)  # Добавлено
+    email = Column(String, unique=True)    # Добавлено
+    name = Column(String)                  # Добавлено
+    profile_picture = Column(String)      # Добавлено
 
-    user_id = Column(String, primary_key=True)
-    email = Column(String, unique=True, nullable=False)
-    name = Column(String)
-    profile_picture = Column(String, nullable=False, default="img/default.png")
+    voornaam = Column(String)
+    achternaam = Column(String)
+    telefoonnummer = Column(String)
+    titel = Column(String)  # 'heer' of 'vrouw'
+    abonnement = Column(String, default="Geen abonnement")
+    taal = Column(String, default="nl")
+    darkmode = Column(String, default="False")  # als string voor eenvoud
 
     @classmethod
     def get_or_create(cls, db, user_id, email, name, profile_picture):
