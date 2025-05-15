@@ -33,86 +33,61 @@ class Usertable(Base):
 
 
 
-class User(Base):
-    __tablename__ = 'users'
+class Gebruiker(Base):
+    __tablename__ = 'gebruikers'
 
     # De ID wordt automatisch gegenereerd
-    id = Column(Integer, primary_key=True, autoincrement=True)  # autoincrement zorgt ervoor dat de ID automatisch verhoogt
+    id = Column(Integer, primary_key=True)
     voornaam = Column(String)
     achternaam = Column(String)
     email = Column(String)
     abonnementstype = Column(String)
-    registratie_datum = Column(DateTime, default=datetime)
     postcode = Column(String)
-    stad = Column(String)
 
-    rentals = relationship('Rental', back_populates='user')
+    rentals = relationship('Geschiedenis', back_populates='gebruiker')
 
 class Station(Base):
     __tablename__ = 'stations'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)  # autoincrement zorgt voor automatische generatie
+    id = Column(Integer, primary_key=True)  # autoincrement zorgt voor automatische generatie
     naam = Column(String)
-    adres = Column(String)
+    straat = Column(String)
+    postcode = Column(String)
     latitude = Column(DECIMAL)
     longitude = Column(DECIMAL)
     capaciteit = Column(Integer)
+    status = Column(String)
     free_slots = Column(Integer)
     parked_bikes = Column(Integer)
 
-    bike_locations = relationship('BikeLocation', back_populates='station')
-    start_rentals = relationship('Rental', foreign_keys='Rental.start_station_id', back_populates='start_station')
-    end_rentals = relationship('Rental', foreign_keys='Rental.eind_station_id', back_populates='end_station')
+    start_rentals = relationship('Geschiedenis', foreign_keys='geschiedenis.start_station_id', back_populates='start_station')
+    end_rentals = relationship('Geschiedenis', foreign_keys='geschiedenis.eind_station_id', back_populates='eind_station')
 
-class Bike(Base):
-    __tablename__ = 'bikes'
+class Fiets(Base):
+    __tablename__ = 'fietsen'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)  # autoincrement voor automatische generatie
-    type = Column(String)
+    id = Column(Integer, primary_key=True)  # autoincrement voor automatische generatie
+    station_id = Column(Integer, ForeignKey('stations.id'))
     status = Column(String)
 
-    rentals = relationship('Rental', back_populates='bike')
-    maintenance = relationship('Maintenance', back_populates='bike')
-    bike_locations = relationship('BikeLocation', back_populates='bike')
+    geschiedenis = relationship('Geschiedenis', back_populates='fiets')
 
-class Rental(Base):
-    __tablename__ = 'rentals'
+class Geschiedenis(Base):
+    __tablename__ = 'geschiedenis'
 
     id = Column(Integer, primary_key=True, autoincrement=True)  # autoincrement voor automatische generatie
-    user_id = Column(Integer, ForeignKey('users.id'))
-    bike_id = Column(Integer, ForeignKey('bikes.id'))
+    gebruiker_id = Column(Integer, ForeignKey('gebruikers.id'))
+    fiets_id = Column(Integer, ForeignKey('fietsen.id'))
     start_station_id = Column(Integer, ForeignKey('stations.id'))
     eind_station_id = Column(Integer, ForeignKey('stations.id'))
     starttijd = Column(DateTime, default=datetime.utcnow)
     eindtijd = Column(DateTime)
-    prijs = Column(DECIMAL)
+    duur_minuten = Column(DECIMAL)
 
-    user = relationship('User', back_populates='rentals')
-    bike = relationship('Bike', back_populates='rentals')
-    start_station = relationship('Station', foreign_keys=[start_station_id], back_populates='start_rentals')
-    end_station = relationship('Station', foreign_keys=[eind_station_id], back_populates='end_rentals')
-
-
-class BikeLocation(Base):
-    __tablename__ = 'bike_locations'
-
-    bike_id = Column(Integer, ForeignKey('bikes.id'), primary_key=True)
-    station_id = Column(Integer, ForeignKey('stations.id'), primary_key=True)
-    timestamp = Column(DateTime, default=datetime.utcnow)
-
-    bike = relationship('Bike', back_populates='bike_locations')
-    station = relationship('Station', back_populates='bike_locations')
-
-class Maintenance(Base):
-    __tablename__ = 'maintenance'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)  # autoincrement zorgt voor automatische generatie
-    bike_id = Column(Integer, ForeignKey('bikes.id'))
-    datum = Column(DateTime, default=datetime.utcnow)
-    beschrijving = Column(String)
-    status = Column(String)
-
-    bike = relationship('Bike', back_populates='maintenance')
+    gebruiker = relationship('Gebruiker', back_populates='geschiedenis')
+    bike = relationship('Fiets', back_populates='geschiedenis')
+    start_station = relationship('Station', foreign_keys=[start_station_id], back_populates='start_geschiedenis')
+    end_station = relationship('Station', foreign_keys=[eind_station_id], back_populates='end_geschiedenis')
 
 
 

@@ -3,6 +3,8 @@ import pandas as pd
 import sys
 from datetime import datetime, timedelta
 import time
+import io
+import psycopg2
 from faker import Faker
 import os
 
@@ -12,6 +14,7 @@ csv_path = os.path.join(script_dir, "velo.csv")
 stations_df = pd.read_csv(csv_path)
 
 fake = Faker()
+antwerpen_postcodes = ['2000','2018','2020','2030','2040','2050','2060','2100','2130','2140','2150','2170','2180','2600','2610','2610','2660']
 
 # Verwerk stationsgegevens
 stations_df.dropna(subset=["Naam"], inplace=True)
@@ -29,6 +32,7 @@ for _, row in stations_df.iterrows():
         "free_slots": row.get("Aantal_plaatsen", 0)
     })
 
+
 # Genereer gebruikers
 def genereer_gebruikers(aantal):
     gebruikers = []
@@ -37,6 +41,9 @@ def genereer_gebruikers(aantal):
             "id": i + 1,
             "voornaam": fake.first_name(),
             "achternaam": fake.last_name(),
+            "email": f"{fake.last_name()}.{fake.first_name()}@example.com".lower(),
+            "postcode": random.choice(antwerpen_postcodes),
+            "abonnementstype": random.choice(['Basis','Premium','Flex']),
         })
     return gebruikers
 
@@ -108,6 +115,7 @@ def genereer_fietsen(aantal, stations):
 
     return fietsen
 
+
 gebruikers = genereer_gebruikers(58000)
 fietsen = genereer_fietsen(4200, stations)
 
@@ -133,7 +141,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
 
     for dag_offset in range(dagen):
-        datum = vandaag - timedelta(days=dag_offset)
+        datum = vandaag - timedelta(days=(dagen - dag_offset - 1))
         for fiets in beschikbare_fietsen:
             for _ in range(ritten_per_fiets_per_dag):
                 gebruiker = random.choice(gebruikers)
@@ -160,6 +168,17 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                 fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
     return geschiedenis
 
+geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
+
+def geschiedenis_to_csv_buffer(geschiedenis):
+    buffer = io.StringIO()
+    for rit in geschiedenis:
+        buffer.write(
+            f"{rit['gebruiker_id']},{rit['fiets_id']},{rit['begin_station_id']},"
+            f"{rit['eind_station_id']},{rit['starttijd']},{rit['eindtijd']},{rit['duur_minuten']}\n"
+        )
+    buffer.seek(0)
+    return buffer
 
 # Simuleer ritten over tijd
 def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=4):
@@ -213,3 +232,76 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
 
 #simulatie(stations,gebruikers,fietsen, 60)
 
+
+conn = psycopg2.connect(
+    dbname="velo_community",
+    user="admin",
+    password="Velo123",
+    host="localhost",
+    port="5433"
+)
+cur = conn.cursor()
+
+def push_to_db():
+    cur.execute("DELETE FROM geschiedenis")
+    cur.execute("DELETE FROM fietsen")
+    cur.execute("DELETE FROM stations")
+    cur.execute("DELETE FROM gebruikers")
+    cur.executemany("""
+            INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, [
+        (
+            g['id'],
+            g['voornaam'],
+            g['achternaam'],
+            g['email'],
+            g['abonnementstype'],
+            g['postcode']
+        ) for g in gebruikers
+    ])
+
+    cur.executemany("""
+            INSERT INTO stations (id, naam, straat, postcode, capaciteit, status, parked_bikes, free_slots)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, [
+        (
+            s['id'],
+            s['name'],
+            s['straat'],
+            s['postcode'],
+            s['capaciteit'],
+            s['status'],
+            s['free_bikes'],
+            s['free_slots']
+        ) for s in stations
+    ])
+
+    cur.executemany("""
+            INSERT INTO fietsen (id, station_id, status)
+            VALUES (%s, %s, %s)
+        """, [
+        (
+            f['id'],
+            f['station_id'],
+            f['status']
+        ) for f in fietsen
+    ])
+    updates = [(rit['eind_station_id'], rit['fiets_id']) for rit in geschiedenis]
+    cur.executemany("""
+        UPDATE fietsen
+        SET station_id = %s
+        WHERE id = %s
+    """, updates)
+
+    # Gebruik COPY voor geschiedenis omdat COPY beste methode is voor bulk data te pushen naar de DB
+    csv_buffer = geschiedenis_to_csv_buffer(geschiedenis)
+    cur.copy_expert("""
+            COPY geschiedenis (gebruiker_id, fiets_id, start_station_id, eind_station_id, starttijd, eindtijd, duur_minuten)
+            FROM STDIN WITH (FORMAT csv)
+        """, csv_buffer)
+
+push_to_db()
+conn.commit()
+cur.close()
+conn.close()
