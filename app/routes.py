@@ -1,9 +1,11 @@
-from flask import Blueprint, render_template, session, redirect, url_for, request
+from flask import Blueprint, send_file, session, redirect, url_for, request
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
 from urllib.parse import quote_plus, urlencode
 from os import environ as env
 import requests
+import csv
+import uuid
 import os
 
 from app.api import api as api
@@ -207,10 +209,12 @@ def jaarkaart():
 
 
 
+
 @routes.route("/admin", methods=["GET", "POST"])
 def admin():
     boodschap = None
     ritten = []
+    csv_bestand = None
 
     if request.method == "POST":
         try:
@@ -221,12 +225,25 @@ def admin():
             fietsen = simulation.genereer_fietsen(fietsen_aantal, simulation.stations)
             ritten = simulation.simulatie(simulation.stations, gebruikers, fietsen, dagen)
 
+            # Maak een unieke bestandsnaam
+            csv_bestand = f"/tmp/ritten_{uuid.uuid4().hex}.csv"
+            with open(csv_bestand, mode="w", newline="") as file:
+                writer = csv.writer(file)
+                writer.writerow(["gebruiker_id", "fiets_id", "begin_station_id", "eind_station_id", "duur_minuten"])
+                for rit in ritten:
+                    writer.writerow([
+                        rit.gebruiker_id,
+                        rit.fiets_id,
+                        rit.begin_station_id,
+                        rit.eind_station_id,
+                        rit.duur_minuten
+                    ])
+
             boodschap = f"✅ Simulatie is gestart met {len(ritten)} ritten."
 
         except Exception as e:
             boodschap = f"❌ Fout bij simulatie: {str(e)}"
 
-    return render_template("admin.html", boodschap=boodschap, ritten=ritten)
-
+    return render_template("admin.html", boodschap=boodschap, ritten=ritten, csv_bestand=csv_bestand)
 
 

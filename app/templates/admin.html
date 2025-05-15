@@ -38,6 +38,27 @@
         <button type="submit">Start simulatie</button>
     </form>
 
+    <div id="spinner" style="display:none;">
+    <p>Simulatie wordt uitgevoerd...</p>
+    <img src="https://tenor.com/en-GB/view/loading-gif-20768857" alt="Bezig met laden">
+</div>
+
+    {% if ritten %}
+    <h2>📋 Resultaten van simulatie</h2>
+
+    <p><a href="{{ csv_bestand }}" download>📥 Download CSV-bestand</a></p>
+
+    <ul>
+        {% for rit in ritten %}
+            <li>
+                Gebruiker {{ rit.gebruiker_id }} reed met fiets {{ rit.fiets_id }}
+                van station {{ rit.begin_station_id }} naar {{ rit.eind_station_id }}
+                ({{ rit.duur_minuten }} min)
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
 {% if ritten %}
     <h2>📋 Resultaten van simulatie</h2>
     <ul>
@@ -52,6 +73,10 @@
 {% endif %}
 
 
-
+<script>
+    function toonSpinner() {
+        document.getElementById("spinner").style.display = "block";
+    }
+</script>
 </body>
 </html>
