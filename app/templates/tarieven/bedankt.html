@@ -7,20 +7,22 @@
 {% endblock %}
 
 {% block content %}
-<div class="bedankt-container">
-  <h2>🎉 Bedankt voor je aanvraag!</h2>
-  <p>We hebben je gegevens goed ontvangen.</p>
+<div class="card-slider">
+    <div class="card-item">
+      <h2>🎉 Bedankt voor je aanvraag!</h2>
+      <p style="padding: 14px;">We hebben je gegevens goed ontvangen.</p>
 
-  <ul>
-    <li><strong>Voornaam:</strong> {{ data.voornaam }}</li>
-    <li><strong>Achternaam:</strong> {{ data.achternaam }}</li>
-    <li><strong>E-mail:</strong> {{ data.email }}</li>
-    <li><strong>Telefoonnummer:</strong> {{ data.telefoon }}</li>
-    <li><strong>Geboortedatum:</strong> {{ data.geboortedatum }}</li>
-  </ul>
+      <ul>
+        <li><strong>Voornaam:</strong> {{ data.voornaam }}</li>
+        <li><strong>Achternaam:</strong> {{ data.achternaam }}</li>
+        <li><strong>E-mail:</strong> {{ data.email }}</li>
+        <li><strong>Telefoonnummer:</strong> {{ data.telefoon }}</li>
+        <li><strong>Geboortedatum:</strong> {{ data.geboortedatum }}</li>
+      </ul>
 
-  <p>Je gekozen pincode is veilig opgeslagen. Je kunt nu gebruik maken van je pas!</p>
+      <p style="padding: 14px;">Je gekozen pincode is veilig opgeslagen. Je kunt nu gebruik maken van je pas!</p><br>
 
-  <a href="/" class="terug-btn">Ga terug naar startpagina</a>
+      <a href="/" class="terug-btn">Ga terug naar startpagina</a>
+    </div>
 </div>
 {% endblock %}

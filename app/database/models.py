@@ -83,3 +83,4 @@ class Geschiedenis(Base):
     end_station = relationship('Station', foreign_keys=[eind_station_id], back_populates='end_geschiedenis')
 
 
+
