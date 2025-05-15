@@ -3,7 +3,7 @@ import pandas as pd
 import sys
 from datetime import datetime, timedelta
 import time
-
+import io
 import psycopg2
 from faker import Faker
 import os
@@ -168,8 +168,19 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                 fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
     return geschiedenis
 
-
 geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
+
+def geschiedenis_to_csv_buffer(geschiedenis):
+    buffer = io.StringIO()
+    for rit in geschiedenis:
+        buffer.write(
+            f"{rit['gebruiker_id']},{rit['fiets_id']},{rit['begin_station_id']},"
+            f"{rit['eind_station_id']},{rit['starttijd']},{rit['eindtijd']},{rit['duur_minuten']}\n"
+        )
+    buffer.seek(0)
+    return buffer
+
+
 # Simuleer ritten over tijd
 def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=4):
     geschiedenis = []
@@ -233,45 +244,50 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 def push_to_db():
-    # cur.execute("DELETE FROM gebruikers")
-    # cur.execute("DELETE FROM fietsen")
-    # cur.execute("DELETE FROM stations")
-    # cur.execute("DELETE FROM geschiedenis")
-    for gebruiker in gebruikers:
-        cur.execute("""
-        INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
-        VALUES (%s, %s, %s, %s, %s, %s)
-        """,(
-            gebruiker['id'],
-            gebruiker['voornaam'],
-            gebruiker['achternaam'],
-            gebruiker['email'],
-            gebruiker['abonnementstype'],
-            gebruiker['postcode']
-        ))
+    cur.execute("DELETE FROM geschiedenis")
+    cur.execute("DELETE FROM fietsen")
+    cur.execute("DELETE FROM stations")
+    cur.execute("DELETE FROM gebruikers")
+    cur.executemany("""
+            INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, [
+        (
+            g['id'],
+            g['voornaam'],
+            g['achternaam'],
+            g['email'],
+            g['abonnementstype'],
+            g['postcode']
+        ) for g in gebruikers
+    ])
 
-    for station in stations:
-        cur.execute("""
-        INSERT INTO stations (id,naam, straat, postcode, capaciteit, status, parked_bikes, free_slots) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """,(
-            station['id'],
-            station['name'],
-            station['straat'],
-            station['postcode'],
-            station['capaciteit'],
-            station['status'],
-            station['free_bikes'],
-            station['free_slots']
-        ))
+    cur.executemany("""
+            INSERT INTO stations (id, naam, straat, postcode, capaciteit, status, parked_bikes, free_slots)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, [
+        (
+            s['id'],
+            s['name'],
+            s['straat'],
+            s['postcode'],
+            s['capaciteit'],
+            s['status'],
+            s['free_bikes'],
+            s['free_slots']
+        ) for s in stations
+    ])
 
-    for fiets in fietsen:
-        cur.execute("""
-           INSERT INTO fietsen (id, station_id, status) VALUES (%s, %s, %s)
-           """, (
-            fiets['id'],
-            fiets['station_id'],
-            fiets['status']
-        ))
+    cur.executemany("""
+            INSERT INTO fietsen (id, station_id, status)
+            VALUES (%s, %s, %s)
+        """, [
+        (
+            f['id'],
+            f['station_id'],
+            f['status']
+        ) for f in fietsen
+    ])
     updates = [(rit['eind_station_id'], rit['fiets_id']) for rit in geschiedenis]
     cur.executemany("""
         UPDATE fietsen
@@ -279,19 +295,13 @@ def push_to_db():
         WHERE id = %s
     """, updates)
 
-    for rit in geschiedenis:
-        cur.execute("""
-        INSERT INTO geschiedenis (gebruiker_id, fiets_id, start_station_id, eind_station_id, starttijd, eindtijd, duur_minuten)
-        VALUES (%s, %s , %s, %s, %s, %s, %s)
-        """,(
-            rit['gebruiker_id'],
-            rit['fiets_id'],
-            rit['begin_station_id'],
-            rit['eind_station_id'],
-            rit['starttijd'],
-            rit['eindtijd'],
-            rit['duur_minuten']
-        ))
+    # Gebruik COPY voor geschiedenis omdat COPY beste methode is voor bulk data te pushen naar de DB
+    csv_buffer = geschiedenis_to_csv_buffer(geschiedenis)
+    cur.copy_expert("""
+            COPY geschiedenis (gebruiker_id, fiets_id, start_station_id, eind_station_id, starttijd, eindtijd, duur_minuten)
+            FROM STDIN WITH (FORMAT csv)
+        """, csv_buffer)
+
 push_to_db()
 conn.commit()
 cur.close()
