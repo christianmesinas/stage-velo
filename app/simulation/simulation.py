@@ -13,6 +13,7 @@ csv_path = os.path.join(script_dir, "velo.csv")
 stations_df = pd.read_csv(csv_path)
 
 fake = Faker()
+antwerpen_postcodes = ['2000','2018','2020','2030','2040','2050','2060','2100','2130','2140','2150','2170','2180','2600','2610','2610','2660']
 
 # Verwerk stationsgegevens
 stations_df.dropna(subset=["Naam"], inplace=True)
@@ -39,6 +40,9 @@ def genereer_gebruikers(aantal):
             "id": i + 1,
             "voornaam": fake.first_name(),
             "achternaam": fake.last_name(),
+            "email": f"{fake.last_name()}.{fake.first_name()}@example.com".lower(),
+            "postcode": random.choice(antwerpen_postcodes),
+            "abonnementstype": random.choice(['Basis','Premium','Flex']),
         })
     return gebruikers
 
@@ -211,7 +215,7 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     return geschiedenis
 
 
-simulatie(stations,gebruikers,fietsen, 60)
+#simulatie(stations,gebruikers,fietsen, 60)
 
 
 conn = psycopg2.connect(
@@ -223,62 +227,64 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-for gebruiker in gebruikers:
-    cur.execute("""
-        INSERT INTO users (id, voornaam, achternaam, email, abonnementstype, registratie_datum, postcode, stad)
-        VALUES (%s, %s, %s, %s, %s, NOW(), %s, %s)
-    """, (
-        gebruiker["id"],
-        gebruiker["voornaam"],
-        gebruiker["achternaam"],
-        f"{gebruiker['voornaam']}.{gebruiker['achternaam']}@example.com".lower(),
-        random.choice(["Basis", "Premium", "Flex"]),
-        fake.postcode(),
-        fake.city()
-    ))
+def push_to_db():
+    for gebruiker in gebruikers:
+        cur.execute("""
+        INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """,(
+            gebruiker['id'],
+            gebruiker['voornaam'],
+            gebruiker['achternaam'],
+            gebruiker['email'],
+            gebruiker['abonnementstype'],
+            gebruiker['postcode']
+        ))
+push_to_db()
 
-for fiets in fietsen:
-    cur.execute("""
-        INSERT INTO bikes (id, type, status) VALUES (%s, %s, %s)
-    """, (
-        fiets["id"],
-        random.choice(["stadsfiets", "elektrisch"]),
-        fiets["status"]
-    ))
 
-for station in stations:
-    cur.execute("""
-        INSERT INTO stations (id, naam, adres, latitude, longitude, capaciteit, free_slots, parked_bikes)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-    """, (
-        station["id"],
-        station["name"],
-        station["straat"],
-        fake.latitude(),
-        fake.longitude(),
-        station["capaciteit"],
-        station["free_slots"],
-        station["free_bikes"]
-    ))
-
-from datetime import datetime, timedelta
-
-for rit in genereer_geschiedenis(10000, gebruikers, fietsen, stations):
-    starttijd = datetime.now() - timedelta(minutes=rit["duur_minuten"])
-    eindtijd = datetime.now()
-
-    cur.execute("""
-        INSERT INTO rentals (user_id, bike_id, start_station_id, eind_station_id, starttijd, eindtijd, prijs)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
-    """, (
-        rit["gebruiker_id"],
-        rit["fiets_id"],
-        rit["begin_station_id"],
-        rit["eind_station_id"],
-        starttijd,
-        eindtijd,
-        round(rit["duur_minuten"] * 0.15, 2)  # voorbeeldprijs
-    ))
+# for fiets in fietsen:
+#     cur.execute("""
+#         INSERT INTO bikes (id, type, status) VALUES (%s, %s, %s)
+#     """, (
+#         fiets["id"],
+#         random.choice(["stadsfiets", "elektrisch"]),
+#         fiets["status"]
+#     ))
+#
+# for station in stations:
+#     cur.execute("""
+#         INSERT INTO stations (id, naam, adres, latitude, longitude, capaciteit, free_slots, parked_bikes)
+#         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+#     """, (
+#         station["id"],
+#         station["name"],
+#         station["straat"],
+#         fake.latitude(),
+#         fake.longitude(),
+#         station["capaciteit"],
+#         station["free_slots"],
+#         station["free_bikes"]
+#     ))
+#
+# from datetime import datetime, timedelta
+#
+# for rit in genereer_geschiedenis(10000, gebruikers, fietsen, stations):
+#     starttijd = datetime.now() - timedelta(minutes=rit["duur_minuten"])
+#     eindtijd = datetime.now()
+#
+#     cur.execute("""
+#         INSERT INTO rentals (user_id, bike_id, start_station_id, eind_station_id, starttijd, eindtijd, prijs)
+#         VALUES (%s, %s, %s, %s, %s, %s, %s)
+#     """, (
+#         rit["gebruiker_id"],
+#         rit["fiets_id"],
+#         rit["begin_station_id"],
+#         rit["eind_station_id"],
+#         starttijd,
+#         eindtijd,
+#         round(rit["duur_minuten"] * 0.15, 2)  # voorbeeldprijs
+#     ))
 
 conn.commit()
 cur.close()
