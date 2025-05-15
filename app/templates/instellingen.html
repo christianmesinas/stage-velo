@@ -1,75 +1,71 @@
 {% extends "base.html" %}
 
 {% block head %}
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/instellingen.css') }}">
-
 {% endblock %}
 
-
 {% block content %}
+<div class="background">
+    <div class="container mt-6">
 
-    <div class="background">
-    <div class="container_mt-6">
+        {% if user.profile_picture %}
+        <div class="mb-4">
+            <label class="form-label">Huidige profielfoto:</label><br>
+            <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Uw profielfoto" class="img-thumbnail" style="max-width: 200px;">
+        </div>
+        {% endif %}
 
-{% if user.profile_picture %}
-  <div class="mb-4">
-    <label class="form-label">Huidige profielfoto:</label><br>
-    <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Uw profielfoto" class="img-thumbnail" style="max-width: 200px;">
-  </div>
-{% endif %}
+        <form method="POST" action="{{ url_for('routes.instellingen') }}" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="titel" class="form-label">Aanspreektitel</label>
+                <select class="form-select" id="titel" name="titel">
+                    <option value="heer" {% if user.titel == 'heer' %}selected{% endif %}>Heer</option>
+                    <option value="vrouw" {% if user.titel == 'vrouw' %}selected{% endif %}>Vrouw</option>
+                </select>
+            </div>
 
+            <div class="mb-3">
+                <label for="voornaam" class="form-label">Voornaam</label>
+                <input type="text" class="form-control" id="voornaam" name="voornaam" value="{{ user.voornaam }}">
+            </div>
 
-  <form method="POST" action="{{ url_for('routes.instellingen') }}" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="achternaam" class="form-label">Achternaam</label>
+                <input type="text" class="form-control" id="achternaam" name="achternaam" value="{{ user.achternaam }}">
+            </div>
 
-<div class="mb-3">
-  <label for="titel" class="form-label">Titel</label>
-  <select class="form-select" id="titel" name="titel">
-    <option value="heer" {% if user.titel == 'heer' %}selected{% endif %}>Heer</option>
-    <option value="vrouw" {% if user.titel == 'vrouw' %}selected{% endif %}>Vrouw</option>
-  </select>
-</div>
+            <div class="mb-3">
+                <label for="telefoonnummer" class="form-label">Telefoonnummer</label>
+                <input type="text" class="form-control" id="telefoonnummer" name="telefoonnummer" value="{{ user.telefoonnummer }}">
+            </div>
 
-<div class="mb-3">
-  <label for="voornaam" class="form-label">Voornaam</label>
-  <input type="text" class="form-control" id="voornaam" name="voornaam" value="{{ user.voornaam }}">
-</div>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mailadres</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+            </div>
 
-<div class="mb-3">
-  <label for="achternaam" class="form-label">Achternaam</label>
-  <input type="text" class="form-control" id="achternaam" name="achternaam" value="{{ user.achternaam }}">
-</div>
+            <div class="mb-3">
+                <label for="abonnement" class="form-label">Abonnement</label>
+                <select class="form-select" id="abonnement" name="abonnement">
+                    <option value="Geen abonnement" {% if user.abonnement == 'Geen abonnement' %}selected{% endif %}>Geen abonnement</option>
+                    <option value="Dagpas" {% if user.abonnement == 'Dagpas' %}selected{% endif %}>Dagpas</option>
+                    <option value="Weekpas" {% if user.abonnement == 'Weekpas' %}selected{% endif %}>Weekpas</option>
+                    <option value="Jaarkaart" {% if user.abonnement == 'Jaarkaart' %}selected{% endif %}>Jaarkaart</option>
+                </select>
+            </div>
+<!--
+        <form method="POST" action="{{ url_for('routes.profile') }}"> -->
+            <button type="submit" class="btn btn-primary">Opslaan</button>
+       <!-- </form> -->
+            <a href="{{ url_for('routes.profile') }}" class="btn btn-secondary">Annuleren</a>
 
-<div class="mb-3">
-  <label for="telefoonnummer" class="form-label">Telefoonnummer</label>
-  <input type="text" class="form-control" id="telefoonnummer" name="telefoonnummer" value="{{ user.telefoonnummer }}">
-</div>
+        <hr class="my-5">
 
-<div class="mb-3">
-  <label for="abonnement" class="form-label">Abonnement</label>
-  <select class="form-select" id="abonnement" name="abonnement">
-    <option value="Geen abonnement" {% if user.abonnement == 'Geen abonnement' %}selected{% endif %}>Geen abonnement</option>
-    <option value="Dagpas" {% if user.abonnement == 'Dagpas' %}selected{% endif %}>Dagpas</option>
-    <option value="Weekpas" {% if user.abonnement == 'Weekpas' %}selected{% endif %}>Weekpas</option>
-    <option value="Jaarkaart" {% if user.abonnement == 'Jaarkaart' %}selected{% endif %}>Jaarkaart</option>
-  </select>
-</div>
-
-
-    <button type="submit" class="btn btn-primary">Instellingen opslaan</button>
-    <a href="{{ url_for('routes.profile') }}" class="btn btn-secondary">Annuleren</a>
-
-  </form>
-
-  <hr class="my-5">
-
-  <form method="POST" action="{{ url_for('routes.delete_account') }}">
-    <button type="submit" class="btn btn-danger" onclick="return confirm('Bent u zeker dat u uw account permanent wilt verwijderen?')">
-      Account verwijderen
-    </button>
-  </form>
-
+        <form method="POST" action="{{ url_for('routes.delete_account') }}">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Weet u zeker dat u uw account permanent wilt verwijderen?')">
+                Verwijder account
+            </button>
+        </form>
     </div>
-
 </div>
 {% endblock %}

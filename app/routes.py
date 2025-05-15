@@ -250,7 +250,7 @@ def instellingen():
             session["user"]["darkmode"] = darkmode
 
         db.close()
-        return redirect(url_for("routes.instellingen"))
+        return redirect(url_for("routes.profile"))
 
     return render_template("instellingen.html", user=session.get("user"))
 

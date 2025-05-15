@@ -7,11 +7,11 @@
 {% block content %}
 <div class="background">
     <div>
-        <!-- Instellingen knop -->
         <a href="{{ url_for('routes.instellingen') }}">
             <button type="button" class="btn btn-primary">Instellingen</button>
         </a>
     </div>
+
     <div class="container mt-5">
         <h2 class="mb-4">Profiel</h2>
 
@@ -19,26 +19,24 @@
         <div class="mb-4">
             <label class="form-label">Profielfoto:</label><br>
             {% if user.titel == 'vrouw' %}
-              <img src="{{ url_for('static', filename='img/vrouw_fiets.png') }}" alt="Vrouw op fiets" class="img-thumbnail">
+                <img class='gender-foto' src="{{ url_for('static', filename='img/vrouw.png') }}" alt="Vrouw op fiets" class="img-thumbnail">
             {% elif user.titel == 'heer' %}
-              <img src="{{ url_for('static', filename='img/heer_fiets.png') }}" alt="Heer op fiets" class="img-thumbnail">
+                <img class='gender-foto' src="{{ url_for('static', filename='img/man.png') }}" alt="Heer op fiets" class="img-thumbnail">
             {% else %}
-              <img src="{{ url_for('static', filename='img/default.png') }}" alt="Standaard profielfoto" class="img-thumbnail">
+                <img src="{{ url_for('static', filename='img/default.png') }}" alt="Standaard foto" class="img-thumbnail">
             {% endif %}
-
         </div>
 
-        <!-- Gebruikersinformatie -->
+        <!-- Gebruikersgegevens -->
         <div class="mb-4">
-            <h4>Persoonlijke Gegevens</h4>
+            <h4>Persoonlijke gegevens</h4>
             <ul class="list-group">
-                <li class="list-group-item"><strong>Voornaam:</strong> {{ user_data.voornaam or 'Niet ingesteld' }}</li>
-                <li class="list-group-item"><strong>Achternaam:</strong> {{ user_data.achternaam or 'Niet ingesteld' }}</li>
-                <li class="list-group-item"><strong>Email:</strong> {{ user_data.email or 'Niet ingesteld' }}</li>
-                <li class="list-group-item"><strong>Abonnementstype:</strong> {{ user_data.abonnementstype or 'Geen abonnement' }}</li>
-                <li class="list-group-item"><strong>Registratiedatum:</strong> {{ user_data.registratie_datum.strftime('%d-%m-%Y %H:%M') if user_data.registratie_datum else 'Niet ingesteld' }}</li>
-                <li class="list-group-item"><strong>Postcode:</strong> {{ user_data.postcode or 'Niet ingesteld' }}</li>
-                <li class="list-group-item"><strong>Stad:</strong> {{ user_data.stad or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Titel:</strong> {{ user.titel or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Voornaam:</strong> {{ user.voornaam or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Achternaam:</strong> {{ user.achternaam or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Telefoonnummer:</strong> {{ user.telefoonnummer or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Email:</strong> {{ user.email or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Abonnement:</strong> {{ user.abonnement or 'Geen abonnement' }}</li>
             </ul>
         </div>
 
@@ -46,7 +44,7 @@
         <div class="mb-4">
             <h4>Fietsgeschiedenis</h4>
             {% if rentals %}
-                <table> class="table table-striped">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Fiets-ID</th>
@@ -59,22 +57,20 @@
                     </thead>
                     <tbody>
                         {% for rental in rentals %}
-                            <tr>
-                                <td>{{ rental.bike_id }}</td>
-                                <td>{{ rental.start_station.naam if rental.start_station else 'Onbekend' }}</td>
-                                <td>{{ rental.end_station.naam if rental.end_station else 'Onbekend' }}</td>
-                                <td>{{ rental.starttijd.strftime('%d-%m-%Y %H:%M') if rental.starttijd else 'N/A' }}</td>
-                                <td>{{ rental.eindtijd.strftime('%d-%m-%Y %H:%M') if rental.eindtijd else 'N/A' }}</td>
-                                <td>€{{ "%.2f"|format(rental.prijs) if rental.prijs else 'N/A' }}</td>
-                            </nm>
-                            </tr>
+                        <tr>
+                            <td>{{ rental.bike_id }}</td>
+                            <td>{{ rental.start_station.naam if rental.start_station else 'Onbekend' }}</td>
+                            <td>{{ rental.end_station.naam if rental.end_station else 'Onbekend' }}</td>
+                            <td>{{ rental.starttijd.strftime('%d-%m-%Y %H:%M') if rental.starttijd else 'N/A' }}</td>
+                            <td>{{ rental.eindtijd.strftime('%d-%m-%Y %H:%M') if rental.eindtijd else 'N/A' }}</td>
+                            <td>€{{ "%.2f"|format(rental.prijs) if rental.prijs else 'N/A' }}</td>
+                        </tr>
                         {% endfor %}
                     </tbody>
-                table>
+                </table>
             {% else %}
                 <p>Geen fietsgeschiedenis beschikbaar.</p>
             {% endif %}
-            </table>
         </div>
     </div>
 </div>
