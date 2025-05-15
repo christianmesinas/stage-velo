@@ -202,6 +202,11 @@ def jaarkaart():
 
     return render_template("tarieven/jaarkaart.html", formdata={})
 
+@routes.route("/defect")
+def defect():
+    if 'user' not in session:
+        return redirect(url_for("routes.login"))
+    return render_template("defect.html")
 
 @routes.app_errorhandler(404)
 def page_not_found(error):
