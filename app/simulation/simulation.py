@@ -14,13 +14,13 @@ csv_path = os.path.join(script_dir, "velo.csv")
 stations_df = pd.read_csv(csv_path)
 
 fake = Faker()
-antwerpen_postcodes = ['2000','2018','2020','2030','2040','2050','2060','2100','2130','2140','2150','2170','2180','2600','2610','2610','2660']
+antwerpen_postcodes = ['2000','2018','2020','2030','2040','2050','2060','2100','2130','2140','2150','2170','2180','2600','2610','2610','2660'] #alle postcodes antwerpen in een lijst
 
 # Verwerk stationsgegevens
 stations_df.dropna(subset=["Naam"], inplace=True)
 
 stations = []
-for _, row in stations_df.iterrows():
+for _, row in stations_df.iterrows(): #de data in de stations.csv (van velo antwerpen) in een lijst stations steken.
     stations.append({
         "id": row["OBJECTID"],
         "name": row["Naam"],
@@ -170,7 +170,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
 
 geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
 
-def geschiedenis_to_csv_buffer(geschiedenis):
+def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een csv steken zodat we het met COPY kunnen doorpushen naar de db
     buffer = io.StringIO()
     for rit in geschiedenis:
         buffer.write(
