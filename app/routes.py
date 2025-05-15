@@ -1,4 +1,4 @@
-from flask import Blueprint, send_file, session, redirect, url_for, request
+from flask import Blueprint, send_file, session, redirect, url_for, request, render_template
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
 from urllib.parse import quote_plus, urlencode
