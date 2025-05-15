@@ -27,7 +27,7 @@
     var lock = new Auth0Lock('{{ auth0_client_id }}', '{{ auth0_domain }}', {
       container: "auth0-login-box",
       auth: {
-        redirect: true,
+        redirect: false,
         redirectUrl: 'http://127.0.0.1:8000/login',
 
         responseType: 'token id_token',
