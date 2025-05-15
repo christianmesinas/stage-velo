@@ -37,7 +37,7 @@ class Gebruiker(Base):
     abonnementstype = Column(String)
     postcode = Column(String)
 
-    rentals = relationship('Geschiedenis', back_populates='gebruiker')
+    geschiedenis = relationship('Geschiedenis', back_populates='gebruiker')
 
 class Station(Base):
     __tablename__ = 'stations'
@@ -53,8 +53,9 @@ class Station(Base):
     free_slots = Column(Integer)
     parked_bikes = Column(Integer)
 
-    start_rentals = relationship('Geschiedenis', foreign_keys='geschiedenis.start_station_id', back_populates='start_station')
-    end_rentals = relationship('Geschiedenis', foreign_keys='geschiedenis.eind_station_id', back_populates='eind_station')
+    start_geschiedenis = relationship('Geschiedenis', foreign_keys='Geschiedenis.start_station_id', back_populates='start_station')
+    end_geschiedenis = relationship('Geschiedenis', foreign_keys='Geschiedenis.eind_station_id', back_populates='end_station')
+
 
 class Fiets(Base):
     __tablename__ = 'fietsen'
@@ -64,6 +65,7 @@ class Fiets(Base):
     status = Column(String)
 
     geschiedenis = relationship('Geschiedenis', back_populates='fiets')
+
 
 class Geschiedenis(Base):
     __tablename__ = 'geschiedenis'
@@ -78,9 +80,6 @@ class Geschiedenis(Base):
     duur_minuten = Column(DECIMAL)
 
     gebruiker = relationship('Gebruiker', back_populates='geschiedenis')
-    bike = relationship('Fiets', back_populates='geschiedenis')
+    fiets = relationship('Fiets', back_populates='geschiedenis')
     start_station = relationship('Station', foreign_keys=[start_station_id], back_populates='start_geschiedenis')
     end_station = relationship('Station', foreign_keys=[eind_station_id], back_populates='end_geschiedenis')
-
-
-
