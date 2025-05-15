@@ -109,7 +109,7 @@ def genereer_fietsen(aantal, stations):
     return fietsen
 
 gebruikers = genereer_gebruikers(58000)
-fietsen = genereer_fietsen(10000, stations)
+fietsen = genereer_fietsen(4200, stations)
 
 
 def gewogen_starttijd(datum):
