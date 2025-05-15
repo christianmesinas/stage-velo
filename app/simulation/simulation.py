@@ -117,7 +117,7 @@ def genereer_fietsen(aantal, stations):
 
 
 gebruikers = genereer_gebruikers(58000)
-fietsen = genereer_fietsen(10000, stations)
+fietsen = genereer_fietsen(4200, stations)
 
 
 def gewogen_starttijd(datum):
@@ -167,6 +167,9 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
 
                 fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
     return geschiedenis
+
+
+geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
 
 
 # Simuleer ritten over tijd
@@ -228,6 +231,10 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 def push_to_db():
+    # cur.execute("DELETE FROM gebruikers")
+    # cur.execute("DELETE FROM fietsen")
+    # cur.execute("DELETE FROM stations")
+    # cur.execute("DELETE FROM geschiedenis")
     for gebruiker in gebruikers:
         cur.execute("""
         INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
@@ -240,52 +247,50 @@ def push_to_db():
             gebruiker['abonnementstype'],
             gebruiker['postcode']
         ))
+
+    for station in stations:
+        cur.execute("""
+        INSERT INTO stations (id,naam, straat, postcode, capaciteit, status, parked_bikes, free_slots) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """,(
+            station['id'],
+            station['name'],
+            station['straat'],
+            station['postcode'],
+            station['capaciteit'],
+            station['status'],
+            station['free_bikes'],
+            station['free_slots']
+        ))
+
+    for fiets in fietsen:
+        cur.execute("""
+           INSERT INTO fietsen (id, station_id, status) VALUES (%s, %s, %s)
+           """, (
+            fiets['id'],
+            fiets['station_id'],
+            fiets['status']
+        ))
+    updates = [(rit['eind_station_id'], rit['fiets_id']) for rit in geschiedenis]
+    cur.executemany("""
+        UPDATE fietsen
+        SET station_id = %s
+        WHERE id = %s
+    """, updates)
+
+    for rit in geschiedenis:
+        cur.execute("""
+        INSERT INTO geschiedenis (gebruiker_id, fiets_id, start_station_id, eind_station_id, starttijd, eindtijd, duur_minuten)
+        VALUES (%s, %s , %s, %s, %s, %s, %s)
+        """,(
+            rit['gebruiker_id'],
+            rit['fiets_id'],
+            rit['begin_station_id'],
+            rit['eind_station_id'],
+            rit['starttijd'],
+            rit['eindtijd'],
+            rit['duur_minuten']
+        ))
 push_to_db()
-
-
-# for fiets in fietsen:
-#     cur.execute("""
-#         INSERT INTO bikes (id, type, status) VALUES (%s, %s, %s)
-#     """, (
-#         fiets["id"],
-#         random.choice(["stadsfiets", "elektrisch"]),
-#         fiets["status"]
-#     ))
-#
-# for station in stations:
-#     cur.execute("""
-#         INSERT INTO stations (id, naam, adres, latitude, longitude, capaciteit, free_slots, parked_bikes)
-#         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-#     """, (
-#         station["id"],
-#         station["name"],
-#         station["straat"],
-#         fake.latitude(),
-#         fake.longitude(),
-#         station["capaciteit"],
-#         station["free_slots"],
-#         station["free_bikes"]
-#     ))
-#
-# from datetime import datetime, timedelta
-#
-# for rit in genereer_geschiedenis(10000, gebruikers, fietsen, stations):
-#     starttijd = datetime.now() - timedelta(minutes=rit["duur_minuten"])
-#     eindtijd = datetime.now()
-#
-#     cur.execute("""
-#         INSERT INTO rentals (user_id, bike_id, start_station_id, eind_station_id, starttijd, eindtijd, prijs)
-#         VALUES (%s, %s, %s, %s, %s, %s, %s)
-#     """, (
-#         rit["gebruiker_id"],
-#         rit["fiets_id"],
-#         rit["begin_station_id"],
-#         rit["eind_station_id"],
-#         starttijd,
-#         eindtijd,
-#         round(rit["duur_minuten"] * 0.15, 2)  # voorbeeldprijs
-#     ))
-
 conn.commit()
 cur.close()
 conn.close()
