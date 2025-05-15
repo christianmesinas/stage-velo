@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
+from api.api import get_info
 from urllib.parse import quote_plus, urlencode
 from os import environ as env
 import requests
@@ -116,17 +117,22 @@ def help():
 
 @routes.route("/maps")
 def markers():
+    stations = get_info()
     markers = []
-    for location in api.get_alle_stations():
+    for station in stations:
         markers.append({
-            'lat': location[4],
-            'lon': location[5],
-            'name': location[1],
-            'free-bikes': location[6],
-            'empty-slots': location[7],
-            'status': location[3],
+            'lat': station['location']['latitude'],
+            'lon': station['location']['longitude'],
+            'name': station['name'],
+            'free-bikes': station['free_bikes'],
+            'empty-slots': station['empty_slots'],
+            'status': station['extra']['status'],
         })
     return render_template("maps.html", markers=markers)
+
+#def simulatie_button():
+    #if is_admin = True:
+        # geef button for simulatie te genereren in maps
 
 @routes.route("/tarieven")
 def tarieven():
