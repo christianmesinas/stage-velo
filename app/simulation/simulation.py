@@ -3,6 +3,8 @@ import pandas as pd
 import sys
 from datetime import datetime, timedelta
 import time
+
+import psycopg2
 from faker import Faker
 import os
 
