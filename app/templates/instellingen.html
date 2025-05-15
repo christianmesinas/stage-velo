@@ -50,10 +50,19 @@
                     <option value="Geen abonnement" {% if user.abonnement == 'Geen abonnement' %}selected{% endif %}>Geen abonnement</option>
                     <option value="Dagpas" {% if user.abonnement == 'Dagpas' %}selected{% endif %}>Dagpas</option>
                     <option value="Weekpas" {% if user.abonnement == 'Weekpas' %}selected{% endif %}>Weekpas</option>
+                    <option value="maandpas" {% if user.abonnement == 'maandpas' %}selected{% endif %}>maandpas</option>
                     <option value="Jaarkaart" {% if user.abonnement == 'Jaarkaart' %}selected{% endif %}>Jaarkaart</option>
                 </select>
             </div>
-<!--
+
+            <div class="mb-3">
+                <label for="darkmode" class="form-label">Donkere modus</label>
+                <select class="form-select" id="darkmode" name="darkmode">
+                    <option value="0" {% if user.darkmode == False %}selected{% endif %}>Uit</option>
+                    <option value="1" {% if user.darkmode == True %}selected{% endif %}>Aan</option>
+                </select>
+            </div>
+
         <form method="POST" action="{{ url_for('routes.profile') }}"> -->
             <button type="submit" class="btn btn-primary">Opslaan</button>
        <!-- </form> -->

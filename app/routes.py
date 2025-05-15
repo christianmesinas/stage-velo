@@ -217,7 +217,7 @@ def instellingen():
         abonnement = request.form.get("abonnement")
         nieuwe_email = request.form.get("email")
         taal = request.form.get("taal")
-        darkmode = True if request.form.get("darkmode") else False
+        darkmode = request.form.get("darkmode") == "1"
         file = request.files.get("profile_picture")
         filename = None
 
