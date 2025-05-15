@@ -141,7 +141,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
 
     for dag_offset in range(dagen):
-        datum = vandaag - timedelta(days=dag_offset)
+        datum = vandaag - timedelta(days=(dagen - dag_offset - 1))
         for fiets in beschikbare_fietsen:
             for _ in range(ritten_per_fiets_per_dag):
                 gebruiker = random.choice(gebruikers)
