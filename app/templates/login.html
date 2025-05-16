@@ -1,99 +1,82 @@
 {% extends "base.html" %}
 
 {% block head %}
-<script src="https://cdn.auth0.com/js/lock/11.30/lock.min.js"></script>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+  <script src="https://cdn.auth0.com/js/lock/11.30/lock.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 
 {% block content %}
-
-<div class="background"><div id="auth0-login-box"></div></div>
-
-
-
+  <div class="background">
+    <div id="auth0-login-box"></div>
+  </div>
 {% endblock %}
-
-
-
-
-
 
 {% block scripts %}
+<script>
+  const redirectAfterLogin = "{{ next_url | safe }}";
 
-
-<!-- Auth0 Script (NE PAS TOUCHER) -->
-  <script>
-    var lock = new Auth0Lock('{{ auth0_client_id }}', '{{ auth0_domain }}', {
-      container: "auth0-login-box",
-      auth: {
-        redirect: true,
-        redirectUrl: 'http://127.0.0.1:8000/login',
-
-        responseType: 'token id_token',
-
-            params: {
-                scope: 'openid profile email',
-
-}
-                    },
-      allowedConnections: ['database-velo', 'google-oauth2', 'facebook', 'apple'],
-
-
-      theme: {
-        primaryColor: '#2b2d42',
-        backgroundColor: '#000000',
-        logo: 'LOGO'
-      },
-      languageDictionary: {
-        title: "Logo.png"
-      },
-      allowSignUp: true,
-      allowLogin: true,
-      closable: false
-    });
-
-    lock.show();
-
-lock.on("authenticated", function(authResult) {
-  console.log("✅ Ingelogd:", authResult);
-
-  lock.getUserInfo(authResult.accessToken, function(error, profile) {
-    if (error) {
-      console.error("❌ Fout bij ophalen profiel:", error);
-      return;
-    }
-
-    console.log("👤 Gebruiker:", profile);
-
-    // 🔁 Stuur access token naar je Flask backend
-    fetch("/auth/process", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        access_token: authResult.accessToken
-      })
-    }).then((res) => {
-      if (res.ok) {
-        // ✅ Succes! Ga door naar beveiligde pagina
-        window.location.href = "/profile";
-
-      } else {
-        console.error("❌ Backend verwerkte token niet correct");
+  var lock = new Auth0Lock('{{ auth0_client_id }}', '{{ auth0_domain }}', {
+    container: "auth0-login-box",
+    auth: {
+      redirect: false,
+      responseType: 'token id_token',
+      params: {
+        scope: 'openid profile email'
       }
+    },
+    allowedConnections: ['database-velo', 'google-oauth2', 'facebook', 'apple'],
+    theme: {
+      primaryColor: '#2b2d42',
+      backgroundColor: '#000000',
+      logo: 'LOGO'
+    },
+    languageDictionary: {
+      title: "Logo.png"
+    },
+    allowSignUp: true,
+    allowLogin: true,
+    closable: false
+  });
+
+  // Show the lock widget
+  lock.show();
+
+  // Handle successful authentication
+  lock.on("authenticated", function(authResult) {
+    console.log("✅ Ingelogd:", authResult);
+
+    lock.getUserInfo(authResult.accessToken, function(error, profile) {
+      if (error) {
+        console.error("❌ Fout bij ophalen profiel:", error);
+        return;
+      }
+
+      console.log("👤 Gebruiker:", profile);
+
+      fetch("/auth/process", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          access_token: authResult.accessToken,
+          redirect_to: redirectAfterLogin
+        })
+      }).then((res) => {
+        if (res.redirected) {
+          window.location.href = res.url;
+        } else if (res.ok) {
+          window.location.href = redirectAfterLogin;
+        } else {
+          console.error("❌ Backend verwerkte token niet correct");
+        }
+      });
     });
   });
-});
 
-
-    function logout() {
-      localStorage.removeItem("accessToken");
-      window.location.reload();
-    }
-  </script>
-
+  function logout() {
+    localStorage.removeItem("accessToken");
+    window.location.reload();
+  }
+</script>
 {% endblock %}
-
-

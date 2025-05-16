@@ -38,7 +38,13 @@ oauth.register(
 
 @routes.route("/auth/process", methods=["POST"])
 def process_auth():
+    '''token = request.json.get("access_token")
+    if not token:
+        return {"error": "Access token ontbreekt"}, 400'''
+
     token = request.json.get("access_token")
+    redirect_to = request.json.get("redirect_to", "/profile")
+
     if not token:
         return {"error": "Access token ontbreekt"}, 400
 
@@ -72,7 +78,7 @@ def process_auth():
     )
     db.close()
 
-    return "", 200
+    return redirect(redirect_to)
 
 @routes.route("/logout")
 def logout():
@@ -96,14 +102,16 @@ def index():
 
 @routes.route("/login")
 def login():
+    next_url = request.args.get("next", "/profile")
     return render_template("login.html",
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
-                           auth0_domain=env.get("AUTH0_DOMAIN"))
+                           auth0_domain=env.get("AUTH0_DOMAIN"),
+                           next_url=next_url)
 
 @routes.route("/profile")
 def profile():
     if 'user' not in session:
-        return redirect(url_for("routes.login"))
+        return redirect(url_for("routes.login", next=request.path))
     return render_template("profile.html")
 
 @routes.route("/maps")
@@ -122,7 +130,7 @@ def markers():
 
 @routes.route("/tarieven")
 def tarieven():
-    return render_template("tarieven.html")
+   return render_template("tarieven.html")
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpass():
@@ -205,7 +213,7 @@ def jaarkaart():
 @routes.route("/defect")
 def defect():
     if 'user' not in session:
-        return redirect(url_for("routes.login"))
+        return redirect(url_for("routes.login", next=request.path))
     return render_template("defect.html")
 
 @routes.app_errorhandler(404)
@@ -215,3 +223,4 @@ def page_not_found(error):
 @routes.app_errorhandler(500)
 def internal_server_error(error):
     return render_template('500.html'), 500
+
