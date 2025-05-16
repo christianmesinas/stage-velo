@@ -8,7 +8,7 @@ import requests
 import os
 
 from app.api import api as api
-from app.database.models import Usertable, User, Rental
+from app.database.models import Usertable, Gebruiker
 from app.database import SessionLocal
 
 routes = Blueprint("routes", __name__)
@@ -114,12 +114,11 @@ def profile():
         return redirect(url_for("routes.login", next=request.path))
 
     db = SessionLocal()
-    user_table = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
-    user_data = db.query(User).filter_by(email=session["user"]["email"]).first()
-    rentals = db.query(Rental).filter_by(user_id=user_data.id if user_data else None).all()
+    user_table = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    user_data = db.query(Gebruiker).filter_by(email=session["Gebruiker"]["email"]).first()
     db.close()
 
-    return render_template("profile.html", user=user_table, user_data=user_data, rentals=rentals)
+    return render_template("profile.html", user=user_table, user_data=user_data)
 
 @routes.route("/maps")
 def markers():
@@ -219,7 +218,7 @@ def jaarkaart():
 
 @routes.route("/defect")
 def defect():
-    if 'user' not in session:
+    if 'Gebruiker' not in session:
         return redirect(url_for("routes.login", next=request.path))
     return render_template("defect.html")
 
@@ -234,7 +233,7 @@ def internal_server_error(error):
 
 @routes.route("/instellingen", methods=["GET", "POST"])
 def instellingen():
-    if "user" not in session or "user_id" not in session["user"]:
+    if "Gebruiker" not in session or "id" not in session["Gebruiker"]:
         return redirect(url_for("routes.login"))
 
     if request.method == "POST":
@@ -255,7 +254,7 @@ def instellingen():
             file.save(upload_path)
 
         db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
+        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
         if gebruiker:
             gebruiker.voornaam = voornaam
             gebruiker.achternaam = achternaam
@@ -264,29 +263,27 @@ def instellingen():
             gebruiker.naam = nieuwe_naam
             gebruiker.email = nieuwe_email
             gebruiker.taal = taal
-            gebruiker.darkmode = darkmode
             if filename:
                 gebruiker.profile_picture = filename
             db.commit()
 
-            session["user"]["naam"] = nieuwe_naam
-            session["user"]["email"] = nieuwe_email
-            session["user"]["taal"] = taal
-            session["user"]["darkmode"] = darkmode
+            session["Gebruiker"]["naam"] = nieuwe_naam
+            session["Gebruiker"]["email"] = nieuwe_email
+            session["Gebruiker"]["taal"] = taal
 
         db.close()
         flash("Instellingen succesvol opgeslagen.", "success")
         return redirect(url_for("routes.profile"))
 
-    return render_template("instellingen.html", user=session.get("user"))
+    return render_template("instellingen.html", user=session.get("Gebruiker"))
 
 @routes.route("/delete_account", methods=["POST"])
 def delete_account():
-    if "user" not in session:
+    if "Gebruiker" not in session:
         return redirect(url_for("routes.login"))
 
     db = SessionLocal()
-    gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
     if gebruiker:
         db.delete(gebruiker)
         db.commit()

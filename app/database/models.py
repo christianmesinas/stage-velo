@@ -104,19 +104,3 @@ class BikeLocation(Base):
 
     bike = relationship('Bike', back_populates='bike_locations')
     station = relationship('Station', back_populates='bike_locations')
-
-class Maintenance(Base):
-    __tablename__ = 'maintenance'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    bike_id = Column(Integer, ForeignKey('bikes.id'))
-    datum = Column(DateTime, default=datetime.utcnow)
-    beschrijving = Column(String)
-    status = Column(String)
-
-    bike = relationship('Bike', back_populates='maintenance')
-
-    gebruiker = relationship('Gebruiker', back_populates='geschiedenis')
-    fiets = relationship('Fiets', back_populates='geschiedenis')
-    start_station = relationship('Station', foreign_keys=[start_station_id], back_populates='start_geschiedenis')
-    end_station = relationship('Station', foreign_keys=[eind_station_id], back_populates='end_geschiedenis')
