@@ -7,18 +7,18 @@ Base = declarative_base()
 class Usertable(Base):
     __tablename__ = "inlog_gegevens"
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(String, unique=True)  # Добавлено
-    email = Column(String, unique=True)    # Добавлено
-    name = Column(String)                  # Добавлено
-    profile_picture = Column(String)      # Добавлено
+    user_id = Column(String, unique=True)
+    email = Column(String, unique=True)
+    name = Column(String)
+    profile_picture = Column(String)
 
     voornaam = Column(String)
     achternaam = Column(String)
     telefoonnummer = Column(String)
-    titel = Column(String)  # 'heer' of 'vrouw'
+    titel = Column(String)
     abonnement = Column(String, default="Geen abonnement")
     taal = Column(String, default="nl")
-    darkmode = Column(String, default="False")  # als string voor eenvoud
+    darkmode = Column(String, default="False")
 
     @classmethod
     def get_or_create(cls, db, user_id, email, name, profile_picture):
@@ -29,18 +29,19 @@ class Usertable(Base):
             db.commit()
         return user
 
-
+    def set_abonnement(self, db, new_type):
+        self.abonnement = new_type
+        db.commit()
 
 class User(Base):
     __tablename__ = 'users'
 
-    # De ID wordt automatisch gegenereerd
-    id = Column(Integer, primary_key=True, autoincrement=True)  # autoincrement zorgt ervoor dat de ID automatisch verhoogt
+    id = Column(Integer, primary_key=True, autoincrement=True)
     voornaam = Column(String)
     achternaam = Column(String)
     email = Column(String)
     abonnementstype = Column(String)
-    registratie_datum = Column(DateTime, default=datetime)
+    registratie_datum = Column(DateTime, default=datetime.utcnow)
     postcode = Column(String)
     stad = Column(String)
 
@@ -49,7 +50,7 @@ class User(Base):
 class Station(Base):
     __tablename__ = 'stations'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)  # autoincrement zorgt voor automatische generatie
+    id = Column(Integer, primary_key=True, autoincrement=True)
     naam = Column(String)
     adres = Column(String)
     latitude = Column(DECIMAL)
@@ -65,7 +66,7 @@ class Station(Base):
 class Bike(Base):
     __tablename__ = 'bikes'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)  # autoincrement voor automatische generatie
+    id = Column(Integer, primary_key=True, autoincrement=True)
     type = Column(String)
     status = Column(String)
 
@@ -76,7 +77,7 @@ class Bike(Base):
 class Rental(Base):
     __tablename__ = 'rentals'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)  # autoincrement voor automatische generatie
+    id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     bike_id = Column(Integer, ForeignKey('bikes.id'))
     start_station_id = Column(Integer, ForeignKey('stations.id'))
@@ -89,7 +90,6 @@ class Rental(Base):
     bike = relationship('Bike', back_populates='rentals')
     start_station = relationship('Station', foreign_keys=[start_station_id], back_populates='start_rentals')
     end_station = relationship('Station', foreign_keys=[eind_station_id], back_populates='end_rentals')
-
 
 class BikeLocation(Base):
     __tablename__ = 'bike_locations'
@@ -104,13 +104,10 @@ class BikeLocation(Base):
 class Maintenance(Base):
     __tablename__ = 'maintenance'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)  # autoincrement zorgt voor automatische generatie
+    id = Column(Integer, primary_key=True, autoincrement=True)
     bike_id = Column(Integer, ForeignKey('bikes.id'))
     datum = Column(DateTime, default=datetime.utcnow)
     beschrijving = Column(String)
     status = Column(String)
 
     bike = relationship('Bike', back_populates='maintenance')
-
-
-

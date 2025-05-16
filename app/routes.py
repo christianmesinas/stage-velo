@@ -1,5 +1,5 @@
-from werkzeug.utils import secure_filename,redirect
-from flask import Blueprint, render_template, session, redirect, url_for, request
+from werkzeug.utils import secure_filename
+from flask import Blueprint, render_template, session, redirect, url_for, request, flash
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
 from urllib.parse import quote_plus, urlencode
@@ -7,16 +7,11 @@ from os import environ as env
 import requests
 import os
 
-import app.routes
 from app.api import api as api
 from app.database.models import Usertable, User, Rental
 from app.database import SessionLocal
 
 routes = Blueprint("routes", __name__)
-
-# ======================
-# .env en Auth0 configuratie
-# ======================
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -34,10 +29,6 @@ oauth.register(
     server_metadata_url=f"https://{env.get('AUTH0_DOMAIN')}/.well-known/openid-configuration"
 )
 
-# ======================
-# AUTH ROUTES
-# ======================
-
 @routes.route("/auth/process", methods=["POST"])
 def process_auth():
     token = request.json.get("access_token")
@@ -47,8 +38,7 @@ def process_auth():
     headers = {'Authorization': f'Bearer {token}'}
     try:
         user_info = requests.get(
-            f'https://{env.get("AUTH0_DOMAIN")}/userinfo',
-            headers=headers
+            f'https://{env.get("AUTH0_DOMAIN")}/userinfo', headers=headers
         ).json()
     except Exception as e:
         return {"error": f"Fout bij ophalen userinfo: {str(e)}"}, 500
@@ -65,16 +55,10 @@ def process_auth():
     }
 
     db = SessionLocal()
-    Usertable.get_or_create(
-        db=db,
-        user_id=user_id,
-        email=email,
-        name=name,
-        profile_picture=profile_picture
-    )
+    Usertable.get_or_create(db=db, user_id=user_id, email=email, name=name, profile_picture=profile_picture)
     db.close()
 
-    return "", 200
+    return redirect(url_for("routes.instellingen"))
 
 @routes.route("/logout")
 def logout():
@@ -85,10 +69,6 @@ def logout():
             "client_id": env.get("AUTH0_CLIENT_ID"),
         }, quote_plus)
     )
-
-# ======================
-# ALGEMENE ROUTES
-# ======================
 
 @routes.route("/")
 def index():
@@ -136,45 +116,27 @@ def tarieven():
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
     if request.method == "POST":
-        pincode = request.form.get("pincode")
-        bevestig_pincode = request.form.get("bevestig_pincode")
-
-        if pincode != bevestig_pincode:
-            foutmelding = "De pincodes komen niet overeen."
-            return render_template("tarieven/dagpas.html", foutmelding=foutmelding)
-
-        data = {
-            "voornaam": request.form.get("voornaam"),
-            "achternaam": request.form.get("achternaam"),
-            "email": request.form.get("email"),
-            "telefoon": request.form.get("telefoon"),
-            "geboortedatum": request.form.get("geboortedatum"),
-            "pincode": pincode
-        }
-        return render_template("tarieven/bedankt.html", data=data)
-
+        db = SessionLocal()
+        gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
+        if gebruiker:
+            gebruiker.abonnement = "Dagpas"
+            db.commit()
+        db.close()
+        flash("Dagpas succesvol gekocht.", "success")
+        return redirect(url_for("routes.profile"))
     return render_template("tarieven/dagpas.html")
 
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
 def weekpass():
     if request.method == "POST":
-        pincode = request.form.get("pincode")
-        bevestig_pincode = request.form.get("bevestig_pincode")
-
-        if pincode != bevestig_pincode:
-            foutmelding = "De pincodes komen niet overeen."
-            return render_template("tarieven/weekpas.html", foutmelding=foutmelding)
-
-        data = {
-            "voornaam": request.form.get("voornaam"),
-            "achternaam": request.form.get("achternaam"),
-            "email": request.form.get("email"),
-            "telefoon": request.form.get("telefoon"),
-            "geboortedatum": request.form.get("geboortedatum"),
-            "pincode": pincode
-        }
-        return render_template("tarieven/bedankt.html", data=data)
-
+        db = SessionLocal()
+        gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
+        if gebruiker:
+            gebruiker.abonnement = "Weekpas"
+            db.commit()
+        db.close()
+        flash("Weekpas succesvol gekocht.", "success")
+        return redirect(url_for("routes.profile"))
     return render_template("tarieven/weekpas.html")
 
 @routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
@@ -184,37 +146,27 @@ def jaarkaart():
             foutmelding = "Je moet akkoord gaan met de algemene voorwaarden."
             return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding)
 
-        data = {
-            "voornaam": request.form.get("voornaam"),
-            "achternaam": request.form.get("achternaam"),
-            "email": request.form.get("email"),
-            "telefoon": request.form.get("telefoon"),
-            "geboortedatum": request.form.get("geboortedatum"),
-            "postcode": request.form.get("postcode"),
-            "gemeente": request.form.get("gemeente"),
-            "betaalmethode": request.form.get("betaalmethode"),
-            "ontleenmodus": "velo_app"
-        }
-        return render_template("tarieven/bedankt.html", data=data)
-
+        db = SessionLocal()
+        gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
+        if gebruiker:
+            gebruiker.abonnement = "Jaarkaart"
+            db.commit()
+        db.close()
+        flash("Jaarkaart succesvol gekocht.", "success")
+        return redirect(url_for("routes.profile"))
     return render_template("tarieven/jaarkaart.html")
-
 
 @routes.route("/instellingen", methods=["GET", "POST"])
 def instellingen():
     if "user" not in session or "user_id" not in session["user"]:
         return redirect(url_for("routes.login"))
 
-
     if request.method == "POST":
-
-
         nieuwe_naam = request.form.get("naam")
         voornaam = request.form.get("voornaam")
         achternaam = request.form.get("achternaam")
         telefoonnummer = request.form.get("telefoonnummer")
         titel = request.form.get("titel")
-        abonnement = request.form.get("abonnement")
         nieuwe_email = request.form.get("email")
         taal = request.form.get("taal")
         darkmode = request.form.get("darkmode") == "1"
@@ -233,28 +185,24 @@ def instellingen():
             gebruiker.achternaam = achternaam
             gebruiker.telefoonnummer = telefoonnummer
             gebruiker.titel = titel
-            gebruiker.abonnement = abonnement
             gebruiker.naam = nieuwe_naam
             gebruiker.email = nieuwe_email
             gebruiker.taal = taal
             gebruiker.darkmode = darkmode
             if filename:
                 gebruiker.profile_picture = filename
-
             db.commit()
 
-            # Werk ook de sessie bij
             session["user"]["naam"] = nieuwe_naam
             session["user"]["email"] = nieuwe_email
             session["user"]["taal"] = taal
             session["user"]["darkmode"] = darkmode
 
         db.close()
+        flash("Instellingen succesvol opgeslagen.", "success")
         return redirect(url_for("routes.profile"))
 
     return render_template("instellingen.html", user=session.get("user"))
-
-
 
 @routes.route("/delete_account", methods=["POST"])
 def delete_account():
@@ -267,7 +215,6 @@ def delete_account():
         db.delete(gebruiker)
         db.commit()
     db.close()
-
     session.clear()
+    flash("Uw account is verwijderd.", "danger")
     return redirect(url_for("routes.index"))
-

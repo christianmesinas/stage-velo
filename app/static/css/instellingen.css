@@ -1,6 +1,5 @@
 .background {
     display: flex;
-
     align-items: center;
     width: auto;
     height: 80vh;
@@ -8,10 +7,7 @@
     margin: 20px;
     background-color: white;
     border-radius: 20px;
-
 }
-
-
 
 .container_mt-6 {
     margin: auto;
@@ -20,4 +16,35 @@
     text-align: center;
     margin-left: 5rem;
     text-align: left;
+}
+
+/* ✅ Flash messages style (added) */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+}
+
+.alert-success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+}
+
+.alert-danger {
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+}
+
+.alert-dismissible .btn-close {
+    position: relative;
+    float: right;
+    padding: 0.5rem 1rem;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: inherit;
 }

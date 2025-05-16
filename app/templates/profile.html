@@ -15,6 +15,20 @@
     <div class="container mt-5">
         <h2 class="mb-4">Profiel</h2>
 
+        <!-- ✅ Flash-berichten -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="mb-4">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
         <!-- Profielfoto -->
         <div class="mb-4">
             <label class="form-label">Profielfoto:</label><br>
@@ -36,7 +50,14 @@
                 <li class="list-group-item"><strong>Achternaam:</strong> {{ user.achternaam or 'Niet ingesteld' }}</li>
                 <li class="list-group-item"><strong>Telefoonnummer:</strong> {{ user.telefoonnummer or 'Niet ingesteld' }}</li>
                 <li class="list-group-item"><strong>Email:</strong> {{ user.email or 'Niet ingesteld' }}</li>
-                <li class="list-group-item"><strong>Abonnement:</strong> {{ user.abonnement or 'Geen abonnement' }}</li>
+                <li class="list-group-item">
+                    <strong>Abonnement:</strong>
+                    {% if user.abonnement != 'Geen abonnement' %}
+                        <span class="text-success fw-bold">{{ user.abonnement }}</span>
+                    {% else %}
+                        <span class="text-danger fw-bold">Geen abonnement</span>
+                    {% endif %}
+                </li>
             </ul>
         </div>
 
@@ -70,6 +91,18 @@
                 </table>
             {% else %}
                 <p>Geen fietsgeschiedenis beschikbaar.</p>
+            {% endif %}
+        </div>
+
+        <!-- Abonnement Kopen -->
+        <div class="mb-5">
+            {% if user.abonnement == 'Geen abonnement' %}
+                <h5>Kies een abonnement:</h5>
+                <a href="{{ url_for('routes.dagpas') }}" class="btn btn-outline-primary me-2">Dagpas</a>
+                <a href="{{ url_for('routes.weekpass') }}" class="btn btn-outline-primary me-2">Weekpas</a>
+                <a href="{{ url_for('routes.jaarkaart') }}" class="btn btn-outline-primary">Jaarkaart</a>
+            {% else %}
+                <p class="text-success"><em>Je hebt al een actief abonnement.</em></p>
             {% endif %}
         </div>
     </div>
