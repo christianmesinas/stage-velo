@@ -1,44 +1,78 @@
 {% extends "base.html" %}
-{% block title %}Jaarpas Aanvragen{% endblock %}
+{% block title %}Jaarkaart Aanvragen{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
 {% endblock %}
 
 {% block content %}
-<h2>Jaarpas Aanvragen</h2>
 
 {% if foutmelding %}
   <p style="color: red;">{{ foutmelding }}</p>
 {% endif %}
 
-<form method="POST" action="/tarieven/jaarpas" class="form-container">
-  <label for="voornaam">Voornaam:</label>
-  <input type="text" name="voornaam" required><br>
+<div class="card-slider">
+    <div class="card-item">
+    <h2 style="margin:auto; width:fit-content">Jaarkaart Aanvragen</h2>
+        <form method="POST" action="/tarieven/jaarkaart" class="form-container">
 
-  <label for="achternaam">Achternaam:</label>
-  <input type="text" name="achternaam" required><br>
+          <div class="form-row">
+              <div class="form-group">
+                <label for="voornaam">Voornaam:</label>
+                <input type="text" id="voornaam" name="voornaam" value="{{ formdata.get('voornaam', '') }}" required>
+              </div>
 
-  <label for="email">E-mailadres:</label>
-  <input type="email" name="email" required><br>
+              <div class="form-group">
+                <label for="achternaam">Achternaam:</label>
+                <input type="text" id="achternaam" name="achternaam" value="{{ formdata.get('achternaam', '') }}" required>
+              </div>
+          </div>
 
-  <label for="telefoon">Telefoonnummer:</label>
-  <input type="tel" name="telefoon" required><br>
+          <div class="form-group">
+            <label for="email">E-mailadres:</label>
+            <input type="email" id="email" name="email" value="{{ formdata.get('email', '') }}" required>
+          </div>
 
-  <label for="geboortedatum">Geboortedatum:</label>
-  <input type="date" name="geboortedatum" required><br>
+          <div class="form-row">
+              <div class="form-group">
+                <label for="telefoon">Telefoonnummer:</label>
+                <input type="tel" id="telefoon" name="telefoon" pattern="^\+?\d{10,15}$" required placeholder="+32478942069" value="{{ formdata.get('telefoon', '') }}">
+              </div>
 
-  <label for="pincode">Pincode (4 cijfers):</label>
-  <input type="password" name="pincode" pattern="\d{4}" required><br>
+              <div class="form-group">
+                <label for="geboortedatum">Geboortedatum:</label>
+                <input type="date" id="geboortedatum" name="geboortedatum" required value="{{ formdata.get('geboortedatum', '') }}">
+              </div>
+          </div>
 
-  <label for="bevestig_pincode">Bevestig Pincode:</label>
-  <input type="password" name="bevestig_pincode" pattern="\d{4}" required><br>
+          <div class="form-row">
+            <div class="form-group">
+                <label for="pincode">Pincode (4 cijfers):</label>
+                <input type="text" id="pincode" name="pincode" pattern="\d{4}" maxlength="4" required placeholder="Voer een pincode van 4 cijfers in." value="{{ formdata.get('pincode', '') }}">
+              </div>
 
-  <label>
-    <input type="checkbox" name="voorwaarden" required>
-    Ik ga akkoord met de <a href="/algemene-voorwaarden" target="_blank">algemene voorwaarden</a>
-  </label><br>
+              <div class="form-group">
+                <label for="bevestig_pincode">Bevestig Pincode:</label>
+                <input type="text" id="bevestig_pincode" name="bevestig_pincode" pattern="\d{4}" maxlength="4" required placeholder="Voer een pincode van 4 cijfers in." value="{{ formdata.get('bevestig_pincode', '') }}">
+              </div>
+          </div>
+            {% if foutmelding %}
+  <p style="color: red; margin-bottom:10px; margin-top:2px;">{{ foutmelding }}</p>
+{% endif %}
 
-  <button type="submit">Aanvragen</button>
-</form>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" name="voorwaarden" required>
+              Ik ga akkoord met de <a href="/algemene-voorwaarden" target="_blank">algemene voorwaarden</a>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <button type="submit">Aanvragen</button>
+          </div>
+
+        </form>
+    </div>
+</div>
+
 {% endblock %}
