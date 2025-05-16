@@ -39,10 +39,6 @@ oauth.register(
 
 @routes.route("/auth/process", methods=["POST"])
 def process_auth():
-    '''token = request.json.get("access_token")
-    if not token:
-        return {"error": "Access token ontbreekt"}, 400'''
-
     token = request.json.get("access_token")
     redirect_to = request.json.get("redirect_to", "/profile")
 
@@ -62,8 +58,8 @@ def process_auth():
     name = user_info.get("name", "")
     profile_picture = user_info.get("picture", "img/default.png")
 
-    session["user"] = {
-        "user_id": user_id,
+    session["Gebruiker"] = {
+        "id": user_id,
         "email": email,
         "name": name
     }
@@ -110,7 +106,7 @@ def login():
 
 @routes.route("/profile")
 def profile():
-    if 'user' not in session:
+    if 'Gebruiker' not in session:
         return redirect(url_for("routes.login", next=request.path))
 
     db = SessionLocal()
@@ -136,21 +132,17 @@ def markers():
 
 @routes.route("/tarieven")
 def tarieven():
-   return render_template("tarieven.html")
+    return render_template("tarieven.html")
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
-def dagpass():
+def dagpas():
     if request.method == "POST":
         pincode = request.form.get("pincode")
         bevestig_pincode = request.form.get("bevestig_pincode")
 
         if pincode != bevestig_pincode:
             foutmelding = "De pincodes komen niet overeen!"
-            return render_template(
-                "tarieven/dagpas.html",
-                foutmelding=foutmelding,
-                formdata=request.form
-            )
+            return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
         data = {
             "voornaam": request.form.get("voornaam"),
@@ -172,11 +164,7 @@ def weekpass():
 
         if pincode != bevestig_pincode:
             foutmelding = "De pincodes komen niet overeen!"
-            return render_template(
-                "tarieven/weekpas.html",
-                foutmelding=foutmelding,
-                formdata=request.form
-            )
+            return render_template("tarieven/weekpas.html", foutmelding=foutmelding, formdata=request.form)
 
         data = {
             "voornaam": request.form.get("voornaam"),
@@ -198,11 +186,7 @@ def jaarkaart():
 
         if pincode != bevestig_pincode:
             foutmelding = "De pincodes komen niet overeen!"
-            return render_template(
-                "tarieven/jaarkaart.html",
-                foutmelding=foutmelding,
-                formdata=request.form
-            )
+            return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding, formdata=request.form)
 
         data = {
             "voornaam": request.form.get("voornaam"),
@@ -222,15 +206,6 @@ def defect():
         return redirect(url_for("routes.login", next=request.path))
     return render_template("defect.html")
 
-@routes.app_errorhandler(404)
-def page_not_found(error):
-    return render_template('404.html'), 404
-
-@routes.app_errorhandler(500)
-def internal_server_error(error):
-    return render_template('500.html'), 500
-
-
 @routes.route("/instellingen", methods=["GET", "POST"])
 def instellingen():
     if "Gebruiker" not in session or "id" not in session["Gebruiker"]:
@@ -244,7 +219,7 @@ def instellingen():
         titel = request.form.get("titel")
         nieuwe_email = request.form.get("email")
         taal = request.form.get("taal")
-        darkmode = request.form.get("darkmode") == "1"
+
         file = request.files.get("profile_picture")
         filename = None
 
@@ -260,14 +235,14 @@ def instellingen():
             gebruiker.achternaam = achternaam
             gebruiker.telefoonnummer = telefoonnummer
             gebruiker.titel = titel
-            gebruiker.naam = nieuwe_naam
+            gebruiker.name = nieuwe_naam
             gebruiker.email = nieuwe_email
             gebruiker.taal = taal
             if filename:
                 gebruiker.profile_picture = filename
             db.commit()
 
-            session["Gebruiker"]["naam"] = nieuwe_naam
+            session["Gebruiker"]["name"] = nieuwe_naam
             session["Gebruiker"]["email"] = nieuwe_email
             session["Gebruiker"]["taal"] = taal
 
@@ -291,3 +266,11 @@ def delete_account():
     session.clear()
     flash("Uw account is verwijderd.", "danger")
     return redirect(url_for("routes.index"))
+
+@routes.app_errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
+
+@routes.app_errorhandler(500)
+def internal_server_error(error):
+    return render_template('500.html'), 500
