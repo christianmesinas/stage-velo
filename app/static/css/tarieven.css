@@ -118,6 +118,25 @@
   transform: translateY(2px);
 }
 
+body.dark-mode .card-item.swiper-slide{
+    background-color: black;
+}
+body.dark-mode .card-slider__button{
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bolder;
+  border: 3px solid white;
+  color: white;
+  background: none;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+body.dark-mode .card-slider__button:hover{
+    border-color: #D41444;
+    color: #D41444;
+}
+
 /*
 .card-slider.pressed {
   box-shadow: none;
