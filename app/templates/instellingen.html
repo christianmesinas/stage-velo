@@ -6,6 +6,7 @@
 
 {% block content %}
 <div class="background">
+    <h2 class="form-title">Instellingen</h2>
     <div class="container mt-6">
 
         <!-- ✅ Flash-berichten -->
@@ -31,8 +32,9 @@
 
         <form method="POST" action="{{ url_for('routes.instellingen') }}" enctype="multipart/form-data">
             <div class="mb-3">
-                <label for="titel" class="form-label">Aanspreektitel</label>
+                <label for="titel" class="form-label">Aanspreekvorm</label>
                 <select class="form-select" id="titel" name="titel">
+                    <option value="" {% if not user.titel %}selected{% endif %}>Geen</option>
                     <option value="heer" {% if user.titel == 'heer' %}selected{% endif %}>Heer</option>
                     <option value="vrouw" {% if user.titel == 'vrouw' %}selected{% endif %}>Vrouw</option>
                 </select>

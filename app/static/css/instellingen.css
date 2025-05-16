@@ -1,21 +1,141 @@
+/* Volledige achtergrond wit maken */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* lichtgrijze achtergrond voor contrast */
+}
+
+/* Witte container over volledige breedte */
 .background {
+    width: 100%;
+    background-color: white;
+    padding: 3rem 2rem;
+    box-sizing: border-box;
+}
+
+/* Formulier iets centraler maar nog steeds links */
+.container_mt-6 {
+    max-width: 500px;
+    margin-left: 6rem; /* iets meer naar rechts, maar niet gecentreerd */
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.container_mt-6 label {
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.container_mt-6 input,
+.container_mt-6 select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.container_mt-6 button,
+.container_mt-6 a {
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.container_mt-6 button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.container_mt-6 a {
+    color: #800080;
+}
+
+.container_mt-6 .button-group {
+    display: flex;
+    gap: 1rem;
     align-items: center;
-    width: auto;
-    height: 80vh;
-    background-repeat: no-repeat;
-    margin: 20px;
+}
+
+.container_mt-6 .danger-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
     background-color: white;
     border-radius: 20px;
 }
 
-.container_mt-6 {
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-left: 5rem;
-    text-align: left;
+.form-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.form-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.container_mt-6 input,
+.container_mt-6 select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.button-group button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.button-group a {
+    color: #800080;
+    padding: 0.6rem 1rem;
+}
+
+.danger-button {
+    margin-top: 1rem;
+    background-color: #e74c3c;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 /* ✅ Flash messages style (added) */

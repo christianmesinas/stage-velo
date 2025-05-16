@@ -37,7 +37,7 @@
             {% elif user.titel == 'heer' %}
                 <img class='gender-foto' src="{{ url_for('static', filename='img/man.png') }}" alt="Heer op fiets" class="img-thumbnail">
             {% else %}
-                <img src="{{ url_for('static', filename='img/default.png') }}" alt="Standaard foto" class="img-thumbnail">
+                <img class="gender-foto img-thumbnail" src="{{ url_for('static', filename='img/profielfoto_default.png') }}" alt="Standaard foto">
             {% endif %}
         </div>
 
@@ -45,7 +45,15 @@
         <div class="mb-4">
             <h4>Persoonlijke gegevens</h4>
             <ul class="list-group">
-                <li class="list-group-item"><strong>Titel:</strong> {{ user.titel or 'Niet ingesteld' }}</li>
+                <li class="list-group-item"><strong>Aanspreekvorm:</strong>
+                    {% if user.titel == 'heer' %}
+                        heer
+                    {% elif user.titel == 'vrouw' %}
+                        vrouw
+                    {% else %}
+                        geen
+                    {% endif %}
+                </li>
                 <li class="list-group-item"><strong>Voornaam:</strong> {{ user.voornaam or 'Niet ingesteld' }}</li>
                 <li class="list-group-item"><strong>Achternaam:</strong> {{ user.achternaam or 'Niet ingesteld' }}</li>
                 <li class="list-group-item"><strong>Telefoonnummer:</strong> {{ user.telefoonnummer or 'Niet ingesteld' }}</li>
