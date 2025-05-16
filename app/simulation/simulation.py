@@ -232,76 +232,76 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
 
 #simulatie(stations,gebruikers,fietsen, 60)
 
-
-conn = psycopg2.connect(
-    dbname="velo_community",
-    user="admin",
-    password="Velo123",
-    host="localhost",
-    port="5433"
-)
-cur = conn.cursor()
-
-def push_to_db():
-    cur.execute("DELETE FROM geschiedenis")
-    cur.execute("DELETE FROM fietsen")
-    cur.execute("DELETE FROM stations")
-    cur.execute("DELETE FROM gebruikers")
-    cur.executemany("""
-            INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
-            VALUES (%s, %s, %s, %s, %s, %s)
-        """, [
-        (
-            g['id'],
-            g['voornaam'],
-            g['achternaam'],
-            g['email'],
-            g['abonnementstype'],
-            g['postcode']
-        ) for g in gebruikers
-    ])
-
-    cur.executemany("""
-            INSERT INTO stations (id, naam, straat, postcode, capaciteit, status, parked_bikes, free_slots)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """, [
-        (
-            s['id'],
-            s['name'],
-            s['straat'],
-            s['postcode'],
-            s['capaciteit'],
-            s['status'],
-            s['free_bikes'],
-            s['free_slots']
-        ) for s in stations
-    ])
-
-    cur.executemany("""
-            INSERT INTO fietsen (id, station_id, status)
-            VALUES (%s, %s, %s)
-        """, [
-        (
-            f['id'],
-            f['station_id'],
-            f['status']
-        ) for f in fietsen
-    ])
-    updates = [(rit['eind_station_id'], rit['fiets_id']) for rit in geschiedenis]
-    cur.executemany("""
-        UPDATE fietsen
-        SET station_id = %s
-        WHERE id = %s
-    """, updates)
-
-    # Gebruik COPY voor geschiedenis omdat COPY beste methode is voor bulk data te pushen naar de DB
-    csv_buffer = geschiedenis_to_csv_buffer(geschiedenis)
-    cur.copy_expert("""
-            COPY geschiedenis (gebruiker_id, fiets_id, start_station_id, eind_station_id, starttijd, eindtijd, duur_minuten)
-            FROM STDIN WITH (FORMAT csv)
-        """, csv_buffer)
-
-push_to_db()
-conn.commit()
-cur.close()
-conn.close()
+#
+# conn = psycopg2.connect(
+#     dbname="velo_community",
+#     user="admin",
+#     password="Velo123",
+#     host="localhost",
+#     port="5433"
+# )
+# cur = conn.cursor()
+#
+# def push_to_db():
+#     cur.execute("DELETE FROM geschiedenis")
+#     cur.execute("DELETE FROM fietsen")
+#     cur.execute("DELETE FROM stations")
+#     cur.execute("DELETE FROM gebruikers")
+#     cur.executemany("""
+#             INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
+#             VALUES (%s, %s, %s, %s, %s, %s)
+#         """, [
+#         (
+#             g['id'],
+#             g['voornaam'],
+#             g['achternaam'],
+#             g['email'],
+#             g['abonnementstype'],
+#             g['postcode']
+#         ) for g in gebruikers
+#     ])
+#
+#     cur.executemany("""
+#             INSERT INTO stations (id, naam, straat, postcode, capaciteit, status, parked_bikes, free_slots)
+#             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+#         """, [
+#         (
+#             s['id'],
+#             s['name'],
+#             s['straat'],
+#             s['postcode'],
+#             s['capaciteit'],
+#             s['status'],
+#             s['free_bikes'],
+#             s['free_slots']
+#         ) for s in stations
+#     ])
+#
+#     cur.executemany("""
+#             INSERT INTO fietsen (id, station_id, status)
+#             VALUES (%s, %s, %s)
+#         """, [
+#         (
+#             f['id'],
+#             f['station_id'],
+#             f['status']
+#         ) for f in fietsen
+#     ])
+#     updates = [(rit['eind_station_id'], rit['fiets_id']) for rit in geschiedenis]
+#     cur.executemany("""
+#         UPDATE fietsen
+#         SET station_id = %s
+#         WHERE id = %s
+#     """, updates)
+#
+#     # Gebruik COPY voor geschiedenis omdat COPY beste methode is voor bulk data te pushen naar de DB
+#     csv_buffer = geschiedenis_to_csv_buffer(geschiedenis)
+#     cur.copy_expert("""
+#             COPY geschiedenis (gebruiker_id, fiets_id, start_station_id, eind_station_id, starttijd, eindtijd, duur_minuten)
+#             FROM STDIN WITH (FORMAT csv)
+#         """, csv_buffer)
+#
+# push_to_db()
+# conn.commit()
+# cur.close()
+# conn.close()
