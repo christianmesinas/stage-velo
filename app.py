@@ -2,27 +2,21 @@ from flask import Flask, session
 from dotenv import load_dotenv
 from os import getenv
 
-
 from app.database import SessionLocal
 from app.database.models import Base
 from app.routes import routes
 from authlib.integrations.flask_client import OAuth
 
-
-
-
-
-
-# ✅ Laad .ENV-bestand
+# Laad .ENV-bestand,
 load_dotenv()
 
-# ✅ Initialiseer Flask
+ #Initialiseer Flask,
 app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
 
-# ✅ Stel de secret key in voor sessies
+# Stel de secret key in voor sessies,
 app.secret_key = getenv("SECRET_KEY", "fallback-secret")
 
-# ✅ OAuth instellen
+# OAuth instellen,
 oauth = OAuth(app)
 oauth.register(
     "auth0",
@@ -32,10 +26,10 @@ oauth.register(
         "scope": "openid profile email",
         "audience": "https://" + getenv("AUTH0_DOMAIN") + "/api/v2/"
     },
-    server_metadata_url=f'https://{getenv("AUTH0_DOMAIN")}/.well-known/openid-configuration'
+    server_metadata_url=f'https://{getenv("auth0_domain")}/.well-known/openid-configuration'
 )
 
-# ✅ Registreer je Blueprint-routes
+# Registreer je Blueprint-routes,
 app.register_blueprint(routes)
 
 with app.app_context():
@@ -52,12 +46,3 @@ def inject_user():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
-
-import io
-import csv
-from flask import make_response
-
-
-
-
-
