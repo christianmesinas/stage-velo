@@ -191,3 +191,11 @@ body.dark-mode .btn {
   background-color: #444;
   color: white;
 }
+
+body.dark-mode .background{
+    background-color: black;
+}
+
+body.dark-mode .btn.btn-outline-primary{
+    color: white;
+}
