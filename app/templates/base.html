@@ -47,5 +47,25 @@
 {% block scripts %}{% endblock %}
 
 
+<!-- 🌗 Кнопка для включения/выключения тёмной темы - knop voor in- en uitzetten van donkere thema -->
+<button id="darkModeToggle" style="position: fixed; bottom: 1rem; right: 1rem; padding: 0.5rem;">🌗 Donkere modus</button>
+
+<!-- 🌙 Скрипт: включение/выключение темы и сохранение в браузере - script: in- en uitzetten van thema en opslaan in browser -->
+<script>
+  const toggleButton = document.getElementById("darkModeToggle");
+  const isDark = localStorage.getItem("darkMode") === "true";
+
+  if (isDark) {
+    document.body.classList.add("dark-mode");
+  }
+
+  toggleButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDarkNow = document.body.classList.contains("dark-mode");
+    localStorage.setItem("darkMode", isDarkNow);
+  });
+</script>
+
+
 </body>
 </html>

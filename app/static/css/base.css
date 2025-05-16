@@ -169,3 +169,30 @@ color: white;
 .nav-buttons .logout:hover {
   background-color: #f8d7da;
 }
+
+
+/* 🌑 Тёмная тема: стили для основного фона и текста - donkere kleur thema, voor de achtergrond en text */
+body.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+/* 🔗 Тёмные стили для меню и ссылок - donker kleur voor de menu en links*/
+body.dark-mode .nav-links a,
+body.dark-mode .nav-buttons a,
+body.dark-mode .dropdown-menu a {
+  color: #f0f0f0;
+}
+
+body.dark-mode header {
+  background-color: #1f1f1f;
+}
+
+body.dark-mode .dropdown-menu {
+  background-color: #333;
+  color: #f0f0f0;
+}
+
+body.dark-mode .dropdown-menu a:hover {
+  background-color: #444;
+}
