@@ -13,6 +13,10 @@ from app.database import SessionLocal
 
 routes = Blueprint("routes", __name__)
 
+# ======================
+# .env en Auth0 configuratie
+# ======================
+
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
@@ -29,9 +33,19 @@ oauth.register(
     server_metadata_url=f"https://{env.get('AUTH0_DOMAIN')}/.well-known/openid-configuration"
 )
 
+# ======================
+# AUTH ROUTES
+# ======================
+
 @routes.route("/auth/process", methods=["POST"])
 def process_auth():
+    '''token = request.json.get("access_token")
+    if not token:
+        return {"error": "Access token ontbreekt"}, 400'''
+
     token = request.json.get("access_token")
+    redirect_to = request.json.get("redirect_to", "/profile")
+
     if not token:
         return {"error": "Access token ontbreekt"}, 400
 
@@ -55,10 +69,16 @@ def process_auth():
     }
 
     db = SessionLocal()
-    Usertable.get_or_create(db=db, user_id=user_id, email=email, name=name, profile_picture=profile_picture)
+    Usertable.get_or_create(
+        db=db,
+        user_id=user_id,
+        email=email,
+        name=name,
+        profile_picture=profile_picture
+    )
     db.close()
 
-    return redirect(url_for("routes.instellingen"))
+    return redirect(redirect_to)
 
 @routes.route("/logout")
 def logout():
@@ -70,6 +90,10 @@ def logout():
         }, quote_plus)
     )
 
+# ======================
+# ALGEMENE ROUTES
+# ======================
+
 @routes.route("/")
 def index():
     return render_template("index.html",
@@ -78,14 +102,16 @@ def index():
 
 @routes.route("/login")
 def login():
+    next_url = request.args.get("next", "/profile")
     return render_template("login.html",
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
-                           auth0_domain=env.get("AUTH0_DOMAIN"))
+                           auth0_domain=env.get("AUTH0_DOMAIN"),
+                           next_url=next_url)
 
 @routes.route("/profile")
 def profile():
     if 'user' not in session:
-        return redirect(url_for("routes.login"))
+        return redirect(url_for("routes.login", next=request.path))
 
     db = SessionLocal()
     user_table = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
@@ -111,50 +137,100 @@ def markers():
 
 @routes.route("/tarieven")
 def tarieven():
-    return render_template("tarieven.html")
+   return render_template("tarieven.html")
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
-def dagpas():
+def dagpass():
     if request.method == "POST":
-        db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
-        if gebruiker:
-            gebruiker.abonnement = "Dagpas"
-            db.commit()
-        db.close()
-        flash("Dagpas succesvol gekocht.", "success")
-        return redirect(url_for("routes.profile"))
-    return render_template("tarieven/dagpas.html")
+        pincode = request.form.get("pincode")
+        bevestig_pincode = request.form.get("bevestig_pincode")
+
+        if pincode != bevestig_pincode:
+            foutmelding = "De pincodes komen niet overeen!"
+            return render_template(
+                "tarieven/dagpas.html",
+                foutmelding=foutmelding,
+                formdata=request.form
+            )
+
+        data = {
+            "voornaam": request.form.get("voornaam"),
+            "achternaam": request.form.get("achternaam"),
+            "email": request.form.get("email"),
+            "telefoon": request.form.get("telefoon"),
+            "geboortedatum": request.form.get("geboortedatum"),
+            "pincode": pincode
+        }
+        return render_template("tarieven/bedankt.html", data=data)
+
+    return render_template("tarieven/dagpas.html", formdata={})
 
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
 def weekpass():
     if request.method == "POST":
-        db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
-        if gebruiker:
-            gebruiker.abonnement = "Weekpas"
-            db.commit()
-        db.close()
-        flash("Weekpas succesvol gekocht.", "success")
-        return redirect(url_for("routes.profile"))
-    return render_template("tarieven/weekpas.html")
+        pincode = request.form.get("pincode")
+        bevestig_pincode = request.form.get("bevestig_pincode")
+
+        if pincode != bevestig_pincode:
+            foutmelding = "De pincodes komen niet overeen!"
+            return render_template(
+                "tarieven/weekpas.html",
+                foutmelding=foutmelding,
+                formdata=request.form
+            )
+
+        data = {
+            "voornaam": request.form.get("voornaam"),
+            "achternaam": request.form.get("achternaam"),
+            "email": request.form.get("email"),
+            "telefoon": request.form.get("telefoon"),
+            "geboortedatum": request.form.get("geboortedatum"),
+            "pincode": pincode
+        }
+        return render_template("tarieven/bedankt.html", data=data)
+
+    return render_template("tarieven/weekpas.html", formdata={})
 
 @routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
 def jaarkaart():
     if request.method == "POST":
-        if not request.form.get("voorwaarden"):
-            foutmelding = "Je moet akkoord gaan met de algemene voorwaarden."
-            return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding)
+        pincode = request.form.get("pincode")
+        bevestig_pincode = request.form.get("bevestig_pincode")
 
-        db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["user"]["user_id"]).first()
-        if gebruiker:
-            gebruiker.abonnement = "Jaarkaart"
-            db.commit()
-        db.close()
-        flash("Jaarkaart succesvol gekocht.", "success")
-        return redirect(url_for("routes.profile"))
-    return render_template("tarieven/jaarkaart.html")
+        if pincode != bevestig_pincode:
+            foutmelding = "De pincodes komen niet overeen!"
+            return render_template(
+                "tarieven/jaarkaart.html",
+                foutmelding=foutmelding,
+                formdata=request.form
+            )
+
+        data = {
+            "voornaam": request.form.get("voornaam"),
+            "achternaam": request.form.get("achternaam"),
+            "email": request.form.get("email"),
+            "telefoon": request.form.get("telefoon"),
+            "geboortedatum": request.form.get("geboortedatum"),
+            "pincode": pincode
+        }
+        return render_template("tarieven/bedankt.html", data=data)
+
+    return render_template("tarieven/jaarkaart.html", formdata={})
+
+@routes.route("/defect")
+def defect():
+    if 'user' not in session:
+        return redirect(url_for("routes.login", next=request.path))
+    return render_template("defect.html")
+
+@routes.app_errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
+
+@routes.app_errorhandler(500)
+def internal_server_error(error):
+    return render_template('500.html'), 500
+
 
 @routes.route("/instellingen", methods=["GET", "POST"])
 def instellingen():
