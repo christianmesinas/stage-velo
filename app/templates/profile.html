@@ -102,23 +102,73 @@
             {% endif %}
         </div>
 
-        <!-- Abonnement Kopen -->
-        <div class="mb-5">
-            <h5>Kies een abonnement:</h5>
 
-            {% if user.abonnement == 'Geen abonnement' %}
-                <a href="{{ url_for('routes.dagpas') }}" class="btn btn-outline-primary me-2">Dagpas</a>
-                <a href="{{ url_for('routes.weekpass') }}" class="btn btn-outline-primary me-2">Weekpas</a>
-                <a href="{{ url_for('routes.jaarkaart') }}" class="btn btn-outline-primary">Jaarkaart</a>
-            {% else %}
-                <p class="text-success"><em>Je hebt al een actief abonnement.</em></p>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-outline-secondary" disabled>Dagpas</button>
-                    <button class="btn btn-outline-secondary" disabled>Weekpas</button>
-                    <button class="btn btn-outline-secondary" disabled>Jaarkaart</button>
+ <!-- Abonnement Kopen -->
+<div class="mb-5">
+    <h5 class="mb-4">Kies een abonnement:</h5>
+
+    {% if user.abonnement == 'Geen abonnement' %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100 text-center border-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Dagpas</h5>
+                    <p class="card-text">Een dag fietsen met 30 min limit voor een vaste prijs.</p>
+                    <a href="{{ url_for('routes.dagpas') }}" class="btn btn-outline-primary w-100">Kopen</a>
                 </div>
-            {% endif %}
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center border-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Weekpas</h5>
+                    <p class="card-text">7 dagen fietsen met 30 min limit--or something like this.</p>
+                    <a href="{{ url_for('routes.weekpass') }}" class="btn btn-outline-primary w-100">Kopen</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center border-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Jaarkaart</h5>
+                    <p class="card-text">365 dagen zorgeloos fietsen met 30 min limit.</p>
+                    <a href="{{ url_for('routes.jaarkaart') }}" class="btn btn-outline-primary w-100">Kopen</a>
+                </div>
+            </div>
         </div>
     </div>
+    {% else %}
+        <p class="text-success"><em>Je hebt al een actief abonnement.</em></p>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100 text-center border-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title">Dagpas</h5>
+                        <p class="card-text text-muted">Niet beschikbaar</p>
+                        <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 text-center border-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title">Weekpas</h5>
+                        <p class="card-text text-muted">Niet beschikbaar</p>
+                        <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 text-center border-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title">Jaarkaart</h5>
+                        <p class="card-text text-muted">Niet beschikbaar</p>
+                        <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </div>
+
 {% endblock %}

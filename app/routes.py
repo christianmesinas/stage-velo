@@ -243,7 +243,7 @@ def instellingen():
                 gebruiker.profile_picture = filename
             db.commit()
 
-            # обновляем сессию
+            # обновляем сессию - updaten de session
             session["Gebruiker"]["naam"] = nieuwe_naam
             session["Gebruiker"]["email"] = nieuwe_email
             session["Gebruiker"]["taal"] = taal
@@ -252,7 +252,7 @@ def instellingen():
         db.close()
         return redirect(url_for("routes.profile"))
 
-    # GET-запрос — возвращаем объект из базы
+    # GET-запрос — возвращаем объект из базы - Get - krijg de gegevens van DB
     db.close()
     return render_template("instellingen.html", user=gebruiker)
 
