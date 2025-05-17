@@ -1,183 +1,108 @@
-/* Volledige achtergrond wit maken */
+/* Algemene stijl */
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0; /* lichtgrijze achtergrond voor contrast */
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  font-family: "Segoe UI", sans-serif;
 }
 
-/* Witte container over volledige breedte */
+/* Container */
 .background {
-    width: 100%;
-    background-color: white;
-    padding: 3rem 2rem;
-    box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
 }
 
-/* Formulier iets centraler maar nog steeds links */
-.container_mt-6 {
-    max-width: 500px;
-    margin-left: 6rem; /* iets meer naar rechts, maar niet gecentreerd */
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.settings-box {
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: 15px;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
-.container_mt-6 label {
-    font-weight: bold;
-    margin-bottom: 0.3rem;
-    display: block;
-}
-
-.container_mt-6 input,
-.container_mt-6 select {
-    width: 100%;
-    padding: 0.6rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.container_mt-6 button,
-.container_mt-6 a {
-    margin-top: 1rem;
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 1rem;
-}
-
-.container_mt-6 button {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.container_mt-6 a {
-    color: #800080;
-}
-
-.container_mt-6 .button-group {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
-.container_mt-6 .danger-button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 5px;
-    cursor: pointer;
-}
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background-color: white;
-    border-radius: 20px;
-}
-
+/* Titel */
 .form-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
-    color: #333;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
-.form-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
-    color: #333;
-}
-
+/* Labels & velden */
 .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1.2rem;
+  margin-bottom: 1.3rem;
 }
 
 .form-group label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
-.container_mt-6 input,
-.container_mt-6 select {
-    width: 100%;
-    padding: 0.6rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
+/* Knoppen */
 .button-group {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-.button-group button {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.button-group a {
-    color: #800080;
-    padding: 0.6rem 1rem;
+.button-group .btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 5px;
 }
 
 .danger-button {
-    margin-top: 1rem;
-    background-color: #e74c3c;
-    color: white;
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #e74c3c;
+  color: white;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
 }
 
-/* ✅ Flash messages style (added) */
+/* Flash alerts */
 .alert {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid transparent;
-    border-radius: 0.375rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
 }
 
 .alert-success {
-    color: #0f5132;
-    background-color: #d1e7dd;
-    border-color: #badbcc;
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
 }
 
 .alert-danger {
-    color: #842029;
-    background-color: #f8d7da;
-    border-color: #f5c2c7;
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
 }
 
-.alert-dismissible .btn-close {
-    position: relative;
-    float: right;
-    padding: 0.5rem 1rem;
-    background: none;
-    border: none;
-    font-size: 1.25rem;
-    line-height: 1;
-    color: inherit;
-}
-
-
-/* 🌑 Тёмная тема на странице настроек - donkere kleur thema voor instellingen pagina */
+/* Donkere modus */
 body.dark-mode {
   background-color: #121212;
   color: #f0f0f0;
 }
 
-body.dark-mode .background {
-  background-color: #1e1e1e;
+body.dark-mode .settings-box {
+  background-color: #1f1f1f;
+  color: #f0f0f0;
 }
 
 body.dark-mode input,
@@ -187,15 +112,18 @@ body.dark-mode select {
   border: 1px solid #555;
 }
 
-body.dark-mode .btn {
-  background-color: #444;
+body.dark-mode .btn,
+body.dark-mode .danger-button {
+  background-color: #333;
   color: white;
 }
 
-body.dark-mode .background{
-    background-color: black; !important;
+body.dark-mode .alert-success {
+  background-color: #224f38;
+  border-color: #2a7250;
 }
 
-body.dark-mode .btn.btn-outline-primary{
-    color: white;
+body.dark-mode .alert-danger {
+  background-color: #5c1e27;
+  border-color: #8c2c38;
 }

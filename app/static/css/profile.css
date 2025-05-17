@@ -68,3 +68,13 @@ body.dark-mode .background{
 body.dark-mode a{
 
 }
+
+/* ✅ Donkere modus achtergrond */
+body.dark-mode .background {
+    background-color: #1a1a1a;
+}
+
+/* ✅ Donkere rand voor profielfoto */
+body.dark-mode .gender-foto {
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+}

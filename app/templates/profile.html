@@ -33,9 +33,9 @@
         <div class="mb-4">
             <label class="form-label">Profielfoto:</label><br>
             {% if user.titel == 'vrouw' %}
-                <img class='gender-foto' src="{{ url_for('static', filename='img/vrouw.png') }}" alt="Vrouw op fiets" class="img-thumbnail">
+                <img class="gender-foto img-thumbnail" src="{{ url_for('static', filename='img/vrouw.png') }}" alt="Vrouw op fiets">
             {% elif user.titel == 'heer' %}
-                <img class='gender-foto' src="{{ url_for('static', filename='img/man.png') }}" alt="Heer op fiets" class="img-thumbnail">
+                <img class="gender-foto img-thumbnail" src="{{ url_for('static', filename='img/man.png') }}" alt="Heer op fiets">
             {% else %}
                 <img class="gender-foto img-thumbnail" src="{{ url_for('static', filename='img/profielfoto_default.png') }}" alt="Standaard foto">
             {% endif %}
@@ -104,13 +104,19 @@
 
         <!-- Abonnement Kopen -->
         <div class="mb-5">
+            <h5>Kies een abonnement:</h5>
+
             {% if user.abonnement == 'Geen abonnement' %}
-                <h5>Kies een abonnement:</h5>
                 <a href="{{ url_for('routes.dagpas') }}" class="btn btn-outline-primary me-2">Dagpas</a>
                 <a href="{{ url_for('routes.weekpass') }}" class="btn btn-outline-primary me-2">Weekpas</a>
                 <a href="{{ url_for('routes.jaarkaart') }}" class="btn btn-outline-primary">Jaarkaart</a>
             {% else %}
                 <p class="text-success"><em>Je hebt al een actief abonnement.</em></p>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary" disabled>Dagpas</button>
+                    <button class="btn btn-outline-secondary" disabled>Weekpas</button>
+                    <button class="btn btn-outline-secondary" disabled>Jaarkaart</button>
+                </div>
             {% endif %}
         </div>
     </div>

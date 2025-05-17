@@ -211,6 +211,9 @@ def instellingen():
     if "Gebruiker" not in session or "id" not in session["Gebruiker"]:
         return redirect(url_for("routes.login"))
 
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+
     if request.method == "POST":
         nieuwe_naam = request.form.get("naam")
         voornaam = request.form.get("voornaam")
@@ -228,29 +231,30 @@ def instellingen():
             upload_path = os.path.join("app", "static", "uploads", filename)
             file.save(upload_path)
 
-        db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
         if gebruiker:
             gebruiker.voornaam = voornaam
             gebruiker.achternaam = achternaam
             gebruiker.telefoonnummer = telefoonnummer
             gebruiker.titel = titel
-            gebruiker.name = nieuwe_naam
+            gebruiker.naam = nieuwe_naam
             gebruiker.email = nieuwe_email
             gebruiker.taal = taal
             if filename:
                 gebruiker.profile_picture = filename
             db.commit()
 
-            session["Gebruiker"]["name"] = nieuwe_naam
+            # обновляем сессию
+            session["Gebruiker"]["naam"] = nieuwe_naam
             session["Gebruiker"]["email"] = nieuwe_email
             session["Gebruiker"]["taal"] = taal
 
-        db.close()
         flash("Instellingen succesvol opgeslagen.", "success")
+        db.close()
         return redirect(url_for("routes.profile"))
 
-    return render_template("instellingen.html", user=session.get("Gebruiker"))
+    # GET-запрос — возвращаем объект из базы
+    db.close()
+    return render_template("instellingen.html", user=gebruiker)
 
 @routes.route("/delete_account", methods=["POST"])
 def delete_account():
