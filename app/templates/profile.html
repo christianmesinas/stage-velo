@@ -2,173 +2,190 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<style>
+  /* Центрированное flash-сообщение */
+  #flash-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    display: none;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
 <div class="background">
-    <div>
-        <a href="{{ url_for('routes.instellingen') }}">
-            <button type="button" class="btn btn-primary">Instellingen</button>
-        </a>
+  <div>
+    <a href="{{ url_for('routes.instellingen') }}">
+      <button type="button" class="btn btn-primary">Instellingen</button>
+    </a>
+  </div>
+
+  <div class="container mt-5">
+    <h2 class="mb-4">Profiel</h2>
+
+    <!-- Flash-bericht-центровка -->
+    <div id="flash-overlay">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} shadow-lg" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
     </div>
 
-    <div class="container mt-5">
-        <h2 class="mb-4">Profiel</h2>
+    <!-- Profielfoto -->
+    <div class="mb-4">
+      <label class="form-label">Profielfoto:</label><br>
+      {% if user.titel == 'vrouw' %}
+        <img class="gender-foto img-thumbnail" src="{{ url_for('static', filename='img/vrouw.png') }}" alt="Vrouw op fiets">
+      {% elif user.titel == 'heer' %}
+        <img class="gender-foto img-thumbnail" src="{{ url_for('static', filename='img/man.png') }}" alt="Heer op fiets">
+      {% else %}
+        <img class="gender-foto img-thumbnail" src="{{ url_for('static', filename='img/profielfoto_default.png') }}" alt="Standaard foto">
+      {% endif %}
+    </div>
 
-        <!-- ✅ Flash-berichten -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            <div class="mb-4">
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                  {{ message }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-              {% endfor %}
-            </div>
+    <!-- Gebruikersgegevens -->
+    <div class="mb-4">
+      <h4>Persoonlijke gegevens</h4>
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Aanspreekvorm:</strong> {{ user.titel or 'geen' }}</li>
+        <li class="list-group-item"><strong>Voornaam:</strong> {{ user.voornaam or 'Niet ingesteld' }}</li>
+        <li class="list-group-item"><strong>Achternaam:</strong> {{ user.achternaam or 'Niet ingesteld' }}</li>
+        <li class="list-group-item"><strong>Telefoonnummer:</strong> {{ user.telefoonnummer or 'Niet ingesteld' }}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{ user.email or 'Niet ingesteld' }}</li>
+        <li class="list-group-item">
+          <strong>Abonnement:</strong>
+          {% if user.abonnement != 'Geen abonnement' %}
+            <span class="text-success fw-bold">{{ user.abonnement }}</span>
+          {% else %}
+            <span class="text-danger fw-bold">Geen abonnement</span>
           {% endif %}
-        {% endwith %}
-
-        <!-- Profielfoto -->
-        <div class="mb-4">
-            <label class="form-label">Profielfoto:</label><br>
-            {% if user.titel == 'vrouw' %}
-                <img class="gender-foto img-thumbnail" src="{{ url_for('static', filename='img/vrouw.png') }}" alt="Vrouw op fiets">
-            {% elif user.titel == 'heer' %}
-                <img class="gender-foto img-thumbnail" src="{{ url_for('static', filename='img/man.png') }}" alt="Heer op fiets">
-            {% else %}
-                <img class="gender-foto img-thumbnail" src="{{ url_for('static', filename='img/profielfoto_default.png') }}" alt="Standaard foto">
-            {% endif %}
-        </div>
-
-        <!-- Gebruikersgegevens -->
-        <div class="mb-4">
-            <h4>Persoonlijke gegevens</h4>
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Aanspreekvorm:</strong>
-                    {% if user.titel == 'heer' %}
-                        heer
-                    {% elif user.titel == 'vrouw' %}
-                        vrouw
-                    {% else %}
-                        geen
-                    {% endif %}
-                </li>
-                <li class="list-group-item"><strong>Voornaam:</strong> {{ user.voornaam or 'Niet ingesteld' }}</li>
-                <li class="list-group-item"><strong>Achternaam:</strong> {{ user.achternaam or 'Niet ingesteld' }}</li>
-                <li class="list-group-item"><strong>Telefoonnummer:</strong> {{ user.telefoonnummer or 'Niet ingesteld' }}</li>
-                <li class="list-group-item"><strong>Email:</strong> {{ user.email or 'Niet ingesteld' }}</li>
-                <li class="list-group-item">
-                    <strong>Abonnement:</strong>
-                    {% if user.abonnement != 'Geen abonnement' %}
-                        <span class="text-success fw-bold">{{ user.abonnement }}</span>
-                    {% else %}
-                        <span class="text-danger fw-bold">Geen abonnement</span>
-                    {% endif %}
-                </li>
-            </ul>
-        </div>
-
-        <!-- Fietsgeschiedenis -->
-        <div class="mb-4">
-            <h4>Fietsgeschiedenis</h4>
-            {% if rentals %}
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Fiets-ID</th>
-                            <th>Startstation</th>
-                            <th>Eindstation</th>
-                            <th>Starttijd</th>
-                            <th>Eindtijd</th>
-                            <th>Prijs</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for rental in rentals %}
-                        <tr>
-                            <td>{{ rental.bike_id }}</td>
-                            <td>{{ rental.start_station.naam if rental.start_station else 'Onbekend' }}</td>
-                            <td>{{ rental.end_station.naam if rental.end_station else 'Onbekend' }}</td>
-                            <td>{{ rental.starttijd.strftime('%d-%m-%Y %H:%M') if rental.starttijd else 'N/A' }}</td>
-                            <td>{{ rental.eindtijd.strftime('%d-%m-%Y %H:%M') if rental.eindtijd else 'N/A' }}</td>
-                            <td>€{{ "%.2f"|format(rental.prijs) if rental.prijs else 'N/A' }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
-                <p>Geen fietsgeschiedenis beschikbaar.</p>
-            {% endif %}
-        </div>
-
-
- <!-- Abonnement Kopen -->
-<div class="mb-5">
-    <h5 class="mb-4">Kies een abonnement:</h5>
-
-    {% if user.abonnement == 'Geen abonnement' %}
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-            <div class="card h-100 text-center border-primary">
-                <div class="card-body">
-                    <h5 class="card-title">Dagpas</h5>
-                    <p class="card-text">Een dag fietsen met 30 min limit voor een vaste prijs.</p>
-                    <a href="{{ url_for('routes.dagpas') }}" class="btn btn-outline-primary w-100">Kopen</a>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100 text-center border-primary">
-                <div class="card-body">
-                    <h5 class="card-title">Weekpas</h5>
-                    <p class="card-text">7 dagen fietsen met 30 min limit--or something like this.</p>
-                    <a href="{{ url_for('routes.weekpass') }}" class="btn btn-outline-primary w-100">Kopen</a>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100 text-center border-primary">
-                <div class="card-body">
-                    <h5 class="card-title">Jaarkaart</h5>
-                    <p class="card-text">365 dagen zorgeloos fietsen met 30 min limit.</p>
-                    <a href="{{ url_for('routes.jaarkaart') }}" class="btn btn-outline-primary w-100">Kopen</a>
-                </div>
-            </div>
-        </div>
+        </li>
+      </ul>
     </div>
-    {% else %}
-        <p class="text-success"><em>Je hebt al een actief abonnement.</em></p>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card h-100 text-center border-secondary">
-                    <div class="card-body">
-                        <h5 class="card-title">Dagpas</h5>
-                        <p class="card-text text-muted">Niet beschikbaar</p>
-                        <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100 text-center border-secondary">
-                    <div class="card-body">
-                        <h5 class="card-title">Weekpas</h5>
-                        <p class="card-text text-muted">Niet beschikbaar</p>
-                        <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100 text-center border-secondary">
-                    <div class="card-body">
-                        <h5 class="card-title">Jaarkaart</h5>
-                        <p class="card-text text-muted">Niet beschikbaar</p>
-                        <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-</div>
 
+    <!-- Fietsgeschiedenis -->
+    <div class="mb-4">
+      <h4>Fietsgeschiedenis</h4>
+      {% if rentals %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Fiets-ID</th>
+              <th>Startstation</th>
+              <th>Eindstation</th>
+              <th>Starttijd</th>
+              <th>Eindtijd</th>
+              <th>Prijs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rental in rentals %}
+              <tr>
+                <td>{{ rental.bike_id }}</td>
+                <td>{{ rental.start_station.naam if rental.start_station else 'Onbekend' }}</td>
+                <td>{{ rental.end_station.naam if rental.end_station else 'Onbekend' }}</td>
+                <td>{{ rental.starttijd.strftime('%d-%m-%Y %H:%M') if rental.starttijd else 'N/A' }}</td>
+                <td>{{ rental.eindtijd.strftime('%d-%m-%Y %H:%M') if rental.eindtijd else 'N/A' }}</td>
+                <td>€{{ "%.2f"|format(rental.prijs) if rental.prijs else 'N/A' }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>Geen fietsgeschiedenis beschikbaar.</p>
+      {% endif %}
+    </div>
+
+    <!-- Abonnement Kopen -->
+    <div class="mb-5">
+      <h5 class="mb-4">Kies een abonnement:</h5>
+
+      {% if user.abonnement == 'Geen abonnement' %}
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <div class="card h-100 text-center border-primary">
+            <div class="card-body">
+              <h5 class="card-title">Dagpas</h5>
+              <p class="card-text">Een dag fietsen met 30 min limit voor een vaste prijs.</p>
+              <a href="{{ url_for('routes.dagpas') }}" class="btn btn-outline-primary w-100">Kopen</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 text-center border-primary">
+            <div class="card-body">
+              <h5 class="card-title">Weekpas</h5>
+              <p class="card-text">7 dagen fietsen met 30 min limit.</p>
+              <a href="{{ url_for('routes.weekpass') }}" class="btn btn-outline-primary w-100">Kopen</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 text-center border-primary">
+            <div class="card-body">
+              <h5 class="card-title">Jaarkaart</h5>
+              <p class="card-text">365 dagen zorgeloos fietsen met 30 min limit.</p>
+              <a href="{{ url_for('routes.jaarkaart') }}" class="btn btn-outline-primary w-100">Kopen</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <p class="text-success"><em>Je hebt al een actief abonnement.</em></p>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <div class="card h-100 text-center border-secondary">
+            <div class="card-body">
+              <h5 class="card-title">Dagpas</h5>
+              <p class="card-text text-muted">Niet beschikbaar</p>
+              <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 text-center border-secondary">
+            <div class="card-body">
+              <h5 class="card-title">Weekpas</h5>
+              <p class="card-text text-muted">Niet beschikbaar</p>
+              <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 text-center border-secondary">
+            <div class="card-body">
+              <h5 class="card-title">Jaarkaart</h5>
+              <p class="card-text text-muted">Niet beschikbaar</p>
+              <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const flashOverlay = document.getElementById('flash-overlay');
+  if (flashOverlay && flashOverlay.innerText.trim() !== '') {
+    flashOverlay.style.display = 'block';
+    setTimeout(() => {
+      flashOverlay.style.opacity = 0;
+      setTimeout(() => {
+        flashOverlay.remove();
+      }, 400);
+    }, 2000);
+  }
+</script>
 {% endblock %}

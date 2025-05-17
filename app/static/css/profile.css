@@ -1,3 +1,4 @@
+/* ✅ Algemene achtergrond van de profielpagina */
 .background {
     display: flex;
     justify-content: flex-end;
@@ -7,34 +8,46 @@
     margin: 20px;
     background-color: white;
     border-radius: 20px;
+    padding: 2rem;
+    position: relative;
 }
 
+/* ✅ Marges en layout spacing */
 .mt-5 {
     margin-top: 2rem;
     display: flex;
+    flex-wrap: wrap;
     gap: 30px;
 }
 
-.mb-4{
-    margin-right: 30px;
+.mb-4 {
+    margin-bottom: 1.5rem;
 }
 
-.btn-primary{
+.mb-5 {
+    margin-bottom: 3rem;
+}
+
+/* ✅ Instellingen-knop rechtsboven */
+.btn-primary {
     position: absolute;
-    right: 3rem;
-    margin-top: 1.5rem;
+    right: 2rem;
+    top: 1.5rem;
 }
 
-.gender-foto{
+/* ✅ Profielfoto styling */
+.gender-foto {
     width: 10vw;
+    max-width: 150px;
 }
 
-/* ✅ Flash messages style (added) */
+/* ✅ Flash messages stijl */
 .alert {
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: 1rem 1.25rem;
     border: 1px solid transparent;
     border-radius: 0.375rem;
+    font-size: 1rem;
+    z-index: 9999;
 }
 
 .alert-success {
@@ -60,21 +73,66 @@
     color: inherit;
 }
 
-body.dark-mode .background{
-    background-color: black;
-
-}
-
-body.dark-mode a{
-
-}
-
-/* ✅ Donkere modus achtergrond */
+/* ✅ Donkere modus */
 body.dark-mode .background {
     background-color: #1a1a1a;
 }
 
-/* ✅ Donkere rand voor profielfoto */
+body.dark-mode a {
+    color: #fff;
+}
+
 body.dark-mode .gender-foto {
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+/* ✅ Kaartjes voor abonnementen */
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card .card-title {
+    font-weight: bold;
+}
+
+.card .card-text {
+    font-size: 0.95rem;
+}
+
+.card .btn {
+    margin-top: 1rem;
+}
+
+/* ✅ Donkere modus kaartstijl */
+body.dark-mode .card {
+    background-color: #2c2c2c;
+    border-color: #444;
+    color: #f0f0f0;
+}
+
+body.dark-mode .card .btn-outline-primary {
+    color: #f0f0f0;
+    border-color: #888;
+}
+
+body.dark-mode .card .btn-outline-primary:hover {
+    background-color: #444;
+    color: #fff;
+    border-color: #666;
+}
+
+/* ✅ Flash message overlay in center */
+#flash-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    display: none;
 }
