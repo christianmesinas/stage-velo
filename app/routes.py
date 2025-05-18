@@ -1,27 +1,29 @@
-from werkzeug.utils import secure_filename
-from flask import Blueprint, render_template, session, redirect, url_for, request, flash
-from authlib.integrations.flask_client import OAuth
-from dotenv import load_dotenv, find_dotenv
-from urllib.parse import quote_plus, urlencode
-from os import environ as env
-import requests
-import os
+# ✅ Импорт нужных модулей / Importeer noodzakelijke modules
+from werkzeug.utils import secure_filename  # Защищает имя файла / Beveiligt de bestandsnaam
+from flask import Blueprint, render_template, session, redirect, url_for, request, flash  # Flask-модули / Flask-modules
+from authlib.integrations.flask_client import OAuth  # Для OAuth / Voor OAuth-integratie
+from dotenv import load_dotenv, find_dotenv  # Загрузка .env / Laad .env-bestand
+from urllib.parse import quote_plus, urlencode  # Кодирование URL / Encode URL parameters
+from os import environ as env  # Переменные окружения / Omgevingsvariabelen
+import requests  # Запросы к API / Voor HTTP-verzoeken
+import os  # Операции с ОС / OS-operaties
 
-from app.api import api as api
-from app.database.models import Usertable, Gebruiker
-from app.database import SessionLocal
+# ✅ Импорт из проекта / Importeer uit project
+from app.api import api as api  # Пользовательский API / Eigen API-module
+from app.database.models import Usertable, Gebruiker  # Модели БД / Database modellen
+from app.database import SessionLocal  # Сессия БД / Database sessie
 
+# ✅ Создание Blueprint / Maak een Blueprint
 routes = Blueprint("routes", __name__)
 
 # ======================
-# .env en Auth0 configuratie
+# ✅ Настройка Auth0 / Auth0 configuratie
 # ======================
-
-ENV_FILE = find_dotenv()
+ENV_FILE = find_dotenv()  # Найти .env / Zoek .env-bestand
 if ENV_FILE:
-    load_dotenv(ENV_FILE)
+    load_dotenv(ENV_FILE)  # Загрузить .env / Laad de variabelen uit het bestand
 
-oauth = OAuth()
+oauth = OAuth()  # Инициализация OAuth / Initialiseer OAuth
 oauth.register(
     "auth0",
     client_id=env.get("AUTH0_CLIENT_ID"),
@@ -34,22 +36,21 @@ oauth.register(
 )
 
 # ======================
-# AUTH ROUTES
+# ✅ Обработка авторизации / AUTHENTICATIE
 # ======================
-
 @routes.route("/auth/process", methods=["POST"])
 def process_auth():
-    token = request.json.get("access_token")
-    redirect_to = request.json.get("redirect_to", "/profile")
+    token = request.json.get("access_token")  # Получить токен / Verkrijg toegangstoken
+    redirect_to = request.json.get("redirect_to", "/profile")  # Куда редиректить / Doorverwijzingspagina
 
     if not token:
-        return {"error": "Access token ontbreekt"}, 400
+        return {"error": "Access token ontbreekt"}, 400  # Нет токена / Geen toegangstoken
 
-    headers = {'Authorization': f'Bearer {token}'}
+    headers = {'Authorization': f'Bearer {token}'}  # Заголовок с токеном / Authorization-header
     try:
         user_info = requests.get(
             f'https://{env.get("AUTH0_DOMAIN")}/userinfo', headers=headers
-        ).json()
+        ).json()  # Получение инфо о юзере / Haal gebruikersinfo op
     except Exception as e:
         return {"error": f"Fout bij ophalen userinfo: {str(e)}"}, 500
 
@@ -58,7 +59,7 @@ def process_auth():
     name = user_info.get("name", "")
     profile_picture = user_info.get("picture", "img/default.png")
 
-    session["Gebruiker"] = {
+    session["Gebruiker"] = {  # Сохранить в сессию / Sla op in sessie
         "id": user_id,
         "email": email,
         "name": name
@@ -71,14 +72,15 @@ def process_auth():
         email=email,
         name=name,
         profile_picture=profile_picture
-    )
+    )  # Создание или обновление пользователя / Maak of update gebruiker
     db.close()
 
-    return redirect(redirect_to)
+    return redirect(redirect_to)  # Перенаправление / Doorverwijzen
 
+# ✅ Выход / Afmelden
 @routes.route("/logout")
 def logout():
-    session.clear()
+    session.clear()  # Очистить сессию / Leeg de sessie
     return redirect(
         f'https://{env.get("AUTH0_DOMAIN")}/v2/logout?' + urlencode({
             "returnTo": url_for("routes.index", _external=True),
@@ -87,9 +89,8 @@ def logout():
     )
 
 # ======================
-# ALGEMENE ROUTES
+# ✅ Общие маршруты / Algemene routes
 # ======================
-
 @routes.route("/")
 def index():
     return render_template("index.html",
@@ -241,9 +242,10 @@ def instellingen():
             gebruiker.taal = taal
             if filename:
                 gebruiker.profile_picture = filename
-            db.commit()
 
-            # обновляем сессию - updaten de session
+            db.commit()
+            db.refresh(gebruiker)
+
             session["Gebruiker"]["naam"] = nieuwe_naam
             session["Gebruiker"]["email"] = nieuwe_email
             session["Gebruiker"]["taal"] = taal
@@ -252,7 +254,6 @@ def instellingen():
         db.close()
         return redirect(url_for("routes.profile"))
 
-    # GET-запрос — возвращаем объект из базы - Get - krijg de gegevens van DB
     db.close()
     return render_template("instellingen.html", user=gebruiker)
 

@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block head %}
+<!-- ✅ Подключение CSS + базовая стилизация страницы настроек /
+     Koppelen van CSS + basisstijl voor de instellingenpagina -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/instellingen.css') }}">
 <style>
   .settings-wrapper {
@@ -43,6 +45,7 @@
 {% block header %}{% endblock %}
 
 {% block content %}
+<!-- ✅ Кнопка возврата на профиль / Terug naar profiel knop -->
 <div class="return-button">
   <a href="{{ url_for('routes.profile') }}" class="btn btn-outline-secondary">← Terug naar profiel</a>
 </div>
@@ -50,6 +53,7 @@
 <div class="settings-wrapper">
   <h2 class="form-title">Instellingen</h2>
 
+  <!-- ✅ Показываем флеш-сообщения об успехе / Weergeven van flashberichten -->
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       <div class="mb-4">
@@ -63,6 +67,7 @@
     {% endif %}
   {% endwith %}
 
+  <!-- ✅ Форма настроек пользователя / Gebruikersinstellingenformulier -->
   <form method="POST" action="{{ url_for('routes.instellingen') }}">
     <div class="mb-3">
       <label for="titel" class="form-label">Aanspreekvorm</label>
@@ -93,6 +98,18 @@
       <input type="email" class="form-control" id="email" name="email" autocomplete="email" value="{{ user.email or '' }}">
     </div>
 
+    <!-- ✅ Поле выбора абонемента / Abonnement keuzeveld -->
+    <div class="mb-4">
+      <label for="abonnement" class="form-label">Abonnement</label>
+      <select class="form-select" id="abonnement" name="abonnement">
+        <option value="Geen abonnement" {% if user.abonnement == "Geen abonnement" %}selected{% endif %}>Geen abonnement</option>
+        <option value="Dagpas" {% if user.abonnement == "Dagpas" %}selected{% endif %}>Dagpas</option>
+        <option value="Weekpas" {% if user.abonnement == "Weekpas" %}selected{% endif %}>Weekpas</option>
+        <option value="Jaarkaart" {% if user.abonnement == "Jaarkaart" %}selected{% endif %}>Jaarkaart</option>
+      </select>
+    </div>
+
+    <!-- ✅ Кнопки отправки и отмены / Opslaan en annuleren knoppen -->
     <div class="d-flex justify-content-between">
       <button type="submit" class="btn btn-primary">Opslaan</button>
       <a href="{{ url_for('routes.profile') }}" class="btn btn-secondary">Annuleren</a>
@@ -101,6 +118,7 @@
 
   <hr class="my-4">
 
+  <!-- ✅ Форма удаления аккаунта / Formulier voor account verwijderen -->
   <form method="POST" action="{{ url_for('routes.delete_account') }}">
     <button type="submit" class="btn btn-danger w-100"
             onclick="return confirm('Weet u zeker dat u uw account permanent wilt verwijderen?')">
