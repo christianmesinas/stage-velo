@@ -113,16 +113,6 @@
   <div class="form-text text-danger">Bijv. naam@example.com</div>
     </div>
 
-    <!-- ✅ Поле выбора абонемента / Abonnement keuzeveld -->
-    <div class="mb-4">
-      <label for="abonnement" class="form-label">Abonnement</label>
-      <select class="form-select" id="abonnement" name="abonnement">
-        <option value="Geen abonnement" {% if user.abonnement == "Geen abonnement" %}selected{% endif %}>Geen abonnement</option>
-        <option value="Dagpas" {% if user.abonnement == "Dagpas" %}selected{% endif %}>Dagpas</option>
-        <option value="Weekpas" {% if user.abonnement == "Weekpas" %}selected{% endif %}>Weekpas</option>
-        <option value="Jaarkaart" {% if user.abonnement == "Jaarkaart" %}selected{% endif %}>Jaarkaart</option>
-      </select>
-    </div>
 
     <!-- ✅ Кнопки отправки и отмены / Opslaan en annuleren knoppen -->
     <div class="d-flex justify-content-between">
@@ -143,6 +133,9 @@
 </div>
 {% endblock %}
 
+
+<!-- ✅Deze JavaScript-code controleert of de verplichte velden in een formulier (voornaam, achternaam, telefoonnummer, e-mailadres) correct zijn ingevuld.-->
+<!-- ✅ iets ontbreekt of ongeldig is, verschijnt er een waarschuwing (alert), en wordt het formulier niet verzonden.-->
 {% block scripts %}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
