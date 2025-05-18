@@ -11,6 +11,15 @@
 
 {% block content %}
 <div class="background">
+<!-- ✅ Сообщение об успешном сохранении-de wijzigengen zijn opgeslaan -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div id="flash-overlay" class="flash-overlay">
+      {{ messages[0] }}
+    </div>
+  {% endif %}
+{% endwith %}
+
   <div class="container mt-5">
 
     <!-- ✅ Кнопка Instellingen – под шапкой справа -->
