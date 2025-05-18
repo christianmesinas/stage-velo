@@ -37,7 +37,8 @@
   </nav>
 
   <div class="nav-buttons">
-    {% if user %}
+    {% if session.get('Gebruiker') %}
+      <span>Welkom, {{ session['Gebruiker']['name'] }}</span>
       <a href="{{ url_for('routes.profile') }}" class="profile">Profiel</a>
       <a href="{{ url_for('routes.logout') }}" class="logout">Uitloggen</a>
     {% else %}
@@ -83,10 +84,9 @@
     localStorage.setItem("darkMode", nowDark);
     updateToggleIcon(nowDark);
 
-    // Bereken positie knop
     const rect = toggleButton.getBoundingClientRect();
     themeIcon.textContent = nowDark ? "🌙" : "🌞";
-    themeIcon.style.left = `${rect.left + rect.width / 2 - 48}px`; // positie van item die naar boven springt
+    themeIcon.style.left = `${rect.left + rect.width / 2 - 48}px`;
     themeIcon.style.top = `${rect.top}px`;
     themeIcon.classList.add("show");
 

@@ -177,6 +177,10 @@ input[type="checkbox"] {
   color: #D41444;
 }
 
+body.dark-mode .card-item{
+  background-color: black;
+  color: white;
+}
 /* Wanneer een kaart wordt ingedrukt */
 .card-slider .card-item.pressed {
   box-shadow: none;
