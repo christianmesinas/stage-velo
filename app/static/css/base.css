@@ -22,7 +22,6 @@ header {
   padding: 15px 30px;
   flex-wrap: wrap;
 }
-
 .logo {
   font-weight: bold;
   background-color: white;
@@ -156,7 +155,6 @@ header {
   z-index: 9999;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
-
 .alert-success {
   color: #0f5132;
   background-color: #d1e7dd;
@@ -194,9 +192,7 @@ body.dark-mode .dropdown-menu a {
 body.dark-mode .nav-links a:hover {
   color: #ffcccb;
 }
-body.dark-mode .register {
-  color: black !important;
-}
+body.dark-mode .register,
 body.dark-mode .logout {
   color: black !important;
 }
@@ -244,4 +240,41 @@ body.dark-mode .list-group-item {
   background-color: #1e1e1e;
   color: #f0f0f0;
   border-color: #444;
+}
+
+/* ✅ Donkere modus knop stijl */
+.dark-toggle-btn {
+  position: fixed;
+  bottom: 1rem;
+  right: 0.5rem; /* сдвинута влево */
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  font-size: 1.5rem;
+  z-index: 9999;
+  background-color: #333;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+body.dark-mode .dark-toggle-btn {
+  background-color: #f0f0f0;
+  color: #121212;
+}
+
+/* ✅ Theme-icon vliegt omhoog vanaf knop */
+.theme-icon {
+  position: fixed;
+  font-size: 3.5rem;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(0) scale(1);
+  transition: transform 0.8s ease-out, opacity 0.5s ease-in;
+}
+.theme-icon.show {
+  opacity: 1;
+  transform: translateY(-120px) scale(1.4);
+}
+body.dark-mode .card .card-text {
+  color: #f0f0f0 !important;
 }
