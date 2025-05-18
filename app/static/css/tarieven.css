@@ -48,7 +48,7 @@
   position: relative;
   max-width: 90rem;
   margin: 50px;
-  background: #fff;
+  background: white;
   box-shadow: 0px 10px 10px rgba(34, 35, 58, 0.2);
   padding: 25px;
   border-radius: 25px;
@@ -120,6 +120,7 @@
 
 body.dark-mode .card-item.swiper-slide{
     background-color: black;
+    color: white;
 }
 body.dark-mode .card-slider__button{
   padding: 6px 14px;

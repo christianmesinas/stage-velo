@@ -85,12 +85,27 @@
 
     <div class="mb-3">
       <label for="telefoonnummer" class="form-label">Telefoonnummer</label>
-      <input type="tel" class="form-control" id="telefoonnummer" name="telefoonnummer" autocomplete="tel" value="{{ user.telefoonnummer or '' }}">
+  <input type="tel" class="form-control" id="telefoonnummer" name="telefoonnummer"
+         pattern="^(0|\+)[1-9][0-9]{7,14}$"
+         title="Voer een geldig telefoonnummer in. Begin met 0 of +, gevolgd door 8 tot 15 cijfers. Geen spaties of symbolen."
+         autocomplete="tel"
+         required
+         value="{{ user.telefoonnummer or '' }}">
+        <div class="form-text text-danger">
+        Bijv. 0478123456 of +32478123456 (geen spaties of leestekens)
+        </div>
     </div>
+
 
     <div class="mb-4">
       <label for="email" class="form-label">E-mailadres</label>
-      <input type="email" class="form-control" id="email" name="email" autocomplete="email" value="{{ user.email or '' }}">
+      <input type="email" class="form-control" id="email" name="email"
+             pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+             title="Voer een geldig e-mailadres in, bv. naam@example.com"
+             required
+             autocomplete="email"
+             value="{{ user.email or '' }}">
+  <div class="form-text text-danger">Bijv. naam@example.com</div>
     </div>
 
     <div class="d-flex justify-content-between">
@@ -109,3 +124,37 @@
   </form>
 </div>
 {% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('form[action="{{ url_for('routes.instellingen') }}"]');
+
+  form.addEventListener('submit', function (e) {
+    const requiredFields = [
+      { id: 'voornaam', label: 'voornaam' },
+      { id: 'achternaam', label: 'achternaam' },
+      { id: 'telefoonnummer', label: 'telefoonnummer' },
+      { id: 'email', label: 'e-mailadres' }
+    ];
+
+    let fouten = [];
+
+    requiredFields.forEach(field => {
+      const input = document.getElementById(field.id);
+      if (!input.value.trim()) {
+        fouten.push(`• Vul het veld '${field.label}' in.`);
+      } else if (!input.checkValidity()) {
+        fouten.push(`• Ongeldige invoer bij '${field.label}'.`);
+      }
+    });
+
+    if (fouten.length > 0) {
+      e.preventDefault(); // voorkom dat formulier wordt verzonden
+      alert("Foutmelding:\n\n" + fouten.join("\n"));
+    }
+  });
+});
+</script>
+{% endblock %}
+
