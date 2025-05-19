@@ -178,6 +178,8 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
 
         for fiets in beschikbare_fietsen:
             for _ in range(ritten_per_fiets_per_dag):
+                # de gemiddelde opsplitsen in 25%, 50%, 25%
+                aantal_ritten = random.choices([ritten_per_fiets_per_dag - 1, ritten_per_fiets_per_dag, ritten_per_fiets_per_dag + 1], weights=[0.25, 0.5, 0.25])[0]
                 gebruiker = random.choice(gebruikers)
                 begin_station = station_lookup.get(fiets["station_id"])
                 bepaling_eind_station = [s for s in stations if s["id"] != begin_station["id"]] #de eindstation mag niet hetzelfde zijn als waar de fiets wordt genomen.
@@ -211,6 +213,6 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
 
 
 
-simulatie(stations,gebruikers,fietsen, 60)
+#simulatie(stations,gebruikers,fietsen, 30)
 
 
