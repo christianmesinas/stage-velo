@@ -254,10 +254,7 @@ body.dark-mode .list-group-item {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.dark-toggle-btn:hover {
-  background-color: #FFC300; /* iets donkerder geel bij hover */
-  border-color: #FFC300;
-}
+
 
 
 body.dark-mode .dark-toggle-btn {
@@ -277,8 +274,10 @@ body.dark-mode .dark-toggle-btn {
 }
 .theme-icon.show {
   opacity: 1;
-  transform: translateY(-120px) scale(1.4);
+  transform: translateY(120px) scale(1.4); /* ← Verplaats naar beneden */
 }
+
+
 body.dark-mode .card .card-text {
   color: #f0f0f0 !important;
 }
@@ -302,9 +301,15 @@ body.dark-mode .dark-toggle-btn {
   color: white;
   border: 2px solid white;
 }
-body.dark-mode .dark-toggle-btn:hover {
-  background-color: #333;
+
+.dark-toggle-btn:hover {
+  background-color: black;
   color: white;
-  border-color: white;
+  border-color: black;
 }
 
+body.dark-mode .dark-toggle-btn:hover {
+  background-color: white;
+  color: black;
+  border-color: white;
+}
