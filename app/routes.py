@@ -11,10 +11,26 @@ import uuid
 import os
 
 from app.api import api as api
+from app.api.api import get_alle_stations, get_info
 from app.database.models import Usertable
 from app.database import SessionLocal
 from app.simulation import simulation
 from collections import Counter
+from functools import wraps
+
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        user = session.get("user")
+        if not user:
+            return redirect(url_for("routes.login"))  # of index als je geen aparte loginpagina hebt
+        if user.get("email") != os.getenv("ADMIN_EMAIL"):
+            return "❌ Geen toegang: je bent geen administrator", 403
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 
 
 
@@ -239,9 +255,25 @@ def internal_server_error(error):
 
 
 
+@routes.route("/admin")
 
-@routes.route("/admin", methods=["GET", "POST"])
+
 def admin():
+    laatste_simulatie = session.get("laatste_simulatie")
+    return render_template("admin.html", laatste_simulatie=laatste_simulatie)
+
+
+
+
+
+
+
+
+
+@routes.route("/admin/simulatie", methods=["GET", "POST"])
+
+
+def admin_simulatie():
     boodschap = None
     ritten = []
     csv_bestand = None
@@ -315,6 +347,10 @@ def admin():
 
             boodschap = f"✅ Simulatie is gestart met {len(ritten)} ritten."
 
+            session["laatste_simulatie"] = datetime.now().strftime("%d-%m-%Y om %H:%M")
+            session.modified = True
+
+
         except Exception as e:
             boodschap = f"❌ Fout bij simulatie: {str(e)}"
 
@@ -328,7 +364,7 @@ def admin():
         })
 
     return render_template(
-        "admin.html",
+        "admin_simulatie.html",
         boodschap=boodschap,
         ritten=ritten,
         csv_bestand=csv_bestand,
@@ -342,3 +378,32 @@ def admin():
     )
 
 
+
+from datetime import datetime
+
+@routes.route("/admin/data")
+
+
+def admin_data():
+    stations = get_alle_stations()
+    info = get_info()
+
+    # voorbeeld: update tijd registreren
+    session["live_data_update"] = datetime.now().strftime("%H:%M:%S")
+
+    populairste_station = {
+        "naam": "Station Zuid",
+        "ritten": 23
+    }
+
+    return render_template("live_data.html", stations=stations, populairste_station=populairste_station)
+
+
+
+
+@routes.route("/admin/gebruikers")
+
+
+def admin_gebruikers():
+    gebruikers = simulation.gebruikers_lijst()  # voorbeeld
+    return render_template("admin/gebruikers.html", gebruikers=gebruikers)

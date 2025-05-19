@@ -8,7 +8,7 @@ import psycopg2
 from faker import Faker
 import os
 
-# Dynamisch pad naar velo.csv (2 niveaus omhoog vanaf script)
+# Dynamisch pad naar velo.csv (zelfde map als script)
 script_dir = os.path.dirname(__file__)
 csv_path = os.path.join(script_dir, "velo.csv")
 stations_df = pd.read_csv(csv_path)
@@ -53,11 +53,9 @@ def genereer_fietsen(aantal, stations):
     fiets_id = 1
     station_slots = {station["id"]: station["capaciteit"] for station in stations}
     station_ids = list(station_slots.keys())
-    random.shuffle(station_ids) #random toewijzing van stations
+    random.shuffle(station_ids)
 
     totaal = len(station_ids)
-    #een gecontroleerde random choice waar 20 procent van de stations vol zijn, 1 procent volledig leeg zijn.
-    #de resterdende 71 procent heeft dan een willekeurig aantal fietsen en vrije slots.
     n_vol = round(totaal * 0.2)
     n_leeg = max(1, round(totaal * 0.01))
     n_partial = totaal - n_vol - n_leeg
@@ -116,28 +114,23 @@ def genereer_fietsen(aantal, stations):
     return fietsen
 
 
-gebruikers = genereer_gebruikers(58000)
-fietsen = genereer_fietsen(4200, stations)
-
-
 def gewogen_starttijd(datum):
-    #we moeten a.d.h. van de uur van de dag beslissen hoe groot de kans is dat op die moment een fiets gepakt wordt.
     gewichten = []
     for uur in range(24):
-        if 8 <= uur < 18: #spitsuur, piekuren
-            gewichten += [uur] * 5 #hoogste activiteit
-        elif 6 <= uur < 8 or 18 <= uur < 20: #mensen die vroeger naar en later van werk vertrekken.
+        if 8 <= uur < 18:
+            gewichten += [uur] * 5
+        elif 6 <= uur < 8 or 18 <= uur < 20:
             gewichten += [uur] * 2
         else:
-            gewichten += [uur] #daluren
+            gewichten += [uur]
     gekozen_uur = random.choice(gewichten)
     gekozen_minuten = random.randint(0,59)
     return datetime.combine(datum, datetime.min.time()) + timedelta(hours=gekozen_uur,minutes=gekozen_minuten)
 
 
-def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fiets_per_dag=4): #velo gemiddelde is 4 ritten/fiets/dag
+def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fiets_per_dag=4):
     geschiedenis = []
-    vandaag = datetime.today().date() #simulatie telt terug van de dag van vandaag, als default de voorbije 28dagen (1maand)
+    vandaag = datetime.today().date()
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
 
     for dag_offset in range(dagen):
@@ -165,10 +158,8 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                     "duur_minuten": duur
                 })
 
-                fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
+                fiets["station_id"] = eind_station["id"]
     return geschiedenis
-
-geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
 
 def geschiedenis_to_csv_buffer(geschiedenis):
     buffer = io.StringIO()
@@ -180,14 +171,13 @@ def geschiedenis_to_csv_buffer(geschiedenis):
     buffer.seek(0)
     return buffer
 
-# Simuleer ritten over tijd
 def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=4):
     geschiedenis = []
     station_lookup = {s["id"]: s for s in stations}
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
     vandaag = datetime.today().date()
 
-    for dag_offset in range(dagen):#de simulatie telt de voorbije aantal dagen.
+    for dag_offset in range(dagen):
         datum = vandaag - timedelta(days=dag_offset)
         print(f"\bSimulatie voor {datum}...")
 
@@ -200,11 +190,11 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
             for _ in range(ritten_per_fiets_per_dag):
                 gebruiker = random.choice(gebruikers)
                 begin_station = station_lookup.get(fiets["station_id"])
-                bepaling_eind_station = [s for s in stations if s["id"] != begin_station["id"]] #de eindstation mag niet hetzelfde zijn als waar de fiets wordt genomen.
+                bepaling_eind_station = [s for s in stations if s["id"] != begin_station["id"]]
                 if not begin_station or not bepaling_eind_station:
                     continue
 
-                eind_station = random.choice(bepaling_eind_station) #de eind_station (eindpunt van rit) moet random bepaalt worden.
+                eind_station = random.choice(bepaling_eind_station)
                 duur = random.randint(2,30)
                 starttijd = gewogen_starttijd(datum)
                 eindtijd = starttijd + timedelta(minutes=duur)
@@ -219,89 +209,23 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
                     "duur_minuten": duur
                 })
 
-                fiets["station_id"] = eind_station["id"] #de fiets moet gelinkt worden aan de eindstation.
+                fiets["station_id"] = eind_station["id"]
                 begin_station["free_bikes"] = max(0, begin_station["free_bikes"] - 1)
-                begin_station["free_slots"] += 1 #er komt een slot vrij bij de station waar de fiets wordt gepakt.
-                eind_station["free_bikes"] += 1 #er komt een fiets erbij bij de station waar de fiets wordt achter gelaten.
+                begin_station["free_slots"] += 1
+                eind_station["free_bikes"] += 1
                 eind_station["free_slots"] = max(0, eind_station["free_slots"] - 1)
                 print(f"- {starttijd.strftime('%H:%M')} Fiets {fiets['id']} van {begin_station['name']} naar {eind_station['name']} ({duur} min)")
 
     print(f"Simulatie voltooid met {len(geschiedenis)} ritten over {dagen}")
     return geschiedenis
 
+# ⛔ Niets wordt automatisch uitgevoerd bij import
+# ✅ Enkel als je simulation.py rechtstreeks runt
+if __name__ == "__main__":
+    gebruikers = genereer_gebruikers(1000)
+    fietsen = genereer_fietsen(400, stations)
+    geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
 
-#simulatie(stations,gebruikers,fietsen, 60)
-
-
-conn = psycopg2.connect(
-    dbname="velo_community",
-    user="admin",
-    password="Velo123",
-    host="localhost",
-    port="5433"
-)
-cur = conn.cursor()
-
-def push_to_db():
-    cur.execute("DELETE FROM geschiedenis")
-    cur.execute("DELETE FROM fietsen")
-    cur.execute("DELETE FROM stations")
-    cur.execute("DELETE FROM gebruikers")
-    cur.executemany("""
-            INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
-            VALUES (%s, %s, %s, %s, %s, %s)
-        """, [
-        (
-            g['id'],
-            g['voornaam'],
-            g['achternaam'],
-            g['email'],
-            g['abonnementstype'],
-            g['postcode']
-        ) for g in gebruikers
-    ])
-
-    cur.executemany("""
-            INSERT INTO stations (id, naam, straat, postcode, capaciteit, status, parked_bikes, free_slots)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """, [
-        (
-            s['id'],
-            s['name'],
-            s['straat'],
-            s['postcode'],
-            s['capaciteit'],
-            s['status'],
-            s['free_bikes'],
-            s['free_slots']
-        ) for s in stations
-    ])
-
-    cur.executemany("""
-            INSERT INTO fietsen (id, station_id, status)
-            VALUES (%s, %s, %s)
-        """, [
-        (
-            f['id'],
-            f['station_id'],
-            f['status']
-        ) for f in fietsen
-    ])
-    updates = [(rit['eind_station_id'], rit['fiets_id']) for rit in geschiedenis]
-    cur.executemany("""
-        UPDATE fietsen
-        SET station_id = %s
-        WHERE id = %s
-    """, updates)
-
-    # Gebruik COPY voor geschiedenis omdat COPY beste methode is voor bulk data te pushen naar de DB
-    csv_buffer = geschiedenis_to_csv_buffer(geschiedenis)
-    cur.copy_expert("""
-            COPY geschiedenis (gebruiker_id, fiets_id, start_station_id, eind_station_id, starttijd, eindtijd, duur_minuten)
-            FROM STDIN WITH (FORMAT csv)
-        """, csv_buffer)
-
-push_to_db()
-conn.commit()
-cur.close()
-conn.close()
+    buffer = geschiedenis_to_csv_buffer(geschiedenis)
+    with open("simulatie_output.csv", "w") as f:
+        f.write(buffer.getvalue())
