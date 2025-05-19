@@ -1,30 +1,50 @@
 {% extends "base.html" %}
 
+{% block title %}Fiets Defect Melden{% endblock %}
+
 {% block head %}
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/defect.css') }}">
-
 {% endblock %}
-
-
-
-
 
 {% block content %}
+<div class="div4">
+    <div id="card-wrapper" class="card wrapper">
+        <ul class="card-slider swiper-wrapper">
+            <li class="card-item swiper-slide">
+                <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" class="card-image">
 
-<div class="card-slider">
-    <div class="card-item">
-     <h2 style="margin:auto; width:fit-content">Fiets defect?</h2>
-        <p style="margin:auto; width:fit-content">PECH</p>
+                <div class="card-item__content">
+                    <h1 class="card-item__title">FIETS DEFECT</h1>
+                    <img class="streep" src="{{ url_for('static', filename='images/streep.svg') }}" alt="decoratief lijntje">
+
+                    <form method="POST" action="{{ url_for('routes.defect') }}" class="defect-form">
+                        <div class="form-group">
+                            <label for="fiets_id">Fiets ID</label>
+                            <input type="text" id="fiets_id" name="fiets_id" placeholder="Bijv. 1234" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="probleem">Wat is er aan de hand?</label>
+                            <textarea id="probleem" name="probleem" rows="4" placeholder="Beschrijf het probleem..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="card-slider__button">MELD NU</button>
+                    </form>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <div class="flash-messages">
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
-
 {% endblock %}
 
 
-
-
-
-
-{% block scripts %}
-{% endblock %}
