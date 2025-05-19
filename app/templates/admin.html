@@ -1,123 +1,43 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-</head>
-<body>
-    <h1>Welkom Admin</h1>
-
-    <h2>🛠 Simulatie starten</h2>
-
-    {% if boodschap %}
-        <div style="margin-top: 20px; background-color: #e1f5e1; padding: 10px; border-radius: 5px;">
-            {{ boodschap }}
-        </div>
-    {% endif %}
-
-    <form method="post" action="/admin" class="inline-form">
-        <label>
-            Aantal gebruikers
-            <input type="number" name="gebruikers" value="58000">
-        </label>
-        <label>
-            Aantal fietsen
-            <input type="number" name="fietsen" value="10000">
-        </label>
-        <label>
-            Aantal dagen
-            <input type="number" name="dagen" value="30">
-        </label>
-        <button type="submit">Start simulatie</button>
-    </form>
-
-    {% if aantal_ritten is not none %}
-    <!-- Simulatie-inzichten -->
-    <div style="margin-bottom: 30px;">
-      <h2>📈 Simulatie-inzichten</h2>
-      <ul>
-          <li>Aantal ritten: {{ aantal_ritten }}</li>
-          <li>Gemiddelde ritduur: {{ gemiddelde_duur }} min</li>
-          <li>Langste rit: {{ langste_rit }} min</li>
-          <li>Meest gebruikte fiets: ID {{ meest_gebruikte_fiets }}</li>
-          <li>Populairst beginstation: ID {{ populairst_station }}</li>
-      </ul>
-    </div>
-
-    <!-- Drukste momenten per station als scrollbare tabel -->
-    <div>
-      <h2>⏰ Drukste momenten per station</h2>
-      <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
-        <table style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th style="text-align: left; padding: 8px;">Station</th>
-                    <th style="text-align: left; padding: 8px;">Tijdvak</th>
-                    <th style="text-align: left; padding: 8px;">Aantal ritten gestart</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for d in drukste_per_station %}
-                <tr>
-                    <td style="padding: 8px;">{{ d.naam }}</td>
-                    <td style="padding: 8px;">{{ d.tijdvak }}</td>
-                    <td style="padding: 8px;">{{ d.aantal }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-      </div>
-    </div>
-    {% endif %}
-
-    <div id="spinner" style="display:none;">
-        <p>Simulatie wordt uitgevoerd...</p>
-        <img src="https://tenor.com/en-GB/view/loading-gif-20768857" alt="Bezig met laden">
-    </div>
-
-    {% if ritten %}
+{% extends 'base_admin.html' %}
 
 
-        {% if csv_bestand %}
-    <p><a href="{{ csv_bestand }}" download style="display: inline-block; background-color: #3498db; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none;">
-        📥 Download CSV-bestand
-    </a></p>
-{% endif %}
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+
+
+{% endblock %}
 
 
 
-    <div class="scrollbox">
-        <h1>Resultaten</h1>
-        <table style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th style="padding: 8px; text-align: left;">Gebruiker</th>
-                    <th style="padding: 8px; text-align: left;">Fiets</th>
-                    <th style="padding: 8px; text-align: left;">Van</th>
-                    <th style="padding: 8px; text-align: left;">Naar</th>
-                    <th style="padding: 8px; text-align: left;">Duur (min)</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for rit in ritten %}
-                <tr>
-                    <td style="padding: 8px;">{{ rit.gebruiker_id }}</td>
-                    <td style="padding: 8px;">{{ rit.fiets_id }}</td>
-                    <td style="padding: 8px;">{{ rit.begin_station_id }}</td>
-                    <td style="padding: 8px;">{{ rit.eind_station_id }}</td>
-                    <td style="padding: 8px;">{{ rit.duur_minuten }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% endif %}
+{% block content %}
 
-    <script>
-        function toonSpinner() {
-            document.getElementById("spinner").style.display = "block";
-        }
-    </script>
-</body>
-</html>
+<div class="admin-dashboard">
+
+
+  <h2 class="dashboard-title">Welkom terug, admin {{ session["username"] }}</h2>
+
+
+    <div class="status-grid">
+  {% if laatste_simulatie %}
+    <div class="status-card success">✅ Simulatie correct uitgevoerd op {{ laatste_simulatie }}</div>
+  {% else %}
+    <div class="status-card warning">⚠️ Nog geen simulatie uitgevoerd</div>
+  {% endif %}
+
+</div>
+
+
+  <div class="quick-links">
+    <a href="{{ url_for('routes.admin_simulatie') }}" class="link-card">🚴 Start Simulatie</a>
+    <a href="{{ url_for('routes.admin_data') }}" class="link-card">📡 Bekijk Live Data</a>
+    <a href="#" class="link-card">👥 Gebruikersoverzicht</a>
+    <a href="#" class="link-card">📄 CSV-overzicht</a>
+  </div>
+
+</div>
+
+
+{% endblock %}
+
+
