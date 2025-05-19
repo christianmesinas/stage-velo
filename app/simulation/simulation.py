@@ -182,7 +182,7 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     vandaag = datetime.today().date()
 
     for dag_offset in range(dagen):#de simulatie telt de voorbije aantal dagen.
-        datum = vandaag - timedelta(days=dag_offset)
+        datum = vandaag - timedelta(days=(dagen - dag_offset - 1))
         print(f"\bSimulatie voor {datum}...")
 
         for _ in range(random.randint(5, 20)):
