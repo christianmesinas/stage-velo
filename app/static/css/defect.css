@@ -80,9 +80,11 @@ input[type="checkbox"] {
   margin-right: 10px;
 }
 
-/* Zorg ervoor dat de laatste form-group geen extra marge heeft */
-.form-group:last-child {
-  margin-bottom: 0;
+/* Kaartstructuur */
+.card-slider {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 /* Stijl voor de knoppen onderaan het formulier */
@@ -137,46 +139,66 @@ input[type="checkbox"] {
 
 /* Streep onder de titel */
 .streep {
-  width: 60px;
-  height: 4px;
-  margin-top: 8px; /* Ruimte tussen titel en streep */
-  border-radius: 2px;
+    width: 30%;
+    height: 4px;
+    margin-bottom: 20px;
 }
 
-/* Ruimte voor de kaart */
-.card-item {
-  margin-right: 8rem;
+/* Formulierstijl */
+.defect-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
 }
 
-/* Afbeelding van de kaart */
-.card-image {
-  width: 20%;
-  height: 80%;
-  position: absolute;
-  left: -2%;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 20px;
+.defect-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-/* Knop in de kaartslider */
+.defect-form input[type="text"],
+.defect-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.defect-form textarea {
+    resize: vertical;
+}
+
+/* Meld-knop */
 .card-slider__button {
-  padding: 6px 14px;
-  margin-top: 20px;
-  border-radius: 20px;
-  font-weight: bolder;
-  border: 3px solid #2B2D42;
-  color: #2B2D42;
-  background: none;
-  transition: 0.5s ease;
-  cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: 2px solid #2B2D42;
+    color: #2B2D42;
+    background: none;
+    transition: 0.3s ease;
+    cursor: pointer;
+    align-self: flex-start;
 }
 
 .card-slider__button:hover {
-  border-color: #D41444;
-  color: #D41444;
+    border-color: #c1002b;
+    color: #c1002b;
 }
 
+/* Flash-berichten */
+.flash-messages {
+    margin-top: 20px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-left: 5px solid #28a745;
+    padding: 10px 15px;
+    border-radius: 5px;
 body.dark-mode .card-item{
   background-color: black;
   color: white;

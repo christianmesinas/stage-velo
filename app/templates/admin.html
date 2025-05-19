@@ -1,0 +1,43 @@
+{% extends 'base_admin.html' %}
+
+
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="admin-dashboard">
+
+
+  <h2 class="dashboard-title">Welkom terug, admin {{ session["username"] }}</h2>
+
+
+    <div class="status-grid">
+  {% if laatste_simulatie %}
+    <div class="status-card success">✅ Simulatie correct uitgevoerd op {{ laatste_simulatie }}</div>
+  {% else %}
+    <div class="status-card warning">⚠️ Nog geen simulatie uitgevoerd</div>
+  {% endif %}
+
+</div>
+
+
+  <div class="quick-links">
+    <a href="{{ url_for('routes.admin_simulatie') }}" class="link-card">🚴 Start Simulatie</a>
+    <a href="{{ url_for('routes.admin_data') }}" class="link-card">📡 Bekijk Live Data</a>
+    <a href="#" class="link-card">👥 Gebruikersoverzicht</a>
+    <a href="#" class="link-card">📄 CSV-overzicht</a>
+  </div>
+
+</div>
+
+
+{% endblock %}
+
+

@@ -176,3 +176,4 @@ cython_debug/
 
 #pycharm files
 .idea
+/app/simulation/simulatie_output_csv

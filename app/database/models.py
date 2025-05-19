@@ -11,7 +11,8 @@ class Usertable(Base):
     user_id = Column(String, unique=True)
     email = Column(String, unique=True)
     name = Column(String)
-    profile_picture = Column(String)
+    profile_picture = Column(String, nullable=False, default="img/default.png")
+
 
     voornaam = Column(String)
     achternaam = Column(String)
