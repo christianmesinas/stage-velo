@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
+from api.api import get_info
 from urllib.parse import quote_plus, urlencode
 from os import environ as env
 import requests
@@ -9,6 +10,8 @@ import os
 from app.api import api as api
 from app.database.models import Usertable
 from app.database import SessionLocal
+from app.simulation import simulation
+
 
 routes = Blueprint("routes", __name__)
 
@@ -110,6 +113,12 @@ def profile():
     if 'user' not in session:
         return redirect(url_for("routes.login", next=request.path))
     return render_template("profile.html")
+
+@routes.route("/help")
+def help():
+    return render_template("help.html")
+
+
 
 @routes.route("/maps")
 def markers():
@@ -220,4 +229,37 @@ def page_not_found(error):
 @routes.app_errorhandler(500)
 def internal_server_error(error):
     return render_template('500.html'), 500
+
+
+
+
+
+# ======================
+# ADMIN ROUTE
+# ======================
+
+
+
+@routes.route("/admin", methods=["GET", "POST"])
+def admin():
+    boodschap = None
+    ritten = []
+
+    if request.method == "POST":
+        try:
+            gebruikers_aantal = int(request.form.get("gebruikers"))
+            fietsen_aantal = int(request.form.get("fietsen"))
+            dagen = int(request.form.get("dagen"))
+            gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
+            fietsen = simulation.genereer_fietsen(fietsen_aantal, simulation.stations)
+            ritten = simulation.simulatie(simulation.stations, gebruikers, fietsen, dagen)
+
+            boodschap = f"✅ Simulatie is gestart met {len(ritten)} ritten."
+
+        except Exception as e:
+            boodschap = f"❌ Fout bij simulatie: {str(e)}"
+
+    return render_template("admin.html", boodschap=boodschap, ritten=ritten)
+
+
 
