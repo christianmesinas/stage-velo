@@ -116,10 +116,6 @@ def genereer_fietsen(aantal, stations):
     return fietsen
 
 
-gebruikers = genereer_gebruikers(58000)
-fietsen = genereer_fietsen(4200, stations)
-
-
 def gewogen_starttijd(datum):
     #we moeten a.d.h. van de uur van de dag beslissen hoe groot de kans is dat op die moment een fiets gepakt wordt.
     gewichten = []
@@ -143,7 +139,8 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
     for dag_offset in range(dagen):
         datum = vandaag - timedelta(days=(dagen - dag_offset - 1))
         for fiets in beschikbare_fietsen:
-            for _ in range(ritten_per_fiets_per_dag):
+            aantal_ritten = random.choices([ritten_per_fiets_per_dag - 1, ritten_per_fiets_per_dag, ritten_per_fiets_per_dag + 1], weights=[0.25, 0.5, 0.25])[0]
+            for _ in range(aantal_ritten):
                 gebruiker = random.choice(gebruikers)
                 begin_station = next((s for s in stations if s["id"] == fiets["station_id"]), None)
                 eind_station = random.choice([s for s in stations if s["id"] != fiets["station_id"]])
@@ -168,7 +165,6 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                 fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
     return geschiedenis
 
-geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
 
 def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een csv steken zodat we het met COPY kunnen doorpushen naar de db
     buffer = io.StringIO()
@@ -192,13 +188,11 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
         datum = vandaag - timedelta(days=dag_offset)
         print(f"\bSimulatie voor {datum}...")
 
-        for _ in range(random.randint(5, 20)):
-            if not beschikbare_fietsen:
-                print("Geen beschikbare fietsen op dit moment.")
-                break
 
         for fiets in beschikbare_fietsen:
-            for _ in range(ritten_per_fiets_per_dag):
+            # de gemiddelde opsplitsen in 25%, 50%, 25%
+            aantal_ritten = random.choices([ritten_per_fiets_per_dag - 1, ritten_per_fiets_per_dag, ritten_per_fiets_per_dag + 1], weights=[0.25, 0.5, 0.25])[0]
+            for _ in range(aantal_ritten):
                 gebruiker = random.choice(gebruikers)
                 begin_station = station_lookup.get(fiets["station_id"])
                 bepaling_eind_station = [s for s in stations if s["id"] != begin_station["id"]] #de eindstation mag niet hetzelfde zijn als waar de fiets wordt genomen.
@@ -231,78 +225,14 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     return geschiedenis
 
 
-#simulatie(stations,gebruikers,fietsen, 60)
+if __name__ == "__main__":
+    gebruikers = genereer_gebruikers(50000)
+    fietsen = genereer_fietsen(4200, stations)
+    geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
+
+    buffer = geschiedenis_to_csv_buffer(geschiedenis)
+    with open("simulatie_output_csv", "w") as f:
+        f.write(buffer.getvalue())
 
 
-conn = psycopg2.connect(
-    dbname="velo_community",
-    user="admin",
-    password="Velo123",
-    host="localhost",
-    port="5433"
-)
-cur = conn.cursor()
-
-def push_to_db():
-    cur.execute("DELETE FROM geschiedenis")
-    cur.execute("DELETE FROM fietsen")
-    cur.execute("DELETE FROM stations")
-    cur.execute("DELETE FROM gebruikers")
-    cur.executemany("""
-            INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
-            VALUES (%s, %s, %s, %s, %s, %s)
-        """, [
-        (
-            g['id'],
-            g['voornaam'],
-            g['achternaam'],
-            g['email'],
-            g['abonnementstype'],
-            g['postcode']
-        ) for g in gebruikers
-    ])
-
-    cur.executemany("""
-            INSERT INTO stations (id, naam, straat, postcode, capaciteit, status, parked_bikes, free_slots)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """, [
-        (
-            s['id'],
-            s['name'],
-            s['straat'],
-            s['postcode'],
-            s['capaciteit'],
-            s['status'],
-            s['free_bikes'],
-            s['free_slots']
-        ) for s in stations
-    ])
-
-    cur.executemany("""
-            INSERT INTO fietsen (id, station_id, status)
-            VALUES (%s, %s, %s)
-        """, [
-        (
-            f['id'],
-            f['station_id'],
-            f['status']
-        ) for f in fietsen
-    ])
-    updates = [(rit['eind_station_id'], rit['fiets_id']) for rit in geschiedenis]
-    cur.executemany("""
-        UPDATE fietsen
-        SET station_id = %s
-        WHERE id = %s
-    """, updates)
-
-    # Gebruik COPY voor geschiedenis omdat COPY beste methode is voor bulk data te pushen naar de DB
-    csv_buffer = geschiedenis_to_csv_buffer(geschiedenis)
-    cur.copy_expert("""
-            COPY geschiedenis (gebruiker_id, fiets_id, start_station_id, eind_station_id, starttijd, eindtijd, duur_minuten)
-            FROM STDIN WITH (FORMAT csv)
-        """, csv_buffer)
-
-push_to_db()
-conn.commit()
-cur.close()
-conn.close()
+simulatie(stations, gebruikers, fietsen)
