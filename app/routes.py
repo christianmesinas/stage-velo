@@ -38,9 +38,6 @@ oauth.register(
 
 @routes.route("/auth/process", methods=["POST"])
 def process_auth():
-    '''token = request.json.get("access_token")
-    if not token:
-        return {"error": "Access token ontbreekt"}, 400'''
 
     token = request.json.get("access_token")
     redirect_to = request.json.get("redirect_to", "/profile")
@@ -223,4 +220,3 @@ def page_not_found(error):
 @routes.app_errorhandler(500)
 def internal_server_error(error):
     return render_template('500.html'), 500
-
