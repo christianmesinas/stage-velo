@@ -1,20 +1,16 @@
 import requests
-from app.simulation.simulation import genereer_fietsen
+import app.simulation.simulation as sim
 
 BASE_URL = "https://api.citybik.es/v2/networks/velo-antwerpen"
 HEADERS = {}
 
-def get_info(simulated=False):
+def get_info():
     params = {}
     response = requests.get(BASE_URL, headers=HEADERS, params=params)
     if response.status_code == 200:
+
         data = response.json()
         stations = data['network']['stations']
-
-        if simulated:
-            simulated_stations = genereer_fietsen()
-            simulated_lookup = {s['id']: s for s in simulated_stations}
-
         result = [
             {
                 'id': station['id'],
@@ -23,8 +19,8 @@ def get_info(simulated=False):
                     'latitude': station['latitude'],
                     'longitude': station['longitude']
                 },
-                'free_bikes': simulated_lookup.get(station['id'], {}).get('free_bikes', station['free_bikes']),
-                'empty_slots': simulated_lookup.get(station['id'], {}).get('empty_slots', station['empty_slots']),
+                'free_bikes': station['free_bikes'],
+                'empty_slots': station['empty_slots'],
                 'extra': {
                     'adress': station['extra']['address'],
                     'status': station['extra']['status'],
@@ -39,8 +35,6 @@ def get_info(simulated=False):
 
 
 stations_info = get_info()
-
-simulated_stations_info = get_info(simulated=True)
 
 def get_alle_stations():
     if stations_info:
@@ -80,5 +74,6 @@ def zoek_lege_slots():
 
 #lege_slots = zoek_lege_slots()
 #alle_stations = get_alle_stations()
+
 
 
