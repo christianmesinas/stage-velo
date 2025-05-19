@@ -13,11 +13,10 @@ class Usertable(Base):
     email = Column(String, unique=True, nullable=False)
     name = Column(String)
     profile_picture = Column(String, nullable=False, default="img/default.png")
-    is_admin = Column(Boolean, nullable=False, default=False)
 
 
     @classmethod
-    def get_or_create(cls, db, user_id, email, name, profile_picture, is_admin=False):
+    def get_or_create(cls, db, user_id, email, name, profile_picture):
         user = db.query(cls).filter_by(user_id=user_id).first()
         if not user:
             user = cls(
@@ -25,7 +24,6 @@ class Usertable(Base):
                 email=email,
                 name=name,
                 profile_picture=profile_picture,
-                is_admin=is_admin
             )
             db.add(user)
             db.commit()
