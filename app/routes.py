@@ -1,4 +1,7 @@
 from datetime import datetime
+import pytz
+
+
 
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template
 from authlib.integrations.flask_client import OAuth
@@ -9,6 +12,7 @@ import requests
 import csv
 import uuid
 import os
+import copy
 
 from app.api import api as api
 from app.api.api import get_alle_stations, get_info
@@ -257,7 +261,6 @@ def internal_server_error(error):
 
 @routes.route("/admin")
 
-
 def admin():
     laatste_simulatie = session.get("laatste_simulatie")
     return render_template("admin.html", laatste_simulatie=laatste_simulatie)
@@ -272,7 +275,6 @@ def admin():
 
 @routes.route("/admin/simulatie", methods=["GET", "POST"])
 
-
 def admin_simulatie():
     boodschap = None
     ritten = []
@@ -283,7 +285,9 @@ def admin_simulatie():
     langste_rit = 0
     meest_gebruikte_fiets = 0
     populairst_station = 0
-    drukste_per_station = []  # ← default lege lijst
+    drukste_per_station = []
+
+    stations_copy = None
 
     if request.method == "POST":
         try:
@@ -292,8 +296,9 @@ def admin_simulatie():
             dagen = int(request.form.get("dagen"))
 
             gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
-            fietsen = simulation.genereer_fietsen(fietsen_aantal, simulation.stations)
-            ritten = simulation.simulatie(simulation.stations, gebruikers, fietsen, dagen)
+            stations_copy = copy.deepcopy(simulation.stations)
+            fietsen = simulation.genereer_fietsen(fietsen_aantal, stations_copy)
+            ritten = simulation.simulatie(stations_copy, gebruikers, fietsen, dagen)
 
             # 📊 Inzichten
             aantal_ritten = len(ritten)
@@ -306,7 +311,7 @@ def admin_simulatie():
             station_teller = Counter(r["begin_station_id"] for r in ritten)
             populairst_station = station_teller.most_common(1)[0][0] if station_teller else None
 
-            # ⏰ Drukste momenten per station (op basis van ritten)
+            # ⏰ Drukste momenten per station
             station_uren_counter = {}
             for rit in ritten:
                 station_id = rit["begin_station_id"]
@@ -317,7 +322,7 @@ def admin_simulatie():
                     startuur = starttijd.hour
                 station_uren_counter.setdefault(station_id, Counter())[startuur] += 1
 
-            for station in simulation.stations:
+            for station in stations_copy:
                 sid = station["id"]
                 naam = station["name"]
                 if sid in station_uren_counter:
@@ -338,25 +343,27 @@ def admin_simulatie():
                 writer.writerow(["gebruiker_id", "fiets_id", "begin_station_id", "eind_station_id", "duur_minuten"])
                 for rit in ritten:
                     writer.writerow([
-                        rit.gebruiker_id,
-                        rit.fiets_id,
-                        rit.begin_station_id,
-                        rit.eind_station_id,
-                        rit.duur_minuten
+                        rit["gebruiker_id"],
+                        rit["fiets_id"],
+                        rit["begin_station_id"],
+                        rit["eind_station_id"],
+                        rit["duur_minuten"]
                     ])
 
-            boodschap = f"✅ Simulatie is gestart met {len(ritten)} ritten."
-
-            session["laatste_simulatie"] = datetime.now().strftime("%d-%m-%Y om %H:%M")
+            # ✅ Tijd in Belgische tijdzone
+            brussel_tijd = datetime.now(pytz.timezone("Europe/Brussels"))
+            session["laatste_simulatie"] = brussel_tijd.strftime("%d-%m-%Y om %H:%M")
             session.modified = True
 
+            boodschap = f"✅ Simulatie is gestart met {len(ritten)} ritten."
 
         except Exception as e:
             boodschap = f"❌ Fout bij simulatie: {str(e)}"
 
-    # 📍 Stationstatus (free_bikes/vrije plaatsen)
+    # 📍 Stationstatus
     stations_overzicht = []
-    for s in simulation.stations:
+    bron_stations = stations_copy if request.method == "POST" else simulation.stations
+    for s in bron_stations:
         stations_overzicht.append({
             "naam": s["name"],
             "fietsen": s["free_bikes"],
@@ -379,9 +386,10 @@ def admin_simulatie():
 
 
 
-from datetime import datetime
+
 
 @routes.route("/admin/data")
+
 
 
 def admin_data():
@@ -402,6 +410,7 @@ def admin_data():
 
 
 @routes.route("/admin/gebruikers")
+
 
 
 def admin_gebruikers():
