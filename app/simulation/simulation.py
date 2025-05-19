@@ -32,6 +32,7 @@ for _, row in stations_df.iterrows(): #de data in de stations.csv (van velo antw
         "free_slots": row.get("Aantal_plaatsen", 0)
     })
 
+
 # Genereer gebruikers
 def genereer_gebruikers(aantal):
     gebruikers = []
