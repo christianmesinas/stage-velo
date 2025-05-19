@@ -38,9 +38,6 @@ oauth.register(
 
 @routes.route("/auth/process", methods=["POST"])
 def process_auth():
-    '''token = request.json.get("access_token")
-    if not token:
-        return {"error": "Access token ontbreekt"}, 400'''
 
     token = request.json.get("access_token")
     redirect_to = request.json.get("redirect_to", "/profile")
