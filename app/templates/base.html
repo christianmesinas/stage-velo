@@ -37,8 +37,8 @@
   </nav>
 
   <div class="nav-buttons">
-    {% if session.get('Gebruiker') %}
       <button id="darkModeToggle" class="dark-toggle-btn" style="right: 0.5rem;">🌗</button>
+    {% if session.get('Gebruiker') %}
       <a href="{{ url_for('routes.profile') }}" class="profile">Profiel</a>
       <a href="{{ url_for('routes.logout') }}" class="logout">Uitloggen</a>
     {% else %}
