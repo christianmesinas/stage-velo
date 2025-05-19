@@ -14,7 +14,7 @@ csv_path = os.path.join(script_dir, "velo.csv")
 stations_df = pd.read_csv(csv_path)
 
 fake = Faker()
-antwerpen_postcodes = ['2000','2018','2020','2030','2040','2050','2060','2100','2130','2140','2150','2170','2180','2600','2610','2610','2660'] #alle postcodes antwerpen in een lijst
+antwerpen_postcodes = ['2000','2018','2020','2030','2040','2050','2060','2100','2130','2140','2150','2170','2180','2600','2610','2610','2660']
 
 # Verwerk stationsgegevens
 stations_df.dropna(subset=["Naam"], inplace=True)
@@ -166,7 +166,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
     return geschiedenis
 
 
-def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een csv steken zodat we het met COPY kunnen doorpushen naar de db
+def geschiedenis_to_csv_buffer(geschiedenis):
     buffer = io.StringIO()
     for rit in geschiedenis:
         buffer.write(
@@ -185,9 +185,13 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     vandaag = datetime.today().date()
 
     for dag_offset in range(dagen):#de simulatie telt de voorbije aantal dagen.
-        datum = vandaag - timedelta(days=dag_offset)
+        datum = vandaag - timedelta(days=(dagen - dag_offset - 1))
         print(f"\bSimulatie voor {datum}...")
 
+        for _ in range(random.randint(5, 20)):
+            if not beschikbare_fietsen:
+                print("Geen beschikbare fietsen op dit moment.")
+                break
 
         for fiets in beschikbare_fietsen:
             # de gemiddelde opsplitsen in 25%, 50%, 25%
@@ -224,15 +228,13 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     print(f"Simulatie voltooid met {len(geschiedenis)} ritten over {dagen}")
     return geschiedenis
 
-
+# ⛔ Niets wordt automatisch uitgevoerd bij import
+# ✅ Enkel als je simulation.py rechtstreeks runt
 if __name__ == "__main__":
-    gebruikers = genereer_gebruikers(50000)
-    fietsen = genereer_fietsen(4200, stations)
+    gebruikers = genereer_gebruikers(1000)
+    fietsen = genereer_fietsen(400, stations)
     geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
 
     buffer = geschiedenis_to_csv_buffer(geschiedenis)
-    with open("simulatie_output_csv", "w") as f:
+    with open("simulatie_output.csv", "w") as f:
         f.write(buffer.getvalue())
-
-
-simulatie(stations, gebruikers, fietsen)
