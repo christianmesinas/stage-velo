@@ -60,3 +60,34 @@ body.dark-mode .background{
 
 }
 
+.auth0-lock-header{
+    background-color: black !important;
+
+}
+
+
+body.dark-mode .auth0-lock-cred-pane{
+    background-color: black !important;
+}
+
+body.dark-mode .auth0-lock-tabs li a{
+    background-color: black;
+    color: rgb(180,180,180) !important;
+}
+
+body.dark-mode .auth0-lock-tabs-current{
+    background-color: black !important;
+}
+
+body.dark-mode .auth0-lock-tabs-current span{
+    color: white !important;
+}
+
+body.dark-mode .auth0-lock.auth0-lock.auth0-lock-opened-in-frame .auth0-lock-header-bg .auth0-lock-header-bg-blur{
+    opacity: 0;
+    transition: 0ms;
+}
+
+body.dark-mode .auth0-lock.auth0-lock .auth0-lock-header-bg{
+    background-color: black;
+}
