@@ -176,30 +176,28 @@ def tarieven():
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
     if request.method == "POST":
-        # Stap 1: Verzamel de pincodes
         pincode = request.form.get("pincode")
         bevestig_pincode = request.form.get("bevestig_pincode")
 
-        # Stap 2: Controleer of pincodes overeenkomen
         if pincode != bevestig_pincode:
             foutmelding = "De pincodes komen niet overeen!"
             return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        # Stap 3: Haal gebruiker op uit de database
         from app.database import SessionLocal
         from app.database.models import Usertable
 
         db = SessionLocal()
         gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
-        # Stap 4: Zet het abonnement op 'Dagpas' en sla op
         if gebruiker:
             gebruiker.abonnement = "Dagpas"
             db.commit()
 
+            # ✅ Update sessie zodat profiel het correct toont
+            session["Gebruiker"]["abonnement"] = "Dagpas"
+
         db.close()
 
-        # Stap 5: Verzamel formuliergegevens voor de bedankt-pagina
         data = {
             "voornaam": request.form.get("voornaam"),
             "achternaam": request.form.get("achternaam"),
@@ -209,12 +207,11 @@ def dagpas():
             "pincode": pincode
         }
 
-        # Stap 6: Geef flashmelding en toon de bedankt-pagina
         flash("Dagpas succesvol geactiveerd!", "success")
         return render_template("tarieven/bedankt.html", data=data)
 
-    # Stap 7: GET-verzoek → toon het formulier leeg
     return render_template("tarieven/dagpas.html", formdata={})
+
 
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
 def weekpass():
