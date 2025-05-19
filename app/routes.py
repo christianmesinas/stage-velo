@@ -260,7 +260,7 @@ def internal_server_error(error):
 
 
 @routes.route("/admin")
-
+@admin_required
 def admin():
     laatste_simulatie = session.get("laatste_simulatie")
     return render_template("admin.html", laatste_simulatie=laatste_simulatie)
@@ -274,7 +274,7 @@ def admin():
 
 
 @routes.route("/admin/simulatie", methods=["GET", "POST"])
-
+@admin_required
 def admin_simulatie():
     boodschap = None
     ritten = []
@@ -389,7 +389,7 @@ def admin_simulatie():
 
 
 @routes.route("/admin/data")
-
+@admin_required
 
 
 def admin_data():
@@ -410,7 +410,7 @@ def admin_data():
 
 
 @routes.route("/admin/gebruikers")
-
+@admin_required
 
 
 def admin_gebruikers():
