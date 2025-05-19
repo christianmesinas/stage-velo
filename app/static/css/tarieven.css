@@ -138,10 +138,10 @@ body.dark-mode .card-slider__button:hover{
     color: #D41444;
 }
 
-body.dark-mode .swiper-wrapper{
+body.dark-mode .swiper-wrapper {
     background: #212121;
 
-
+}
 /*
 .card-slider.pressed {
   box-shadow: none;

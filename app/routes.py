@@ -1,6 +1,6 @@
 from datetime import datetime
-import pytz
 
+import pytz
 
 from app.database.models import Usertable, Gebruiker
 
@@ -22,6 +22,7 @@ from app.database import SessionLocal
 from app.simulation import simulation
 from collections import Counter
 from functools import wraps
+from werkzeug.utils import secure_filename
 
 
 def admin_required(f):
@@ -286,19 +287,23 @@ def jaarkaart():
 def defect():
     if 'Gebruiker' not in session:
         return redirect(url_for("routes.login", next=request.path))
-    if 'user' not in session:
-        return redirect(url_for("routes.login"))
+
+    foutmelding = None
+
     if request.method == 'POST':
         fiets_id = request.form.get('fiets_id')
         probleem = request.form.get('probleem')
 
-        # ➤ Je kunt het hier opslaan in de database of e-mail sturen naar admin
-        print(f"Defect gemeld - Fiets ID: {fiets_id}, Probleem: {probleem}")
+        if not fiets_id or not probleem:
+            foutmelding = 'Gelieve alle velden in te vullen.'
+        else:
+            # Здесь можно сохранить в БД или отправить email админу - hier kan jij opslaan in DB of Email sturen naar Admin
+            print(f"Defect gemeld - Fiets ID: {fiets_id}, Probleem: {probleem}")
+            flash('✅ Je melding is doorgestuurd naar de administratie.', 'success')
+            return redirect(url_for('routes.profile')) # <--Переход на profile.html - naar profile bij verzenden van bericht
 
-        flash('Je melding is doorgestuurd naar de administratie.', 'success')
-        return redirect(url_for('routes.defect'))
+    return render_template("defect.html", foutmelding=foutmelding)
 
-    return render_template("defect.html")
 
 @routes.route("/instellingen", methods=["GET", "POST"])
 def instellingen():
