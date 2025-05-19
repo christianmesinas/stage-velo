@@ -1,9 +1,10 @@
 import random
 import pandas as pd
 import sys
+import time
 import io
 from datetime import datetime, timedelta
-import time
+import psycopg2
 from faker import Faker
 import os
 
@@ -13,6 +14,7 @@ csv_path = os.path.join(script_dir, "velo.csv")
 stations_df = pd.read_csv(csv_path)
 
 fake = Faker()
+antwerpen_postcodes = ['2000','2018','2020','2030','2040','2050','2060','2100','2130','2140','2150','2170','2180','2600','2610','2610','2660']
 
 # Verwerk stationsgegevens
 stations_df.dropna(subset=["Naam"], inplace=True)
@@ -39,6 +41,9 @@ def genereer_gebruikers(aantal):
             "id": i + 1,
             "voornaam": fake.first_name(),
             "achternaam": fake.last_name(),
+            "email": f"{fake.last_name()}.{fake.first_name()}@example.com".lower(),
+            "postcode": random.choice(antwerpen_postcodes),
+            "abonnementstype": random.choice(['Basis','Premium','Flex']),
         })
     return gebruikers
 
@@ -132,7 +137,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
     vandaag = datetime.today().date() #simulatie telt terug van de dag van vandaag, als default de voorbije 28dagen (1maand)
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
 
-    for dag_offset in range(dagen):
+    for dag_offset in reversed(range(dagen)):
         datum = vandaag - timedelta(days=dag_offset)
         for fiets in beschikbare_fietsen:
             aantal_ritten = random.choices([ritten_per_fiets_per_dag - 1, ritten_per_fiets_per_dag, ritten_per_fiets_per_dag + 1], weights=[0.25, 0.5, 0.25])[0]
@@ -180,7 +185,7 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
     vandaag = datetime.today().date()
 
-    for dag_offset in range(dagen):#de simulatie telt de voorbije aantal dagen.
+    for dag_offset in reversed(range(dagen)):#de simulatie telt de voorbije aantal dagen.
         datum = vandaag - timedelta(days=dag_offset)
         print(f"\bSimulatie voor {datum}...")
 
@@ -221,6 +226,80 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     return geschiedenis
 
 
+
+def push_to_db():
+    conn = psycopg2.connect(
+        dbname="velo_community",
+        user="admin",
+        password="Velo123",
+        host="localhost",
+        port="5433"
+    )
+    cur = conn.cursor()
+    cur.execute("DELETE FROM gebruikers")
+    cur.execute("DELETE FROM fietsen")
+    cur.execute("DELETE FROM stations")
+    cur.execute("DELETE FROM geschiedenis")
+    for gebruiker in gebruikers:
+        cur.execute("""
+        INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """,(
+            gebruiker['id'],
+            gebruiker['voornaam'],
+            gebruiker['achternaam'],
+            gebruiker['email'],
+            gebruiker['abonnementstype'],
+            gebruiker['postcode']
+        ))
+
+    for station in stations:
+        cur.execute("""
+        INSERT INTO stations (id,naam, straat, postcode, capaciteit, status, parked_bikes, free_slots) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """,(
+            station['id'],
+            station['name'],
+            station['straat'],
+            station['postcode'],
+            station['capaciteit'],
+            station['status'],
+            station['free_bikes'],
+            station['free_slots']
+        ))
+
+    for fiets in fietsen:
+        cur.execute("""
+           INSERT INTO fietsen (id, station_id, status) VALUES (%s, %s, %s)
+           """, (
+            fiets['id'],
+            fiets['station_id'],
+            fiets['status']
+        ))
+    updates = [(rit['eind_station_id'], rit['fiets_id']) for rit in geschiedenis]
+    cur.executemany("""
+        UPDATE fietsen
+        SET station_id = %s
+        WHERE id = %s
+    """, updates)
+
+    for rit in geschiedenis:
+        cur.execute("""
+        INSERT INTO geschiedenis (gebruiker_id, fiets_id, start_station_id, eind_station_id, starttijd, eindtijd, duur_minuten)
+        VALUES (%s, %s , %s, %s, %s, %s, %s)
+        """,(
+            rit['gebruiker_id'],
+            rit['fiets_id'],
+            rit['begin_station_id'],
+            rit['eind_station_id'],
+            rit['starttijd'],
+            rit['eindtijd'],
+            rit['duur_minuten']
+        ))
+    push_to_db()
+    conn.commit()
+    cur.close()
+    conn.close()
+
 if __name__ == "__main__":
     gebruikers = genereer_gebruikers(50000)
     fietsen = genereer_fietsen(4200, stations)
@@ -230,5 +309,3 @@ if __name__ == "__main__":
     with open("simulatie_output_csv", "w") as f:
         f.write(buffer.getvalue())
 
-
-simulatie(stations, gebruikers, fietsen)
