@@ -244,18 +244,22 @@ body.dark-mode .list-group-item {
 
 /* ✅ Donkere modus knop stijl */
 .dark-toggle-btn {
-  position: fixed;
-  bottom: 1rem;
-  right: 0.5rem; /* сдвинута влево */
-  padding: 0.8rem 1rem;
-  border-radius: 999px;
-  font-size: 1.5rem;
-  z-index: 9999;
-  background-color: #333;
-  color: white;
-  border: none;
-  transition: background-color 0.3s ease;
+  position: static;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 1rem;
+  background-color: white; /* geel in lichtmodus */
+  color: black;
+  border: 2px solid #FFD700;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
+.dark-toggle-btn:hover {
+  background-color: #FFC300; /* iets donkerder geel bij hover */
+  border-color: #FFC300;
+}
+
+
 body.dark-mode .dark-toggle-btn {
   background-color: #f0f0f0;
   color: #121212;
@@ -292,3 +296,15 @@ body.dark-mode .card .card-text {
   border-radius: 3rem; /* скругление углов */
 
 }
+
+body.dark-mode .dark-toggle-btn {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}
+body.dark-mode .dark-toggle-btn:hover {
+  background-color: #333;
+  color: white;
+  border-color: white;
+}
+

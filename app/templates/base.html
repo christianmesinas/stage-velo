@@ -38,7 +38,7 @@
 
   <div class="nav-buttons">
     {% if session.get('Gebruiker') %}
-      <span>Welkom, {{ session['Gebruiker']['name'] }}</span>
+      <button id="darkModeToggle" class="dark-toggle-btn" style="right: 0.5rem;">🌗</button>
       <a href="{{ url_for('routes.profile') }}" class="profile">Profiel</a>
       <a href="{{ url_for('routes.logout') }}" class="logout">Uitloggen</a>
     {% else %}
@@ -55,8 +55,6 @@
 
 {% block scripts %}{% endblock %}
 
-<!-- 🌗 Donkere modus toggle knop -->
-<button id="darkModeToggle" class="dark-toggle-btn" style="right: 0.5rem;">🌗</button>
 
 <!-- 🌗 Icoon dat uit de knop omhoog vliegt -->
 <div id="theme-icon-animation" class="theme-icon">🌙</div>

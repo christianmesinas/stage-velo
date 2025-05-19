@@ -76,7 +76,9 @@
             {% if user.abonnement != 'Geen abonnement' %}
               <span class="text-success fw-bold">{{ user.abonnement }}</span>
             {% else %}
-              <span class="text-danger fw-bold">Geen abonnement</span>
+                <a href="{{ url_for('routes.tarieven') }}" class="text-danger fw-bold" style="text-decoration: none;">
+                   geen abonnement
+                </a>
             {% endif %}
           </p>
         </div>
@@ -111,32 +113,33 @@
   </div>
 
   <!-- ✅ Абонементы на поездки /
-       Fietsabonnementen voor de gebruiker -->
-  <div class="mb-5">
-    <h5 class="mb-4">Kies een abonnement:</h5>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      {% for soort, beschrijving in [('dagpas', '1 dag reizen met fietsen binnen 30 min voor een vaste prijs'),
-                                     ('weekpass', '7 dagen reizen met fietsen binnen 30 min voor een vaste prijs'),
-                                     ('jaarkaart', '1 jaar reizen met fietsen binnen 30 min voor een vaste prijs')] %}
-      <div class="col">
-        <div class="card h-100 text-center {% if user.abonnement == 'Geen abonnement' %}border-primary{% else %}border-secondary{% endif %}">
-          <div class="card-body">
-            <h5 class="card-title text-capitalize">{{ soort }}</h5>
-            <p class="card-text">{{ beschrijving }}</p>
-            {% if user.abonnement == 'Geen abonnement' %}
-              <a href="{{ url_for('routes.' + soort) }}" class="btn btn-danger w-100">Kopen</a>
-            {% else %}
-              <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
-            {% endif %}
-          </div>
+     Fietsabonnementen voor de gebruiker -->
+<!--
+<div class="mb-5">
+  <h5 class="mb-4">Kies een abonnement:</h5>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for soort, beschrijving in [('dagpas', '1 dag reizen met fietsen binnen 30 min voor een vaste prijs'),
+                                   ('weekpass', '7 dagen reizen met fietsen binnen 30 min voor een vaste prijs'),
+                                   ('jaarkaart', '1 jaar reizen met fietsen binnen 30 min voor een vaste prijs')] %}
+    <div class="col">
+      <div class="card h-100 text-center {% if user.abonnement == 'Geen abonnement' %}border-primary{% else %}border-secondary{% endif %}">
+        <div class="card-body">
+          <h5 class="card-title text-capitalize">{{ soort }}</h5>
+          <p class="card-text">{{ beschrijving }}</p>
+          {% if user.abonnement == 'Geen abonnement' %}
+            <a href="{{ url_for('routes.' + soort) }}" class="btn btn-danger w-100">Kopen</a>
+          {% else %}
+            <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
+          {% endif %}
         </div>
       </div>
-      {% endfor %}
     </div>
+    {% endfor %}
   </div>
 </div>
-</div>
+-->
 {% endblock %}
+
 
 {% block scripts %}
 <!-- ✅ Скрипт для плавного скрытия всплывающего сообщения /
