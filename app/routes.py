@@ -3,7 +3,7 @@ import pytz
 
 
 
-from flask import Blueprint, send_file, session, redirect, url_for, request, render_template
+from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
 from urllib.parse import quote_plus, urlencode
@@ -125,6 +125,7 @@ def index():
 
 @routes.route("/login")
 def login():
+    next_url = request.args.get("next", "/profile")
     return render_template("login.html",
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"))
@@ -237,10 +238,21 @@ def jaarkaart():
 
     return render_template("tarieven/jaarkaart.html", formdata={})
 
-@routes.route("/defect")
+
+@routes.route('/defect', methods=['GET', 'POST'])
 def defect():
     if 'user' not in session:
         return redirect(url_for("routes.login"))
+    if request.method == 'POST':
+        fiets_id = request.form.get('fiets_id')
+        probleem = request.form.get('probleem')
+
+        # ➤ Je kunt het hier opslaan in de database of e-mail sturen naar admin
+        print(f"Defect gemeld - Fiets ID: {fiets_id}, Probleem: {probleem}")
+
+        flash('Je melding is doorgestuurd naar de administratie.', 'success')
+        return redirect(url_for('routes.defect'))
+
     return render_template("defect.html")
 
 @routes.app_errorhandler(404)
