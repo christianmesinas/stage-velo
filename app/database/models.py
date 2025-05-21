@@ -78,7 +78,6 @@ class Station(Base):
         foreign_keys="Geschiedenis.eind_station_id",
         back_populates="end_station"
     )
-    bike_locations = relationship("BikeLocation", back_populates="station")
 
 # 🚲 Fietsen
 class Fiets(Base):
@@ -89,7 +88,6 @@ class Fiets(Base):
     status = Column(String)
 
     geschiedenis = relationship("Geschiedenis", back_populates="fiets")
-    bike_locations = relationship("BikeLocation", back_populates="bike")
 
 # 📜 Geschiedenis van ritten
 class Geschiedenis(Base):
@@ -110,13 +108,4 @@ class Geschiedenis(Base):
     start_station = relationship("Station", foreign_keys=[start_station_id], back_populates="start_geschiedenis")
     end_station = relationship("Station", foreign_keys=[eind_station_id], back_populates="end_geschiedenis")
 
-# 📌 Relatie tussen fiets en station (huidige locatie)
-class BikeLocation(Base):
-    __tablename__ = "bike_locations"
 
-    bike_id = Column(Integer, ForeignKey("fietsen.id"), primary_key=True)
-    station_id = Column(Integer, ForeignKey("stations.id"), primary_key=True)
-    timestamp = Column(DateTime, default=datetime.utcnow)
-
-    bike = relationship("Fiets", back_populates="bike_locations")
-    station = relationship("Station", back_populates="bike_locations")
