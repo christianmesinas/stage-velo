@@ -9,9 +9,13 @@
     background-repeat: no-repeat;
     margin: 20px;
     background-color: white;
+    color: black;
     border-radius: 20px;
+}
 
-
+body.dark-mode .background{
+    background: black;
+    color: white;
 }
 
 
@@ -44,6 +48,11 @@ h1 {
   border-radius: 20px;
   box-shadow: 0 5px 10px 0 rgb(0,0,0,0.25);
   margin: 20px 0;
+}
+
+body.dark-mode .container{
+    background: #212121;
+    color: white;
 }
 
 .question {
