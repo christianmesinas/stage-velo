@@ -1,9 +1,6 @@
 from datetime import datetime
-
 import pytz
-
 from app.database.models import Usertable, Gebruiker
-
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
@@ -14,7 +11,6 @@ import csv
 import uuid
 import os
 import copy
-
 from app.api import api as api
 from app.api.api import get_alle_stations, get_info
 from app.database.models import Usertable
@@ -28,16 +24,13 @@ from werkzeug.utils import secure_filename
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        user = session.get("user")
-        if not user:
-            return redirect(url_for("routes.login"))  # of index als je geen aparte loginpagina hebt
-        if user.get("email") != os.getenv("ADMIN_EMAIL"):
+        gebruiker = session.get("Gebruiker")
+        if not gebruiker:
+            return redirect(url_for("routes.login", next=request.path))
+        if gebruiker.get("email") != os.getenv("ADMIN_EMAIL"):
             return "❌ Geen toegang: je bent geen administrator", 403
         return f(*args, **kwargs)
     return decorated_function
-
-
-
 
 
 
@@ -155,7 +148,6 @@ def help():
     return render_template("help.html")
 
 
-
 @routes.route("/maps")
 def markers():
     markers = []
@@ -170,9 +162,11 @@ def markers():
         })
     return render_template("maps.html", markers=markers)
 
+
 @routes.route("/tarieven")
 def tarieven():
     return render_template("tarieven.html")
+
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
@@ -247,6 +241,7 @@ def weekpass():
         return render_template("tarieven/bedankt.html", data=data)
 
     return render_template("tarieven/weekpas.html", formdata={})
+
 
 @routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
 def jaarkaart():
