@@ -1,4 +1,4 @@
-/* Basis reset voor marges en padding */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -10,106 +10,40 @@ body {
   background-color: #f4f4f4;
 }
 
-/* Formulier container */
-.form-container {
-  background-color: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 500px;
-  margin: auto;
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: white;
 }
 
-/* Formulier rij voor de velden */
-.form-row {
-  display: flex;           /* Flexbox activeert naast elkaar plaatsen */
-  flex-wrap: wrap;         /* Flexbox laat de items naar de volgende regel verplaatsen als er geen ruimte is */
-  gap: 5px;               /* Ruimte tussen de velden */
-  margin-bottom: 15px;
-  margin-top: 15px;
-}
-
-/* Formuliergroep voor elk veld in de rij */
-.form-row .form-group {
-  flex: 1 1 49%;               /* Zorgt ervoor dat de velden 45% van de breedte krijgen, en flexibel zijn */
+/* Container */
+.div4 {
   display: flex;
-  flex-direction: column;      /* Zorg ervoor dat de inhoud binnen de .form-group verticaal uitgelijnd is */
-}
-
-/* Formuliervelden (tekst, email, telefoon, enz.) */
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="date"],
-input[type="password"],
-input[type="checkbox"] {
-  width: 100%;             /* Zorg ervoor dat de invoervelden de breedte van .form-group vullen */
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Labels voor formulier */
-label {
-  font-size: 14px;
-  margin-bottom: 5px;
-  display: block;
-}
-
-/* Submitknop stijl */
-button[type="submit"] {
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-weight: bolder;
-  border: 3px solid #2B2D42;
-  color: #2B2D42;
-  background: none;
-  transition: 0.5s ease;
-  cursor: pointer;
-}
-
-button[type="submit"]:hover {
-  border-color: #D41444;
-  color: #D41444;
-}
-
-/* Checkbox stijl */
-input[type="checkbox"] {
-  width: auto;
-  margin-right: 10px;
-}
-
-/* Zorg ervoor dat de laatste form-group geen extra marge heeft */
-.form-group:last-child {
-  margin-bottom: 0;
-}
-
-/* Stijl voor de knoppen onderaan het formulier */
-.buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-/* Div2 hoogte instelling */
-.div2 {
-  height: 35rem;
-}
-
-/* Specifieke stijl voor voornaam veld */
-.voornaam {
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-
-/* Stijl voor de kaartslider */
-.card-slider .card-item {
-  /*display: flex;*/
-  align-items: center;
   justify-content: center;
-  position: relative;
+  align-items: center;
+  padding: 2rem;
+}
+
+body.dark-mode .div4 {
+  background-color: #1e1e1e;
+}
+
+/* Wrapper fix */
+.card.wrapper, .card-wrapper {
+  background-color: transparent;
+}
+
+body.dark-mode .card.wrapper,
+body.dark-mode .card-wrapper {
+  background-color: transparent;
+  border: none;
+}
+
+/* Kaart layout */
+.card-slider .card-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
   max-width: 90%;
   margin: 50px auto;
   background: #fff;
@@ -117,52 +51,98 @@ input[type="checkbox"] {
   padding: 30px;
   border-radius: 25px;
   min-height: 300px;
-  border: 2px solid transparent;
+  border: none;
   transition: 0.2s ease;
 }
 
-/* Inhoud van de kaart */
+body.dark-mode .card-slider .card-item {
+  background-color: #2a2a2a;
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Afbeelding links */
+.card-image {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Content rechts */
 .card-item__content {
-  margin-left: 20rem;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 1rem;
 }
 
-/* Titel van de kaart */
 .card-item__title {
   font-size: 38px;
+  margin-bottom: 10px;
 }
 
-/* Streep onder de titel */
 .streep {
-  width: 60px;
+  width: 30%;
   height: 4px;
-  margin-top: 8px; /* Ruimte tussen titel en streep */
+  background-color: #D41444;
   border-radius: 2px;
+  margin-bottom: 10px;
 }
 
-/* Ruimte voor de kaart */
-.card-item {
-  margin-right: 8rem;
+body.dark-mode .streep {
+  background-color: #ff4569;
 }
 
-/* Afbeelding van de kaart */
-.card-image {
-  width: 20%;
-  height: 80%;
-  position: absolute;
-  left: -2%;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 20px;
+/* Formulier */
+.defect-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 500px;
 }
 
-/* Knop in de kaartslider */
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+/* Inputs */
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+}
+
+body.dark-mode input,
+body.dark-mode textarea {
+  background-color: #2a2a2a;
+  color: white;
+  border: 1px solid #555;
+}
+
+/* Labels */
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Knop */
+button[type="submit"],
 .card-slider__button {
   padding: 6px 14px;
-  margin-top: 20px;
   border-radius: 20px;
   font-weight: bolder;
   border: 3px solid #2B2D42;
@@ -170,15 +150,73 @@ input[type="checkbox"] {
   background: none;
   transition: 0.5s ease;
   cursor: pointer;
+  align-self: flex-start;
 }
 
+button[type="submit"]:hover,
 .card-slider__button:hover {
   border-color: #D41444;
   color: #D41444;
 }
 
-/* Wanneer een kaart wordt ingedrukt */
-.card-slider .card-item.pressed {
-  box-shadow: none;
-  transform: translateY(2px);
+body.dark-mode button[type="submit"],
+body.dark-mode .card-slider__button {
+  border: 3px solid white;
+  color: white;
+}
+
+body.dark-mode button[type="submit"]:hover,
+body.dark-mode .card-slider__button:hover {
+  border-color: #D41444;
+  color: #D41444;
+}
+
+/* Flash messages */
+.flash-messages {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-left: 5px solid #28a745;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+body.dark-mode .alert-success {
+  background-color: #2e4e2e;
+  color: #b0f0b0;
+  border-left-color: #28a745;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-slider .card-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .card-image {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+  }
+
+  .card-item__content {
+    align-items: center;
+  }
+
+  button[type="submit"],
+  .card-slider__button {
+    align-self: center;
+  }
 }

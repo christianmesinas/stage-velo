@@ -1,0 +1,95 @@
+{% extends 'base_admin.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_simulatie.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<h2>🛠 Simulatie starten</h2>
+{% if boodschap %}
+  <div class="alert">{{ boodschap }}</div>
+{% endif %}
+
+<form method="post" action="{{ url_for('routes.admin_simulatie') }}" class="inline-form">
+  <label>Aantal gebruikers<input type="number" name="gebruikers" value="58000"></label>
+  <label>Aantal fietsen<input type="number" name="fietsen" value="10000"></label>
+  <label>Aantal dagen<input type="number" name="dagen" value="30"></label>
+  <button type="submit">Start simulatie</button>
+</form>
+
+{% if aantal_ritten is not none %}
+  <div class="stats">
+    <h2>📈 Simulatie-inzichten</h2>
+    <ul>
+      <li>Aantal ritten: {{ aantal_ritten }}</li>
+      <li>Gemiddelde ritduur: {{ gemiddelde_duur }} min</li>
+      <li>Langste rit: {{ langste_rit }} min</li>
+      <li>Meest gebruikte fiets: ID {{ meest_gebruikte_fiets }}</li>
+      <li>Populairst beginstation: ID {{ populairst_station }}</li>
+    </ul>
+  </div>
+
+  <h2>⏰ Drukste momenten per station</h2>
+  <div class="table-container">
+    <table class="fixed-header-table">
+      <thead>
+        <tr>
+          <th>Station</th>
+          <th>Tijdvak</th>
+          <th>Aantal ritten gestart</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="scrollbox">
+      <table class="fixed-header-table">
+        <tbody>
+          {% for d in drukste_per_station %}
+          <tr>
+            <td>{{ d["naam"] }}</td>
+            <td>{{ d["tijdvak"] }}</td>
+            <td>{{ d["aantal"] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endif %}
+
+{% if ritten %}
+  {% if csv_bestand %}
+  <a href="{{ csv_bestand }}" download class="download-btn">📥 Download CSV-bestand</a>
+  {% endif %}
+
+  <h2>Resultaten</h2>
+  <div class="table-container">
+    <table class="fixed-header-table">
+      <thead>
+        <tr>
+          <th>Gebruiker</th>
+          <th>Fiets</th>
+          <th>Van</th>
+          <th>Naar</th>
+          <th>Duur (min)</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="scrollbox">
+      <table class="fixed-header-table">
+        <tbody>
+          {% for rit in ritten %}
+          <tr>
+            <td>{{ rit["gebruiker_id"] }}</td>
+            <td>{{ rit["fiets_id"] }}</td>
+            <td>{{ rit["begin_station_id"] }}</td>
+            <td>{{ rit["eind_station_id"] }}</td>
+            <td>{{ rit["duur_minuten"] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

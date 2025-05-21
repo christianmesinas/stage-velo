@@ -108,3 +108,7 @@ button[type="submit"]:hover {
   border-color: #D41444;
   color: #D41444;
 }
+
+body.dark-mode .card-item{
+  background-color: black;
+}

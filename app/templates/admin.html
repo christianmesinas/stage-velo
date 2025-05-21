@@ -1,57 +1,43 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-</head>
-<body>
-    <h1>Welkom Admin</h1>
+{% extends 'base_admin.html' %}
 
-    <h2>📊 Fietsenstatistiek</h2>
-    <ul>
-        <li>Totaal fietsen: 10000</li>
-        <li>Beschikbaar: 8200</li>
-        <li>In onderhoud: 500</li>
-        <li>Onderweg: 1300</li>
-    </ul>
 
-    <h2>📍 Stationsoverzicht</h2>
-    <ul>
-        <li>Groenplaats – 24 fietsen – 6 vrije plaatsen</li>
-        <li>Berchem – 18 fietsen – 12 vrije plaatsen</li>
-        <li>Meir – 15 fietsen – 5 vrije plaatsen</li>
-    </ul>
+{% block head %}
 
-    <h2>🛠 Simulatie starten</h2>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 
-    {% if boodschap %}
-        <div style="margin-top: 20px; background-color: #e1f5e1; padding: 10px; border-radius: 5px;">
-            {{ boodschap }}
-        </div>
-    {% endif %}
 
-    <form method="post" action="/admin">
-        <label>Aantal gebruikers:<br><input type="number" name="gebruikers" value="58000"></label><br>
-        <label>Aantal fietsen:<br><input type="number" name="fietsen" value="10000"></label><br>
-        <label>Aantal dagen:<br><input type="number" name="dagen" value="30"></label><br>
-        <button type="submit">Start simulatie</button>
-    </form>
-
-{% if ritten %}
-    <h2>📋 Resultaten van simulatie</h2>
-    <ul>
-        {% for rit in ritten %}
-            <li>
-                Gebruiker {{ rit.gebruiker_id }} reed met fiets {{ rit.fiets_id }}
-                van station {{ rit.begin_station_id }} naar {{ rit.eind_station_id }}
-                ({{ rit.duur_minuten }} min)
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
+{% endblock %}
 
 
 
-</body>
-</html>
+{% block content %}
+
+<div class="admin-dashboard">
+
+
+  <h2 class="dashboard-title">Welkom terug, admin {{ session["username"] }}</h2>
+
+
+    <div class="status-grid">
+  {% if laatste_simulatie %}
+    <div class="status-card success">✅ Simulatie correct uitgevoerd op {{ laatste_simulatie }}</div>
+  {% else %}
+    <div class="status-card warning">⚠️ Nog geen simulatie uitgevoerd</div>
+  {% endif %}
+
+</div>
+
+
+  <div class="quick-links">
+    <a href="{{ url_for('routes.admin_simulatie') }}" class="link-card">🚴 Start Simulatie</a>
+    <a href="{{ url_for('routes.admin_data') }}" class="link-card">📡 Bekijk Live Data</a>
+    <a href="#" class="link-card">👥 Gebruikersoverzicht</a>
+    <a href="#" class="link-card">📄 CSV-overzicht</a>
+  </div>
+
+</div>
+
+
+{% endblock %}
+
+

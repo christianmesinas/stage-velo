@@ -1,0 +1,158 @@
+/* ✅ Общий фон всей страницы / Algemene achtergrond van de pagina */
+.background {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+/* ✅ Отступы / Marges */
+.mt-5 { margin-top: 2rem; }       /* Отступ сверху / Bovenmarge */
+.mb-4 { margin-bottom: 1.5rem; }  /* Отступ снизу / Ondermarge */
+.mb-5 { margin-bottom: 3rem; }    /* Отступ снизу / Ondermarge */
+
+/* ✅ Кнопка Instellingen справа сверху / Instellingen-knop rechtsboven */
+.instellingen-button-topright {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 20;
+}
+
+.instellingen-button-topright .btn-primary {
+    position: static; /* Убираем абсолютное позиционирование / Geen absolute positionering */
+    top: auto;
+    right: auto;
+}
+
+/* ✅ Фото пользователя / Profielfoto */
+.profile-foto {
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 1rem;
+    display: block;
+    user-select: none;
+}
+
+/* ✅ Карточки (инфо, история и т.д.) / Kaarten (info, geschiedenis enz.) */
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    user-select: none;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Эффект при наведении / Hover-effect */
+}
+
+.card .card-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.card .card-text {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.card .btn {
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+/* ✅ Список поездок / Fietsgeschiedenis-lijst */
+.card ul {
+    padding-left: 0;
+}
+
+.card li {
+    margin-bottom: 1rem;
+}
+
+/* ✅ Flash-сообщение по центру / Flashmelding in het midden */
+#flash-overlay,
+.flash-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: rgba(47, 255, 0, 0.95); /* Ярко-зелёный / Felgroen */
+    color: white;
+    padding: 1.5rem 2.5rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.4s ease;
+    display: none;
+}
+
+/* ✅ Агрессивное предупреждение при незаполненных данных / Agressieve waarschuwing bij onvolledig profiel */
+.alert-instellingen {
+    background-color: #ff0000;       /* Красный фон / Rode achtergrond */
+    color: #fff700;                  /* Ядовито-жёлтый текст / Geel gifkleurig tekst */
+    padding: 14px 20px;
+    border: 4px dashed #ffffff;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 1.05rem;
+    text-align: center;
+    animation: knipper 0.6s infinite; /* Мерцание / Knipperende animatie */
+    max-width: 450px;
+    margin: 1rem auto 0 auto;
+    box-shadow: 0 0 25px #ff0000, 0 0 25px #ff0000;
+}
+
+/* ✅ Анимация мерцания и пульсации / Knipper- en pulse-effect */
+@keyframes knipper {
+    0%   { opacity: 1; transform: scale(1); }
+    50%  { opacity: 0.6; transform: scale(1.04); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ✅ Поддержка тёмной темы / Donkere modus ondersteuning */
+body.dark-mode {
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+body.dark-mode .background {
+    background-color: #1a1a1a;
+}
+
+body.dark-mode .card {
+    background-color: #2c2c2c;
+    color: #f0f0f0;
+    border-color: #444;
+}
+
+body.dark-mode .card .btn-outline-primary {
+    color: #f0f0f0;
+    border-color: #888;
+}
+
+body.dark-mode .card .btn-outline-primary:hover {
+    background-color: #444;
+    color: #fff;
+    border-color: #666;
+}
+
+body.dark-mode .card .btn-danger {
+    background-color: #b00020;
+    border: none;
+}
+
+body.dark-mode .alert-instellingen {
+    background-color: #660000;   /* Тёмно-красный / Donkerrood */
+    color: #ffff00;              /* Ярко-жёлтый / Felgeel */
+    border-color: #ffffff;
+    box-shadow: 0 0 15px #ff0000;
+}
