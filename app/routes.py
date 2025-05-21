@@ -154,7 +154,11 @@ def profile():
 def help():
     return render_template("help.html")
 
-
+@routes.route("/huur_fiets")
+def huur():
+    if 'Gebruiker' not in session:
+        return redirect(url_for("routes.login", next=request.path))
+    return render_template("huur_fiets.html")
 
 @routes.route("/maps")
 def markers():
