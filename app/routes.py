@@ -176,110 +176,93 @@ def tarieven():
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
-    if request.method == "POST":
-        pincode = request.form.get("pincode")
-        bevestig_pincode = request.form.get("bevestig_pincode")
+    from app.database import SessionLocal
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
-        if pincode != bevestig_pincode:
-            foutmelding = "De pincodes komen niet overeen!"
+    if request.method == "POST":
+        if gebruiker and gebruiker.abonnement != "Geen abonnement":
+            foutmelding = f"Je hebt al een {gebruiker.abonnement.lower()}."
+            db.close()
             return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        from app.database import SessionLocal
-        from app.database.models import Usertable
+        pincode = request.form.get("pincode")
+        bevestig_pincode = request.form.get("bevestig_pincode")
+        if pincode != bevestig_pincode:
+            foutmelding = "De pincodes komen niet overeen!"
+            db.close()
+            return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-
-        if gebruiker:
-            gebruiker.abonnement = "Dagpas"
-            db.commit()
-
-            # ✅ Update sessie zodat profiel het correct toont
-            session["Gebruiker"]["abonnement"] = "Dagpas"
-
+        gebruiker.abonnement = "Dagpas"
+        db.commit()
+        session["Gebruiker"]["abonnement"] = "Dagpas"
         db.close()
 
-        data = {
-            "voornaam": request.form.get("voornaam"),
-            "achternaam": request.form.get("achternaam"),
-            "email": request.form.get("email"),
-            "telefoon": request.form.get("telefoon"),
-            "geboortedatum": request.form.get("geboortedatum"),
-            "pincode": pincode
-        }
-
         flash("Dagpas succesvol geactiveerd!", "success")
-        return render_template("tarieven/bedankt.html", data=data)
+        return redirect(url_for("routes.profile"))
 
+    db.close()
     return render_template("tarieven/dagpas.html", formdata={})
 
 
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
 def weekpass():
-    if request.method == "POST":
-        pincode = request.form.get("pincode")
-        bevestig_pincode = request.form.get("bevestig_pincode")
+    from app.database import SessionLocal
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
-        if pincode != bevestig_pincode:
-            foutmelding = "De pincodes komen niet overeen!"
+    if request.method == "POST":
+        if gebruiker and gebruiker.abonnement != "Geen abonnement":
+            foutmelding = f"Je hebt al een {gebruiker.abonnement.lower()}."
+            db.close()
             return render_template("tarieven/weekpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        from app.database import SessionLocal
-        from app.database.models import Usertable
+        pincode = request.form.get("pincode")
+        bevestig_pincode = request.form.get("bevestig_pincode")
+        if pincode != bevestig_pincode:
+            foutmelding = "De pincodes komen niet overeen!"
+            db.close()
+            return render_template("tarieven/weekpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-        if gebruiker:
-            gebruiker.abonnement = "Weekpas"
-            db.commit()
+        gebruiker.abonnement = "Weekpas"
+        db.commit()
+        session["Gebruiker"]["abonnement"] = "Weekpas"
         db.close()
 
-        data = {
-            "voornaam": request.form.get("voornaam"),
-            "achternaam": request.form.get("achternaam"),
-            "email": request.form.get("email"),
-            "telefoon": request.form.get("telefoon"),
-            "geboortedatum": request.form.get("geboortedatum"),
-            "pincode": pincode
-        }
-
         flash("Weekpas succesvol geactiveerd!", "success")
-        return render_template("tarieven/bedankt.html", data=data)
+        return redirect(url_for("routes.profile"))
 
+    db.close()
     return render_template("tarieven/weekpas.html", formdata={})
 
 @routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
 def jaarkaart():
-    if request.method == "POST":
-        pincode = request.form.get("pincode")
-        bevestig_pincode = request.form.get("bevestig_pincode")
+    from app.database import SessionLocal
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
-        if pincode != bevestig_pincode:
-            foutmelding = "De pincodes komen niet overeen!"
+    if request.method == "POST":
+        if gebruiker and gebruiker.abonnement != "Geen abonnement":
+            foutmelding = f"Je hebt al een {gebruiker.abonnement.lower()}."
+            db.close()
             return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding, formdata=request.form)
 
-        from app.database import SessionLocal
-        from app.database.models import Usertable
+        pincode = request.form.get("pincode")
+        bevestig_pincode = request.form.get("bevestig_pincode")
+        if pincode != bevestig_pincode:
+            foutmelding = "De pincodes komen niet overeen!"
+            db.close()
+            return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding, formdata=request.form)
 
-        db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-        if gebruiker:
-            gebruiker.abonnement = "Jaarkaart"
-            db.commit()
+        gebruiker.abonnement = "Jaarkaart"
+        db.commit()
+        session["Gebruiker"]["abonnement"] = "Jaarkaart"
         db.close()
 
-        data = {
-            "voornaam": request.form.get("voornaam"),
-            "achternaam": request.form.get("achternaam"),
-            "email": request.form.get("email"),
-            "telefoon": request.form.get("telefoon"),
-            "geboortedatum": request.form.get("geboortedatum"),
-            "pincode": pincode
-        }
-
         flash("Jaarkaart succesvol geactiveerd!", "success")
-        return render_template("tarieven/bedankt.html", data=data)
+        return redirect(url_for("routes.profile"))
 
+    db.close()
     return render_template("tarieven/jaarkaart.html", formdata={})
 
 
