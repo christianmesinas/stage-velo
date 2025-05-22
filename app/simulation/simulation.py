@@ -4,6 +4,9 @@ import sys
 from datetime import datetime, timedelta
 import time
 import io
+from app.database.session import SessionLocal
+from app.database.models import Fiets
+
 import psycopg2
 from faker import Faker
 import os
@@ -232,3 +235,23 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
 
 
 #simulatie(stations,gebruikers,fietsen, 60)
+
+
+def sla_fietsen_op_in_db(fietsen):
+    session = SessionLocal()
+    try:
+        for f in fietsen:
+            fiets = Fiets(
+                id=f["id"],
+                status=f["status"]
+            )
+            session.merge(fiets)  # merge voorkomt fouten bij dubbele ID’s
+        session.commit()
+        print(f"{len(fietsen)} fietsen opgeslagen in de database.")
+    except Exception as e:
+        session.rollback()
+        print("❌ Fout bij opslaan fietsen:", e)
+    finally:
+        session.close()
+
+sla_fietsen_op_in_db(fietsen)
