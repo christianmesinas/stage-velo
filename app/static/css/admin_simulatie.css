@@ -509,3 +509,12 @@ h2 {
 
 
 }
+
+.alert {
+  background-color: #f1dbc1;
+  border: 2px solid #ffcc80;
+  color: #252525;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 20px 0;
+}

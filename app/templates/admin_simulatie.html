@@ -59,7 +59,7 @@
 
 {% if ritten %}
   {% if csv_bestand %}
-  <a href="{{ csv_bestand }}" download class="download-btn">📥 Download CSV-bestand</a>
+  <a href="{{ url_for('routes.download_csv') }}" download class="download-btn">📥 Download CSV-bestand</a>
   {% endif %}
 
   <h2>Resultaten</h2>
@@ -78,7 +78,7 @@
     <div class="scrollbox">
       <table class="fixed-header-table">
         <tbody>
-          {% for rit in ritten %}
+          {% for rit in ritten[:1000] %}
           <tr>
             <td>{{ rit["gebruiker_id"] }}</td>
             <td>{{ rit["fiets_id"] }}</td>
@@ -87,6 +87,11 @@
             <td>{{ rit["duur_minuten"] }}</td>
           </tr>
           {% endfor %}
+        {% if ritten|length > 1000 %}
+        <div class="alert">
+            Hier zijn de eerste 1000 ritten. Download het CSV-bestand om alle {{ ritten|length }} ritten te bekijken.
+        </div>
+        {% endif %}
         </tbody>
       </table>
     </div>

@@ -471,6 +471,7 @@ def admin_simulatie():
                         rit["eind_station_id"],
                         rit["duur_minuten"]
                     ])
+            session["laatste_csv"] = csv_bestand
 
             # ✅ Tijd in Belgische tijdzone
             brussel_tijd = datetime.now(pytz.timezone("Europe/Brussels"))
@@ -506,7 +507,18 @@ def admin_simulatie():
         drukste_per_station=drukste_per_station,
     )
 
+@routes.route("/admin/download_csv")
+@admin_required
+def download_csv():
+    csv_filename = session.get("laatste_csv")
+    if not csv_filename:
+        return "Geen CSV-bestand beschikbaar.", 404
 
+    csv_path = os.path.join("/tmp", csv_filename)
+    if not os.path.exists(csv_path):
+        return "Bestand bestaat niet meer.", 404
+
+    return send_file(csv_path, as_attachment=True)
 
 
 
