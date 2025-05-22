@@ -16,3 +16,23 @@
     border-radius: 5px;
 }
 
+#search-container {
+    text-align: center;
+    margin-top: 20px;
+}
+#search-input {
+    width: 300px;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+button {
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    margin-left: 5px;
+}

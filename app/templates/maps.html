@@ -12,6 +12,11 @@
 {% endblock %}
 
 {% block content %}
+    <div id="search-container">
+     <input type="text" id="search-input" placeholder="Zoek op stationnummer of adres...">
+     <button onclick="searchStation()">Zoek</button>
+    </div>
+
     <div id="map"></div>
 
 {% endblock %}
@@ -62,6 +67,43 @@
         .addTo(map)
         .bindPopup(popupContent);
 });
+
+    function searchStation() {
+    const input = document.getElementById("search-input").value.toLowerCase().trim();
+    let found = false;
+
+    markers.forEach(function(marker) {
+        const stationId = marker.id?.toString().toLowerCase();
+        const stationName = marker.name.toLowerCase();
+
+        if (stationId === input || stationName.includes(input)) {
+            map.setView([marker.lat, marker.lon], 17);
+
+            let popupContent;
+            if (marker.status === 'CLS') {
+                popupContent = `${marker.name}<br><span style="color: red; font-weight: bold;">Closed</span>`;
+            } else {
+                popupContent = `
+                    ${marker.name}<br>
+                    <img src='/static/images/bike.png' alt='bike' style='height: 16px; vertical-align: middle;'> ${marker['free-bikes']}
+                    <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> ${marker['empty-slots']}
+                `;
+            }
+
+            L.popup()
+                .setLatLng([marker.lat, marker.lon])
+                .setContent(popupContent)
+                .openOn(map);
+
+            found = true;
+        }
+    });
+
+    if (!found) {
+        alert("Geen station gevonden met deze invoer.");
+    }
+}
+
 </script>
 
     <!--<button id="refresh-button">Ververs Data</button> -->
