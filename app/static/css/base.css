@@ -155,6 +155,17 @@ header {
   z-index: 9999;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+
+.no-js-alert {
+      animation: fadeOut 1s ease forwards;
+      animation-delay: 10s;
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; display: none; }
+    }
+
 .alert-success {
   color: #0f5132;
   background-color: #d1e7dd;
