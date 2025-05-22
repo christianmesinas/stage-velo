@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pytz
 
-from app.database.models import Usertable, Gebruiker
+from app.database.models import Usertable, Gebruiker, Geschiedenis
 
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
 from authlib.integrations.flask_client import OAuth
@@ -144,11 +144,25 @@ def profile():
         return redirect(url_for("routes.login", next=request.path))
 
     db = SessionLocal()
-    user_table = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    gebruiker_id = session["Gebruiker"]["id"]
+
+    # Haal de gebruiker uit beide tabellen op
+    user_table = db.query(Usertable).filter_by(user_id=gebruiker_id).first()
     user_data = db.query(Gebruiker).filter_by(email=session["Gebruiker"]["email"]).first()
+
+    # Haal de fietsritten (geschiedenis) op als de gebruiker bestaat
+    rentals = []
+    if user_data:
+        rentals = db.query(Geschiedenis).filter_by(gebruiker_id=user_data.id).all()
+
     db.close()
 
-    return render_template("profile.html", user=user_table, user_data=user_data)
+    return render_template(
+        "profile.html",
+        user=user_table,
+        user_data=user_data,
+        rentals=rentals  # hier geef je de geschiedenis door
+    )
 
 @routes.route("/help")
 def help():
