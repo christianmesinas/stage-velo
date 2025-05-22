@@ -154,12 +154,6 @@ def profile():
 def help():
     return render_template("help.html")
 
-@routes.route("/huur_fiets")
-def huur():
-    if 'Gebruiker' not in session:
-        return redirect(url_for("routes.login", next=request.path))
-    return render_template("huur_fiets.html")
-
 @routes.route("/maps")
 def markers():
     markers = []
@@ -180,16 +174,21 @@ def tarieven():
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
-    from app.database import SessionLocal
     db = SessionLocal()
-    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    gebruiker = None
+
+    # Controleer of er een ingelogde gebruiker is
+    if "Gebruiker" in session:
+        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
     if request.method == "POST":
+        # Als er een ingelogde gebruiker is en die heeft al een abonnement, mag hij geen dagpas nemen
         if gebruiker and gebruiker.abonnement != "Geen abonnement":
             foutmelding = f"Je hebt al een {gebruiker.abonnement.lower()}."
             db.close()
             return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
+        # Controle op pin
         pincode = request.form.get("pincode")
         bevestig_pincode = request.form.get("bevestig_pincode")
         if pincode != bevestig_pincode:
@@ -197,13 +196,18 @@ def dagpas():
             db.close()
             return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        gebruiker.abonnement = "Dagpas"
-        db.commit()
-        session["Gebruiker"]["abonnement"] = "Dagpas"
-        db.close()
+        # Ingelogde gebruiker krijgt het toegekend
+        if gebruiker:
+            gebruiker.abonnement = "Dagpas"
+            db.commit()
+            session["Gebruiker"]["abonnement"] = "Dagpas"
+        else:
+            # Voor gasten (niet-ingelogde gebruikers), bewaar je de info eventueel in een aparte tabel
+            # of verwerk je enkel tijdelijke toegang (hier alleen flashbericht)
+            flash("Dagpas succesvol geactiveerd! Bewaar je pincode goed.", "success")
 
-        flash("Dagpas succesvol geactiveerd!", "success")
-        return redirect(url_for("routes.profile"))
+        db.close()
+        return redirect(url_for("routes.profile") if gebruiker else url_for("routes.index"))
 
     db.close()
     return render_template("tarieven/dagpas.html", formdata={})

@@ -36,3 +36,49 @@ button {
     border: none;
     margin-left: 5px;
 }
+
+#show-all-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+#show-all-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+#show-all-container button:hover {
+    background-color: #0056b3;
+}
+
+#station-list-container {
+    width: 768px;
+    margin: auto;
+    margin-bottom: 40px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+#station-list-container h3 {
+    text-align: center;
+}
+#station-list {
+    list-style: none;
+    padding-left: 0;
+}
+#station-list li {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+#rent-button {
+    margin-left: 10px;
+    background-color: #28a745;
+}
+#rent-button:hover {
+    background-color: #1e7e34;
+}
