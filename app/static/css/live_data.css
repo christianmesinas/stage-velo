@@ -4,7 +4,7 @@
   font-size: 2rem;
   margin-top: 2vw;
   margin-bottom: 2rem;
-  color: #2c3e50;
+  color: #D1003C;
 }
 
 .stats-grid {
@@ -36,7 +36,7 @@
 .stat-card p {
   font-size: 1.6rem;
   font-weight: bold;
-  color: #2980b9;
+  color: #D1003C;
 }
 
 /* Tabelstijl */
@@ -61,7 +61,7 @@ th, td {
 }
 
 th {
-  background-color: #3498db;
+  background-color: #D1003C;
   color: white;
   text-transform: uppercase;
   font-size: 0.9rem;
@@ -92,7 +92,7 @@ tr:hover {
 }
 
 .fixed-header-table thead th {
-  background-color: #3498db;
+  background-color: #D1003C;
   color: white;
   position: sticky;
   top: 0;
@@ -121,7 +121,7 @@ tr:hover {
 .populaire-station p {
   font-size: 1.4rem;
   font-weight: bold;
-  color: #2c3e50;
+  color: #D1003C;
 
 
 }
