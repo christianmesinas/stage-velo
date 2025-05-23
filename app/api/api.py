@@ -1,5 +1,4 @@
 import requests
-import app.simulation.simulation as sim
 
 BASE_URL = "https://api.citybik.es/v2/networks/velo-antwerpen"
 HEADERS = {}

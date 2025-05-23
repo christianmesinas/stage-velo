@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Testbetaling</title>
+     <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h2>Betaal €5 voor een abonnement</h2>
+  <button id="checkout-button">Betaal nu</button>
+
+  <script>
+    const stripe = Stripe("{{ public_key }}");
+
+    document.getElementById("checkout-button").addEventListener("click", function () {
+      fetch("/create-checkout-session", {
+        method: "POST"
+      })
+      .then(res => res.json())
+      .then(data => {
+        return stripe.redirectToCheckout({ sessionId: data.id });
+      });
+    });
+  </script>
+</body>
+</html>
