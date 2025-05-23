@@ -184,22 +184,8 @@ def dagpas():
             foutmelding = "De pincodes komen niet overeen!"
             return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        from app.database import SessionLocal
-        from app.database.models import Usertable
-
-        db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-
-        if gebruiker:
-            gebruiker.abonnement = "Dagpas"
-            db.commit()
-
-            # ✅ Update sessie zodat profiel het correct toont
-            session["Gebruiker"]["abonnement"] = "Dagpas"
-
-        db.close()
-
-        data = {
+        session["abonnement_data"] = {
+            "type": "Dagpas",
             "voornaam": request.form.get("voornaam"),
             "achternaam": request.form.get("achternaam"),
             "email": request.form.get("email"),
@@ -208,10 +194,35 @@ def dagpas():
             "pincode": pincode
         }
 
-        flash("Dagpas succesvol geactiveerd!", "success")
-        return render_template("tarieven/bedankt.html", data=data)
+        prijzen = {
+            "Dagpas": 500,
+            "Weekpas": 1500,
+            "Jaarkaart": 3000
+        }
+
+        try:
+            stripe_session = stripe.checkout.Session.create(
+                payment_method_types=["card"],
+                line_items=[{
+                    "price_data": {
+                        "currency": "eur",
+                        "unit_amount": prijzen["Dagpas"],
+                        "product_data": {
+                            "name": "Dagpas"
+                        }
+                    },
+                    "quantity": 1
+                }],
+                mode="payment",
+                success_url=request.host_url + "betaling-succes",
+                cancel_url=request.host_url + "betaling-annulatie",
+            )
+            return redirect(stripe_session.url)
+        except Exception as e:
+            return f"Fout bij aanmaken van Stripe sessie: {str(e)}", 500
 
     return render_template("tarieven/dagpas.html", formdata={})
+
 
 
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
@@ -224,7 +235,6 @@ def weekpass():
             foutmelding = "De pincodes komen niet overeen!"
             return render_template("tarieven/weekpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        # 🔐 Bewaar formulierdata tijdelijk in sessie
         session["abonnement_data"] = {
             "type": "Weekpas",
             "voornaam": request.form.get("voornaam"),
@@ -235,14 +245,12 @@ def weekpass():
             "pincode": pincode
         }
 
-        # 💳 Stripe prijzen (centen)
         prijzen = {
             "Dagpas": 500,
             "Weekpas": 1500,
             "Jaarkaart": 3000
         }
 
-        # 🎯 Start een Stripe checkout sessie
         try:
             stripe_session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
@@ -268,6 +276,7 @@ def weekpass():
 
 
 
+
 @routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
 def jaarkaart():
     if request.method == "POST":
@@ -278,7 +287,6 @@ def jaarkaart():
             foutmelding = "De pincodes komen niet overeen!"
             return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding, formdata=request.form)
 
-        # Sla de data tijdelijk op in session voor later gebruik
         session["abonnement_data"] = {
             "type": "Jaarkaart",
             "voornaam": request.form.get("voornaam"),
@@ -289,10 +297,10 @@ def jaarkaart():
             "pincode": pincode
         }
 
-        # Redirect naar checkout sessie met juiste prijs
         return redirect(url_for("routes.create_checkout_session", abonnement_type="jaarkaart"))
 
     return render_template("tarieven/jaarkaart.html", formdata={})
+
 
 
 
