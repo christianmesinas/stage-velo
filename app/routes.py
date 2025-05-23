@@ -33,7 +33,6 @@ def admin_required(f):
     return decorated_function
 
 
-
 # ✅ Создание Blueprint / Maak een Blueprint
 routes = Blueprint("routes", __name__)
 
@@ -55,6 +54,7 @@ oauth.register(
     },
     server_metadata_url=f"https://{env.get('AUTH0_DOMAIN')}/.well-known/openid-configuration"
 )
+
 
 # ======================
 # ✅ Обработка авторизации / AUTHENTICATIE
@@ -103,6 +103,7 @@ def process_auth():
 
     return redirect(redirect_to)
 
+
 # ✅ Выход / Afmelden
 @routes.route("/logout")
 def logout():
@@ -114,6 +115,7 @@ def logout():
         }, quote_plus)
     )
 
+
 # ======================
 # ✅ Общие маршруты / Algemene routes
 # ======================
@@ -123,6 +125,7 @@ def index():
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"))
 
+
 @routes.route("/login")
 def login():
     next_url = request.args.get("next", "/profile")
@@ -130,6 +133,7 @@ def login():
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"),
                            next_url=next_url)
+
 
 @routes.route("/profile")
 def profile():
@@ -142,6 +146,7 @@ def profile():
     db.close()
 
     return render_template("profile.html", user=user_table, user_data=user_data)
+
 
 @routes.route("/help")
 def help():
@@ -350,6 +355,7 @@ def instellingen():
     db.close()
     return render_template("instellingen.html", user=gebruiker)
 
+
 @routes.route("/delete_account", methods=["POST"])
 def delete_account():
     if "Gebruiker" not in session:
@@ -365,34 +371,25 @@ def delete_account():
     flash("Uw account is verwijderd.", "danger")
     return redirect(url_for("routes.index"))
 
+
 @routes.app_errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
+
 
 @routes.app_errorhandler(500)
 def internal_server_error(error):
     return render_template('500.html'), 500
 
 
-
 # ======================
 # ADMIN ROUTE
 # ======================
-
-
-
 @routes.route("/admin")
 @admin_required
 def admin():
     laatste_simulatie = session.get("laatste_simulatie")
     return render_template("admin.html", laatste_simulatie=laatste_simulatie)
-
-
-
-
-
-
-
 
 
 @routes.route("/admin/simulatie", methods=["GET", "POST"])
@@ -507,9 +504,6 @@ def admin_simulatie():
     )
 
 
-
-
-
 @routes.route("/admin/data")
 @admin_required
 
@@ -527,8 +521,6 @@ def admin_data():
     }
 
     return render_template("live_data.html", stations=stations, populairste_station=populairste_station)
-
-
 
 
 @routes.route("/admin/gebruikers")
