@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import time
 import io
 from app.database.session import SessionLocal
-from app.database.models import Fiets
+from app.database.models import Fiets, Station
 
 import psycopg2
 from faker import Faker
@@ -230,9 +230,6 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     return geschiedenis
 
 
-#simulatie(stations,gebruikers,fietsen, 60)
-
-
 def sla_stations_op_in_db(stations):
     session = SessionLocal()
     try:
@@ -271,8 +268,6 @@ def sla_stations_op_in_db(stations):
     finally:
         session.close()
 
-sla_stations_op_in_db(stations)
-
 
 def sla_fietsen_op_in_db(fietsen):
     session = SessionLocal()
@@ -293,11 +288,13 @@ def sla_fietsen_op_in_db(fietsen):
         session.close()
 
 
+#simulatie(stations,gebruikers,fietsen, 60)
 
 if __name__ == "__main__": #zorgt ervoor dat de functies enkel runnen wanneer ze worden opgeroepen, en niet tijdens import.
     gebruikers = genereer_gebruikers(30000)
     fietsen = genereer_fietsen(2000, stations)
     geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
+    sla_stations_op_in_db(stations)
     sla_fietsen_op_in_db(fietsen)
 
     buffer = geschiedenis_to_csv_buffer(geschiedenis)
