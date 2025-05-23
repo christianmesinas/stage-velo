@@ -50,6 +50,7 @@ def genereer_gebruikers(aantal):
         })
     return gebruikers
 
+
 # Genereer fietsen en wijs ze toe aan stations
 def genereer_fietsen(aantal, stations):
     fietsen = []
@@ -255,3 +256,12 @@ def sla_fietsen_op_in_db(fietsen):
         session.close()
 
 sla_fietsen_op_in_db(fietsen)
+
+if __name__ == "__main__": #zorgt ervoor dat de functies enkel runnen wanneer ze worden opgeroepen, en niet tijdens import.
+    gebruikers = gebruikers(30000)
+    fietsen = genereer_fietsen(4200, stations)
+    geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
+
+    buffer = geschiedenis_to_csv_buffer(geschiedenis)
+    with open("simulatie_output_csv", "w") as f:
+        f.write(buffer.getvalue())
