@@ -380,25 +380,14 @@ def internal_server_error(error):
     return render_template('500.html'), 500
 
 
-
 # ======================
 # ADMIN ROUTE
 # ======================
-
-
-
 @routes.route("/admin")
 @admin_required
 def admin():
     laatste_simulatie = session.get("laatste_simulatie")
     return render_template("admin.html", laatste_simulatie=laatste_simulatie)
-
-
-
-
-
-
-
 
 
 @routes.route("/admin/simulatie", methods=["GET", "POST"])
