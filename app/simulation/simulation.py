@@ -275,7 +275,7 @@ def sla_fietsen_op_in_db(fietsen):
         for f in fietsen:
             fiets = Fiets(
                 id=f["id"],
-                # station_id=f["station_id"],
+                station_id=f["station_id"],
                 status=f["status"]
             )
             session.merge(fiets)  # merge voorkomt fouten bij dubbele ID’s
