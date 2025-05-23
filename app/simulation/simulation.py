@@ -230,12 +230,57 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     return geschiedenis
 
 
+#simulatie(stations,gebruikers,fietsen, 60)
+
+
+def sla_stations_op_in_db(stations):
+    session = SessionLocal()
+    try:
+        for s in stations:
+            bestaand_station = session.get(Station, s["id"])
+            if bestaand_station:
+                # Update bestaande waarden
+                bestaand_station.naam = s["name"]
+                bestaand_station.straat = s["straat"]
+                bestaand_station.postcode = s["postcode"]
+                bestaand_station.latitude = None
+                bestaand_station.longitude = None
+                bestaand_station.capaciteit = s["capaciteit"]
+                bestaand_station.status = s["status"]
+                bestaand_station.free_slots = s["free_slots"]
+                bestaand_station.parked_bikes = s["free_bikes"]
+            else:
+                nieuw_station = Station(
+                    id=s["id"],
+                    naam=s["name"],
+                    straat=s["straat"],
+                    postcode=s["postcode"],
+                    latitude=None,
+                    longitude=None,
+                    capaciteit=s["capaciteit"],
+                    status=s["status"],
+                    free_slots=s["free_slots"],
+                    parked_bikes=s["free_bikes"]
+                )
+                session.add(nieuw_station)
+        session.commit()
+        print(f"{len(stations)} stations opgeslagen of bijgewerkt in de database.")
+    except Exception as e:
+        session.rollback()
+        print("❌ Fout bij opslaan van stations:", e)
+    finally:
+        session.close()
+
+sla_stations_op_in_db(stations)
+
+
 def sla_fietsen_op_in_db(fietsen):
     session = SessionLocal()
     try:
         for f in fietsen:
             fiets = Fiets(
                 id=f["id"],
+                # station_id=f["station_id"],
                 status=f["status"]
             )
             session.merge(fiets)  # merge voorkomt fouten bij dubbele ID’s
