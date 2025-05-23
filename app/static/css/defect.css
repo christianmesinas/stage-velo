@@ -220,3 +220,42 @@ input[type="checkbox"] {
     align-self: center;
   }
 }
+/* Blokkeert het selecteren van tekst */
+* {
+  user-select: none; /* Standaard */
+  -webkit-user-select: none; /* Voor Safari */
+  -moz-user-select: none; /* Voor Firefox */
+  -ms-user-select: none; /* Voor IE/Edge */
+}
+
+/* Blokkeert kopiëren, slepen en contextmenu (rechtermuisknop) */
+body {
+  -webkit-touch-callout: none; /* Voor iOS */
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+}
+
+/* Ook inputvelden en knoppen kunnen niet geselecteerd of gesleept worden */
+body, input, textarea, button {
+  -webkit-user-drag: none;
+  user-drag: none;
+  user-select: none;
+}
+
+/* Voor oudere browsers: blokkeer contextmenu */
+html, body {
+  oncontextmenu: return false;
+}
+
+/* Moderne methode om rechter muisklik te blokkeren */
+body {
+  pointer-events: auto;
+}
+
+/* Zorg ervoor dat geselecteerde tekst geen achtergrond krijgt */
+body::selection {
+  background: transparent;
+}
+
+
