@@ -97,18 +97,19 @@
 
 /* ✅ Агрессивное предупреждение при незаполненных данных / Agressieve waarschuwing bij onvolledig profiel */
 .alert-instellingen {
-    background-color: #ff0000;       /* Красный фон / Rode achtergrond */
-    color: #fff700;                  /* Ядовито-жёлтый текст / Geel gifkleurig tekst */
-    padding: 14px 20px;
-    border: 4px dashed #ffffff;
-    border-radius: 12px;
-    font-weight: 900;
-    font-size: 1.05rem;
+    background-color: red;         /* Lichtrood in plaats van felrood */
+    color: white;                    /* Donkerrood voor de tekst */
+    padding: 10px 16px;                /* Minder padding */
+    border: none;                      /* Geen rand meer */
+    border-radius: 8px;                /* Iets afgerond */
+    font-weight: 600;                  /* Normale vetheid */
+    font-size: 10px;                /* Iets kleiner */
     text-align: center;
-    animation: knipper 0.6s infinite; /* Мерцание / Knipperende animatie */
-    max-width: 450px;
+    max-width: 200px;
+    max-height: 400px;
     margin: 1rem auto 0 auto;
-    box-shadow: 0 0 25px #ff0000, 0 0 25px #ff0000;
+    box-shadow: none;                 /* Geen gloed meer */
+    animation: none;                  /* Geen knipperend effect meer */
 }
 
 /* ✅ Анимация мерцания и пульсации / Knipper- en pulse-effect */
@@ -152,7 +153,7 @@ body.dark-mode .card .btn-danger {
 
 body.dark-mode .alert-instellingen {
     background-color: #660000;   /* Тёмно-красный / Donkerrood */
-    color: #ffff00;              /* Ярко-жёлтый / Felgeel */
+    color: white;              /* Ярко-жёлтый / Felgeel */
     border-color: #ffffff;
     box-shadow: 0 0 15px #ff0000;
 }
