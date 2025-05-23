@@ -1,6 +1,7 @@
 from flask import Flask, session
 from dotenv import load_dotenv
 from os import getenv
+import stripe
 
 from app.database import SessionLocal
 from app.database.models import Base
@@ -10,9 +11,11 @@ from authlib.integrations.flask_client import OAuth
 
 # Laad .ENV-bestand,
 load_dotenv()
+stripe.api_key = getenv('STRIPE_SECRET_KEY')
 
  #Initialiseer Flask,
 app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
+app.secret_key = getenv("SECRET_KEY", "fallback-secret")
 
 # Stel de secret key in voor sessies,
 app.secret_key = getenv("SECRET_KEY", "fallback-secret")
