@@ -120,10 +120,6 @@ def genereer_fietsen(aantal, stations):
     return fietsen
 
 
-gebruikers = genereer_gebruikers(58000)
-fietsen = genereer_fietsen(4200, stations)
-
-
 def gewogen_starttijd(datum):
     #we moeten a.d.h. van de uur van de dag beslissen hoe groot de kans is dat op die moment een fiets gepakt wordt.
     gewichten = []
@@ -172,7 +168,6 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                 fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
     return geschiedenis
 
-geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
 
 def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een csv steken zodat we het met COPY kunnen doorpushen naar de db
     buffer = io.StringIO()
@@ -233,9 +228,6 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
 
     print(f"Simulatie voltooid met {len(geschiedenis)} ritten over {dagen}")
     return geschiedenis
-
-
-#simulatie(stations,gebruikers,fietsen, 60)
 
 
 def sla_fietsen_op_in_db(fietsen):
