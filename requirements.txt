@@ -7,3 +7,4 @@ authlib
 requests
 pandas
 faker
+stripe==8.6.0

@@ -1,4 +1,10 @@
 from datetime import datetime
+
+import stripe
+from flask import jsonify
+
+
+
 import pytz
 from app.database.models import Usertable, Gebruiker
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
@@ -374,25 +380,14 @@ def internal_server_error(error):
     return render_template('500.html'), 500
 
 
-
 # ======================
 # ADMIN ROUTE
 # ======================
-
-
-
 @routes.route("/admin")
 @admin_required
 def admin():
     laatste_simulatie = session.get("laatste_simulatie")
     return render_template("admin.html", laatste_simulatie=laatste_simulatie)
-
-
-
-
-
-
-
 
 
 @routes.route("/admin/simulatie", methods=["GET", "POST"])
@@ -471,6 +466,7 @@ def admin_simulatie():
                         rit["eind_station_id"],
                         rit["duur_minuten"]
                     ])
+            session["laatste_csv"] = csv_bestand
 
             # ✅ Tijd in Belgische tijdzone
             brussel_tijd = datetime.now(pytz.timezone("Europe/Brussels"))
@@ -506,7 +502,18 @@ def admin_simulatie():
         drukste_per_station=drukste_per_station,
     )
 
+@routes.route("/admin/download_csv")
+@admin_required
+def download_csv():
+    csv_filename = session.get("laatste_csv")
+    if not csv_filename:
+        return "Geen CSV-bestand beschikbaar.", 404
 
+    csv_path = os.path.join("/tmp", csv_filename)
+    if not os.path.exists(csv_path):
+        return "Bestand bestaat niet meer.", 404
+
+    return send_file(csv_path, as_attachment=True)
 
 
 
@@ -538,3 +545,44 @@ def admin_data():
 def admin_gebruikers():
     gebruikers = simulation.gebruikers_lijst()  # voorbeeld
     return render_template("admin/gebruikers.html", gebruikers=gebruikers)
+
+
+
+
+# ================= Stripe - Betalingen ====================
+@routes.route("/betalen")
+def betalen():
+    return render_template("betalen.html", public_key=os.getenv("STRIPE_PUBLIC_KEY"))
+
+
+@routes.route("/create-checkout-session", methods=["POST"])
+def create_checkout_session():
+    try:
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[{
+                "price_data": {
+                    "currency": "eur",
+                    "unit_amount": 500,  # 5 euro in cent
+                    "product_data": {
+                        "name": "Premium Abonnement",
+                    },
+                },
+                "quantity": 1,
+            }],
+            mode="payment",
+            success_url=request.host_url + "succes",
+            cancel_url=request.host_url + "annulatie",
+        )
+        return jsonify(id=session.id)
+    except Exception as e:
+        return jsonify(error=str(e)), 400
+
+
+@routes.route("/succes")
+def succes():
+    return "<h1>✅ Betaling gelukt!</h1>"
+
+@routes.route("/annulatie")
+def annulatie():
+    return "<h1>❌ Betaling geannuleerd.</h1>"
