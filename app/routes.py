@@ -240,17 +240,9 @@ def weekpass():
             foutmelding = "De pincodes komen niet overeen!"
             return render_template("tarieven/weekpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        from app.database import SessionLocal
-        from app.database.models import Usertable
-
-        db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-        if gebruiker:
-            gebruiker.abonnement = "Weekpas"
-            db.commit()
-        db.close()
-
-        data = {
+        # 🔐 Bewaar formulierdata tijdelijk in sessie
+        session["abonnement_data"] = {
+            "type": "Weekpas",
             "voornaam": request.form.get("voornaam"),
             "achternaam": request.form.get("achternaam"),
             "email": request.form.get("email"),
@@ -259,10 +251,37 @@ def weekpass():
             "pincode": pincode
         }
 
-        flash("Weekpas succesvol geactiveerd!", "success")
-        return render_template("tarieven/bedankt.html", data=data)
+        # 💳 Stripe prijzen (centen)
+        prijzen = {
+            "Dagpas": 500,
+            "Weekpas": 1500,
+            "Jaarkaart": 3000
+        }
+
+        # 🎯 Start een Stripe checkout sessie
+        try:
+            stripe_session = stripe.checkout.Session.create(
+                payment_method_types=["card"],
+                line_items=[{
+                    "price_data": {
+                        "currency": "eur",
+                        "unit_amount": prijzen["Weekpas"],
+                        "product_data": {
+                            "name": "Weekpas"
+                        }
+                    },
+                    "quantity": 1
+                }],
+                mode="payment",
+                success_url=request.host_url + "betaling-succes",
+                cancel_url=request.host_url + "betaling-annulatie",
+            )
+            return redirect(stripe_session.url)
+        except Exception as e:
+            return f"Fout bij aanmaken Stripe sessie: {str(e)}", 500
 
     return render_template("tarieven/weekpas.html", formdata={})
+
 
 
 @routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
@@ -275,17 +294,9 @@ def jaarkaart():
             foutmelding = "De pincodes komen niet overeen!"
             return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding, formdata=request.form)
 
-        from app.database import SessionLocal
-        from app.database.models import Usertable
-
-        db = SessionLocal()
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-        if gebruiker:
-            gebruiker.abonnement = "Jaarkaart"
-            db.commit()
-        db.close()
-
-        data = {
+        # Sla de data tijdelijk op in session voor later gebruik
+        session["abonnement_data"] = {
+            "type": "Jaarkaart",
             "voornaam": request.form.get("voornaam"),
             "achternaam": request.form.get("achternaam"),
             "email": request.form.get("email"),
@@ -294,10 +305,11 @@ def jaarkaart():
             "pincode": pincode
         }
 
-        flash("Jaarkaart succesvol geactiveerd!", "success")
-        return render_template("tarieven/bedankt.html", data=data)
+        # Redirect naar checkout sessie met juiste prijs
+        return redirect(url_for("routes.create_checkout_session", abonnement_type="jaarkaart"))
 
     return render_template("tarieven/jaarkaart.html", formdata={})
+
 
 
 @routes.route('/defect', methods=['GET', 'POST'])
@@ -571,17 +583,27 @@ def betalen():
     return render_template("betalen.html", public_key=os.getenv("STRIPE_PUBLIC_KEY"))
 
 
-@routes.route("/create-checkout-session", methods=["POST"])
+@routes.route("/create-checkout-session")
 def create_checkout_session():
+    abonnement_type = request.args.get("abonnement_type", "dagpas")
+
+    prijzen = {
+        "dagpas": 500,
+        "weekpas": 1000,
+        "jaarkaart": 5000
+    }
+
+    bedrag = prijzen.get(abonnement_type, 500)
+
     try:
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=[{
                 "price_data": {
                     "currency": "eur",
-                    "unit_amount": 500,  # 5 euro in cent
+                    "unit_amount": bedrag,
                     "product_data": {
-                        "name": "Premium Abonnement",
+                        "name": abonnement_type.capitalize(),
                     },
                 },
                 "quantity": 1,
@@ -590,7 +612,7 @@ def create_checkout_session():
             success_url=request.host_url + "succes",
             cancel_url=request.host_url + "annulatie",
         )
-        return jsonify(id=session.id)
+        return redirect(session.url, code=303)
     except Exception as e:
         return jsonify(error=str(e)), 400
 
