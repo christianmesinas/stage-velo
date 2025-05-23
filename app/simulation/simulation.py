@@ -95,7 +95,7 @@ def genereer_fietsen(aantal, stations):
     for sid in station_ids:
         toewijsbaar = min(max_per_station[sid], aantal - len(fietsen))
         for _ in range(toewijsbaar):
-            status = random.choice(["beschikbaar", "onderhoud"])
+            status = random.choices(["beschikbaar", "onderhoud"], weights=[0.8, 0.2])[0]
             fietsen.append({
                 "id": fiets_id,
                 "station_id": sid,
@@ -251,7 +251,7 @@ def sla_fietsen_op_in_db(fietsen):
 
 if __name__ == "__main__": #zorgt ervoor dat de functies enkel runnen wanneer ze worden opgeroepen, en niet tijdens import.
     gebruikers = genereer_gebruikers(30000)
-    fietsen = genereer_fietsen(4200, stations)
+    fietsen = genereer_fietsen(2000, stations)
     geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
     sla_fietsen_op_in_db(fietsen)
 
