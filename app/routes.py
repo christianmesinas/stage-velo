@@ -170,17 +170,8 @@ def help():
 
 @routes.route("/maps")
 def markers():
-    markers = []
-    for location in api.get_alle_stations():
-        markers.append({
-            'lat': location[4],
-            'lon': location[5],
-            'name': location[1],
-            'free-bikes': location[6],
-            'empty-slots': location[7],
-            'status': location[3],
-        })
-    return render_template("maps.html", markers=markers)
+    stations = api.get_alle_stations()
+    return render_template("maps.html", markers=stations)
 
 @routes.route("/tarieven")
 def tarieven():

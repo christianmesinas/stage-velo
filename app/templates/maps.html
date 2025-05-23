@@ -13,30 +13,27 @@
 
 {% block content %}
     <div id="search-container">
-     <input type="text" id="search-input" placeholder="Zoek op stationnummer of adres...">
-     <button onclick="searchStation()">Zoek</button>
+        <input type="text" id="search-input" placeholder="Zoek op stationnummer, stationnaam">
+        <button onclick="searchStation()">Zoek</button>
     </div>
 
     <div id="map"></div>
 
     <div id="show-all-container">
         <button onclick="showAvailableStations()">Toon alle beschikbare stations</button>
+        <div id="station-count" style="text-align: center; font-size: 18px; font-weight: bold; margin-top: 10px;"></div>
     </div>
-
 
     <div id="station-list-container" style="display: none;">
         <h3>Beschikbare stations</h3>
         <ul id="station-list"></ul>
     </div>
-
-
-
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
- <script>
-    // Functie om het juiste icoon te kiezen
+<script src="{{ url_for('static', filename='js/maps.js') }}"></script>
+
+<script>
     function createCustomIcon(status, freeBikes, emptySlots) {
         let iconUrl;
         if (status !== 'OPN') {
@@ -59,100 +56,96 @@
         });
     }
 
-    // Markerdata van Flask
     const markers = {{ markers | tojson }};
+    const markerMap = new Map();  // ➕ opslaan van Leaflet-markers
 
-    // Loop door markers en voeg ze toe aan de kaart
+    // Voeg markers toe aan de kaart en bewaar ze
     markers.forEach(function(marker) {
-    let customIcon = createCustomIcon(marker.status, marker['free-bikes'], marker['empty-slots']);
-    let popupContent;
-    if (marker.status === 'CLS') {
-        popupContent = `${marker.name}<br><span style="color: red; font-weight: bold;">Closed</span>`;
-    } else {
-        popupContent = `
-            ${marker.name}<br>
-            <img src='/static/images/bike.png' alt='bike' style='height: 16px; vertical-align: middle;'> ${marker['free-bikes']}
-            <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> ${marker['empty-slots']}
-        `;
-    }
-    L.marker([marker.lat, marker.lon], { icon: customIcon })
-        .addTo(map)
-        .bindPopup(popupContent);
-});
+        let customIcon = createCustomIcon(marker.status, marker['free-bikes'], marker['empty-slots']);
+        let popupContent;
+
+        if (marker.status === 'CLS') {
+            popupContent = `${marker.name}<br><span style="color: red; font-weight: bold;">Closed</span>`;
+        } else {
+            popupContent = `
+                ${marker.name}<br>
+                <img src='/static/images/bike.png' alt='bike' style='height: 16px; vertical-align: middle;'> ${marker['free-bikes']}
+                <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> ${marker['empty-slots']}
+            `;
+        }
+
+        const leafletMarker = L.marker([marker.lat, marker.lon], { icon: customIcon })
+            .addTo(map)
+            .bindPopup(popupContent);
+
+        markerMap.set(marker.name, leafletMarker); // ➕ station koppelen aan marker
+    });
 
     function searchStation() {
-    const input = document.getElementById("search-input").value.toLowerCase().trim();
-    let found = false;
+        const input = document.getElementById("search-input").value.toLowerCase().trim();
+        let found = false;
 
-    markers.forEach(function(marker) {
-        const stationId = marker.id?.toString().toLowerCase();
-        const stationName = marker.name.toLowerCase();
+        markers.forEach(function(marker) {
+            const stationName = marker.name.toLowerCase();
+            const stationNumber = marker.station_number?.toString().toLowerCase();
 
-        if (stationId === input || stationName.includes(input)) {
-            map.setView([marker.lat, marker.lon], 17);
-
-            let popupContent;
-            if (marker.status === 'CLS') {
-                popupContent = `${marker.name}<br><span style="color: red; font-weight: bold;">Closed</span>`;
-            } else {
-                popupContent = `
-                    ${marker.name}<br>
-                    <img src='/static/images/bike.png' alt='bike' style='height: 16px; vertical-align: middle;'> ${marker['free-bikes']}
-                    <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> ${marker['empty-slots']}
-                `;
+            if (stationNumber === input || stationName.includes(input)) {
+                map.setView([marker.lat, marker.lon], 17);
+                markerMap.get(marker.name)?.openPopup();
+                found = true;
             }
+        });
 
-            L.popup()
-                .setLatLng([marker.lat, marker.lon])
-                .setContent(popupContent)
-                .openOn(map);
-
-            found = true;
+        if (!found) {
+            alert("Geen station gevonden met deze invoer.");
         }
-        function showAllStations() {
-    if (markers.length === 0) return;
-
-    const group = new L.featureGroup(
-        markers.map(marker =>
-            L.marker([marker.lat, marker.lon])
-        )
-    );
-    map.fitBounds(group.getBounds().pad(0.2));
-}
-    });
-
-    if (!found) {
-        alert("Geen station gevonden met deze invoer.");
     }
-}
 
     function showAvailableStations() {
-    const container = document.getElementById("station-list-container");
-    const list = document.getElementById("station-list");
+        const container = document.getElementById("station-list-container");
+        const list = document.getElementById("station-list");
+        const button = document.querySelector("#show-all-container button");
 
-    list.innerHTML = ''; // Maak de lijst leeg
-    let count = 0;
-
-    markers.forEach(function(marker) {
-        if (marker.status === 'OPN' && marker['free-bikes'] > 0) {
-            const li = document.createElement('li');
-            li.innerHTML = `<strong>${marker.name}</strong> - 🚲 ${marker['free-bikes']} vrije fietsen, 🔒 ${marker['empty-slots']} lege plaatsen`;
-            list.appendChild(li);
-            count++;
+        if (container.style.display === 'block') {
+            container.style.display = 'none';
+            button.textContent = "Toon alle beschikbare stations";
+            return;
         }
-    });
 
-    if (count === 0) {
-        list.innerHTML = '<li>Geen stations beschikbaar.</li>';
+        list.innerHTML = '';
+
+        const sortedMarkers = markers
+            .filter(marker => marker.status === 'OPN' && marker['free-bikes'] > 0)
+            .sort((a, b) => parseInt(a.station_number) - parseInt(b.station_number));
+
+        if (sortedMarkers.length === 0) {
+            list.innerHTML = '<li>Geen stations beschikbaar.</li>';
+        } else {
+            sortedMarkers.forEach(function(marker) {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#" onclick="focusOnStation(${marker.lat}, ${marker.lon}, \`${marker.name}\`)"><strong>${marker.name}</strong></a> - 🚲 ${marker['free-bikes']} vrije fietsen, 🔒 ${marker['empty-slots']} lege plaatsen`;
+                list.appendChild(li);
+            });
+        }
+
+        container.style.display = 'block';
+        button.textContent = "Verberg beschikbare stations";
     }
 
-    container.style.display = 'block';
-}
+    function focusOnStation(lat, lon, name) {
+        const marker = markerMap.get(name);
+        if (marker) {
+            map.setView([lat, lon], 17);
+            marker.openPopup();
+        }
+    }
 
+    function updateStationCount() {
+        const countDiv = document.getElementById("station-count");
+        const count = markers.filter(m => m.status === 'OPN' && m['free-bikes'] > 0).length;
+        countDiv.innerHTML = `Totaal beschikbare stations: ${count}`;
+    }
 
+    updateStationCount(); // bij laden
 </script>
-
-    <!--<button id="refresh-button">Ververs Data</button> -->
-    <div id="map"></div>
-
 {% endblock %}

@@ -42,21 +42,26 @@ def get_alle_stations():
         for station in stations_info:
             free_bikes = station.get('free_bikes', 0)
             empty_slots = station.get('empty_slots', 0)
-
             capaciteit = free_bikes + empty_slots
 
-            stations.append((
-                station['id'],
-                station['name'],
-                station['extra']['adress'],
-                station['extra']['status'],
-                station['location']['latitude'],
-                station['location']['longitude'],
-                free_bikes,
-                empty_slots,
-                capaciteit,
-            ))
+            # 👇 Probeer het stationnummer uit de naam te halen (bv. "005 - Centraal Station")
+            name = station['name']
+            nummer = name.split("-")[0].strip() if "-" in name else "999"  # fallback als er geen nummer staat
+
+            stations.append({
+                'uuid': station['id'],
+                'station_number': nummer,  # ✅ toegevoegd
+                'name': name,
+                'address': station['extra']['adress'],
+                'status': station['extra']['status'],
+                'lat': station['location']['latitude'],
+                'lon': station['location']['longitude'],
+                'free-bikes': free_bikes,
+                'empty-slots': empty_slots,
+                'capacity': capaciteit
+            })
         return stations
+
 
 def zoek_lege_slots():
     stations = []

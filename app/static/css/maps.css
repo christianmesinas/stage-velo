@@ -55,14 +55,24 @@ button {
 }
 
 #station-list-container {
-    width: 768px;
+    width: 95%;
+    max-width: 1200px;
     margin: auto;
     margin-bottom: 40px;
     background-color: #f7f7f7;
     border-radius: 8px;
-    padding: 20px;
+    padding: 30px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
+
+body.dark-mode #station-list-container{
+    background: black;
+}
+
+body.dark-mode #station-list li{
+    background: black;
+}
+
 #station-list-container h3 {
     text-align: center;
 }
@@ -81,4 +91,21 @@ button {
 }
 #rent-button:hover {
     background-color: #1e7e34;
+}
+
+#station-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+#station-list li {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    font-size: 15px;
 }
