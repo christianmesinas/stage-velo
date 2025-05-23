@@ -609,10 +609,27 @@ def create_checkout_session():
         return jsonify(error=str(e)), 400
 
 
-@routes.route("/succes")
-def succes():
-    return "<h1>✅ Betaling gelukt!</h1>"
+@routes.route("/betaling-succes")
+def betaling_succes():
+    data = session.pop("abonnement_data", None)
+    if not data:
+        return "Geen gegevens gevonden.", 400
 
-@routes.route("/annulatie")
-def annulatie():
-    return "<h1>❌ Betaling geannuleerd.</h1>"
+    from app.database import SessionLocal
+    from app.database.models import Usertable
+
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    if gebruiker:
+        gebruiker.abonnement = data["type"]
+        db.commit()
+        session["Gebruiker"]["abonnement"] = data["type"]
+    db.close()
+
+    flash(f"{data['type']} succesvol geactiveerd!", "success")
+    return render_template("tarieven/bedankt.html", data=data)
+
+@routes.route("/betaling-annulatie")
+def betaling_annulatie():
+    flash("Je betaling werd geannuleerd.", "danger")
+    return redirect(url_for("routes.tarieven"))
