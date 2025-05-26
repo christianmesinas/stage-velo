@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+
+<div class="container mt-5 mb-5">
+  <h2>📬 Contacteer ons</h2>
+  <p>Heb je een vraag, probleem of suggestie? Vul onderstaand formulier in.</p>
+
+  {% if foutmelding %}
+    <div class="alert alert-danger">{{ foutmelding }}</div>
+  {% endif %}
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST">
+    <div class="mb-3">
+      <label for="naam" class="form-label">Naam *</label>
+      <input type="text" class="form-control" id="naam" name="naam" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">E-mailadres *</label>
+      <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="onderwerp" class="form-label">Onderwerp *</label>
+      <input type="text" class="form-control" id="onderwerp" name="onderwerp" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="bericht" class="form-label">Bericht *</label>
+      <textarea class="form-control" id="bericht" name="bericht" rows="5" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Verzend bericht</button>
+  </form>
+</div>
+
+{% endblock %}

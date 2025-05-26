@@ -642,3 +642,23 @@ def succes():
 @routes.route("/annulatie")
 def annulatie():
     return "<h1>❌ Betaling geannuleerd.</h1>"
+
+@routes.route("/contact", methods=["GET", "POST"])
+def contact():
+    foutmelding = None
+    succes = None
+
+    if request.method == "POST":
+        naam = request.form.get("naam")
+        email = request.form.get("email")
+        onderwerp = request.form.get("onderwerp")
+        bericht = request.form.get("bericht")
+
+        if not naam or not email or not onderwerp or not bericht:
+            foutmelding = "Gelieve alle verplichte velden in te vullen."
+        else:
+            # Hier kan je nog e-mail versturen of opslaan in DB indien gewenst
+            flash("✅ Bedankt voor je bericht! We nemen zo snel mogelijk contact met je op.", "success")
+            return redirect(url_for("routes.contact"))
+
+    return render_template("contact.html", foutmelding=foutmelding)

@@ -286,6 +286,10 @@ body.dark-mode .card .card-text {
   user-select: none;
 }
 
+body.dark-mode .card{
+  background: #1e1e1e;
+}
+
 /* Новые стили для изображения профиля */
 .profile-foto {
   Width: 100%;
