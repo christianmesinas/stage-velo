@@ -220,6 +220,13 @@ def dagpas():
 
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
 def weekpass():
+    db = SessionLocal()
+    gebruiker = None
+
+    # Check of er een ingelogde gebruiker is
+    if "Gebruiker" in session:
+        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+
     if request.method == "POST":
         if gebruiker and gebruiker.abonnement != "Geen abonnement":
             foutmelding = f"Je hebt al een {gebruiker.abonnement.lower()}."
@@ -245,14 +252,12 @@ def weekpass():
             "pincode": pincode
         }
 
-        # 💳 Stripe prijzen (centen)
         prijzen = {
             "Dagpas": 500,
             "Weekpas": 1500,
             "Jaarkaart": 3000
         }
 
-        # 🎯 Start een Stripe checkout sessie
         try:
             stripe_session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
@@ -270,12 +275,15 @@ def weekpass():
                 success_url=request.host_url + "betaling-succes",
                 cancel_url=request.host_url + "betaling-annulatie",
             )
+            db.close()
             return redirect(stripe_session.url)
         except Exception as e:
+            db.close()
             return f"Fout bij aanmaken Stripe sessie: {str(e)}", 500
 
     db.close()
     return render_template("tarieven/weekpas.html", formdata={})
+
 
 
 

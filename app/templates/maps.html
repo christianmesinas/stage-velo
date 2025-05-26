@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block head %}
+    <!-- Eerst defect.css zodat dark/light achtergrond juist toegepast wordt -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/defect.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/maps.css') }}">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -57,9 +59,8 @@
     }
 
     const markers = {{ markers | tojson }};
-    const markerMap = new Map();  // ➕ opslaan van Leaflet-markers
+    const markerMap = new Map();
 
-    // Voeg markers toe aan de kaart en bewaar ze
     markers.forEach(function(marker) {
         let customIcon = createCustomIcon(marker.status, marker['free-bikes'], marker['empty-slots']);
         let popupContent;
@@ -78,7 +79,7 @@
             .addTo(map)
             .bindPopup(popupContent);
 
-        markerMap.set(marker.name, leafletMarker); // ➕ station koppelen aan marker
+        markerMap.set(marker.name, leafletMarker);
     });
 
     function searchStation() {
@@ -146,6 +147,6 @@
         countDiv.innerHTML = `Totaal beschikbare stations: ${count}`;
     }
 
-    updateStationCount(); // bij laden
+    updateStationCount();
 </script>
 {% endblock %}

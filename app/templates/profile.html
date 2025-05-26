@@ -16,7 +16,7 @@
 
     <!-- ✅ Instellingen-knop rechtsboven -->
     <div class="instellingen-button-topright mb-4 text-end position-relative">
-      <a href="{{ url_for('routes.instellingen') }}" class="btn btn-primary">Instellingen</a>
+      <a href="{{ url_for('routes.instellingen') }}" class="card-slider__button">Instellingen</a>
     </div>
 
     <!-- ✅ Bovenste kaarten: foto, gegevens, geschiedenis -->
@@ -45,7 +45,7 @@
             <p><strong>Aanspreekvorm:</strong> {{ user.titel or 'geen' }}</p>
             <p><strong>Voornaam:</strong> {{ user.voornaam or 'Niet ingesteld' }}</p>
             <p><strong>Achternaam:</strong> {{ user.achternaam or 'Niet ingesteld' }}</p>
-            <p><strong>Telefoonnummer:</strong> {{ user.telefoonnummer or 'Niet ingesteld' }}</p>
+            <p><strong>Telefoonnummer:</strong> {{ user.telefoonnummer or 'Niet ingesteld (optioneel)' }}</p>
             <p><strong>Email:</strong> {{ user.email or 'Niet ingesteld' }}</p>
             <p><strong>Abonnement:</strong>
               {% if user.abonnement != 'Geen abonnement' %}
@@ -54,7 +54,7 @@
                 <a href="{{ url_for('routes.tarieven') }}" class="text-danger fw-bold" style="text-decoration: none;">
                   geen abonnement
                 </a>
-                {% if user.titel and user.voornaam and user.achternaam and user.telefoonnummer and user.email %}
+                {% if user.titel and user.voornaam and user.achternaam and user.email %}
                   <br><small class="text-red">Abonnement kopen? klik op geen abonnement om naar tarieven te gaan.</small>
                 {% endif %}
               {% endif %}
@@ -91,7 +91,7 @@
     </div>
 
     <!-- ✅ Flashmelding ONDERAAN als profiel NIET volledig is (abonnement telt niet mee) -->
-    {% if not user.titel or not user.voornaam or not user.achternaam or not user.telefoonnummer or not user.email %}
+    {% if not user.titel or not user.voornaam or not user.achternaam or not user.email %}
       <div class="alert-instellingen mt-4">
         ⚡ <strong>Je profiel is NIET volledig — klik NU op Instellingen en vul alles in!</strong>
       </div>

@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
 {% block head %}
-<!-- ✅ Подключение CSS + базовая стилизация страницы настроек /
-     Koppelen van CSS + basisstijl voor de instellingenpagina -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/instellingen.css') }}">
 <style>
   .settings-wrapper {
@@ -42,18 +40,14 @@
 </style>
 {% endblock %}
 
-{#{% block header %}{% endblock %} <!-- deze block is nodig om de header te verbergen, dus met deze kan jij bepalen of dit block moet verborgen worden of niet -->#}
-
 {% block content %}
-<!-- ✅ Кнопка возврата на профиль / Terug naar profiel knop -->
 <div class="return-button">
-  <a href="{{ url_for('routes.profile') }}" class="btn btn-outline-secondary">← Terug naar profiel</a>
+  <a href="{{ url_for('routes.profile') }}" class="btn">← Terug naar profiel</a>
 </div>
 
 <div class="settings-wrapper">
   <h2 class="form-title">Instellingen</h2>
 
-  <!-- ✅ Показываем флеш-сообщения об успехе / Weergeven van flashberichten -->
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       <div class="mb-4">
@@ -67,7 +61,6 @@
     {% endif %}
   {% endwith %}
 
-  <!-- ✅ Форма настроек пользователя / Gebruikersinstellingenformulier -->
   <form method="POST" action="{{ url_for('routes.instellingen') }}">
     <div class="mb-3">
       <label for="titel" class="form-label">Aanspreekvorm</label>
@@ -90,17 +83,15 @@
 
     <div class="mb-3">
       <label for="telefoonnummer" class="form-label">Telefoonnummer</label>
-  <input type="tel" class="form-control" id="telefoonnummer" name="telefoonnummer"
-         pattern="^(0|\+)[1-9][0-9]{7,14}$"
-         title="Voer een geldig telefoonnummer in. Begin met 0 of +, gevolgd door 8 tot 15 cijfers. Geen spaties of symbolen."
-         autocomplete="tel"
-         required
-         value="{{ user.telefoonnummer or '' }}">
-        <div class="form-text text-danger">
+      <input type="tel" class="form-control" id="telefoonnummer" name="telefoonnummer"
+             pattern="^(0|\+)[1-9][0-9]{7,14}$"
+             title="Voer een geldig telefoonnummer in. Begin met 0 of +, gevolgd door 8 tot 15 cijfers. Geen spaties of symbolen."
+             autocomplete="tel"
+             value="{{ user.telefoonnummer or '' }}">
+      <div class="form-text text-danger">
         Bijv. 0478123456 of +32478123456 (geen spaties of leestekens)
-        </div>
+      </div>
     </div>
-
 
     <div class="mb-4">
       <label for="email" class="form-label">E-mailadres</label>
@@ -110,22 +101,19 @@
              required
              autocomplete="email"
              value="{{ user.email or '' }}">
-  <div class="form-text text-danger">Bijv. naam@example.com</div>
+      <div class="form-text text-danger">Bijv. naam@example.com</div>
     </div>
 
-
-    <!-- ✅ Кнопки отправки и отмены / Opslaan en annuleren knoppen -->
-    <div class="d-flex justify-content-between">
-      <button type="submit" class="btn btn-primary">Opslaan</button>
-      <a href="{{ url_for('routes.profile') }}" class="btn btn-secondary">Annuleren</a>
+    <div class="d-flex justify-content-between button-group">
+      <button type="submit" class="btn">Opslaan</button>
+      <a href="{{ url_for('routes.profile') }}" class="btn">Annuleren</a>
     </div>
   </form>
 
   <hr class="my-4">
 
-  <!-- ✅ Форма удаления аккаунта / Formulier voor account verwijderen -->
   <form method="POST" action="{{ url_for('routes.delete_account') }}">
-    <button type="submit" class="btn btn-danger w-100"
+    <button type="submit" class="danger-button"
             onclick="return confirm('Weet u zeker dat u uw account permanent wilt verwijderen?')">
       Verwijder account
     </button>
@@ -133,9 +121,6 @@
 </div>
 {% endblock %}
 
-
-<!-- ✅Deze JavaScript-code controleert of de verplichte velden in een formulier (voornaam, achternaam, telefoonnummer, e-mailadres) correct zijn ingevuld.-->
-<!-- ✅ iets ontbreekt of ongeldig is, verschijnt er een waarschuwing (alert), en wordt het formulier niet verzonden.-->
 {% block scripts %}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -145,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const requiredFields = [
       { id: 'voornaam', label: 'voornaam' },
       { id: 'achternaam', label: 'achternaam' },
-      { id: 'telefoonnummer', label: 'telefoonnummer' },
       { id: 'email', label: 'e-mailadres' }
     ];
 
@@ -168,4 +152,3 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 {% endblock %}
-
