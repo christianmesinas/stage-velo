@@ -39,6 +39,18 @@ def admin_required(f):
     return decorated_function
 
 
+def transport_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        gebruiker = session.get("Gebruiker")
+        if not gebruiker:
+            return redirect(url_for("routes.login", next=request.path))
+        if gebruiker.get("email") != os.getenv("TRANSPORT_EMAIL"):
+            return "❌ Geen toegang: je bent geen transporteur", 403
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 
 # ✅ Создание Blueprint / Maak een Blueprint
 routes = Blueprint("routes", __name__)
@@ -399,6 +411,16 @@ def page_not_found(error):
 def internal_server_error(error):
     return render_template('500.html'), 500
 
+# ======================
+# TRANSPORT ROUTE
+# ======================
+
+@routes.route("/transport/dashboard")
+@transport_required
+def transport_dashboard():
+    return render_template("transport.html")
+
+
 
 # ======================
 # ADMIN ROUTE
@@ -633,3 +655,4 @@ def betaling_succes():
 def betaling_annulatie():
     flash("Je betaling werd geannuleerd.", "danger")
     return redirect(url_for("routes.tarieven"))
+
