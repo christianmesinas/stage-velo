@@ -59,7 +59,7 @@
 
 {% if ritten %}
   {% if csv_bestand %}
-  <a href="{{ url_for('routes.download_csv') }}" download class="download-btn">📥 Download CSV-bestand</a>
+  <a href="{{ url_for('routes.download_csv') }}" download id="download-csv" class="download-btn">📥 Download CSV-bestand</a>
   {% endif %}
 
   <h2>Resultaten</h2>
@@ -97,4 +97,44 @@
     </div>
   </div>
 {% endif %}
+
+<script>
+  // Flag om bij te houden of CSV is gedownload
+  let csvGedownload = false;
+
+  // Zorg dat de download link een id heeft: download-csv
+  const downloadLink = document.getElementById('download-csv');
+
+  if (downloadLink) {
+    downloadLink.addEventListener('click', () => {
+      csvGedownload = true;
+    });
+  }
+
+  // Waarschuwing bij klikken op interne links (behalve de download-link)
+  document.querySelectorAll('a[href]').forEach(link => {
+    if (link.id !== 'download-csv' && !link.classList.contains('no-confirm')) {
+      link.addEventListener('click', function(event) {
+        if (!csvGedownload) {
+          const confirmNav = confirm('Je hebt een simulatie uitgevoerd. Download eerst het CSV-bestand om je gegevens te bewaren. Wil je doorgaan zonder te downloaden?');
+          if (!confirmNav) {
+            event.preventDefault();
+          }
+        }
+      });
+    }
+  });
+
+  // Waarschuwing bij pagina verlaten (refresh, sluiten, tab sluiten)
+  window.addEventListener('beforeunload', function (e) {
+    if (!csvGedownload) {
+      const boodschap = "Je hebt een simulatie gedaan. Download het CSV-bestand voordat je de pagina verlaat om je gegevens te bewaren.";
+      e.preventDefault();
+      e.returnValue = boodschap;
+      return boodschap;
+    }
+  });
+</script>
+
+
 {% endblock %}
