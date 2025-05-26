@@ -19,7 +19,7 @@ import os
 import copy
 from app.api import api as api
 from app.api.api import get_alle_stations, get_info
-from app.database.models import Usertable
+from app.database.models import Usertable, Defect, Fiets, Geschiedenis
 from app.database import SessionLocal
 from app.simulation import simulation
 from collections import Counter
@@ -318,10 +318,25 @@ def defect():
         if not fiets_id or not probleem:
             foutmelding = 'Gelieve alle velden in te vullen.'
         else:
-            # Здесь можно сохранить в БД или отправить email админу - hier kan jij opslaan in DB of Email sturen naar Admin
-            print(f"Defect gemeld - Fiets ID: {fiets_id}, Probleem: {probleem}")
-            flash('✅ Je melding is doorgestuurd naar de administratie.', 'success')
-            return redirect(url_for('routes.profile')) # <--Переход на profile.html - naar profile bij verzenden van bericht
+            db = SessionLocal()
+            try:
+                fiets = db.query(Fiets).filter_by(id=fiets_id).first()
+                if not fiets:
+                    foutmelding = "⚠️ Deze fiets bestaat niet in het systeem."
+                else:
+                    nieuw_defect = Defect(
+                        fiets_id=int(fiets_id),
+                        probleem=probleem
+                    )
+                    db.add(nieuw_defect)
+                    db.commit()
+                    flash('✅ Je melding is doorgestuurd naar de administratie.', 'success')
+                    return redirect(url_for('routes.profile'))
+            except Exception as e:
+                db.rollback()
+                foutmelding = f"Er ging iets mis bij het opslaan van de melding: {str(e)}"
+            finally:
+                db.close()
 
     return render_template("defect.html", foutmelding=foutmelding)
 

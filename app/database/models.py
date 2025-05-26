@@ -108,4 +108,12 @@ class Geschiedenis(Base):
     start_station = relationship("Station", foreign_keys=[start_station_id], back_populates="start_geschiedenis")
     end_station = relationship("Station", foreign_keys=[eind_station_id], back_populates="end_geschiedenis")
 
+# Defecte fietsen met probleem opslaan in de databank
+class Defect(Base):
+    __tablename__ = "defecten"
+    id = Column(Integer, primary_key=True)
+    fiets_id = Column(Integer, ForeignKey("fietsen.id"))
+    probleem = Column(String)
+
+    fiets = relationship("Fiets")
 
