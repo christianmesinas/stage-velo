@@ -19,7 +19,7 @@ import os
 import copy
 from app.api import api as api
 from app.api.api import get_alle_stations, get_info
-from app.database.models import Usertable
+from app.database.models import Usertable, Station
 from app.database import SessionLocal
 from app.simulation import simulation
 from collections import Counter
@@ -415,11 +415,22 @@ def internal_server_error(error):
 # TRANSPORT ROUTE
 # ======================
 
-@routes.route("/transport/dashboard")
-@transport_required
+@routes.route('/transport_dashboard')
 def transport_dashboard():
-    return render_template("transport.html")
+    db_session = SessionLocal()
+    stations = db_session.query(Station).all()
 
+    LEEG_DREMPEL = 5  # minder dan 5 fietsen
+    VOL_DREMPEL = 0.9  # 90% vol
+
+    lege_stations = [s for s in stations if s.parked_bikes < LEEG_DREMPEL]
+    volle_stations = [s for s in stations if s.parked_bikes / s.capaciteit > VOL_DREMPEL]
+
+    return render_template(
+        'transport.html',
+        lege_stations=lege_stations,
+        volle_stations=volle_stations
+    )
 
 
 # ======================
