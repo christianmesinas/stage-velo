@@ -6,7 +6,6 @@ import time
 import io
 from app.database.session import SessionLocal
 from app.database.models import Fiets, Station, Gebruiker
-
 import psycopg2
 from faker import Faker
 import os
