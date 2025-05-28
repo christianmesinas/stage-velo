@@ -1,0 +1,38 @@
+.station-section {
+  margin-bottom: 2rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  background-color: #fdfdfd;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.station-leeg {
+  border-left: 4px solid #dc3545; /* Rood */
+}
+
+.station-vol {
+  border-left: 4px solid #28a745; /* Groen */
+}
+
+.station-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.station-item {
+  background: #fff;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s ease;
+}
+
+.station-item:hover {
+  background: #f1f1f1;
+}
+
+.section-title {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}

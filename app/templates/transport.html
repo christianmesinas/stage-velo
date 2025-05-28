@@ -1,57 +1,75 @@
-<!-- ✅ Kaart met lege en volle stations voor transporteurs -->
-<div class="col">
-  <div class="card h-100 border-0 shadow-sm">
-    <div class="card-body text-start">
-      <h5 class="card-title text-center">Stationstatus</h5>
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_stationstatus.css') }}">
+{% endblock %}
 
-      <!-- Lege stations -->
-      <h6 class="text-danger">Lege stations (bijvullen nodig)</h6>
-  <div class="card h-100 border-0 shadow-sm">
-  <div class="card-body text-start">
-    <h5 class="card-title text-center">Lege stations</h5>
-    {% if lege_stations %}
-      <ul class="list-unstyled small">
-        {% for station in lege_stations %}
-          <li>
-            <strong>Station:</strong> {{ station.naam }}<br>
-            <strong>Fietsen:</strong> {{ station.parked_bikes }}/{{ station.capaciteit }}<br>
-            <strong>Status:</strong> {{ station.status or 'Onbekend' }}
-          </li>
-          <hr>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>Geen lege stations gevonden.</p>
-    {% endif %}
-  </div>
+{% block content %}
+
+<h2>🚲 Stationstatus voor transporteurs</h2>
+
+<!-- Lege stations -->
+<div class="station-section station-leeg">
+  <h3 class="section-title text-danger">🔴 Lege stations (bijvullen nodig)</h3>
+  {% if lege_stations %}
+    <ul class="station-list">
+      {% for station in lege_stations %}
+        <li class="station-item">
+          <strong>Station:</strong> {{ station.naam }}<br>
+          <strong>Fietsen:</strong> {{ station.parked_bikes }}/{{ station.capaciteit }}<br>
+          <strong>Status:</strong> {{ station.status or 'Onbekend' }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Geen lege stations gevonden.</p>
+  {% endif %}
+</div>
+
+<hr>
+
+<!-- Volle stations -->
+<div class="station-section station-vol">
+  <h3 class="section-title text-success">🟢 Volle stations (fietsen ophalen)</h3>
+  {% if volle_stations %}
+    <ul class="station-list">
+      {% for station in volle_stations %}
+        <li class="station-item">
+          <strong>Station:</strong> {{ station.naam }}<br>
+          <strong>Fietsen:</strong> {{ station.parked_bikes }}/{{ station.capaciteit }}<br>
+          <strong>Status:</strong> {{ station.status or 'Onbekend' }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Geen volle stations gevonden.</p>
+  {% endif %}
 </div>
 
 
+    <h2>🚚 Fietsen verplaatsen</h2>
+<form method="post" action="{{ url_for('routes.verplaats_fietsen') }}" class="transport-form">
+  <label for="from_station">Van station (vol):</label>
+  <select name="from_station_id" id="from_station" required>
+    {% for station in volle_stations %}
+      <option value="{{ station.id }}">{{ station.naam }} ({{ station.parked_bikes }}/{{ station.capaciteit }})</option>
+    {% endfor %}
+  </select>
 
-      <hr>
+  <label for="to_station">Naar station (leeg):</label>
+  <select name="to_station_id" id="to_station" required>
+    {% for station in lege_stations %}
+      <option value="{{ station.id }}">{{ station.naam }} ({{ station.parked_bikes }}/{{ station.capaciteit }})</option>
+    {% endfor %}
+  </select>
 
-      <!-- Volle stations -->
-      <h6 class="text-success">Volle stations (fietsen ophalen)</h6>
-   <div class="card h-100 border-0 shadow-sm">
-  <div class="card-body text-start">
-    <h5 class="card-title text-center">Volle stations</h5>
-    {% if volle_stations %}
-      <ul class="list-unstyled small">
-        {% for station in volle_stations %}
-          <li>
-            <strong>Station:</strong> {{ station.naam }}<br>
-            <strong>Fietsen:</strong> {{ station.parked_bikes }}/{{ station.capaciteit }}<br>
-            <strong>Status:</strong> {{ station.status or 'Onbekend' }}
-          </li>
-          <hr>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>Geen volle stations gevonden.</p>
-    {% endif %}
-  </div>
-</div>
+  <label for="aantal">Aantal fietsen:</label>
+  <input type="number" name="aantal" min="1" max="50" required>
 
-    </div>
-  </div>
-</div>
+  <button type="submit">Verplaats fietsen</button>
+</form>
+
+{% if message %}
+  <div class="alert">{{ message }}</div>
+{% endif %}
+
+
+{% endblock %}
