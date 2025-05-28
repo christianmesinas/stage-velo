@@ -646,18 +646,38 @@ def annulatie():
 @routes.route("/contact", methods=["GET", "POST"])
 def contact():
     foutmelding = None
-    succes = None
 
     if request.method == "POST":
         naam = request.form.get("naam")
         email = request.form.get("email")
+        telefoon = request.form.get("telefoon")
+        reden = request.form.get("reden")
         onderwerp = request.form.get("onderwerp")
         bericht = request.form.get("bericht")
 
-        if not naam or not email or not onderwerp or not bericht:
-            foutmelding = "Gelieve alle verplichte velden in te vullen."
-        else:
-            # Hier kan je nog e-mail versturen of opslaan in DB indien gewenst
+        # Regex validatie
+        email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        telefoon_regex = r"^(?:\+32|0)[1-9][0-9]{7,8}$"
+
+        if not request.match(email_regex, email):
+            foutmelding = "❌ Ongeldig e-mailadres. Voorbeeld: naam@voorbeeld.be"
+
+        elif telefoon and not request.match(telefoon_regex, telefoon):
+            foutmelding = "❌ Ongeldig telefoonnummer. Voorbeeld: 0471234567 of +32471234567"
+
+        elif not naam or not email or not reden or not onderwerp or not bericht:
+            foutmelding = "❌ Gelieve alle verplichte velden in te vullen."
+
+        # Alles geldig → flash success
+        if not foutmelding:
+            print("📩 Nieuw contactbericht ontvangen:")
+            print("Naam:", naam)
+            print("E-mail:", email)
+            print("Telefoon:", telefoon or "—")
+            print("Reden:", reden)
+            print("Onderwerp:", onderwerp)
+            print("Bericht:", bericht)
+
             flash("✅ Bedankt voor je bericht! We nemen zo snel mogelijk contact met je op.", "success")
             return redirect(url_for("routes.contact"))
 
