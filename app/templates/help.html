@@ -5,102 +5,100 @@
 {% endblock %}
 
 {% block content %}
-<div class="background">
+<div class="faq-wrapper">
 
-    <h1>FAQs</h1>
+  <!-- Categorie 1: Account & Betaling -->
+  <section class="faq-category">
+    <h2>Account &amp; Betaling</h2>
+    <details>
+      <summary>Hoe maak ik een account aan?</summary>
+      <p>Ga naar de registratiepagina, vul je gegevens in en bevestig je e-mail via de link die je ontvangt.</p>
+    </details>
+    <details>
+      <summary>Welke betaalmethodes worden geaccepteerd?</summary>
+      <p>Je kunt betalen met iDEAL, Bancontact, Visa en Mastercard.</p>
+    </details>
+    <details>
+      <summary>Hoe verander ik mijn betaalmethode?</summary>
+      <p>Ga naar "Mijn profiel" &gt; "Betalingsgegevens" en klik op "Bewerken" om een andere betaalmethode toe te voegen.</p>
+    </details>
+    <details>
+      <summary>Wanneer wordt mijn betaling afgeschreven?</summary>
+      <p>Betalingen worden binnen 24 uur na bevestiging van je bestelling afgeschreven.</p>
+    </details>
+  </section>
 
-    <div class="wrapper">
+  <!-- Categorie 2: Verhuur & Gebruik -->
+  <section class="faq-category">
+    <h2>Verhuur &amp; Gebruik</h2>
+    <details>
+      <summary>Hoe huur ik een fiets?</summary>
+      <p>Open de app, selecteer een beschikbaar station, scan de QR-code op de fiets en je rit start automatisch.</p>
+    </details>
+    <details>
+      <summary>Wat als de fiets defect is?</summary>
+      <p>Maak een foto in de app en meld het defect direct via “Probleem melden”. We zorgen voor vervanging of reparatie.</p>
+    </details>
+    <details>
+      <summary>Hoe eindig ik mijn rit?</summary>
+      <p>Plaats de fiets terug in een vrije parkeerplek, sluit de ketting en bevestig in de app dat je bent geeindigd.</p>
+    </details>
+    <details>
+      <summary>Mag ik buiten de stad fietsen?</summary>
+      <p>Je mag tot 5 km buiten de stad grens fietsen, daarna worden extra kosten per kilometer gerekend.</p>
+    </details>
+  </section>
 
-      <div class="container">
-        <div class="question">
-          How do I verify my email?
-        </div>
-        <div class="answercont">
-          <div class="answer">
-            Click the link in the verification email from verify@codepen.io (be sure to check your spam folder or other email tabs if it's not in your inbox).<br><br>
-            <a href="https://blog.codepen.io/documentation/features/email-verification/#how-do-i-verify-my-email-2">How to Verify Email Docs</a>
-          </div>
-        </div>
-      </div>
+  <!-- Categorie 3: Abonnementen -->
+  <section class="faq-category">
+    <h2>Abonnementen</h2>
+    <details>
+      <summary>Welke abonnementen zijn er?</summary>
+      <p>We bieden dag-, week-, maand- en jaarabonnementen aan. Kijk op de tarievenpagina voor details.</p>
+    </details>
+    <details>
+      <summary>Kan ik mijn abonnement pauzeren?</summary>
+      <p>Ja, in je profiel kun je per maand één keer een pauze aanvragen.</p>
+    </details>
+    <details>
+      <summary>Hoe annuleer ik mijn abonnement?</summary>
+      <p>Ga naar "Mijn abonnement" en klik op "Opzeggen". Je abonnement stopt aan het eind van de huidige periode.</p>
+    </details>
+  </section>
 
-      <div class="container">
-        <div class="question">
-          My Pen loads infinitely or crashes the browser.
-        </div>
-        <div class="answercont">
-          <div class="answer">
-            Add ?turn_off_js=true to the URL to disable JavaScript temporarily.<br><br>
-            <a href="https://blog.codepen.io/documentation/features/turn-off-javascript-in-previews/">How to Disable JavaScript Docs</a>
-          </div>
-        </div>
-      </div>
+  <!-- Categorie 4: Veiligheid & Regels -->
+  <section class="faq-category">
+    <h2>Veiligheid &amp; Regels</h2>
+    <details>
+      <summary>Moet ik een helm dragen?</summary>
+      <p>Het is niet verplicht, maar we raden het sterk aan voor je eigen veiligheid.</p>
+    </details>
+    <details>
+      <summary>Wat zijn de verkeersregels voor fietsers?</summary>
+      <p>Volg altijd de borden, fiets in de fietslaan en geef handgebaren bij afslaan.</p>
+    </details>
+    <details>
+      <summary>Mag ik met twee personen op één fiets?</summary>
+      <p>Nee, onze fietsen zijn ontworpen voor één persoon om veiligheidsredenen.</p>
+    </details>
+  </section>
 
-      <div class="container">
-        <div class="question">
-          How do I contact the creator of a Pen?
-        </div>
-        <div class="answercont">
-          <div class="answer">
-            Leave a comment on the Pen or use the Details page.<br><br>
-            <a href="https://blog.codepen.io/documentation/faq/how-do-i-contact-the-creator-of-a-pen/">How to Contact Creator of a Pen Docs</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="question">
-          What version of [library] does CodePen use?
-        </div>
-        <div class="answercont">
-          <div class="answer">
-            Current library versions can be found <a href="https://codepen.io/versions">here</a>.
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="question">
-          What are forks?
-        </div>
-        <div class="answercont">
-          <div class="answer">
-            A fork is a complete copy of a Pen or Project that you can modify.<br><br>
-            <a href="https://blog.codepen.io/documentation/features/forks/">Learn More About Forks</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
+  <!-- Categorie 5: Klantenservice & Ondersteuning -->
+  <section class="faq-category">
+    <h2>Klantenservice &amp; Ondersteuning</h2>
+    <details>
+      <summary>Hoe bereik ik de klantenservice?</summary>
+      <p>Stuur een e-mail naar support@velo-antwerpen.be of bel naar 0800-12345.</p>
+    </details>
+    <details>
+      <summary>Wat zijn de openingstijden van support?</summary>
+      <p>Onze klantenservice is bereikbaar van maandag t/m vrijdag van 8u tot 18u.</p>
+    </details>
+    <details>
+      <summary>Waar vind ik de gebruikershandleiding?</summary>
+      <p>De handleiding staat online via de link "Help" in de footer of direct op onze website.</p>
+    </details>
+  </section>
 
 </div>
-{% endblock %}
-
-{% block scripts %}
-
-
-    <script>
-        let question = document.querySelectorAll(".question");
-
-question.forEach(question => {
-  question.addEventListener("click", event => {
-    const active = document.querySelector(".question.active");
-    if(active && active !== question ) {
-      active.classList.toggle("active");
-      active.nextElementSibling.style.maxHeight = 0;
-    }
-    question.classList.toggle("active");
-    const answer = question.nextElementSibling;
-    if(question.classList.contains("active")){
-      answer.style.maxHeight = answer.scrollHeight + "px";
-    } else {
-      answer.style.maxHeight = 0;
-    }
-  })
-})
-
-
-
-
-
-    </script>
 {% endblock %}
