@@ -4,6 +4,9 @@ import sys
 from datetime import datetime, timedelta
 import time
 import io
+from app.database.session import SessionLocal
+from app.database.models import Fiets, Station, Gebruiker
+
 import psycopg2
 from faker import Faker
 import os
@@ -35,8 +38,8 @@ for _, row in stations_df.iterrows(): #de data in de stations.csv (van velo antw
 
 # Genereer gebruikers
 def genereer_gebruikers(aantal):
-    gebruikers = []
-    for i in range(aantal):
+    gebruikers = [] #lege lijst gebruikers aangemaakt
+    for i in range(aantal): #loop met als i het aantal gebruikers dat we willen genereren
         gebruikers.append({
             "id": i + 1,
             "voornaam": fake.first_name(),
@@ -46,6 +49,7 @@ def genereer_gebruikers(aantal):
             "abonnementstype": random.choice(['Basis','Premium','Flex']),
         })
     return gebruikers
+
 
 # Genereer fietsen en wijs ze toe aan stations
 def genereer_fietsen(aantal, stations):
@@ -61,7 +65,7 @@ def genereer_fietsen(aantal, stations):
     n_vol = round(totaal * 0.2)
     n_leeg = max(1, round(totaal * 0.01))
     n_partial = totaal - n_vol - n_leeg
-
+    #een onderscheid tussen volle stations , lege stations en stations die niet leeg alsook niet vol zijn.
     stations_vol = station_ids[:n_vol]
     stations_leeg = station_ids[n_vol:n_vol + n_leeg]
     stations_partial = station_ids[n_vol + n_leeg:]
@@ -69,7 +73,7 @@ def genereer_fietsen(aantal, stations):
     extra_vol_kans = 0.10
 
     max_per_station = {}
-    for sid in stations_vol:
+    for sid in stations_vol: #
         max_per_station[sid] = station_slots[sid]
     for sid in stations_leeg:
         max_per_station[sid] = 0
@@ -91,7 +95,7 @@ def genereer_fietsen(aantal, stations):
     for sid in station_ids:
         toewijsbaar = min(max_per_station[sid], aantal - len(fietsen))
         for _ in range(toewijsbaar):
-            status = random.choice(["beschikbaar", "onderhoud"])
+            status = random.choices(["beschikbaar", "onderhoud"], weights=[0.8, 0.2])[0]
             fietsen.append({
                 "id": fiets_id,
                 "station_id": sid,
@@ -116,10 +120,6 @@ def genereer_fietsen(aantal, stations):
     return fietsen
 
 
-gebruikers = genereer_gebruikers(58000)
-fietsen = genereer_fietsen(4200, stations)
-
-
 def gewogen_starttijd(datum):
     #we moeten a.d.h. van de uur van de dag beslissen hoe groot de kans is dat op die moment een fiets gepakt wordt.
     gewichten = []
@@ -141,7 +141,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
 
     for dag_offset in range(dagen):
-        datum = vandaag - timedelta(days=(dagen - dag_offset - 1))
+        datum = vandaag - timedelta(days=(dagen - dag_offset - 1)) #dagen tellen van het aantal dagen tot dag van vandaag
         for fiets in beschikbare_fietsen:
             for _ in range(ritten_per_fiets_per_dag):
                 gebruiker = random.choice(gebruikers)
@@ -151,7 +151,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                 if not begin_station or not eind_station:
                     continue
 
-                duur = random.randint(2,30)
+                duur = random.randint(2,30) #random duur in minuten voor een fietsrit
                 starttijd = gewogen_starttijd(datum)
                 eindtijd = starttijd + timedelta(minutes=duur)
 
@@ -168,7 +168,6 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                 fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
     return geschiedenis
 
-geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
 
 def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een csv steken zodat we het met COPY kunnen doorpushen naar de db
     buffer = io.StringIO()
@@ -231,78 +230,100 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
     return geschiedenis
 
 
+def sla_stations_op_in_db(stations):
+    session = SessionLocal()
+    try:
+        for s in stations:
+            bestaand_station = session.get(Station, s["id"])
+            if bestaand_station:
+                # Update bestaande waarden
+                bestaand_station.naam = s["name"]
+                bestaand_station.straat = s["straat"]
+                bestaand_station.postcode = s["postcode"]
+                bestaand_station.latitude = None
+                bestaand_station.longitude = None
+                bestaand_station.capaciteit = s["capaciteit"]
+                bestaand_station.status = s["status"]
+                bestaand_station.free_slots = s["free_slots"]
+                bestaand_station.parked_bikes = s["free_bikes"]
+            else:
+                nieuw_station = Station(
+                    id=s["id"],
+                    naam=s["name"],
+                    straat=s["straat"],
+                    postcode=s["postcode"],
+                    latitude=None,
+                    longitude=None,
+                    capaciteit=s["capaciteit"],
+                    status=s["status"],
+                    free_slots=s["free_slots"],
+                    parked_bikes=s["free_bikes"]
+                )
+                session.add(nieuw_station)
+        session.commit()
+        print(f"{len(stations)} stations opgeslagen of bijgewerkt in de database.")
+    except Exception as e:
+        session.rollback()
+        print("❌ Fout bij opslaan van stations:", e)
+    finally:
+        session.close()
+
+
+def sla_fietsen_op_in_db(fietsen):
+    session = SessionLocal()
+    try:
+        for f in fietsen:
+            fiets = Fiets(
+                id=f["id"],
+                station_id=f["station_id"],
+                status=f["status"]
+            )
+            session.merge(fiets)  # merge voorkomt fouten bij dubbele ID’s
+        session.commit()
+        print(f"{len(fietsen)} fietsen opgeslagen in de database.")
+    except Exception as e:
+        session.rollback()
+        print("❌ Fout bij opslaan fietsen:", e)
+    finally:
+        session.close()
+
+
+def sla_gebruikers_op_in_db(gebruikers):
+    session = SessionLocal()
+    try:
+        for g in gebruikers:
+            gebruiker = Gebruiker(
+                id=g["id"],
+                voornaam=g["voornaam"],
+                achternaam=g["achternaam"],
+                email=g["email"],
+                postcode=g["postcode"],
+                abonnementstype=g["abonnementstype"],
+            )
+            session.merge(gebruiker)
+        session.commit()
+        print(f"{len(gebruikers)} gebruikers opgeslagen in de database.")
+    except Exception as e:
+        session.rollback()
+        print("❌ Fout bij opslaan gebruikers:", e)
+    finally:
+        session.close()
+
+
+
+   # geschiedenis = relationship("Geschiedenis", back_populates="gebruiker")
+
+
 #simulatie(stations,gebruikers,fietsen, 60)
 
+if __name__ == "__main__": #zorgt ervoor dat de functies enkel runnen wanneer ze worden opgeroepen, en niet tijdens import.
+    gebruikers = genereer_gebruikers(30000)
+    fietsen = genereer_fietsen(2000, stations)
+    geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
+    sla_stations_op_in_db(stations)
+    sla_fietsen_op_in_db(fietsen)
+    sla_gebruikers_op_in_db(gebruikers)
 
-conn = psycopg2.connect(
-    dbname="velo_community",
-    user="admin",
-    password="Velo123",
-    host="localhost",
-    port="5433"
-)
-cur = conn.cursor()
-
-def push_to_db():
-    cur.execute("DELETE FROM geschiedenis")
-    cur.execute("DELETE FROM fietsen")
-    cur.execute("DELETE FROM stations")
-    cur.execute("DELETE FROM gebruikers")
-    cur.executemany("""
-            INSERT INTO gebruikers (id, voornaam, achternaam, email, abonnementstype, postcode)
-            VALUES (%s, %s, %s, %s, %s, %s)
-        """, [
-        (
-            g['id'],
-            g['voornaam'],
-            g['achternaam'],
-            g['email'],
-            g['abonnementstype'],
-            g['postcode']
-        ) for g in gebruikers
-    ])
-
-    cur.executemany("""
-            INSERT INTO stations (id, naam, straat, postcode, capaciteit, status, parked_bikes, free_slots)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """, [
-        (
-            s['id'],
-            s['name'],
-            s['straat'],
-            s['postcode'],
-            s['capaciteit'],
-            s['status'],
-            s['free_bikes'],
-            s['free_slots']
-        ) for s in stations
-    ])
-
-    cur.executemany("""
-            INSERT INTO fietsen (id, station_id, status)
-            VALUES (%s, %s, %s)
-        """, [
-        (
-            f['id'],
-            f['station_id'],
-            f['status']
-        ) for f in fietsen
-    ])
-    updates = [(rit['eind_station_id'], rit['fiets_id']) for rit in geschiedenis]
-    cur.executemany("""
-        UPDATE fietsen
-        SET station_id = %s
-        WHERE id = %s
-    """, updates)
-
-    # Gebruik COPY voor geschiedenis omdat COPY beste methode is voor bulk data te pushen naar de DB
-    csv_buffer = geschiedenis_to_csv_buffer(geschiedenis)
-    cur.copy_expert("""
-            COPY geschiedenis (gebruiker_id, fiets_id, start_station_id, eind_station_id, starttijd, eindtijd, duur_minuten)
-            FROM STDIN WITH (FORMAT csv)
-        """, csv_buffer)
-
-push_to_db()
-conn.commit()
-cur.close()
-conn.close()
+    buffer = geschiedenis_to_csv_buffer(geschiedenis)
+    with open("simulatie_output_csv", "w") as f:
+        f.write(buffer.getvalue())

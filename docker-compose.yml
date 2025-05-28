@@ -10,7 +10,7 @@ services:
       TZ: Europe/Amsterdam
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./db_scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+
     ports:
       - "5433:5432"
 
@@ -39,6 +39,20 @@ services:
       - .:/app  # ✅ Zorg voor live reload van alle projectbestanden
     command: python app.py  # ✅ Start de app handmatig zodat debug werkt
 
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://admin:Velo123@db:5432/velo_community
+      - PYTHONPATH=/app
+    volumes:
+      - .:/app
+    working_dir: /app/app/simulation
+    command: python simulation.py
+
+
 volumes:
   postgres_data:
   pgadmin_data:
+

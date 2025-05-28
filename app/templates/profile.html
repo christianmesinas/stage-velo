@@ -1,25 +1,159 @@
 {% extends "base.html" %}
 
 {% block head %}
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/') }}">
-
+<!-- Подключаем стили для страницы профиля / Koppel CSS-stijlen voor profielpagina -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<style>
+  .card {
+    user-select: none;
+  }
+</style>
 {% endblock %}
-
-
-
-
 
 {% block content %}
+<div class="background">
 
-<h1>pagina profiel</h1>
+<!-- ✅ Показываем флеш-сообщение при сохранении настроек /
+     Toont een flashbericht wanneer instellingen zijn opgeslagen -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div id="flash-overlay" class="flash-overlay">
+      {{ messages[0] }}
+    </div>
+  {% endif %}
+{% endwith %}
 
+<div class="container mt-5">
+
+  <!-- ✅ Кнопка "Instellingen" + предупреждение при незаполненных данных /
+       Instellingen-knop + waarschuwing bij onvolledig profiel -->
+  <div class="instellingen-button-topright mb-4 text-end position-relative">
+
+    <!-- Кнопка настроек / Instellingen-knop -->
+    <a href="{{ url_for('routes.instellingen') }}" class="btn btn-primary">Instellingen</a>
+
+    <!-- Если хоть одно поле не заполнено — показываем предупреждение /
+         Als een veld leeg is, tonen we een waarschuwing -->
+    {% if not user.titel or not user.voornaam or not user.achternaam or not user.telefoonnummer or not user.email or user.abonnement == 'Geen abonnement' %}
+      <div class="alert-instellingen mt-3">
+        ⚡ <strong>Je profiel is NIET volledig — klik NU op Instellingen en vul alles in!</strong>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- ✅ Верхние карточки: фото, данные, история /
+       Bovenste kaarten: foto, gegevens, fietsgeschiedenis -->
+  <div class="row row-cols-1 row-cols-md-3 g-4 mb-5 text-center justify-content-center">
+
+    <!-- ✅ Карточка с фотографией по полу /
+         Profielfoto op basis van gekozen aanspreekvorm -->
+    <div class="col">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body p-0">
+          {% if user.titel == 'vrouw' %}
+            <img class="profile-foto" src="{{ url_for('static', filename='img/vrouw.png') }}" alt="Vrouw op fiets">
+          {% elif user.titel == 'heer' %}
+            <img class="profile-foto" src="{{ url_for('static', filename='img/man.png') }}" alt="Heer op fiets">
+          {% else %}
+            <img class="profile-foto" src="{{ url_for('static', filename='img/profielfoto_default.png') }}" alt="Standaard foto">
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Персональные данные пользователя /
+         Persoonlijke gebruikersgegevens -->
+    <div class="col">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body text-start">
+          <h5 class="card-title text-center">Persoonlijke gegevens</h5>
+          <p><strong>Aanspreekvorm:</strong> {{ user.titel or 'geen' }}</p>
+          <p><strong>Voornaam:</strong> {{ user.voornaam or 'Niet ingesteld' }}</p>
+          <p><strong>Achternaam:</strong> {{ user.achternaam or 'Niet ingesteld' }}</p>
+          <p><strong>Telefoonnummer:</strong> {{ user.telefoonnummer or 'Niet ingesteld' }}</p>
+          <p><strong>Email:</strong> {{ user.email or 'Niet ingesteld' }}</p>
+          <p><strong>Abonnement:</strong>
+            {% if user.abonnement != 'Geen abonnement' %}
+              <span class="text-success fw-bold">{{ user.abonnement }}</span>
+            {% else %}
+                <a href="{{ url_for('routes.tarieven') }}" class="text-danger fw-bold" style="text-decoration: none;">
+                   geen abonnement
+                </a>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ История поездок пользователя /
+         Geschiedenis van fietstochten -->
+    <div class="col">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body text-start">
+          <h5 class="card-title text-center">Fietsgeschiedenis</h5>
+          {% if rentals %}
+            <ul class="list-unstyled small">
+              {% for rental in rentals %}
+                <li>
+                  <strong>ID:</strong> {{ rental.bike_id }}<br>
+                  <strong>Van:</strong> {{ rental.start_station.naam if rental.start_station else 'Onbekend' }}<br>
+                  <strong>Tot:</strong> {{ rental.end_station.naam if rental.end_station else 'Onbekend' }}<br>
+                  <strong>Start:</strong> {{ rental.starttijd.strftime('%d-%m-%Y %H:%M') if rental.starttijd else 'N/A' }}<br>
+                  <strong>Prijs:</strong> €{{ "%.2f"|format(rental.prijs) if rental.prijs else 'N/A' }}
+                </li>
+                <hr>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>Geen fietsgeschiedenis beschikbaar.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Абонементы на поездки /
+     Fietsabonnementen voor de gebruiker -->
+<!--
+<div class="mb-5">
+  <h5 class="mb-4">Kies een abonnement:</h5>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for soort, beschrijving in [('dagpas', '1 dag reizen met fietsen binnen 30 min voor een vaste prijs'),
+                                   ('weekpass', '7 dagen reizen met fietsen binnen 30 min voor een vaste prijs'),
+                                   ('jaarkaart', '1 jaar reizen met fietsen binnen 30 min voor een vaste prijs')] %}
+    <div class="col">
+      <div class="card h-100 text-center {% if user.abonnement == 'Geen abonnement' %}border-primary{% else %}border-secondary{% endif %}">
+        <div class="card-body">
+          <h5 class="card-title text-capitalize">{{ soort }}</h5>
+          <p class="card-text">{{ beschrijving }}</p>
+          {% if user.abonnement == 'Geen abonnement' %}
+            <a href="{{ url_for('routes.' + soort) }}" class="btn btn-danger w-100">Kopen</a>
+          {% else %}
+            <button class="btn btn-outline-secondary w-100" disabled>Inactief</button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+-->
 {% endblock %}
-
-
-
-
 
 
 {% block scripts %}
+<!-- ✅ Скрипт для плавного скрытия всплывающего сообщения /
+     Script om flashmelding langzaam te verbergen -->
+<script>
+  const flashOverlay = document.getElementById('flash-overlay');
+  if (flashOverlay && flashOverlay.innerText.trim() !== '') {
+    flashOverlay.style.display = 'block';
+    setTimeout(() => {
+      flashOverlay.style.opacity = 0;
+      setTimeout(() => {
+        flashOverlay.remove();
+      }, 400);
+    }, 2000);
+  }
+</script>
 {% endblock %}

@@ -20,6 +20,27 @@
 
 }
 
+body.dark-mode .background{
+    background: url(../images/Group7@2x.png), url(../images/MaskGroup6@2x.png), url(../images/Group9.png);
+    background-size: contain, contain, 47%;
+    background-position: -3px center, calc(100% + 30px) calc(100% + 20px), calc(80%) ;
+
+
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: flex-end;
+    color: black;
+    width: auto;
+    height: 80vh;
+    background-repeat: no-repeat;
+    margin: 20px;
+    background-color: black;
+    border-radius: 20px;
+}
+
 
 
 
@@ -33,9 +54,40 @@
     z-index: 50;
 }
 
-
 .auth0-lock-content-wrapper{
         border: solid 5px;
         border-color: #2b2d42;
 
+}
+
+.auth0-lock-header{
+    background-color: black !important;
+
+}
+
+
+body.dark-mode .auth0-lock-cred-pane{
+    background-color: black !important;
+}
+
+body.dark-mode .auth0-lock-tabs li a{
+    background-color: black;
+    color: rgb(180,180,180) !important;
+}
+
+body.dark-mode .auth0-lock-tabs-current{
+    background-color: black !important;
+}
+
+body.dark-mode .auth0-lock-tabs-current span{
+    color: white !important;
+}
+
+body.dark-mode .auth0-lock.auth0-lock.auth0-lock-opened-in-frame .auth0-lock-header-bg .auth0-lock-header-bg-blur{
+    opacity: 0;
+    transition: 0ms;
+}
+
+body.dark-mode .auth0-lock.auth0-lock .auth0-lock-header-bg{
+    background-color: black;
 }

@@ -13,6 +13,7 @@
 
 {% block content %}
     <div id="map"></div>
+
 {% endblock %}
 
 {% block scripts %}
@@ -28,9 +29,8 @@
 
     <!-- Laad maps.js -->
     <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
-
-    <!-- Aangepaste marker-logica -->
-    <script>
+ <script>
+    // Functie om het juiste icoon te kiezen
     function createCustomIcon(status, freeBikes, emptySlots) {
         let iconUrl;
         if (status !== 'OPN') {
@@ -72,4 +72,24 @@
             .bindPopup(popupContent);
     });
     </script>
+    let customIcon = createCustomIcon(marker.status, marker['free-bikes'], marker['empty-slots']);
+    let popupContent;
+    if (marker.status === 'CLS') {
+        popupContent = `${marker.name}<br><span style="color: red; font-weight: bold;">Closed</span>`;
+    } else {
+        popupContent = `
+            ${marker.name}<br>
+            <img src='/static/images/bike.png' alt='bike' style='height: 16px; vertical-align: middle;'> ${marker['free-bikes']}
+            <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> ${marker['empty-slots']}
+        `;
+    }
+    L.marker([marker.lat, marker.lon], { icon: customIcon })
+        .addTo(map)
+        .bindPopup(popupContent);
+});
+</script>
+
+    <!--<button id="refresh-button">Ververs Data</button> -->
+    <div id="map"></div>
+
 {% endblock %}

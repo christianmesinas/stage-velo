@@ -1,0 +1,89 @@
+{% extends 'base_admin.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/live_data.css') }}">
+
+{% endblock %}
+
+{% block content %}
+<h2 class="dashboard-header">🚲 Live Data Fietsstations (Antwerpen)</h2>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <h3>Totaal aantal stations</h3>
+    <p>{{ stations|length }}</p>
+  </div>
+
+
+
+  <div class="stat-card">
+    <h3>Totaal aantal fietsen</h3>
+    <p>{{ stations | sum(attribute=6) }}</p>
+  </div>
+  <div class="stat-card">
+    <h3>Totaal aantal lege slots</h3>
+    <p>{{ stations | sum(attribute=7) }}</p>
+  </div>
+  <div class="stat-card">
+    <h3>Totaal capaciteit</h3>
+    <p>{{ stations | sum(attribute=8) }}</p>
+  </div>
+</div>
+
+<div class="table-container">
+  <table class="fixed-header-table">
+    <thead>
+      <tr>
+        <th>Naam</th>
+        <th>Adres</th>
+        <th>Status</th>
+        <th>Beschikbaar</th>
+        <th>Lege slots</th>
+        <th>Capaciteit</th>
+      </tr>
+    </thead>
+  </table>
+
+  <div class="scrollbox">
+    <table class="fixed-header-table">
+      <tbody>
+        {% for s in stations %}
+        <tr>
+          <td>{{ s[1] }}</td>
+          <td>{{ s[2] }}</td>
+          <td>{{ s[3] }}</td>
+          <td>{{ s[6] }}</td>
+          <td>{{ s[7] }}</td>
+          <td>{{ s[8] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+  <div class="stat-card5" style="max-width: 400px; margin-bottom: 2rem;">
+    <h3>🔥 Populairste station vandaag</h3>
+    <p style="font-size: 1.4rem; color: #2c3e50;">
+      {{ populairste_station.naam }}<br>
+      <small style="color: #999;">{{ populairste_station.ritten }} ritten gestart</small>
+    </p>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

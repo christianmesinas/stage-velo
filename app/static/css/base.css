@@ -1,18 +1,18 @@
-/* Algemene basisstijl */
+/* ✅ Algemene basisstijl */
 * {
   font-family: "Segoe UI", sans-serif;
+  box-sizing: border-box;
 }
-.smoltext {
-  font-family: "Segoe UI", sans-serif;
-}
-
 body {
   margin: 0;
   padding: 0;
   background-color: #E9E9E9;
 }
+a {
+  text-decoration: none;
+}
 
-/* Navigatiebalk */
+/* ✅ Navigatiebalk */
 header {
   background-color: #D1003C;
   color: white;
@@ -33,14 +33,13 @@ header {
   font-size: 20px;
 }
 
-/* Navigatie links in het midden */
+/* ✅ Navigatie links */
 .nav-links {
   display: flex;
   gap: 13px;
   align-items: center;
   flex-wrap: wrap;
 }
-
 .nav-links a {
   padding-bottom: 3px;
   color: white;
@@ -67,17 +66,15 @@ header {
 .nav-links a:hover {
   color: #2b2d42;
 }
-
 .nav-links a:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-/* Dropdown menu */
+/* ✅ Dropdown menu */
 .dropdown {
   position: relative;
 }
-
 .dropdown-menu {
   display: none;
   position: absolute;
@@ -91,18 +88,15 @@ header {
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 1000;
 }
-
 .dropdown-menu a {
   display: block;
   padding: 5px 0;
   color: black;
   text-decoration: none;
 }
-
 .dropdown-menu a:hover {
   background-color: #f2f2f2;
 }
-
 .dropdown:hover .dropdown-menu {
   display: block;
 }
@@ -135,11 +129,11 @@ header {
 }
 
 /* Login / Register knoppen rechts */
+/* ✅ Navigatie knoppen rechts */
 .nav-buttons {
   display: flex;
   gap: 10px;
 }
-
 .nav-buttons a {
   text-decoration: none;
   padding: 6px 14px;
@@ -148,22 +142,18 @@ header {
   border: 2px solid white;
   transition: all 0.3s ease;
 }
-
 .nav-buttons .login {
   color: white;
   background: transparent;
 }
-
 .nav-buttons .login:hover {
   background: white;
   color: #D1003C;
 }
-
 .nav-buttons .register {
   background: white;
   color: #D1003C;
 }
-
 .nav-buttons .register:hover {
   background-color: #f8d7da;
 }
@@ -177,16 +167,187 @@ a {
   color: white;
   background: transparent;
 }
-
 .nav-buttons .profile:hover {
   background-color: #f8d7da;
 }
-
 .logout {
   background: white;
   color: #D1003C;
 }
-
 .nav-buttons .logout:hover {
   background-color: #f8d7da;
+}
+
+/* ✅ Flash meldingen */
+.alert {
+  padding: 1rem 1.25rem;
+  margin: 1rem auto;
+  max-width: 400px;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.alert-success {
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}
+.alert-danger {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+.alert-dismissible .btn-close {
+  position: relative;
+  float: right;
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: inherit;
+}
+
+/* ✅ Donkere modus */
+body.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+body.dark-mode header {
+  background-color: #1f1f1f;
+}
+body.dark-mode .nav-links a,
+body.dark-mode .nav-buttons a,
+body.dark-mode .dropdown-menu a {
+  color: #f0f0f0;
+}
+body.dark-mode .nav-links a:hover {
+  color: #ffcccb;
+}
+body.dark-mode .register,
+body.dark-mode .logout {
+  color: black !important;
+}
+body.dark-mode .dropdown-menu {
+  background-color: #333;
+  color: #f0f0f0;
+}
+body.dark-mode .dropdown-menu a:hover {
+  background-color: #444;
+}
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  border: 1px solid #444;
+}
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #aaa;
+}
+body.dark-mode .alert {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  border-color: #444;
+}
+body.dark-mode .alert-success {
+  background-color: #214d32;
+  color: #c3f3d6;
+}
+body.dark-mode .alert-danger {
+  background-color: #4d1f1f;
+  color: #f3c3c3;
+}
+
+/* ✅ Tabellen en lijsten in donkere modus */
+body.dark-mode .table {
+  color: #f0f0f0;
+  background-color: #1e1e1e;
+}
+body.dark-mode .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #2c2c2c;
+}
+body.dark-mode .list-group-item {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  border-color: #444;
+}
+
+/* ✅ Donkere modus knop stijl */
+.dark-toggle-btn {
+  position: static;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 1rem;
+  background-color: white; /* geel in lichtmodus */
+  color: black;
+  border: 2px solid #FFD700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+
+body.dark-mode .dark-toggle-btn {
+  background-color: #f0f0f0;
+  color: #121212;
+}
+
+/* ✅ Theme-icon vliegt omhoog vanaf knop */
+.theme-icon {
+  position: fixed;
+  font-size: 3.5rem;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(0) scale(1);
+  transition: transform 0.8s ease-out, opacity 0.5s ease-in;
+}
+.theme-icon.show {
+  opacity: 1;
+  transform: translateY(120px) scale(1.4); /* ← Verplaats naar beneden */
+}
+
+
+body.dark-mode .card .card-text {
+  color: #f0f0f0 !important;
+}
+/* Общий стиль карточек */
+.card {
+  user-select: none;
+}
+
+/* Новые стили для изображения профиля */
+.profile-foto {
+  Width: 100%;
+  height: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 3rem; /* скругление углов */
+
+}
+
+body.dark-mode .dark-toggle-btn {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}
+
+.dark-toggle-btn:hover {
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+
+body.dark-mode .dark-toggle-btn:hover {
+  background-color: white;
+  color: black;
+  border-color: white;
 }

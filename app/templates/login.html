@@ -12,125 +12,124 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-  const redirectAfterLogin = "{{ next_url | safe }}";
-  const language = "{{ language | safe }}";  // Taal van Flask-Babel
+  <!-- Auth0 Script (NE PAS TOUCHER) -->
+  <script>
+    const redirectAfterLogin = "{{ next_url | safe }}";
+    const language = "{{ language | safe }}"; // Language from Flask-Babel
 
-  // Definieer vertalingen voor Auth0 Lock
-  const translations = {
-    'nl': {
-      title: 'Inloggen',
-      signUp: 'Registreren',
-      loginLabel: 'Inloggen',
-      emailInputPlaceholder: 'E-mailadres',
-      passwordInputPlaceholder: 'Wachtwoord',
-      forgotPasswordText: 'Wachtwoord vergeten?',
-      signUpTitle: 'Registreren',
-      loginSocial: 'Inloggen met {connection}',
-      signUpTerms: 'Door je te registreren, ga je akkoord met onze voorwaarden.'
-    },
-    'en': {
-      title: 'Log in',
-      signUp: 'Sign Up',
-      loginLabel: 'Log in',
-      emailInputPlaceholder: 'Email address',
-      passwordInputPlaceholder: 'Password',
-      forgotPasswordText: 'Forgot password?',
-      signUpTitle: 'Sign Up',
-      loginSocial: 'Log in with {connection}',
-      signUpTerms: 'By signing up, you agree to our terms.'
-    },
-    'fr': {
-      title: 'Se connecter',
-      signUp: 'S’inscrire',
-      loginLabel: 'Se connecter',
-      emailInputPlaceholder: 'Adresse e-mail',
-      passwordInputPlaceholder: 'Mot de passe',
-      forgotPasswordText: 'Mot de passe oublié ?',
-      signUpTitle: 'S’inscrire',
-      loginSocial: 'Se connecter avec {connection}',
-      signUpTerms: 'En vous inscrivant, vous acceptez nos conditions.'
-    },
-    'es': {
-      title: 'Iniciar sesión',
-      signUp: 'Registrarse',
-      loginLabel: 'Iniciar sesión',
-      emailInputPlaceholder: 'Correo electrónico',
-      passwordInputPlaceholder: 'Contraseña',
-      forgotPasswordText: '¿Olvidaste tu contraseña?',
-      signUpTitle: 'Registrarse',
-      loginSocial: 'Iniciar sesión con {connection}',
-      signUpTerms: 'Al registrarte, aceptas nuestros términos.'
-    },
-    'de': {
-      title: 'Anmelden',
-      signUp: 'Registrieren',
-      loginLabel: 'Anmelden',
-      emailInputPlaceholder: 'E-Mail-Adresse',
-      passwordInputPlaceholder: 'Passwort',
-      forgotPasswordText: 'Passwort vergessen?',
-      signUpTitle: 'Registrieren',
-      loginSocial: 'Anmelden mit {connection}',
-      signUpTerms: 'Durch die Registrierung stimmst du unseren Bedingungen zu.'
-    }
-  };
-
-  var lock = new Auth0Lock('{{ auth0_client_id }}', '{{ auth0_domain }}', {
-    container: "auth0-login-box",
-    auth: {
-      redirect: false,
-      responseType: 'token id_token',
-      params: {
-        scope: 'openid profile email'
+    const translations = {
+      'nl': {
+        title: 'Inloggen',
+        signUp: 'Registreren',
+        loginLabel: 'Inloggen',
+        emailInputPlaceholder: 'E-mailadres',
+        passwordInputPlaceholder: 'Wachtwoord',
+        forgotPasswordText: 'Wachtwoord vergeten?',
+        signUpTitle: 'Registreren',
+        loginSocial: 'Inloggen met {connection}',
+        signUpTerms: 'Door je te registreren, ga je akkoord met onze voorwaarden.'
+      },
+      'en': {
+        title: 'Log in',
+        signUp: 'Sign Up',
+        loginLabel: 'Log in',
+        emailInputPlaceholder: 'Email address',
+        passwordInputPlaceholder: 'Password',
+        forgotPasswordText: 'Forgot password?',
+        signUpTitle: 'Sign Up',
+        loginSocial: 'Log in with {connection}',
+        signUpTerms: 'By signing up, you agree to our terms.'
+      },
+      'fr': {
+        title: 'Se connecter',
+        signUp: 'S’inscrire',
+        loginLabel: 'Se connecter',
+        emailInputPlaceholder: 'Adresse e-mail',
+        passwordInputPlaceholder: 'Mot de passe',
+        forgotPasswordText: 'Mot de passe oublié ?',
+        signUpTitle: 'S’inscrire',
+        loginSocial: 'Se connecter avec {connection}',
+        signUpTerms: 'En vous inscrivant, vous acceptez nos conditions.'
+      },
+      'es': {
+        title: 'Iniciar sesión',
+        signUp: 'Registrarse',
+        loginLabel: 'Iniciar sesión',
+        emailInputPlaceholder: 'Correo electrónico',
+        passwordInputPlaceholder: 'Contraseña',
+        forgotPasswordText: '¿Olvidaste tu contraseña?',
+        signUpTitle: 'Registrarse',
+        loginSocial: 'Iniciar sesión con {connection}',
+        signUpTerms: 'Al registrarte, aceptas nuestros términos.'
+      },
+      'de': {
+        title: 'Anmelden',
+        signUp: 'Registrieren',
+        loginLabel: 'Anmelden',
+        emailInputPlaceholder: 'E-Mail-Adresse',
+        passwordInputPlaceholder: 'Passwort',
+        forgotPasswordText: 'Passwort vergessen?',
+        signUpTitle: 'Registrieren',
+        loginSocial: 'Anmelden mit {connection}',
+        signUpTerms: 'Durch die Registrierung stimmst du unseren Bedingungen zu.'
       }
-    },
-    allowedConnections: ['database-velo', 'google-oauth2', 'facebook', 'apple'],
-    theme: {
-      primaryColor: '#2b2d42',
-      backgroundColor: '#000000',
-      logo: 'LOGO'
-    },
-    language: language,
-    languageDictionary: translations[language],
-    allowSignUp: true,
-    allowLogin: true,
-    closable: false
-  });
+    };
 
-  lock.show();
-
-  lock.on("authenticated", function(authResult) {
-    console.log("✅ Ingelogd:", authResult);
-    lock.getUserInfo(authResult.accessToken, function(error, profile) {
-      if (error) {
-        console.error("❌ Fout bij ophalen profiel:", error);
-        return;
-      }
-      console.log("👤 Gebruiker:", profile);
-      fetch("/auth/process", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          access_token: authResult.accessToken,
-          redirect_to: redirectAfterLogin
-        })
-      }).then((res) => {
-        if (res.redirected) {
-          window.location.href = res.url;
-        } else if (res.ok) {
-          window.location.href = redirectAfterLogin;
-        } else {
-          console.error("❌ Backend verwerkte token niet correct");
+    const lock = new Auth0Lock('{{ auth0_client_id }}', '{{ auth0_domain }}', {
+      container: "auth0-login-box",
+      auth: {
+        redirect: false,
+        responseType: 'token id_token',
+        params: {
+          scope: 'openid profile email'
         }
+      },
+      allowedConnections: ['database-velo', 'google-oauth2', 'facebook', 'apple'],
+      theme: {
+        primaryColor: '#2b2d42',
+        backgroundColor: '#000000',
+        logo: 'LOGO' // Replace with actual logo URL if needed
+      },
+      language: language,
+      languageDictionary: translations[language],
+      allowSignUp: true,
+      allowLogin: true,
+      closable: false
+    });
+
+    lock.show();
+
+    lock.on("authenticated", function(authResult) {
+      console.log("✅ Ingelogd:", authResult);
+
+      lock.getUserInfo(authResult.accessToken, function(error, profile) {
+        if (error) {
+          console.error("❌ Fout bij ophalen profiel:", error);
+          return;
+        }
+
+        console.log("👤 Gebruiker:", profile);
+        localStorage.setItem("accessToken", authResult.accessToken);
+
+        fetch("/auth/process", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ access_token: authResult.accessToken })
+        }).then((res) => {
+          if (res.ok) {
+            window.location.href = redirectAfterLogin || "/profile";
+          } else {
+            console.error("❌ Backend verwerkte token niet correct");
+          }
+        });
       });
     });
-  });
 
-  function logout() {
-    localStorage.removeItem("accessToken");
-    window.location.reload();
-  }
-</script>
+    function logout() {
+      localStorage.removeItem("accessToken");
+      window.location.reload();
+    }
+  </script>
 {% endblock %}
