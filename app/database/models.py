@@ -115,14 +115,15 @@ class Defect(Base):
     __tablename__ = "defecten"
     id = Column(Integer, primary_key=True)
     fiets_id = Column(Integer, ForeignKey("fietsen.id"))
-    station_id = Column(Integer, ForeignKey("stations.id"))
+    station_naam = Column(String, ForeignKey("stations.naam"))
     probleem = Column(String)
 
     fiets = relationship("Fiets")
+    station = relationship("Station", foreign_keys=[station_naam])
 
 
-def add_defect(db: Session, fiets_id: int, station_id: int, probleem: str):
-    defect = Defect(fiets_id=fiets_id, station_id=station_id, probleem=probleem)
+def add_defect(db: Session, fiets_id: int, station_naam: str, probleem: str):
+    defect = Defect(fiets_id=fiets_id, station_naam=station_naam, probleem=probleem)
     db.add(defect)
 
     fiets = db.query(Fiets).filter(Fiets.id == fiets_id).first()
@@ -140,11 +141,11 @@ def update_fiets_status_defect(mapper, connection, target):
         .values(status="onderhoud")
     )
 
+''' WORK IN PROGRESS (IGNORE)
 @event.listens_for(Defect, "after_delete")
 def update_fiets_status_fixed(mapper, connection, target):
     defect_count = connection.execute(
-        select(func.count())
-        .select_from(Defect.__table__)
+        select(func.count(Defect.id))
         .where(Defect.fiets_id == target.fiets_id)
     ).scalar()
 
@@ -153,7 +154,8 @@ def update_fiets_status_fixed(mapper, connection, target):
             Fiets.__table__.update()
             .where(Fiets.id == target.fiets_id)
             .values(status="beschikbaar")
-        )
+        )'''
+
 class Pas(Base):
     __tablename__ = "passen"
 

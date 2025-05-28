@@ -154,6 +154,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                 duur = random.randint(2,30) #random duur in minuten voor een fietsrit
                 starttijd = gewogen_starttijd(datum)
                 eindtijd = starttijd + timedelta(minutes=duur)
+                prijs = round(0.25 + duur * 0.05, 2)
 
                 geschiedenis.append({
                     "gebruiker_id": gebruiker["id"],
@@ -162,7 +163,8 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                     "eind_station_naam": eind_station["name"],
                     "starttijd": starttijd.strftime("%Y-%m-%d %H:%M:%S"),
                     "eindtijd": eindtijd.strftime("%Y-%m-%d %H:%M:%S"),
-                    "duur_minuten": duur
+                    "duur_minuten": duur,
+                    "prijs": prijs
                 })
 
                 fiets["station_naam"] = eind_station["name"] #de fiets wordt teogekend aan zijn nieuwe station.
