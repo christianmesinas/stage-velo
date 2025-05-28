@@ -4,7 +4,7 @@
   background-color: white;
   border-radius: 20px;
   margin: 20px;
-  background-size: cover;
+  background-size: 53rem;
   background-repeat: no-repeat;
   background-position: right;
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.35);
@@ -80,12 +80,10 @@ body.dark-mode .card-slider .card-item{
 
 .card-slider .card-item{
   width: 500px;
-  display: block;
+  height: fit-content;
+  min-height: 30rem;
   list-style: none;
-}
-
-.card-item__content{
-  margin-left: 24rem;
+  display: flex;
 }
 
 .card-item__title{
@@ -120,8 +118,8 @@ body.dark-mode .card-slider .card-item{
 .card-image{
   width: 40%;
   height: 80%;
-  position: absolute;
-  left: -5%;
+  position: relative;
+  left: -8%;
   border-radius: 20px;
 }
 

@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask, session, request, render_template, redirect, url_for
 from dotenv import load_dotenv
 from os import getenv
 import stripe
@@ -6,14 +6,40 @@ from app.database import SessionLocal
 from app.database.models import Base
 from app.routes import routes
 from authlib.integrations.flask_client import OAuth
+from flask_babel import Babel, _
+import logging
 
-
-# Laad .ENV-bestand,
+# ✅ Laad .ENV-bestand
 load_dotenv()
 stripe.api_key = getenv('STRIPE_SECRET_KEY')
 
- #Initialiseer Flask,
+# ✅ Initialiseer Flask
 app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
+
+# Babel configuratie
+app.config['BABEL_DEFAULT_LOCALE'] = 'nl'
+app.config['BABEL_TRANSLATION_DIRECTORIES'] = 'app/translations'
+app.config['BABEL_SUPPORTED_LOCALES'] = ['nl', 'en', 'fr', 'es', 'de']
+
+def get_locale():
+    # Check query parameter
+    if 'lang' in request.args:
+        language = request.args.get('lang')
+        if language in ['nl', 'en', 'fr', 'es', 'de']:
+            session['language'] = language
+            logging.debug(f"Set language from query param: {language}")
+            return language
+    # Check session
+    if 'language' in session:
+        language = session['language']
+        logging.debug(f"Language from session: {language}")
+        return language
+    # Default to Dutch
+    logging.debug("Using default language: nl")
+    return 'nl'
+
+babel = Babel(app, locale_selector=get_locale)
+
 app.secret_key = getenv("SECRET_KEY", "fallback-secret")
 
 # Stel de secret key in voor sessies,
@@ -32,7 +58,7 @@ oauth.register(
     server_metadata_url=f'https://{getenv("auth0_domain")}/.well-known/openid-configuration'
 )
 
-# Registreer je Blueprint-routes,
+# ✅ Registreer je Blueprint-routes
 app.register_blueprint(routes)
 
 with app.app_context():

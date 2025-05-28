@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Bedankt voor je aanvraag{% endblock %}
+{% block title %}{{ _('Bedankt voor je aanvraag') }}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bedankt.css') }}">
@@ -9,19 +9,20 @@
 {% block content %}
 <div class="card-slider">
     <div class="card-item">
-      <h2>🎉 Bedankt voor je aanvraag!</h2>
-      <p style="padding: 14px;">We hebben je gegevens goed ontvangen.</p>
+      <h2>🎉 {{ _('Bedankt voor je aanvraag!') }}</h2>
+      <p style="padding: 14px;">{{ _('We hebben je gegevens goed ontvangen.') }}</p>
 
       <ul>
-        <li><strong>Voornaam:</strong> {{ data.voornaam }}</li>
-        <li><strong>Achternaam:</strong> {{ data.achternaam }}</li>
-        <li><strong>E-mail:</strong> {{ data.email }}</li>
-        <li><strong>Telefoonnummer:</strong> {{ data.telefoon }}</li>
-        <li><strong>Geboortedatum:</strong> {{ data.geboortedatum }}</li>
+        <li><strong>{{ _('Voornaam:') }}</strong> {{ data.voornaam }}</li>
+        <li><strong>{{ _('Achternaam:') }}</strong> {{ data.achternaam }}</li>
+        <li><strong>{{ _('E-mail:') }}</strong> {{ data.email }}</li>
+        <li><strong>{{ _('Telefoonnummer:') }}</strong> {{ data.telefoon }}</li>
+        <li><strong>{{ _('Geboortedatum:') }}</strong> {{ data.geboortedatum }}</li>
       </ul>
 
-      <p style="padding: 14px;">Je gekozen pincode is veilig opgeslagen. Je kunt nu gebruik maken van je pas!</p><br>
+      <p style="padding: 14px;">{{ _('Je gekozen pincode is veilig opgeslagen. Je kunt nu gebruik maken van je pas!') }}</p><br>
 
+      <a href="/" class="terug-btn">{{ _('Ga terug naar startpagina') }}</a>
       <a href="/" class="terug-btn">Ga terug naar startpagina</a>
       <a href="{{ url_for('routes.profile') }}" class="terug-btn">👤 Ga naar profiel</a>
     </div>

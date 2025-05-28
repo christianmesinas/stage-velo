@@ -17,6 +17,17 @@
 {% endblock %}
 
 {% block scripts %}
+    <!-- Inline vertalingen -->
+    <script>
+        window.translations = {
+            'Station met fietsen': '{{ _("Station met fietsen") }}',
+            'Volle stations': '{{ _("Volle stations") }}',
+            'Lege stations': '{{ _("Lege stations") }}',
+            'Gesloten stations': '{{ _("Gesloten stations") }}'
+        };
+    </script>
+
+    <!-- Laad maps.js -->
     <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
  <script>
     // Functie om het juiste icoon te kiezen
@@ -42,11 +53,25 @@
         });
     }
 
-    // Markerdata van Flask
     const markers = {{ markers | tojson }};
 
-    // Loop door markers en voeg ze toe aan de kaart
     markers.forEach(function(marker) {
+        let customIcon = createCustomIcon(marker.status, marker['free-bikes'], marker['empty-slots']);
+        let popupContent;
+        if (marker.status === 'CLS') {
+            popupContent = `${marker.name}<br><span style="color: red; font-weight: bold;">{{ _('Closed') }}</span>`;
+        } else {
+            popupContent = `
+                ${marker.name}<br>
+                <img src='/static/images/bike.png' alt='bike' style='height: 16px; vertical-align: middle;'> ${marker['free-bikes']}
+                <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> ${marker['empty-slots']}
+            `;
+        }
+        L.marker([marker.lat, marker.lon], { icon: customIcon })
+            .addTo(map)
+            .bindPopup(popupContent);
+    });
+    </script>
     let customIcon = createCustomIcon(marker.status, marker['free-bikes'], marker['empty-slots']);
     let popupContent;
     if (marker.status === 'CLS') {
