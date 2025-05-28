@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, DECIMAL
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import event, select, func
+from sqlalchemy.orm import declarative_base, relationship, Session
 from datetime import datetime
 
 Base = declarative_base()
@@ -113,7 +114,42 @@ class Defect(Base):
     __tablename__ = "defecten"
     id = Column(Integer, primary_key=True)
     fiets_id = Column(Integer, ForeignKey("fietsen.id"))
+    station_id = Column(Integer, ForeignKey("stations.id"))
     probleem = Column(String)
 
     fiets = relationship("Fiets")
 
+
+def add_defect(db: Session, fiets_id: int, station_id: int, probleem: str):
+    defect = Defect(fiets_id=fiets_id, station_id=station_id, probleem=probleem)
+    db.add(defect)
+
+    fiets = db.query(Fiets).filter(Fiets.id == fiets_id).first()
+    if fiets:
+        fiets.status = "onderhoud"
+
+    db.commit()
+    return defect
+
+@event.listens_for(Defect, "after_insert")
+def update_fiets_status_defect(mapper, connection, target):
+    connection.execute(
+        Fiets.__table__.update()
+        .where(Fiets.id == target.fiets_id)
+        .values(status="onderhoud")
+    )
+
+@event.listens_for(Defect, "after_delete")
+def update_fiets_status_fixed(mapper, connection, target):
+    defect_count = connection.execute(
+        select(func.count())
+        .select_from(Defect.__table__)
+        .where(Defect.fiets_id == target.fiets_id)
+    ).scalar()
+
+    if defect_count == 0:
+        connection.execute(
+            Fiets.__table__.update()
+            .where(Fiets.id == target.fiets_id)
+            .values(status="beschikbaar")
+        )

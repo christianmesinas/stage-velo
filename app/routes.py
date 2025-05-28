@@ -326,6 +326,7 @@ def defect():
                 else:
                     nieuw_defect = Defect(
                         fiets_id=int(fiets_id),
+                        station_id=fiets.station_id,
                         probleem=probleem
                     )
                     db.add(nieuw_defect)

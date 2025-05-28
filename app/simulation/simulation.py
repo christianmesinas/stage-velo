@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import time
 import io
 from app.database.session import SessionLocal
-from app.database.models import Fiets, Station, Gebruiker
+from app.database.models import Fiets, Station, Gebruiker, Geschiedenis
 
 import psycopg2
 from faker import Faker
@@ -152,17 +152,19 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                     continue
 
                 duur = random.randint(2,30) #random duur in minuten voor een fietsrit
+                prijs = round(0.15 * duur, 2)
                 starttijd = gewogen_starttijd(datum)
                 eindtijd = starttijd + timedelta(minutes=duur)
 
                 geschiedenis.append({
                     "gebruiker_id": gebruiker["id"],
                     "fiets_id": fiets["id"],
-                    "begin_station_id": begin_station["id"],
+                    "start_station_id": begin_station["id"],
                     "eind_station_id": eind_station["id"],
                     "starttijd": starttijd.strftime("%Y-%m-%d %H:%M:%S"),
                     "eindtijd": eindtijd.strftime("%Y-%m-%d %H:%M:%S"),
-                    "duur_minuten": duur
+                    "duur_minuten": duur,
+                    "prijs": prijs
                 })
 
                 fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
@@ -173,7 +175,7 @@ def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een
     buffer = io.StringIO()
     for rit in geschiedenis:
         buffer.write(
-            f"{rit['gebruiker_id']},{rit['fiets_id']},{rit['begin_station_id']},"
+            f"{rit['gebruiker_id']},{rit['fiets_id']},{rit['start_station_id']},"
             f"{rit['eind_station_id']},{rit['starttijd']},{rit['eindtijd']},{rit['duur_minuten']}\n"
         )
     buffer.seek(0)
@@ -310,6 +312,30 @@ def sla_gebruikers_op_in_db(gebruikers):
         session.close()
 
 
+def sla_geschiedenis_op_in_db(geschiedenis):
+    session = SessionLocal()
+    try:
+        for g in geschiedenis:
+            geschieden = Geschiedenis(
+                # id=g["id"],
+                gebruiker_id=g["gebruiker_id"],
+                fiets_id=g["fiets_id"],
+                start_station_id=g["start_station_id"],
+                eind_station_id=g["eind_station_id"],
+                starttijd=g["starttijd"],
+                eindtijd=g["eindtijd"],
+                duur_minuten=g["duur_minuten"],
+                prijs=g["prijs"]
+            )
+            session.merge(geschieden)
+        session.commit()
+        print(f"{len(geschiedenis)} geschiedenis opgeslagen in de database.")
+    except Exception as e:
+        session.rollback()
+        print("❌ Fout bij opslaan geschiedenis:", e)
+    finally:
+        session.close()
+
 
    # geschiedenis = relationship("Geschiedenis", back_populates="gebruiker")
 
@@ -323,6 +349,7 @@ if __name__ == "__main__": #zorgt ervoor dat de functies enkel runnen wanneer ze
     sla_stations_op_in_db(stations)
     sla_fietsen_op_in_db(fietsen)
     sla_gebruikers_op_in_db(gebruikers)
+    sla_geschiedenis_op_in_db(geschiedenis)
 
     buffer = geschiedenis_to_csv_buffer(geschiedenis)
     with open("simulatie_output_csv", "w") as f:
