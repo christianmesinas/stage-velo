@@ -115,14 +115,15 @@ class Defect(Base):
     __tablename__ = "defecten"
     id = Column(Integer, primary_key=True)
     fiets_id = Column(Integer, ForeignKey("fietsen.id"))
-    station_id = Column(Integer, ForeignKey("stations.id"))
+    station_naam = Column(String, ForeignKey("stations.naam"))
     probleem = Column(String)
 
     fiets = relationship("Fiets")
+    station = relationship("Station", foreign_keys=[station_naam])
 
 
-def add_defect(db: Session, fiets_id: int, station_id: int, probleem: str):
-    defect = Defect(fiets_id=fiets_id, station_id=station_id, probleem=probleem)
+def add_defect(db: Session, fiets_id: int, station_naam: str, probleem: str):
+    defect = Defect(fiets_id=fiets_id, station_naam=station_naam, probleem=probleem)
     db.add(defect)
 
     fiets = db.query(Fiets).filter(Fiets.id == fiets_id).first()
