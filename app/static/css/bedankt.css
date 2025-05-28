@@ -1,13 +1,13 @@
-/* Basis reset voor marges en padding */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+.div1{
+  background: url("../images/div-1.png");
+  height: 80vh;
+  background-color: white;
+  border-radius: 20px;
+  margin: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.35);
 }
 
 /* Submitknop stijl */

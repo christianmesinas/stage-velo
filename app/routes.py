@@ -616,7 +616,8 @@ def betaling_succes():
         return "Geen gegevens gevonden.", 400
 
     from app.database import SessionLocal
-    from app.database.models import Usertable
+    from app.database.models import Usertable, Pas
+    from datetime import datetime, timedelta
 
     db = SessionLocal()
     gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
@@ -624,12 +625,76 @@ def betaling_succes():
         gebruiker.abonnement = data["type"]
         db.commit()
         session["Gebruiker"]["abonnement"] = data["type"]
+
+        soort = data["type"].lower()
+        start_datum = datetime.utcnow()
+
+        # normalizeer input (bv. 'dagpas', 'weekpas', 'jaarkaart')
+        if soort in ["dag", "dagpas"]:
+            eind_datum = start_datum + timedelta(days=1)
+            soort = "dag"
+        elif soort in ["week", "weekpas"]:
+            eind_datum = start_datum + timedelta(weeks=1)
+            soort = "week"
+        elif soort in ["jaar", "jaarkaart"]:
+            eind_datum = None
+            soort = "jaar"
+        else:
+            db.close()
+            return "Ongeldig abonnementstype.", 400
+
+        nieuwe_pas = Pas(
+            gebruiker_id=gebruiker.id,  # ✅ correct gekoppeld
+            soort=soort,
+            pincode=data["pincode"],
+            start_datum=start_datum,
+            eind_datum=eind_datum
+        )
+        db.add(nieuwe_pas)
+        db.commit()
+
     db.close()
 
-    flash(f"{data['type']} succesvol geactiveerd!", "success")
-    return render_template("tarieven/bedankt.html", data=data)
+    # Einddatum formatteren
+    if soort in ["dag", "week"]:
+        einddatum_tekst = eind_datum.strftime("%d/%m/%Y")
+    else:
+        einddatum_tekst = "Zolang je abonnement actief is"
+
+    return render_template("tarieven/bedankt.html", gebruiker=gebruiker, data=data, einddatum=einddatum_tekst)
+
+
+
+
+
+
+
 
 @routes.route("/betaling-annulatie")
 def betaling_annulatie():
     flash("Je betaling werd geannuleerd.", "danger")
-    return redirect(url_for("routes.tarieven"))
+
+    return """
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <title>Betaling geannuleerd</title>
+    </head>
+    <body>
+        <h1>❌ Betaling geannuleerd</h1>
+        <p>Je betaling is niet voltooid. Geen zorgen, je kan het later opnieuw proberen.</p>
+        <a href="/">← Terug naar de startpagina</a>
+    </body>
+    </html>
+    """
+
+
+
+
+
+
+
+
+
+

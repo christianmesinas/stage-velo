@@ -109,3 +109,17 @@ class Geschiedenis(Base):
     end_station = relationship("Station", foreign_keys=[eind_station_id], back_populates="end_geschiedenis")
 
 
+
+class Pas(Base):
+    __tablename__ = "passen"
+
+    id = Column(Integer, primary_key=True)
+    gebruiker_id = Column(Integer, ForeignKey("inlog_gegevens.id"), nullable=False)
+    soort = Column(String, nullable=False)  # dag, week, jaar
+    pincode = Column(String, nullable=False)
+    start_datum = Column(DateTime, default=datetime.utcnow)
+    eind_datum = Column(DateTime, nullable=True)
+
+    gebruiker = relationship("Usertable", backref="passen")
+
+
