@@ -183,14 +183,18 @@ def markers():
     stations = cur.fetchall()
     markers = []
     for station in stations:
-        markers.append({
-            'lat': float(station[3]),
-            'lon': float(station[4]),
-            'name': station[1],
-            'free-bikes': station[8],
-            'empty-slots': station[7],
-            'status': station[6],
-        })
+        if station[3] is not None and station[4] is not None:
+            try:
+                markers.append({
+                    'lat': float(station[3]),
+                    'lon': float(station[4]),
+                    'name': station[1],
+                    'free-bikes': station[8],
+                    'empty-slots': station[7],
+                    'status': station[6],
+                })
+            except (ValueError, TypeError):
+                continue  # sla stations met ongeldige coördinaten over
     cur.close()
     conn.close()
     return render_template("maps.html", markers=markers)
