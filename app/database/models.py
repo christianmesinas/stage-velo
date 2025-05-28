@@ -141,11 +141,11 @@ def update_fiets_status_defect(mapper, connection, target):
         .values(status="onderhoud")
     )
 
+''' WORK IN PROGRESS (IGNORE)
 @event.listens_for(Defect, "after_delete")
 def update_fiets_status_fixed(mapper, connection, target):
     defect_count = connection.execute(
-        select(func.count())
-        .select_from(Defect.__table__)
+        select(func.count(Defect.id))
         .where(Defect.fiets_id == target.fiets_id)
     ).scalar()
 
@@ -154,7 +154,8 @@ def update_fiets_status_fixed(mapper, connection, target):
             Fiets.__table__.update()
             .where(Fiets.id == target.fiets_id)
             .values(status="beschikbaar")
-        )
+        )'''
+
 class Pas(Base):
     __tablename__ = "passen"
 
