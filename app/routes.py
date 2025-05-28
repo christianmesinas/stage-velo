@@ -163,8 +163,8 @@ def markers():
     import psycopg2
     conn = psycopg2.connect(
         dbname="velo_community",
-        user="admin",
-        password="Velo123",
+        user=env.get("POSTGRES_USER"),
+        password=env.get("POSTGRES_PASSWORD"),
         host="host.docker.internal",
         port="5433"
     )

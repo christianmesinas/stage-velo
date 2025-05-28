@@ -165,7 +165,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                     "duur_minuten": duur
                 })
 
-                fiets["station_id"] = eind_station["id"] #de fiets wordt teogekend aan zijn nieuwe station.
+                fiets["station_naam"] = eind_station["name"] #de fiets wordt teogekend aan zijn nieuwe station.
     return geschiedenis
 
 
@@ -316,8 +316,8 @@ def sla_geschiedenis_op_in_db(geschiedenis):
                 # id=g["id"],
                 gebruiker_id=g["gebruiker_id"],
                 fiets_id=g["fiets_id"],
-                start_station_id=g["start_station_id"],
-                eind_station_id=g["eind_station_id"],
+                start_station_naam=g["begin_station_naam"],
+                eind_station_naam=g["eind_station_naam"],
                 starttijd=g["starttijd"],
                 eindtijd=g["eindtijd"],
                 duur_minuten=g["duur_minuten"],
