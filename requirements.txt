@@ -1,5 +1,6 @@
 alembic
 Flask
+flask-babel==4.0.0
 Flask_SQLAlchemy
 python-dotenv
 psycopg2-binary

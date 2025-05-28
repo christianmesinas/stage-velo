@@ -1,3 +1,6 @@
+// Mock _() functie voor pybabel extractie
+function _(str) { return str; }
+
 var map = L.map('map').setView([51.2194,4.4025], 13);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -8,10 +11,10 @@ var legend = L.control({position: 'bottomright'});
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend');
     var categories = [
-        { label: "Station met fietsen", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR04a9rmYuwrdOY-wd9R196xmBzJPWY6ERP6w&s" },
-        { label: "Volle station", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBAkFqlBX2bAivJuALy_bzTSN7ysB3GI634w&s" },
-        { label: "Lege station", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9SYMZI045Ex5qTuM1F2jFG0KBq1mWhG4YKw&s"},
-        { label: "Gesloten station", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwjZizx-6SkSoVR9tvHtDQGXPcxU-fQTyUHg&s"}
+        { label: _("Stations met fietsen"), img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR04a9rmYuwrdOY-wd9R196xmBzJPWY6ERP6w&s" },
+        { label: _("Volle stations"), img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBAkFqlBX2bAivJuALy_bzTSN7ysB3GI634w&s" },
+        { label: _("Lege stations"), img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9SYMZI045Ex5qTuM1F2jFG0KBq1mWhG4YKw&s"},
+        { label: _("Gesloten stations"), img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwjZizx-6SkSoVR9tvHtDQGXPcxU-fQTyUHg&s"}
     ];
     categories.forEach(function(cat) {
         div.innerHTML +=
@@ -21,6 +24,5 @@ legend.onAdd = function (map) {
 
     return div;
 };
-
 
 legend.addTo(map);

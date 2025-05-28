@@ -33,9 +33,20 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/maps.js') }}"></script>
+    <!-- Inline vertalingen -->
+    <script>
+        window.translations = {
+            'Station met fietsen': '{{ _("Station met fietsen") }}',
+            'Volle stations': '{{ _("Volle stations") }}',
+            'Lege stations': '{{ _("Lege stations") }}',
+            'Gesloten stations': '{{ _("Gesloten stations") }}'
+        };
+    </script>
 
-<script>
+    <!-- Laad maps.js -->
+    <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
+ <script>
+    // Functie om het juiste icoon te kiezen
     function createCustomIcon(status, freeBikes, emptySlots) {
         let iconUrl;
         if (status !== 'OPN') {
@@ -58,9 +69,11 @@
         });
     }
 
+    // Markerdata van Flask
     const markers = {{ markers | tojson }};
     const markerMap = new Map();
 
+    // Loop door markers en voeg ze toe aan de kaart
     markers.forEach(function(marker) {
         let customIcon = createCustomIcon(marker.status, marker['free-bikes'], marker['empty-slots']);
         let popupContent;
@@ -149,4 +162,8 @@
 
     updateStationCount();
 </script>
+
+    <!--<button id="refresh-button">Ververs Data</button> -->
+    <div id="map"></div>
+
 {% endblock %}
