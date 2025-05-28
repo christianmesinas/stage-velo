@@ -83,8 +83,7 @@ body.dark-mode .card-slider .card-item{
   height: fit-content;
   min-height: 30rem;
   list-style: none;
-  display: flex
-;
+  display: flex;
 }
 
 .card-item__title{
