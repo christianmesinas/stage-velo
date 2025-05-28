@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Dagpas Aanvragen{% endblock %}
+
+{% block title %}{{ _('Dagpas Aanvragen') }}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
@@ -13,62 +14,63 @@
 
 <div class="card-slider">
     <div class="card-item">
-    <h2 style="margin:auto; width:fit-content">Dagpas Aanvragen</h2>
+    <h2 style="margin:auto; width:fit-content">{{ _('Dagpas Aanvragen') }}</h2>
         <form method="POST" action="/tarieven/dagpas" class="form-container">
 
           <div class="form-row">
               <div class="form-group">
-                <label for="voornaam">Voornaam:</label>
+                <label for="voornaam">{{ _('Voornaam:') }}</label>
                 <input type="text" id="voornaam" name="voornaam" value="{{ formdata.get('voornaam', '') }}" required>
               </div>
 
               <div class="form-group">
-                <label for="achternaam">Achternaam:</label>
+                <label for="achternaam">{{ _('Achternaam:') }}</label>
                 <input type="text" id="achternaam" name="achternaam" value="{{ formdata.get('achternaam', '') }}" required>
               </div>
           </div>
 
           <div class="form-group">
-            <label for="email">E-mailadres:</label>
+            <label for="email">{{ _('E-mailadres:') }}</label>
             <input type="email" id="email" name="email" value="{{ formdata.get('email', '') }}" required>
           </div>
 
           <div class="form-row">
               <div class="form-group">
-                <label for="telefoon">Telefoonnummer:</label>
-                <input type="tel" id="telefoon" name="telefoon" pattern="^\+?\d{10,15}$" required placeholder="+32478942069" value="{{ formdata.get('telefoon', '') }}">
+                <label for="telefoon">{{ _('Telefoonnummer:') }}</label>
+                <input type="tel" id="telefoon" name="telefoon" pattern="^\+?\d{10,15}$" required placeholder="{{ _('Voer een telefoonnummer in') }}" value="{{ formdata.get('telefoon', '') }}">
               </div>
 
               <div class="form-group">
-                <label for="geboortedatum">Geboortedatum:</label>
+                <label for="geboortedatum">{{ _('Geboortedatum:') }}</label>
                 <input type="date" id="geboortedatum" name="geboortedatum" required value="{{ formdata.get('geboortedatum', '') }}">
               </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-                <label for="pincode">Pincode (4 cijfers):</label>
-                <input type="text" id="pincode" name="pincode" pattern="\d{4}" maxlength="4" required placeholder="Voer een pincode van 4 cijfers in." value="{{ formdata.get('pincode', '') }}">
+                <label for="pincode">{{ _('Pincode (4 cijfers):') }}</label>
+                <input type="text" id="pincode" name="pincode" pattern="\d{4}" maxlength="4" required placeholder="{{ _('Voer een pincode van 4 cijfers in.') }}" value="{{ formdata.get('pincode', '') }}">
               </div>
 
               <div class="form-group">
-                <label for="bevestig_pincode">Bevestig Pincode:</label>
-                <input type="text" id="bevestig_pincode" name="bevestig_pincode" pattern="\d{4}" maxlength="4" required placeholder="Voer een pincode van 4 cijfers in." value="{{ formdata.get('bevestig_pincode', '') }}">
+                <label for="bevestig_pincode">{{ _('Bevestig Pincode:') }}</label>
+                <input type="text" id="bevestig_pincode" name="bevestig_pincode" pattern="\d{4}" maxlength="4" required placeholder="{{ _('Voer een pincode van 4 cijfers in.') }}" value="{{ formdata.get('bevestig_pincode', '') }}">
               </div>
           </div>
-            {% if foutmelding %}
+
+          {% if foutmelding %}
   <p style="color: red; margin-bottom:10px; margin-top:2px;">{{ foutmelding }}</p>
 {% endif %}
 
           <div class="form-group">
             <label>
               <input type="checkbox" name="voorwaarden" required>
-              Ik ga akkoord met de <a href="/algemene-voorwaarden" target="_blank">algemene voorwaarden</a>
+              {{ _('Ik ga akkoord met de') }} <a href="/algemene-voorwaarden" target="_blank">{{ _('algemene voorwaarden') }}</a>
             </label>
           </div>
 
           <div class="form-group">
-              <button type="submit">Aanvragen</button>
+            <button type="submit">{{ _('Aanvragen') }}</button>
           </div>
 
         </form>
