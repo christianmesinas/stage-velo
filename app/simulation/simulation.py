@@ -31,7 +31,7 @@ for _, row in stations_df.iterrows(): #de data in de stations.csv (van velo antw
         "latitude": row["latitude"],
         "longitude": row["longitude"],
         "capaciteit": row["capaciteit"],
-        "status": None,
+        "status": 'OPN',
         "free_bikes": 0,
         "free_slots": 0
     })
@@ -61,10 +61,10 @@ def genereer_fietsen(aantal, stations):
     random.shuffle(station_ids) #random toewijzing van stations
 
     totaal = len(station_ids)
-    #een gecontroleerde random choice waar 20 procent van de stations vol zijn, 1 procent volledig leeg zijn.
-    #de resterdende 71 procent heeft dan een willekeurig aantal fietsen en vrije slots.
-    n_vol = round(totaal * 0.2)
-    n_leeg = max(1, round(totaal * 0.01))
+    #een gecontroleerde random choice waar 10 procent van de stations vol zijn, 1 procent volledig leeg zijn.
+    #de resterdende procent heeft dan een willekeurig aantal fietsen en vrije slots.
+    n_vol = round(totaal * 0.1)
+    n_leeg = max(1, round(totaal * 0.000001))
     n_partial = totaal - n_vol - n_leeg
     #een onderscheid tussen volle stations , lege stations en stations die niet leeg alsook niet vol zijn.
     stations_vol = station_ids[:n_vol]
@@ -317,7 +317,7 @@ def sla_gebruikers_op_in_db(gebruikers):
 
 if __name__ == "__main__": #zorgt ervoor dat de functies enkel runnen wanneer ze worden opgeroepen, en niet tijdens import.
     gebruikers = genereer_gebruikers(30000)
-    fietsen = genereer_fietsen(2000, stations)
+    fietsen = genereer_fietsen(5800, stations)
     geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
     sla_stations_op_in_db(stations)
     sla_fietsen_op_in_db(fietsen)

@@ -4,7 +4,7 @@ import stripe
 from flask import jsonify
 
 
-
+import psycopg2
 import pytz
 from app.database.models import Usertable, Gebruiker
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
@@ -37,7 +37,6 @@ def admin_required(f):
             return "❌ Geen toegang: je bent geen administrator", 403
         return f(*args, **kwargs)
     return decorated_function
-
 
 
 # ✅ Создание Blueprint / Maak een Blueprint
@@ -156,16 +155,29 @@ def help():
 
 @routes.route("/maps")
 def markers():
+    import psycopg2
+    conn = psycopg2.connect(
+        dbname="velo_community",
+        user="admin",
+        password="Velo123",
+        host="host.docker.internal",
+        port="5433"
+    )
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM stations")
+    stations = cur.fetchall()
     markers = []
-    for location in api.get_alle_stations():
+    for station in stations:
         markers.append({
-            'lat': location[4],
-            'lon': location[5],
-            'name': location[1],
-            'free-bikes': location[6],
-            'empty-slots': location[7],
-            'status': location[3],
+            'lat': float(station[3]),
+            'lon': float(station[4]),
+            'name': station[1],
+            'free-bikes': station[8],
+            'empty-slots': station[7],
+            'status': station[6],
         })
+    cur.close()
+    conn.close()
     return render_template("maps.html", markers=markers)
 
 
