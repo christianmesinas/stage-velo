@@ -432,6 +432,41 @@ def transport_dashboard():
         volle_stations=volle_stations
     )
 
+@routes.route('/verplaats_fietsen', methods=['POST'])
+def verplaats_fietsen():
+    db_session = SessionLocal()
+
+    try:
+        from_id = int(request.form['from_station_id'])
+        to_id = int(request.form['to_station_id'])
+        aantal = int(request.form['aantal'])
+
+        from_station = db_session.query(Station).filter_by(id=from_id).first()
+        to_station = db_session.query(Station).filter_by(id=to_id).first()
+
+        # Validatie
+        if not from_station or not to_station:
+            message = "Station niet gevonden."
+        elif from_station.parked_bikes < aantal:
+            message = f"Niet genoeg fietsen in {from_station.naam}."
+        elif to_station.parked_bikes + aantal > to_station.capaciteit:
+            message = f"{to_station.naam} heeft niet genoeg ruimte."
+        else:
+            # Update
+            from_station.parked_bikes -= aantal
+            to_station.parked_bikes += aantal
+            db_session.commit()
+            message = f"{aantal} fietsen verplaatst van {from_station.naam} naar {to_station.naam}."
+
+    except Exception as e:
+        db_session.rollback()
+        message = f"Fout: {str(e)}"
+    finally:
+        db_session.close()
+
+    # Herladen met boodschap
+    return redirect(url_for('routes.transport_dashboard', _anchor='form', message=message))
+
 
 # ======================
 # ADMIN ROUTE
