@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="{{ language }}">
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Velo App{% endblock %}</title>
@@ -12,7 +12,8 @@
   {% block head %}{% endblock %}
 </head>
 <body>
-<!-- ✅ Header blok – overschrijfbaar in child templates -->
+
+<!-- ✅ Header -->
 {% block header %}
 <header>
   <a href="/">
@@ -22,28 +23,39 @@
   </a>
 
   <nav class="nav-links">
-    <a href="#">Hoe het werkt</a>
-    <a href="/tarieven">Tarieven</a>
-    <a href="maps">Vind een fiets</a>
-    <a href="help">Help</a>
-    <a href="/#footer">Contact</a>
+    <a href="#">{{ _('Hoe het werkt') }}</a>
+    <a href="{{ url_for('routes.tarieven') }}">{{ _('Tarieven') }}</a>
+    <a href="{{ url_for('routes.markers') }}">{{ _('Vind een fiets') }}</a>
+    <a href="#">{{ _('Help') }}</a>
+    <a href="#footer">{{ _('Contact') }}</a>
+
     <div class="dropdown">
-      <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Meer ▼</a>
+      <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">{{ _('Meer ▼') }}</a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="/defect">Fiets defect?</a>
-        <a class="dropdown-item" href="#">optie 2</a>
+        <a class="dropdown-item" href="{{ url_for('routes.defect') }}">{{ _('Fiets defect?') }}</a>
+        <a class="dropdown-item" href="#">{{ _('optie 2') }}</a>
       </div>
+    </div>
+
+    <div class="language-selector">
+      <select id="language-selector" onchange="changeLanguage()" aria-label="{{ _('Selecteer taal') }}">
+        <option value="nl" {% if language == 'nl' %}selected{% endif %}>{{ _('Nederlands ▼') }}</option>
+        <option value="en" {% if language == 'en' %}selected{% endif %}>{{ _('English ▼') }}</option>
+        <option value="fr" {% if language == 'fr' %}selected{% endif %}>{{ _('Français ▼') }}</option>
+        <option value="es" {% if language == 'es' %}selected{% endif %}>{{ _('Español ▼') }}</option>
+        <option value="de" {% if language == 'de' %}selected{% endif %}>{{ _('Deutsch ▼') }}</option>
+      </select>
     </div>
   </nav>
 
   <div class="nav-buttons">
-      <button id="darkModeToggle" class="dark-toggle-btn" style="right: 0.5rem;">🌗</button>
-    {% if session.get('Gebruiker') %}
-      <a href="{{ url_for('routes.profile') }}" class="profile">Profiel</a>
-      <a href="{{ url_for('routes.logout') }}" class="logout">Uitloggen</a>
+    <button id="darkModeToggle" class="dark-toggle-btn" style="right: 0.5rem;">🌗</button>
+    {% if user or session.get('Gebruiker') %}
+      <a href="{{ url_for('routes.profile') }}" class="profile">{{ _('Profiel') }}</a>
+      <a href="{{ url_for('routes.logout') }}" class="logout">{{ _('Uitloggen') }}</a>
     {% else %}
-      <a href="{{ url_for('routes.login') }}" class="login">Inloggen</a>
-      <a href="{{ url_for('routes.login') }}" class="register">Account aanmaken</a>
+      <a href="{{ url_for('routes.login') }}" class="login">{{ _('Inloggen') }}</a>
+      <a href="{{ url_for('routes.login') }}" class="register">{{ _('Account aanmaken') }}</a>
     {% endif %}
   </div>
 </header>
@@ -54,17 +66,41 @@
 </noscript>
 {% endblock %}
 
+<!-- ✅ Main content -->
 <main>
   {% block content %}{% endblock %}
 </main>
 
+<!-- ✅ Scripts block -->
 {% block scripts %}{% endblock %}
-
 
 <!-- 🌗 Icoon dat uit de knop omhoog vliegt -->
 <div id="theme-icon-animation" class="theme-icon">🌙</div>
 
-<!-- ✅ Donkere modus script -->
+<!-- ✅ Taalselector-script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const url = new URL(window.location.href);
+    const langFromUrl = url.searchParams.get('lang');
+    const serverLanguage = "{{ language | safe }}";
+    const selector = document.getElementById('language-selector');
+    if (selector) {
+      const selectedLanguage = langFromUrl || serverLanguage || 'nl';
+      selector.value = selectedLanguage;
+      console.log(`Setting language selector to: ${selectedLanguage}`);
+    }
+  });
+
+  function changeLanguage() {
+    const language = document.getElementById('language-selector').value;
+    const currentUrl = window.location.href;
+    const url = new URL(currentUrl);
+    url.searchParams.set('lang', language);
+    window.location.href = url.toString();
+  }
+</script>
+
+<!-- ✅ Donkere modus -->
 <script>
   const toggleButton = document.getElementById("darkModeToggle");
   const themeIcon = document.getElementById("theme-icon-animation");
@@ -99,7 +135,7 @@
   });
 </script>
 
-<!-- ✅ Bootstrap JS -->
+<!-- ✅ Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- ✅ Flash alerts fade-out -->

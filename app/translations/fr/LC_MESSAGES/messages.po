@@ -1,0 +1,331 @@
+# French translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-05-21 15:22+0200\n"
+"PO-Revision-Date: 2025-05-21 12:18+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: French <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: static/maps.js:14
+msgid "Station met fietsen"
+msgstr "Station avec vélos"
+
+#: static/maps.js:15
+msgid "Volle stations"
+msgstr "Stations pleins"
+
+#: static/maps.js:16
+msgid "Lege stations"
+msgstr "Stations vides"
+
+#: static/maps.js:17
+msgid "Gesloten stations"
+msgstr "Stations fermés"
+
+#: templates/base.html:15
+msgid "Hoe het werkt"
+msgstr "Comment ça marche"
+
+#: templates/base.html:16 templates/tarieven.html:3
+msgid "Tarieven"
+msgstr "Tarifs"
+
+#: templates/base.html:17
+msgid "Vind een fiets"
+msgstr "Trouver un vélo"
+
+#: templates/base.html:18
+msgid "Help"
+msgstr "Aide"
+
+#: templates/base.html:19
+msgid "Contact"
+msgstr "Contact"
+
+#: templates/base.html:21
+msgid "Meer ▼"
+msgstr "Plus ▼"
+
+#: templates/base.html:23
+msgid "Fiets defect?"
+msgstr "Vélo en panne ?"
+
+#: templates/base.html:24
+msgid "optie 2"
+msgstr "Option 2"
+
+#: templates/base.html:35
+msgid "Profiel"
+msgstr "Profil"
+
+#: templates/base.html:36
+msgid "Uitloggen"
+msgstr "Se déconnecter"
+
+#: templates/base.html:38
+msgid "Inloggen"
+msgstr "Se connecter"
+
+#: templates/base.html:39
+msgid "Account aanmaken"
+msgstr "Créer un compte"
+
+#: templates/index.html:13
+msgid "ANTWERPEN"
+msgstr "ANVERS"
+
+#: templates/index.html:13
+msgid "BEWEEGT."
+msgstr "BOUGE."
+
+#: templates/index.html:13
+msgid "JIJ"
+msgstr "TOI"
+
+#: templates/index.html:13
+msgid "OOK?"
+msgstr "AUSSI ?"
+
+#: templates/index.html:14 templates/index.html:97
+msgid "Jouw rit, jouw stad, jouw tempo."
+msgstr "Ton trajet, ta ville, ton rythme."
+
+#: templates/index.html:15
+msgid "we need more tekst here, Make some Vélocity"
+msgstr "Il nous faut plus de texte ici, fais un peu de Vélocité"
+
+#: templates/index.html:16 templates/index.html:99
+msgid "Gebruik Velo voor een dag, een week of een jaar."
+msgstr "Utilise Velo pour un jour, une semaine ou un an."
+
+#: templates/index.html:27
+msgid "FORMULES EN"
+msgstr "FORMULES ET"
+
+#: templates/index.html:27
+msgid "TARIEVEN"
+msgstr "TARIFS"
+
+#: templates/index.html:29 templates/index.html:44 templates/index.html:59
+#: templates/tarieven.html:19 templates/tarieven.html:33
+#: templates/tarieven.html:47
+msgid "lorum ipsum and all that good stuff. We got tarifs, we got bikes!"
+msgstr "Lorem ipsum et tout ce bon stuff. On a des tarifs, on a des vélos !"
+
+#: templates/index.html:30 templates/index.html:45 templates/index.html:60
+msgid "What more could you need? What i need right now is more text here."
+msgstr ""
+"De quoi d'autre as-tu besoin ? Ce dont j'ai besoin maintenant, c'est plus"
+" de texte ici."
+
+#: templates/index.html:31 templates/index.html:46 templates/index.html:61
+msgid "I could just put lorum ipsum here but thats boring."
+msgstr "Je pourrais juste mettre du lorem ipsum ici, mais c'est ennuyeux."
+
+#: templates/index.html:32 templates/index.html:47 templates/index.html:62
+#: templates/tarieven.html:22 templates/tarieven.html:36
+#: templates/tarieven.html:50
+msgid "Nothing beats a good copywriting in the morning, yup."
+msgstr "Rien ne vaut un bon texte publicitaire le matin, hein."
+
+#: templates/index.html:33 templates/index.html:48 templates/index.html:63
+msgid "Whoever is reading this, i'm sorry for wasting 3 minutes of your time."
+msgstr "À celui qui lit ceci, désolé de faire perdre 3 minutes de ton temps."
+
+#: templates/index.html:34 templates/index.html:49 templates/index.html:64
+#: templates/tarieven.html:24 templates/tarieven.html:38
+#: templates/tarieven.html:52
+msgid "But thanks anyways! :D"
+msgstr "Mais merci quand même ! :D"
+
+#: templates/index.html:35 templates/index.html:50 templates/index.html:65
+msgid "KIES JE FORMULE"
+msgstr "CHOISIS TA FORMULE"
+
+#: templates/index.html:42
+msgid "DEEL 2 EN"
+msgstr "PARTIE 2 ET"
+
+#: templates/index.html:42
+msgid "DEEL 2"
+msgstr "PARTIE 2"
+
+#: templates/index.html:57
+msgid "DEEL 3 EN"
+msgstr "PARTIE 3 ET"
+
+#: templates/index.html:57
+msgid "DEEL 3"
+msgstr "PARTIE 3"
+
+#: templates/index.html:96
+msgid "HULP"
+msgstr "AIDE"
+
+#: templates/index.html:96
+msgid "NODIG?"
+msgstr "NÉCESSAIRE ?"
+
+#: templates/index.html:98
+msgid "we hebben meer tekst nodig. Maak een beetje Vélocity"
+msgstr "Il nous faut plus de texte. Fais un peu de Vélocité"
+
+#: templates/index.html:114
+msgid "Copyright Velo Antwerpen 2025 ALLE RECHTEN VOORBEHOUDEN"
+msgstr "Copyright Velo Anvers 2025 TOUS DROITS RÉSERVÉS"
+
+#: templates/index.html:117
+msgid "CONTACT"
+msgstr "CONTACT"
+
+#: templates/maps.html:49
+msgid "Closed"
+msgstr ""
+
+#: templates/tarieven.html:17
+msgid "DAGPAS"
+msgstr "PASS JOUR"
+
+#: templates/tarieven.html:20 templates/tarieven.html:34
+#: templates/tarieven.html:48
+msgid "What more could you need? What I need right now is more text here."
+msgstr ""
+"De quoi d'autre as-tu besoin ? Ce dont j'ai besoin maintenant, c'est plus"
+" de texte ici."
+
+#: templates/tarieven.html:21 templates/tarieven.html:35
+#: templates/tarieven.html:49
+msgid "I could just put lorum ipsum here but that’s boring."
+msgstr "Je pourrais juste mettre du lorem ipsum ici, mais c'est ennuyeux."
+
+#: templates/tarieven.html:23 templates/tarieven.html:37
+#: templates/tarieven.html:51
+msgid "Whoever is reading this, I'm sorry for wasting 3 minutes of your time."
+msgstr "À celui qui lit ceci, désolé de faire perdre 3 minutes de ton temps."
+
+#: templates/tarieven.html:25 templates/tarieven.html:39
+#: templates/tarieven.html:53
+msgid "KOOP NU"
+msgstr "ACHETER MAINTENANT"
+
+#: templates/tarieven.html:31
+msgid "WEEKPAS"
+msgstr "PASS SEMAINE"
+
+#: templates/tarieven.html:45
+msgid "JAARKAART"
+msgstr "PASS ANNUEL"
+
+#: templates/tarieven/bedankt.html:3
+msgid "Bedankt voor je aanvraag"
+msgstr "Merci pour votre demande"
+
+#: templates/tarieven/bedankt.html:12
+msgid "Bedankt voor je aanvraag!"
+msgstr "Merci pour votre demande !"
+
+#: templates/tarieven/bedankt.html:13
+msgid "We hebben je gegevens goed ontvangen."
+msgstr "Nous avons bien reçu vos informations."
+
+#: templates/tarieven/bedankt.html:16 templates/tarieven/dagpas.html:22
+#: templates/tarieven/jaarkaart.html:22 templates/tarieven/weekpas.html:22
+msgid "Voornaam:"
+msgstr "Prénom :"
+
+#: templates/tarieven/bedankt.html:17 templates/tarieven/dagpas.html:27
+#: templates/tarieven/jaarkaart.html:27 templates/tarieven/weekpas.html:27
+msgid "Achternaam:"
+msgstr "Nom :"
+
+#: templates/tarieven/bedankt.html:18
+msgid "E-mail:"
+msgstr "E-mail :"
+
+#: templates/tarieven/bedankt.html:19 templates/tarieven/dagpas.html:39
+#: templates/tarieven/jaarkaart.html:39 templates/tarieven/weekpas.html:39
+msgid "Telefoonnummer:"
+msgstr "Numéro de téléphone :"
+
+#: templates/tarieven/bedankt.html:20 templates/tarieven/dagpas.html:44
+#: templates/tarieven/jaarkaart.html:44 templates/tarieven/weekpas.html:44
+msgid "Geboortedatum:"
+msgstr "Date de naissance :"
+
+#: templates/tarieven/bedankt.html:23
+msgid ""
+"Je gekozen pincode is veilig opgeslagen. Je kunt nu gebruik maken van je "
+"pas!"
+msgstr ""
+"Votre code PIN choisi a été enregistré en toute sécurité. Vous pouvez "
+"maintenant utiliser votre pass !"
+
+#: templates/tarieven/bedankt.html:25
+msgid "Ga terug naar startpagina"
+msgstr "Retour à la page d'accueil"
+
+#: templates/tarieven/dagpas.html:3 templates/tarieven/dagpas.html:17
+msgid "Dagpas Aanvragen"
+msgstr "Demander un Pass Jour"
+
+#: templates/tarieven/dagpas.html:33 templates/tarieven/jaarkaart.html:33
+#: templates/tarieven/weekpas.html:33
+msgid "E-mailadres:"
+msgstr "Adresse e-mail :"
+
+#: templates/tarieven/dagpas.html:40 templates/tarieven/jaarkaart.html:40
+#: templates/tarieven/weekpas.html:40
+msgid "Voer een telefoonnummer in"
+msgstr "Entrez un numéro de téléphone"
+
+#: templates/tarieven/dagpas.html:51 templates/tarieven/jaarkaart.html:51
+#: templates/tarieven/weekpas.html:51
+msgid "Pincode (4 cijfers):"
+msgstr "Code PIN (4 chiffres) :"
+
+#: templates/tarieven/dagpas.html:52 templates/tarieven/dagpas.html:57
+#: templates/tarieven/jaarkaart.html:52 templates/tarieven/jaarkaart.html:57
+#: templates/tarieven/weekpas.html:52 templates/tarieven/weekpas.html:57
+msgid "Voer een pincode van 4 cijfers in."
+msgstr "Entrez un code PIN de 4 chiffres."
+
+#: templates/tarieven/dagpas.html:56 templates/tarieven/jaarkaart.html:56
+#: templates/tarieven/weekpas.html:56
+msgid "Bevestig Pincode:"
+msgstr "Confirmer le code PIN :"
+
+#: templates/tarieven/dagpas.html:68 templates/tarieven/jaarkaart.html:68
+#: templates/tarieven/weekpas.html:68
+msgid "Ik ga akkoord met de"
+msgstr "J'accepte les"
+
+#: templates/tarieven/dagpas.html:68 templates/tarieven/jaarkaart.html:68
+#: templates/tarieven/weekpas.html:68
+msgid "algemene voorwaarden"
+msgstr "conditions générales"
+
+#: templates/tarieven/dagpas.html:73 templates/tarieven/jaarkaart.html:73
+#: templates/tarieven/weekpas.html:73
+msgid "Aanvragen"
+msgstr "Demander"
+
+#: templates/tarieven/jaarkaart.html:3 templates/tarieven/jaarkaart.html:17
+msgid "Jaarkaart Aanvragen"
+msgstr "Demander un Pass Annuel"
+
+#: templates/tarieven/weekpas.html:3 templates/tarieven/weekpas.html:17
+msgid "Weekpas Aanvragen"
+msgstr "Demander un Pass Semaine"
+
