@@ -13,26 +13,27 @@ import os
 
 # Dynamisch pad naar velo.csv (2 niveaus omhoog vanaf script)
 script_dir = os.path.dirname(__file__)
-csv_path = os.path.join(script_dir, "velo.csv")
+csv_path = os.path.join(script_dir, "stations.csv")
 stations_df = pd.read_csv(csv_path)
 
 fake = Faker()
 antwerpen_postcodes = ['2000','2018','2020','2030','2040','2050','2060','2100','2130','2140','2150','2170','2180','2600','2610','2610','2660'] #alle postcodes antwerpen in een lijst
 
 # Verwerk stationsgegevens
-stations_df.dropna(subset=["Naam"], inplace=True)
+stations_df.dropna(subset=["naam"], inplace=True)
 
 stations = []
 for _, row in stations_df.iterrows(): #de data in de stations.csv (van velo antwerpen) in een lijst stations steken.
     stations.append({
-        "id": row["OBJECTID"],
-        "name": row["Naam"],
-        "straat": row.get("Straatnaam", ""),
-        "postcode": row.get("Postcode", ""),
-        "capaciteit": row.get("Aantal_plaatsen", 0),
-        "status": row.get("Gebruik", "ONBEKEND"),
+        "id": row["id"],
+        "name": row["naam"],
+        "straat": row["adres"],
+        "latitude": row["latitude"],
+        "longitude": row["longitude"],
+        "capaciteit": row["capaciteit"],
+        "status": None,
         "free_bikes": 0,
-        "free_slots": row.get("Aantal_plaatsen", 0)
+        "free_slots": 0
     })
 
 
@@ -98,7 +99,7 @@ def genereer_fietsen(aantal, stations):
             status = random.choices(["beschikbaar", "onderhoud"], weights=[0.8, 0.2])[0]
             fietsen.append({
                 "id": fiets_id,
-                "station_id": sid,
+                "station_naam": station_lookup[sid]["name"],
                 "status": status
             })
             if status == "beschikbaar":
@@ -112,7 +113,7 @@ def genereer_fietsen(aantal, stations):
     while len(fietsen) < aantal:
         fietsen.append({
             "id": fiets_id,
-            "station_id": None,
+            "station_naam": None,
             "status": "onderweg"
         })
         fiets_id += 1
@@ -138,15 +139,15 @@ def gewogen_starttijd(datum):
 def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fiets_per_dag=4): #velo gemiddelde is 4 ritten/fiets/dag
     geschiedenis = []
     vandaag = datetime.today().date() #simulatie telt terug van de dag van vandaag, als default de voorbije 28dagen (1maand)
-    beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
+    beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_naam"] is not None]
 
     for dag_offset in range(dagen):
         datum = vandaag - timedelta(days=(dagen - dag_offset - 1)) #dagen tellen van het aantal dagen tot dag van vandaag
         for fiets in beschikbare_fietsen:
             for _ in range(ritten_per_fiets_per_dag):
                 gebruiker = random.choice(gebruikers)
-                begin_station = next((s for s in stations if s["id"] == fiets["station_id"]), None)
-                eind_station = random.choice([s for s in stations if s["id"] != fiets["station_id"]])
+                begin_station = next((s for s in stations if s["name"] == fiets["station_naam"]), None)
+                eind_station = random.choice([s for s in stations if s["name"] != fiets["station_naam"]])
 
                 if not begin_station or not eind_station:
                     continue
@@ -158,8 +159,8 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                 geschiedenis.append({
                     "gebruiker_id": gebruiker["id"],
                     "fiets_id": fiets["id"],
-                    "begin_station_id": begin_station["id"],
-                    "eind_station_id": eind_station["id"],
+                    "begin_station_naam": begin_station["name"],
+                    "eind_station_naam": eind_station["name"],
                     "starttijd": starttijd.strftime("%Y-%m-%d %H:%M:%S"),
                     "eindtijd": eindtijd.strftime("%Y-%m-%d %H:%M:%S"),
                     "duur_minuten": duur
@@ -173,8 +174,8 @@ def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een
     buffer = io.StringIO()
     for rit in geschiedenis:
         buffer.write(
-            f"{rit['gebruiker_id']},{rit['fiets_id']},{rit['begin_station_id']},"
-            f"{rit['eind_station_id']},{rit['starttijd']},{rit['eindtijd']},{rit['duur_minuten']}\n"
+            f"{rit['gebruiker_id']},{rit['fiets_id']},{rit['begin_station_naam']},"
+            f"{rit['eind_station_naam']},{rit['starttijd']},{rit['eindtijd']},{rit['duur_minuten']}\n"
         )
     buffer.seek(0)
     return buffer
@@ -184,7 +185,7 @@ def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een
 def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=4):
     geschiedenis = []
     station_lookup = {s["id"]: s for s in stations}
-    beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_id"] is not None]
+    beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_naam"] is not None]
     vandaag = datetime.today().date()
 
     for dag_offset in range(dagen):#de simulatie telt de voorbije aantal dagen.
@@ -199,8 +200,8 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
         for fiets in beschikbare_fietsen:
             for _ in range(ritten_per_fiets_per_dag):
                 gebruiker = random.choice(gebruikers)
-                begin_station = station_lookup.get(fiets["station_id"])
-                bepaling_eind_station = [s for s in stations if s["id"] != begin_station["id"]] #de eindstation mag niet hetzelfde zijn als waar de fiets wordt genomen.
+                begin_station = station_lookup.get(fiets["station_naam"])
+                bepaling_eind_station = [s for s in stations if s["name"] != begin_station["name"]] #de eindstation mag niet hetzelfde zijn als waar de fiets wordt genomen.
                 if not begin_station or not bepaling_eind_station:
                     continue
 
@@ -212,8 +213,8 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
                 geschiedenis.append({
                     "gebruiker_id": gebruiker["id"],
                     "fiets_id": fiets["id"],
-                    "begin_station_id": begin_station["id"],
-                    "eind_station_id": eind_station["id"],
+                    "begin_station_naam": begin_station["name"],
+                    "eind_station_naam": eind_station["name"],
                     "starttijd": starttijd.strftime("%Y-%m-%d %H:%M:%S"),
                     "eindtijd": eindtijd.strftime("%Y-%m-%d %H:%M:%S"),
                     "duur_minuten": duur
@@ -239,9 +240,8 @@ def sla_stations_op_in_db(stations):
                 # Update bestaande waarden
                 bestaand_station.naam = s["name"]
                 bestaand_station.straat = s["straat"]
-                bestaand_station.postcode = s["postcode"]
-                bestaand_station.latitude = None
-                bestaand_station.longitude = None
+                bestaand_station.latitude = s["latitude"]
+                bestaand_station.longitude = s["longitude"]
                 bestaand_station.capaciteit = s["capaciteit"]
                 bestaand_station.status = s["status"]
                 bestaand_station.free_slots = s["free_slots"]
@@ -251,9 +251,8 @@ def sla_stations_op_in_db(stations):
                     id=s["id"],
                     naam=s["name"],
                     straat=s["straat"],
-                    postcode=s["postcode"],
-                    latitude=None,
-                    longitude=None,
+                    latitude=s["latitude"],
+                    longitude=s["longitude"],
                     capaciteit=s["capaciteit"],
                     status=s["status"],
                     free_slots=s["free_slots"],
@@ -275,7 +274,7 @@ def sla_fietsen_op_in_db(fietsen):
         for f in fietsen:
             fiets = Fiets(
                 id=f["id"],
-                station_id=f["station_id"],
+                station_naam=f["station_naam"],
                 status=f["status"]
             )
             session.merge(fiets)  # merge voorkomt fouten bij dubbele ID’s

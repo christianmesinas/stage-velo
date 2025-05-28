@@ -1,3 +1,5 @@
+from email.charset import Charset
+
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, DECIMAL
 from sqlalchemy.orm import declarative_base, relationship
 from datetime import datetime
@@ -57,10 +59,9 @@ class Gebruiker(Base):
 class Station(Base):
     __tablename__ = "stations"
 
-    id = Column(Integer, primary_key=True)
-    naam = Column(String)
+    id = Column(String(32), primary_key=True)
+    naam = Column(String, unique=True)
     straat = Column(String)
-    postcode = Column(String)
     latitude = Column(DECIMAL)
     longitude = Column(DECIMAL)
     capaciteit = Column(Integer)
@@ -70,12 +71,12 @@ class Station(Base):
 
     start_geschiedenis = relationship(
         "Geschiedenis",
-        foreign_keys="Geschiedenis.start_station_id",
+        foreign_keys="Geschiedenis.start_station_naam",
         back_populates="start_station"
     )
     end_geschiedenis = relationship(
         "Geschiedenis",
-        foreign_keys="Geschiedenis.eind_station_id",
+        foreign_keys="Geschiedenis.eind_station_naam",
         back_populates="end_station"
     )
 
@@ -84,7 +85,7 @@ class Fiets(Base):
     __tablename__ = "fietsen"
 
     id = Column(Integer, primary_key=True)
-    station_id = Column(Integer, ForeignKey("stations.id"))
+    station_naam = Column(String, ForeignKey("stations.naam"))
     status = Column(String)
 
     geschiedenis = relationship("Geschiedenis", back_populates="fiets")
@@ -96,8 +97,8 @@ class Geschiedenis(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     gebruiker_id = Column(Integer, ForeignKey("gebruikers.id"))
     fiets_id = Column(Integer, ForeignKey("fietsen.id"))
-    start_station_id = Column(Integer, ForeignKey("stations.id"))
-    eind_station_id = Column(Integer, ForeignKey("stations.id"))
+    start_station_naam = Column(String, ForeignKey("stations.naam"))
+    eind_station_naam = Column(String, ForeignKey("stations.naam"))
     starttijd = Column(DateTime, default=datetime.utcnow)
     eindtijd = Column(DateTime)
     duur_minuten = Column(DECIMAL)
@@ -105,8 +106,8 @@ class Geschiedenis(Base):
 
     gebruiker = relationship("Gebruiker", back_populates="geschiedenis")
     fiets = relationship("Fiets", back_populates="geschiedenis")
-    start_station = relationship("Station", foreign_keys=[start_station_id], back_populates="start_geschiedenis")
-    end_station = relationship("Station", foreign_keys=[eind_station_id], back_populates="end_geschiedenis")
+    start_station = relationship("Station", foreign_keys=[start_station_naam], back_populates="start_geschiedenis")
+    end_station = relationship("Station", foreign_keys=[eind_station_naam], back_populates="end_geschiedenis")
 
 # Defecte fietsen met probleem opslaan in de databank
 class Defect(Base):
