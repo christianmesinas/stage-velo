@@ -2,7 +2,6 @@ from flask import Flask, session
 from dotenv import load_dotenv
 from os import getenv
 import stripe
-
 from app.database import SessionLocal
 from app.database.models import Base
 from app.routes import routes
