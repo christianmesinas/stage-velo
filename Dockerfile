@@ -14,3 +14,7 @@ COPY . .
 # Start de app
 CMD ["python", "app.py"]
 
+# Start de simulatie
+CMD ["python", "app/simulation/simulation.py"]
+
+
