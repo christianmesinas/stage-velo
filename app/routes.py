@@ -173,8 +173,8 @@ def markers():
     import psycopg2
     conn = psycopg2.connect(
         dbname="velo_community",
-        user="admin",
-        password="Velo123",
+        user=env.get("POSTGRES_USER"),
+        password=env.get("POSTGRES_PASSWORD"),
         host="host.docker.internal",
         port="5433"
     )
@@ -414,6 +414,7 @@ def defect():
                 else:
                     nieuw_defect = Defect(
                         fiets_id=int(fiets_id),
+                        station_naam=fiets.station_naam,
                         probleem=probleem
                     )
                     db.add(nieuw_defect)
