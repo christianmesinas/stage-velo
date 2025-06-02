@@ -103,7 +103,6 @@ class Geschiedenis(Base):
     starttijd = Column(DateTime, default=datetime.utcnow)
     eindtijd = Column(DateTime)
     duur_minuten = Column(DECIMAL)
-    prijs = Column(DECIMAL)
 
     gebruiker = relationship("Gebruiker", back_populates="geschiedenis")
     fiets = relationship("Fiets", back_populates="geschiedenis")
