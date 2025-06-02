@@ -32,10 +32,10 @@ from werkzeug.utils import secure_filename
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        gebruiker = session.get("Gebruiker")
+        gebruiker = session.get("Gebruiker") #eerst checken of er is ingelogd
         if not gebruiker:
             return redirect(url_for("routes.login", next=request.path))
-        if gebruiker.get("email") != os.getenv("ADMIN_EMAIL"):
+        if gebruiker.get("email") != os.getenv("ADMIN_EMAIL"): #hierna checken we of de user email overeenkomt met admin_email
             return "❌ Geen toegang: je bent geen administrator", 403
         return f(*args, **kwargs)
     return decorated_function
@@ -163,10 +163,10 @@ def help():
 @routes.route("/maps")
 def markers():
     import psycopg2
-    conn = psycopg2.connect(
+    conn = psycopg2.connect( #connecteren met de database voor de stations data
         dbname="velo_community",
-        user="admin",
-        password="Velo123",
+        user=env.get("POSTGRES_USER"),
+        password=env.get("POSTGRES_PASSWORD"),
         host="host.docker.internal",
         port="5433"
     )
@@ -174,7 +174,7 @@ def markers():
     cur.execute("SELECT * FROM stations")
     stations = cur.fetchall()
     markers = []
-    for station in stations:
+    for station in stations: #filteren van de data met een loop
         markers.append({
             'lat': float(station[3]),
             'lon': float(station[4]),
@@ -195,15 +195,15 @@ def tarieven():
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
-    if request.method == "POST":
+    if request.method == "POST": #invoer pincode aflezen
         pincode = request.form.get("pincode")
         bevestig_pincode = request.form.get("bevestig_pincode")
 
-        if pincode != bevestig_pincode:
+        if pincode != bevestig_pincode: #checken of de pincodes met elkaar overeenkomen
             foutmelding = "De pincodes komen niet overeen!"
             return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        session["abonnement_data"] = {
+        session["abonnement_data"] = { #alle gegevens bewaren in een sessie
             "type": "Dagpas",
             "voornaam": request.form.get("voornaam"),
             "achternaam": request.form.get("achternaam"),
@@ -219,7 +219,7 @@ def dagpas():
             "Jaarkaart": 3000
         }
 
-        try:
+        try: #stripe checkout sessie aanmaken
             stripe_session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
                 line_items=[{
@@ -236,7 +236,7 @@ def dagpas():
                 success_url=request.host_url + "betaling-succes",
                 cancel_url=request.host_url + "betaling-annulatie",
             )
-            return redirect(stripe_session.url)
+            return redirect(stripe_session.url) #bij succes herleiden naar stripe betaalpagina
         except Exception as e:
             return f"Fout bij aanmaken van Stripe sessie: {str(e)}", 500
 
@@ -320,7 +320,7 @@ def jaarkaart():
 
 @routes.route('/defect', methods=['GET', 'POST'])
 def defect():
-    if 'Gebruiker' not in session:
+    if 'Gebruiker' not in session: #controle of gebruiker is ingelogd
         return redirect(url_for("routes.login", next=request.path))
 
     foutmelding = None
@@ -332,23 +332,23 @@ def defect():
         if not fiets_id or not probleem:
             foutmelding = 'Gelieve alle velden in te vullen.'
         else:
-            db = SessionLocal()
+            db = SessionLocal() #database sessie openen
             try:
-                fiets = db.query(Fiets).filter_by(id=fiets_id).first()
+                fiets = db.query(Fiets).filter_by(id=fiets_id).first() #zoekt de fiets in de database
                 if not fiets:
                     foutmelding = "⚠️ Deze fiets bestaat niet in het systeem."
                 else:
-                    nieuw_defect = Defect(
+                    nieuw_defect = Defect( #een record aanmaken van de defect
                         fiets_id=int(fiets_id),
-                        station_id=fiets.station_id,
+                        station_naam=fiets.station_naam,
                         probleem=probleem
                     )
-                    db.add(nieuw_defect)
+                    db.add(nieuw_defect) #toevoegen aan de database
                     db.commit()
                     flash('✅ Je melding is doorgestuurd naar de administratie.', 'success')
                     return redirect(url_for('routes.profile'))
             except Exception as e:
-                db.rollback()
+                db.rollback() #bij foutmelding de db query annuleren
                 foutmelding = f"Er ging iets mis bij het opslaan van de melding: {str(e)}"
             finally:
                 db.close()
@@ -412,9 +412,9 @@ def delete_account():
     if "Gebruiker" not in session:
         return redirect(url_for("routes.login"))
 
-    db = SessionLocal()
+    db = SessionLocal() #database connectie en checken of gebruiker in database is
     gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-    if gebruiker:
+    if gebruiker: #als gebruiker in database is , wordt hij/zij verwijdert
         db.delete(gebruiker)
         db.commit()
     db.close()
@@ -460,11 +460,11 @@ def admin_simulatie():
     stations_copy = None
 
     if request.method == "POST":
-        try:
+        try: #de aantallen voor de simulatie
             gebruikers_aantal = int(request.form.get("gebruikers"))
             fietsen_aantal = int(request.form.get("fietsen"))
             dagen = int(request.form.get("dagen"))
-
+            #functies aanroepen die de simulatie starten
             gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
             stations_copy = copy.deepcopy(simulation.stations)
             fietsen = simulation.genereer_fietsen(fietsen_aantal, stations_copy)
@@ -641,7 +641,7 @@ def betalen():
 
 @routes.route("/create-checkout-session")
 def create_checkout_session():
-    abonnement_type = request.args.get("abonnement_type", "dagpas")
+    abonnement_type = request.args.get("abonnement_type", "dagpas") #type abonnement van url halen
 
     prijzen = {
         "dagpas": 500,
@@ -652,7 +652,7 @@ def create_checkout_session():
     bedrag = prijzen.get(abonnement_type, 500)
 
     try:
-        session = stripe.checkout.Session.create(
+        session = stripe.checkout.Session.create( #stripe cheeckout sessie
             payment_method_types=["card"],
             line_items=[{
                 "price_data": {
