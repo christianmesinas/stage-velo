@@ -675,6 +675,9 @@ def create_checkout_session():
 
 @routes.route("/betaling-succes")
 def betaling_succes():
+    if "Gebruiker" not in session or "id" not in session["Gebruiker"]:
+        return "Geen geldige sessie gevonden. Log opnieuw in.", 401
+
     data = session.pop("abonnement_data", None)
     if not data:
         return "Geen gegevens gevonden.", 400
@@ -685,48 +688,47 @@ def betaling_succes():
 
     db = SessionLocal()
     gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-    if gebruiker:
-        gebruiker.abonnement = data["type"]
-        db.commit()
-        session["Gebruiker"]["abonnement"] = data["type"]
+    if not gebruiker:
+        db.close()
+        return "Gebruiker niet gevonden.", 400
 
-        soort = data["type"].lower()
-        start_datum = datetime.utcnow()
+    gebruiker.abonnement = data["type"]
+    db.commit()
+    session["Gebruiker"]["abonnement"] = data["type"]
 
-        # normalizeer input (bv. 'dagpas', 'weekpas', 'jaarkaart')
-        if soort in ["dag", "dagpas"]:
-            eind_datum = start_datum + timedelta(days=1)
-            soort = "dag"
-        elif soort in ["week", "weekpas"]:
-            eind_datum = start_datum + timedelta(weeks=1)
-            soort = "week"
-        elif soort in ["jaar", "jaarkaart"]:
-            eind_datum = None
-            soort = "jaar"
-        else:
-            db.close()
-            return "Ongeldig abonnementstype.", 400
+    soort = data["type"].lower()
+    start_datum = datetime.utcnow()
 
-        nieuwe_pas = Pas(
-            gebruiker_id=gebruiker.id,  # ✅ correct gekoppeld
-            soort=soort,
-            pincode=data["pincode"],
-            start_datum=start_datum,
-            eind_datum=eind_datum
-        )
-        db.add(nieuwe_pas)
-        db.commit()
+    if soort in ["dag", "dagpas"]:
+        eind_datum = start_datum + timedelta(days=1)
+        soort = "dag"
+    elif soort in ["week", "weekpas"]:
+        eind_datum = start_datum + timedelta(weeks=1)
+        soort = "week"
+    elif soort in ["jaar", "jaarkaart"]:
+        eind_datum = None
+        soort = "jaar"
+    else:
+        db.close()
+        return "Ongeldig abonnementstype.", 400
 
+    nieuwe_pas = Pas(
+        gebruiker_id=gebruiker.id,
+        soort=soort,
+        pincode=data["pincode"],
+        start_datum=start_datum,
+        eind_datum=eind_datum
+    )
+    db.add(nieuwe_pas)
+    db.commit()
     db.close()
 
-    # Einddatum formatteren
     if soort in ["dag", "week"]:
         einddatum_tekst = eind_datum.strftime("%d/%m/%Y")
     else:
         einddatum_tekst = "Zolang je abonnement actief is"
 
     return render_template("tarieven/bedankt.html", gebruiker=gebruiker, data=data, einddatum=einddatum_tekst)
-
 
 @routes.route("/betaling-annulatie")
 def betaling_annulatie():
