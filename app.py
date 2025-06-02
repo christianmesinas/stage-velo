@@ -1,6 +1,7 @@
 from flask import Flask, session, request, render_template, redirect, url_for
 from dotenv import load_dotenv
 from os import getenv
+from datetime import datetime
 import stripe
 from app.database import SessionLocal
 from app.database.models import Base
@@ -74,6 +75,10 @@ with app.app_context():
 @app.context_processor
 def inject_user(): #voeg ingelogde gebruiker toe aan elke template
     return dict(user=session.get("user"))
+
+@app.context_processor
+def inject_datetime():
+    return dict(datetime=datetime)
 
 #opstart app
 if __name__ == "__main__":
