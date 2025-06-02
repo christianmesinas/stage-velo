@@ -40,7 +40,7 @@ for _, row in stations_df.iterrows(): #de data in de stations.csv (van velo antw
 def genereer_gebruikers(aantal):
     gebruikers = [] #lege lijst gebruikers aangemaakt
     for i in range(aantal): #loop met als i het aantal gebruikers dat we willen genereren
-        gebruikers.append({
+        gebruikers.append({ #tijdens de loop entries toevoegen aan de lijst gebruikers
             "id": i + 1,
             "voornaam": fake.first_name(),
             "achternaam": fake.last_name(),
@@ -55,29 +55,34 @@ def genereer_gebruikers(aantal):
 def genereer_fietsen(aantal, stations):
     fietsen = []
     fiets_id = 1
+    #dict met capaciteit van elke station
     station_slots = {station["id"]: station["capaciteit"] for station in stations}
     station_ids = list(station_slots.keys())
     random.shuffle(station_ids) #random toewijzing van stations
 
     totaal = len(station_ids)
-    #een gecontroleerde random choice waar 10 procent van de stations vol zijn, 1 procent volledig leeg zijn.
-    #de resterdende procent heeft dan een willekeurig aantal fietsen en vrije slots.
-    n_vol = round(totaal * 0.1)
-    n_leeg = max(1, round(totaal * 0.000001))
-    n_partial = totaal - n_vol - n_leeg
-    #een onderscheid tussen volle stations , lege stations en stations die niet leeg alsook niet vol zijn.
+
+    # bepalen aantal stations dat vol, leeg of gedeeltelijk bezet is
+    n_vol = round(totaal * 0.1) # 10% van de stations zijn volledig vol
+    n_leeg = max(1, round(totaal * 0.000001)) # minimum 1 station is leeg
+    n_partial = totaal - n_vol - n_leeg # de rest zijn gedeeltelijk bezet
+
+    #stations verdelen onder deze drie categorieën
     stations_vol = station_ids[:n_vol]
     stations_leeg = station_ids[n_vol:n_vol + n_leeg]
     stations_partial = station_ids[n_vol + n_leeg:]
 
+    #kleine kans dat een gedeeltelijk station toch vol is.
     extra_vol_kans = 0.10
 
-    max_per_station = {}
-    for sid in stations_vol: #
+    max_per_station = {} # hoeveel fietsen max per station
+    for sid in stations_vol: # volle stations krijgen fietsen volgens hun capaciteit
         max_per_station[sid] = station_slots[sid]
-    for sid in stations_leeg:
+
+    for sid in stations_leeg: #lege stations krijgen 0 fietsen
         max_per_station[sid] = 0
-    for sid in stations_partial:
+
+    for sid in stations_partial: # gedeeltelijke stations krijgen een random aantal fietsen (tussen 1 en cap - 1)
         cap = station_slots[sid]
         if cap > 1:
             if random.random() < extra_vol_kans:
@@ -88,27 +93,30 @@ def genereer_fietsen(aantal, stations):
             max_per_station[sid] = 0
 
     station_lookup = {s["id"]: s for s in stations}
-    for s in stations:
+    for s in stations: # reset alle stations: aantal fietsen = 0 , alle plaatsen zijn vrij. (stations komen van de api, bij de simulatie moeten we de free bikes en free slots van api weg)
         s["free_bikes"] = 0
         s["free_slots"] = s["capaciteit"]
 
-    for sid in station_ids:
+    for sid in station_ids: #verdeel fietsen over de stations
         toewijsbaar = min(max_per_station[sid], aantal - len(fietsen))
         for _ in range(toewijsbaar):
+            #geef 80% kans op "beschikbaar", 20% op "onderhoud"
             status = random.choices(["beschikbaar", "onderhoud"], weights=[0.8, 0.2])[0]
             fietsen.append({
                 "id": fiets_id,
                 "station_naam": station_lookup[sid]["name"],
                 "status": status
             })
+            # pas stationstatus aan als fiets beschikbaar is.
             if status == "beschikbaar":
                 station_lookup[sid]["free_bikes"] += 1
+            #verminder het aantal vrije plaatsen in station
             station_lookup[sid]["free_slots"] = max(station_lookup[sid]["free_slots"] - 1, 0)
             fiets_id += 1
-
+        #stop als het gewenste aantal fietsen bereikt is.
         if len(fietsen) >= aantal:
             break
-
+    #als we niet genowg fietsen hebben, maak de rest 'onderweg'
     while len(fietsen) < aantal:
         fietsen.append({
             "id": fiets_id,
@@ -117,7 +125,7 @@ def genereer_fietsen(aantal, stations):
         })
         fiets_id += 1
 
-    return fietsen
+    return fietsen # geef lijst met fietsen terug
 
 
 def gewogen_starttijd(datum):
