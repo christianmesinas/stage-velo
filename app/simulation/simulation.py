@@ -348,7 +348,6 @@ def sla_geschiedenis_op_in_db(geschiedenis):
                 starttijd=g["starttijd"],
                 eindtijd=g["eindtijd"],
                 duur_minuten=g["duur_minuten"],
-                prijs=g["prijs"]
             )
             session.merge(geschieden)
         session.commit()
