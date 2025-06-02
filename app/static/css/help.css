@@ -1,94 +1,80 @@
-.background {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: flex-end;
-    color: white;
-    width: auto;
-    height: 80vh;
-    background-repeat: no-repeat;
-    margin: 20px;
-    background-color: white;
-    border-radius: 20px;
-
-
-}
-
-
-
 @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
 
 * {
   font-family: Lato, sans-serif;
-  padding: 0;
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
-
-
 }
 
-
-
-.wrapper {
-  width: 60%;
-    margin: 0 auto; /* horizontaal centreren */
+.faq-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
-h1 {
-  margin-bottom: 20px;
+.faq-category {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 20px;
 }
 
-.container {
-  background-color: white;
-  color: black;
-  border-radius: 20px;
-  box-shadow: 0 5px 10px 0 rgb(0,0,0,0.25);
-  margin: 20px 0;
+.faq-category h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
 }
 
-.question {
-  font-size: 1.2rem;
-  font-weight: 600;
-  padding: 20px 80px 20px 20px;
-  position: relative;
-  display: flex;
-  align-items: center;
+/* Verberg het standaard marker-icoon van <summary> */
+details summary::-webkit-details-marker {
+  display: none;
+}
+details summary::marker {
+  font-size: 0; /* voor Firefox */
+}
+
+/* Styling van de vraagregel */
+details summary {
   cursor: pointer;
+  position: relative;
+  padding: 12px 20px;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  list-style: none;
 }
 
-.question::after {
-  content: "\002B";
-  font-size: 2.2rem;
+/* plus-icoon */
+details summary::after {
+  content: "+";
   position: absolute;
   right: 20px;
-  transition: 0.2s;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  transition: transform 0.2s;
 }
 
-.question.active::after {
-  transform: rotate(45deg);
+/* kruisje wanneer open */
+details[open] summary::after {
+  transform: translateY(-50%) rotate(45deg);
 }
 
-.answercont {
-  max-height: 0;
-  overflow: hidden;
-  transition: 0.3s;
+/* antwoordtekst */
+details p {
+  padding: 0 20px 15px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
 }
 
-.answer {
-  padding: 0 20px 20px;
-  line-height: 1.5rem;
-}
-
-.question.active + .answercont {
-}
-
-@media screen and (max-width: 790px){
-  html {
-    font-size: 14px;
+/* Responsive: op kleinere schermen minder kolommen */
+@media screen and (max-width: 600px) {
+  .faq-wrapper {
+    grid-template-columns: 1fr;
   }
-  .wrapper {
-  width: 80%;
 }
-}
-
-
