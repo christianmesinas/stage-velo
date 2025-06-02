@@ -146,14 +146,21 @@ def gewogen_starttijd(datum):
 def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fiets_per_dag=4): #velo gemiddelde is 4 ritten/fiets/dag
     geschiedenis = []
     vandaag = datetime.today().date() #simulatie telt terug van de dag van vandaag, als default de voorbije 28dagen (1maand)
+    #selecteer enkel fietsen die beschikbaar zijn en die gekoppelt zijn aan een station
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_naam"] is not None]
 
+    #loop over de opgegeven dagen
     for dag_offset in range(dagen):
+        #bereken de datum voor deze iteratie
         datum = vandaag - timedelta(days=(dagen - dag_offset - 1)) #dagen tellen van het aantal dagen tot dag van vandaag
+        #voor elke beschikbare fiets simuleren we een aantal ritten per dag
         for fiets in beschikbare_fietsen:
             for _ in range(ritten_per_fiets_per_dag):
+                #we kizen een willekeurige gebruiker voor de rit
                 gebruiker = random.choice(gebruikers)
+                #beginstation op basis van de locatie van de gebruikte fiets voor de rit
                 begin_station = next((s for s in stations if s["name"] == fiets["station_naam"]), None)
+                # willekeurige eindstation
                 eind_station = random.choice([s for s in stations if s["name"] != fiets["station_naam"]])
 
                 if not begin_station or not eind_station:
@@ -164,7 +171,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                 eindtijd = starttijd + timedelta(minutes=duur)
                 prijs = round(0.25 + duur * 0.05, 2)
 
-                geschiedenis.append({
+                geschiedenis.append({ #rit toeveogen aan de lijst
                     "gebruiker_id": gebruiker["id"],
                     "fiets_id": fiets["id"],
                     "begin_station_naam": begin_station["name"],
@@ -176,7 +183,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28, ritten_per_fi
                 })
 
                 fiets["station_naam"] = eind_station["name"] #de fiets wordt teogekend aan zijn nieuwe station.
-    return geschiedenis
+    return geschiedenis #geef alle gegenereerde ritten terug
 
 
 def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een csv steken zodat we het met COPY kunnen doorpushen naar de db
@@ -194,9 +201,11 @@ def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een
 def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=4):
     geschiedenis = []
     station_lookup = {s["id"]: s for s in stations}
+    # selecteer enkel fietsen die beschikbaar zijn en die gekoppelt zijn aan een station
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_naam"] is not None]
-    vandaag = datetime.today().date()
+    vandaag = datetime.today().date() #simulatie telt terug van de dag van vandaag, als default de voorbije 28dagen (1maand)
 
+    # loop over de opgegeven dagen
     for dag_offset in range(dagen):#de simulatie telt de voorbije aantal dagen.
         datum = vandaag - timedelta(days=dag_offset)
         print(f"\bSimulatie voor {datum}...")
@@ -206,10 +215,14 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
                 print("Geen beschikbare fietsen op dit moment.")
                 break
 
+        #voor elke beschikbare fiets simuleren we een aantal ritten per dag
         for fiets in beschikbare_fietsen:
             for _ in range(ritten_per_fiets_per_dag):
+                #we kizen een willekeurige gebruiker voor de rit
                 gebruiker = random.choice(gebruikers)
+                # beginstation op basis van de locatie van de gebruikte fiets voor de rit
                 begin_station = station_lookup.get(fiets["station_naam"])
+                # willekeurige eindstation
                 bepaling_eind_station = [s for s in stations if s["name"] != begin_station["name"]] #de eindstation mag niet hetzelfde zijn als waar de fiets wordt genomen.
                 if not begin_station or not bepaling_eind_station:
                     continue
@@ -219,7 +232,7 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
                 starttijd = gewogen_starttijd(datum)
                 eindtijd = starttijd + timedelta(minutes=duur)
 
-                geschiedenis.append({
+                geschiedenis.append({ #rit toeveogen aan de lijst
                     "gebruiker_id": gebruiker["id"],
                     "fiets_id": fiets["id"],
                     "begin_station_naam": begin_station["name"],
@@ -241,11 +254,13 @@ def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=
 
 
 def sla_stations_op_in_db(stations):
-    session = SessionLocal()
+    session = SessionLocal() #nieuwe sessie met de database
     try:
+        #loop voor elk station in de lijst
         for s in stations:
+            #controleer of het station al bestaat in de database op basis van ID
             bestaand_station = session.get(Station, s["id"])
-            if bestaand_station:
+            if bestaand_station: #station bestaat al werk de waarden bij
                 # Update bestaande waarden
                 bestaand_station.naam = s["name"]
                 bestaand_station.straat = s["straat"]
@@ -256,7 +271,7 @@ def sla_stations_op_in_db(stations):
                 bestaand_station.free_slots = s["free_slots"]
                 bestaand_station.parked_bikes = s["free_bikes"]
             else:
-                nieuw_station = Station(
+                nieuw_station = Station( #station bestaat niet , nieuw station aanmaken
                     id=s["id"],
                     naam=s["name"],
                     straat=s["straat"],
@@ -267,11 +282,11 @@ def sla_stations_op_in_db(stations):
                     free_slots=s["free_slots"],
                     parked_bikes=s["free_bikes"]
                 )
-                session.add(nieuw_station)
+                session.add(nieuw_station) #voeg nieuwe station toe aan de sessie
         session.commit()
         print(f"{len(stations)} stations opgeslagen of bijgewerkt in de database.")
     except Exception as e:
-        session.rollback()
+        session.rollback() #bij fout wijzigingen ongedaan maken
         print("❌ Fout bij opslaan van stations:", e)
     finally:
         session.close()
@@ -280,14 +295,16 @@ def sla_stations_op_in_db(stations):
 def sla_fietsen_op_in_db(fietsen):
     session = SessionLocal()
     try:
+        #loop over alle fietsen die je wil opslaan
         for f in fietsen:
+            #maak een fiets-object aan met de info uit de lijst
             fiets = Fiets(
                 id=f["id"],
                 station_naam=f["station_naam"],
                 status=f["status"]
             )
             session.merge(fiets)  # merge voorkomt fouten bij dubbele ID’s
-        session.commit()
+        session.commit() #bevestig alle wijzigingen
         print(f"{len(fietsen)} fietsen opgeslagen in de database.")
     except Exception as e:
         session.rollback()
@@ -299,7 +316,9 @@ def sla_fietsen_op_in_db(fietsen):
 def sla_gebruikers_op_in_db(gebruikers):
     session = SessionLocal()
     try:
+        #loop over alle gebruikers in de lijst
         for g in gebruikers:
+            # maak een nieuwe gebruiker-objet aan met de data uit de lijst
             gebruiker = Gebruiker(
                 id=g["id"],
                 voornaam=g["voornaam"],
