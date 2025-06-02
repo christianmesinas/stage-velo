@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Transport Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base_admin.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+            <span class="image"></span>
+            <div class="text logo-text">
+                <span class="name">Transport</span>
+
+            </div>
+        </div>
+        <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+
+        <div class="bottom-content">
+            <li><a href="{{ url_for('routes.logout') }}"><i class='bx bx-log-out icon'></i><span class="text nav-text">Logout</span></a></li>
+        </div>
+    </div>
+</nav>
+
+<section class="home">
+{% block content %}{% endblock %}
+</section>
+
+
+
+{% block scripts %}
+
+    <script>
+const body = document.querySelector('body');
+const sidebar = document.querySelector('nav.sidebar');
+const toggle = document.querySelector(".toggle");
+const searchBtn = document.querySelector(".search-box");
+const modeSwitch = document.querySelector(".toggle-switch");
+const modeText = document.querySelector(".mode-text");
+
+toggle.addEventListener("click", () => {
+    sidebar.classList.toggle("close");
+});
+
+searchBtn.addEventListener("click", () => {
+    sidebar.classList.remove("close");
+});
+
+modeSwitch.addEventListener("click", () => {
+    body.classList.toggle("dark");
+    modeText.innerText = body.classList.contains("dark") ? "Light mode" : "Dark mode";
+});
+</script>
+
+
+{% endblock %}
+
+
+
+</body>
+</html>

@@ -441,11 +441,14 @@ def internal_server_error(error):
 # ======================
 # TRANSPORT ROUTE
 # ======================
-
 @routes.route('/transport_dashboard')
+@transport_required
 def transport_dashboard():
     db_session = SessionLocal()
     stations = db_session.query(Station).all()
+
+    # Haal defecte fietsen op
+    defecten = db_session.query(Defect, Fiets, Station).join(Fiets, Defect.fiets_id == Fiets.id).join(Station, Defect.station_naam == Station.naam).all()
 
     LEEG_DREMPEL = 5  # minder dan 5 fietsen
     VOL_DREMPEL = 0.9  # 90% vol
@@ -453,37 +456,61 @@ def transport_dashboard():
     lege_stations = [s for s in stations if s.parked_bikes < LEEG_DREMPEL]
     volle_stations = [s for s in stations if s.parked_bikes / s.capaciteit > VOL_DREMPEL]
 
+    # Haal fietsen op voor elk vol station
+    station_fietsen = {}
+    for station in volle_stations:
+        fietsen = db_session.query(Fiets).filter(Fiets.station_naam == station.naam).all()
+        station_fietsen[station.id] = [{"id": fiets.id, "status": fiets.status} for fiets in fietsen]
+        print(f"Station {station.naam} (ID: {station.id}): {len(fietsen)} fietsen")  # Debug logging
+
+    print("station_fietsen:", station_fietsen)
+    # Sluit de database sessie
+    db_session.close()
+
     return render_template(
         'transport.html',
         lege_stations=lege_stations,
-        volle_stations=volle_stations
+        volle_stations=volle_stations,
+        defecten=defecten,
+        stations=stations,
+        station_fietsen=station_fietsen
     )
 
-@routes.route('/verplaats_fietsen', methods=['POST'])
-def verplaats_fietsen():
+@routes.route('/verplaats_geselecteerde_fietsen', methods=['POST'])
+@transport_required
+def verplaats_geselecteerde_fietsen():
     db_session = SessionLocal()
-
     try:
-        from_id = int(request.form['from_station_id'])
-        to_id = int(request.form['to_station_id'])
-        aantal = int(request.form['aantal'])
+        from_station_id = request.form['from_station_id']  # Geen int() nodig
+        to_station_id = request.form['to_station_id']      # Geen int() nodig
+        fiets_ids = request.form.getlist('fiets_ids')      # Meerdere fiets-ID's
 
-        from_station = db_session.query(Station).filter_by(id=from_id).first()
-        to_station = db_session.query(Station).filter_by(id=to_id).first()
+        if not fiets_ids:
+            db_session.close()
+            return redirect(url_for('routes.transport_dashboard', _anchor='volle_stations', message="Geen fietsen geselecteerd."))
+
+        from_station = db_session.query(Station).filter_by(id=from_station_id).first()
+        to_station = db_session.query(Station).filter_by(id=to_station_id).first()
 
         # Validatie
         if not from_station or not to_station:
             message = "Station niet gevonden."
-        elif from_station.parked_bikes < aantal:
+        elif len(fiets_ids) > from_station.parked_bikes:
             message = f"Niet genoeg fietsen in {from_station.naam}."
-        elif to_station.parked_bikes + aantal > to_station.capaciteit:
+        elif to_station.parked_bikes + len(fiets_ids) > to_station.capaciteit:
             message = f"{to_station.naam} heeft niet genoeg ruimte."
         else:
-            # Update
-            from_station.parked_bikes -= aantal
-            to_station.parked_bikes += aantal
+            # Update fietsen
+            for fiets_id in fiets_ids:
+                fiets = db_session.query(Fiets).filter_by(id=int(fiets_id)).first()  # fiets_id is een integer
+                if fiets and fiets.station_naam == from_station.naam:
+                    fiets.station_naam = to_station.naam
+
+            # Update stations
+            from_station.parked_bikes -= len(fiets_ids)
+            to_station.parked_bikes += len(fiets_ids)
             db_session.commit()
-            message = f"{aantal} fietsen verplaatst van {from_station.naam} naar {to_station.naam}."
+            message = f"{len(fiets_ids)} fiets(en) verplaatst van {from_station.naam} naar {to_station.naam}."
 
     except Exception as e:
         db_session.rollback()
@@ -491,9 +518,58 @@ def verplaats_fietsen():
     finally:
         db_session.close()
 
-    # Herladen met boodschap
-    return redirect(url_for('routes.transport_dashboard', _anchor='form', message=message))
+    return redirect(url_for('routes.transport_dashboard', _anchor='volle_stations', message=message))
 
+@routes.route('/verplaats_defecte_fiets', methods=['POST'])
+@transport_required
+def verplaats_defecte_fiets():
+    db_session = SessionLocal()
+    try:
+        fiets_id = int(request.form['fiets_id'])
+        defect_id = int(request.form['defect_id'])
+        to_station_id = request.form['to_station_id']
+        nieuwe_status = request.form['status']
+
+        # Haal fiets, defect en bestemmingsstation op
+        fiets = db_session.query(Fiets).filter_by(id=fiets_id).first()
+        defect = db_session.query(Defect).filter_by(id=defect_id).first()
+        to_station = db_session.query(Station).filter_by(id=to_station_id).first()
+
+        if not fiets or not defect or not to_station:
+            db_session.close()
+            return redirect(url_for('routes.transport_dashboard', _anchor='defecten', message="Fiets, defect of station niet gevonden."))
+
+        # Controleer of het bestemmingsstation ruimte heeft
+        if to_station.parked_bikes >= to_station.capaciteit:
+            db_session.close()
+            return redirect(url_for('routes.transport_dashboard', _anchor='defecten', message=f"{to_station.naam} heeft geen ruimte meer."))
+
+        # Huidige station bijwerken (fiets verwijderen)
+        from_station = db_session.query(Station).filter_by(naam=fiets.station_naam).first()
+        if from_station:
+            from_station.parked_bikes -= 1
+
+        # Bestemmingsstation bijwerken (fiets toevoegen)
+        to_station.parked_bikes += 1
+
+        # Fiets en defect bijwerken
+        fiets.station_naam = to_station.naam
+        fiets.status = nieuwe_status
+        defect.station_naam = to_station.naam
+
+        # Als status niet meer "onderhoud" is, verwijder het defect
+        if nieuwe_status != "onderhoud":
+            db_session.delete(defect)
+
+        db_session.commit()
+        message = f"Fiets {fiets_id} verplaatst naar {to_station.naam} met status '{nieuwe_status}'."
+    except Exception as e:
+        db_session.rollback()
+        message = f"Fout: {str(e)}"
+    finally:
+        db_session.close()
+
+    return redirect(url_for('routes.transport_dashboard', _anchor='defecten', message=message))
 
 # ======================
 # ADMIN ROUTE
