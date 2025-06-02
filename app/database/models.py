@@ -1,5 +1,8 @@
+from email.charset import Charset
+
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, DECIMAL
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import event, select, func
+from sqlalchemy.orm import declarative_base, relationship, Session
 from datetime import datetime
 
 Base = declarative_base()
@@ -57,10 +60,9 @@ class Gebruiker(Base):
 class Station(Base):
     __tablename__ = "stations"
 
-    id = Column(Integer, primary_key=True)
-    naam = Column(String)
+    id = Column(String(32), primary_key=True)
+    naam = Column(String, unique=True)
     straat = Column(String)
-    postcode = Column(String)
     latitude = Column(DECIMAL)
     longitude = Column(DECIMAL)
     capaciteit = Column(Integer)
@@ -70,12 +72,12 @@ class Station(Base):
 
     start_geschiedenis = relationship(
         "Geschiedenis",
-        foreign_keys="Geschiedenis.start_station_id",
+        foreign_keys="Geschiedenis.start_station_naam",
         back_populates="start_station"
     )
     end_geschiedenis = relationship(
         "Geschiedenis",
-        foreign_keys="Geschiedenis.eind_station_id",
+        foreign_keys="Geschiedenis.eind_station_naam",
         back_populates="end_station"
     )
 
@@ -84,7 +86,7 @@ class Fiets(Base):
     __tablename__ = "fietsen"
 
     id = Column(Integer, primary_key=True)
-    station_id = Column(Integer, ForeignKey("stations.id"))
+    station_naam = Column(String, ForeignKey("stations.naam"))
     status = Column(String)
 
     geschiedenis = relationship("Geschiedenis", back_populates="fiets")
@@ -96,8 +98,8 @@ class Geschiedenis(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     gebruiker_id = Column(Integer, ForeignKey("gebruikers.id"))
     fiets_id = Column(Integer, ForeignKey("fietsen.id"))
-    start_station_id = Column(Integer, ForeignKey("stations.id"))
-    eind_station_id = Column(Integer, ForeignKey("stations.id"))
+    start_station_naam = Column(String, ForeignKey("stations.naam"))
+    eind_station_naam = Column(String, ForeignKey("stations.naam"))
     starttijd = Column(DateTime, default=datetime.utcnow)
     eindtijd = Column(DateTime)
     duur_minuten = Column(DECIMAL)
@@ -105,7 +107,64 @@ class Geschiedenis(Base):
 
     gebruiker = relationship("Gebruiker", back_populates="geschiedenis")
     fiets = relationship("Fiets", back_populates="geschiedenis")
-    start_station = relationship("Station", foreign_keys=[start_station_id], back_populates="start_geschiedenis")
-    end_station = relationship("Station", foreign_keys=[eind_station_id], back_populates="end_geschiedenis")
+    start_station = relationship("Station", foreign_keys=[start_station_naam], back_populates="start_geschiedenis")
+    end_station = relationship("Station", foreign_keys=[eind_station_naam], back_populates="end_geschiedenis")
+
+# Defecte fietsen met probleem opslaan in de databank
+class Defect(Base):
+    __tablename__ = "defecten"
+    id = Column(Integer, primary_key=True)
+    fiets_id = Column(Integer, ForeignKey("fietsen.id"))
+    station_naam = Column(String, ForeignKey("stations.naam"))
+    probleem = Column(String)
+
+    fiets = relationship("Fiets")
+    station = relationship("Station", foreign_keys=[station_naam])
+
+
+def add_defect(db: Session, fiets_id: int, station_naam: str, probleem: str):
+    defect = Defect(fiets_id=fiets_id, station_naam=station_naam, probleem=probleem)
+    db.add(defect)
+
+    fiets = db.query(Fiets).filter(Fiets.id == fiets_id).first()
+    if fiets:
+        fiets.status = "onderhoud"
+
+    db.commit()
+    return defect
+
+@event.listens_for(Defect, "after_insert")
+def update_fiets_status_defect(mapper, connection, target):
+    connection.execute(
+        Fiets.__table__.update()
+        .where(Fiets.id == target.fiets_id)
+        .values(status="onderhoud")
+    )
+
+@event.listens_for(Defect, "after_delete")
+def update_fiets_status_fixed(mapper, connection, target):
+    defect_count = connection.execute(
+        select(func.count())
+        .select_from(Defect.__table__)
+        .where(Defect.fiets_id == target.fiets_id)
+    ).scalar()
+
+    if defect_count == 0:
+        connection.execute(
+            Fiets.__table__.update()
+            .where(Fiets.id == target.fiets_id)
+            .values(status="beschikbaar")
+        )
+class Pas(Base):
+    __tablename__ = "passen"
+
+    id = Column(Integer, primary_key=True)
+    gebruiker_id = Column(Integer, ForeignKey("inlog_gegevens.id"), nullable=False)
+    soort = Column(String, nullable=False)  # dag, week, jaar
+    pincode = Column(String, nullable=False)
+    start_datum = Column(DateTime, default=datetime.utcnow)
+    eind_datum = Column(DateTime, nullable=True)
+
+    gebruiker = relationship("Usertable", backref="passen")
 
 

@@ -4,7 +4,7 @@ import stripe
 from flask import jsonify
 
 
-
+import psycopg2
 import pytz
 from app.database.models import Usertable, Gebruiker
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
@@ -19,7 +19,7 @@ import os
 import copy
 from app.api import api as api
 from app.api.api import get_alle_stations, get_info
-from app.database.models import Usertable, Station
+from app.database.models import Usertable, Defect, Fiets, Geschiedenis, Station
 from app.database import SessionLocal
 from app.simulation import simulation
 from collections import Counter
@@ -168,16 +168,29 @@ def help():
 
 @routes.route("/maps")
 def markers():
+    import psycopg2
+    conn = psycopg2.connect(
+        dbname="velo_community",
+        user="admin",
+        password="Velo123",
+        host="host.docker.internal",
+        port="5433"
+    )
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM stations")
+    stations = cur.fetchall()
     markers = []
-    for location in api.get_alle_stations():
+    for station in stations:
         markers.append({
-            'lat': location[4],
-            'lon': location[5],
-            'name': location[1],
-            'free-bikes': location[6],
-            'empty-slots': location[7],
-            'status': location[3],
+            'lat': float(station[3]),
+            'lon': float(station[4]),
+            'name': station[1],
+            'free-bikes': station[8],
+            'empty-slots': station[7],
+            'status': station[6],
         })
+    cur.close()
+    conn.close()
     return render_template("maps.html", markers=markers)
 
 
@@ -236,7 +249,6 @@ def dagpas():
     return render_template("tarieven/dagpas.html", formdata={})
 
 
-
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
 def weekpass():
     if request.method == "POST":
@@ -287,8 +299,6 @@ def weekpass():
     return render_template("tarieven/weekpas.html", formdata={})
 
 
-
-
 @routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
 def jaarkaart():
     if request.method == "POST":
@@ -314,8 +324,6 @@ def jaarkaart():
     return render_template("tarieven/jaarkaart.html", formdata={})
 
 
-
-
 @routes.route('/defect', methods=['GET', 'POST'])
 def defect():
     if 'Gebruiker' not in session:
@@ -330,10 +338,26 @@ def defect():
         if not fiets_id or not probleem:
             foutmelding = 'Gelieve alle velden in te vullen.'
         else:
-            # Здесь можно сохранить в БД или отправить email админу - hier kan jij opslaan in DB of Email sturen naar Admin
-            print(f"Defect gemeld - Fiets ID: {fiets_id}, Probleem: {probleem}")
-            flash('✅ Je melding is doorgestuurd naar de administratie.', 'success')
-            return redirect(url_for('routes.profile')) # <--Переход на profile.html - naar profile bij verzenden van bericht
+            db = SessionLocal()
+            try:
+                fiets = db.query(Fiets).filter_by(id=fiets_id).first()
+                if not fiets:
+                    foutmelding = "⚠️ Deze fiets bestaat niet in het systeem."
+                else:
+                    nieuw_defect = Defect(
+                        fiets_id=int(fiets_id),
+                        station_id=fiets.station_id,
+                        probleem=probleem
+                    )
+                    db.add(nieuw_defect)
+                    db.commit()
+                    flash('✅ Je melding is doorgestuurd naar de administratie.', 'success')
+                    return redirect(url_for('routes.profile'))
+            except Exception as e:
+                db.rollback()
+                foutmelding = f"Er ging iets mis bij het opslaan van de melding: {str(e)}"
+            finally:
+                db.close()
 
     return render_template("defect.html", foutmelding=foutmelding)
 
@@ -388,6 +412,7 @@ def instellingen():
     db.close()
     return render_template("instellingen.html", user=gebruiker)
 
+
 @routes.route("/delete_account", methods=["POST"])
 def delete_account():
     if "Gebruiker" not in session:
@@ -403,9 +428,11 @@ def delete_account():
     flash("Uw account is verwijderd.", "danger")
     return redirect(url_for("routes.index"))
 
+
 @routes.app_errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
+
 
 @routes.app_errorhandler(500)
 def internal_server_error(error):
@@ -684,7 +711,8 @@ def betaling_succes():
         return "Geen gegevens gevonden.", 400
 
     from app.database import SessionLocal
-    from app.database.models import Usertable
+    from app.database.models import Usertable, Pas
+    from datetime import datetime, timedelta
 
     db = SessionLocal()
     gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
@@ -692,13 +720,61 @@ def betaling_succes():
         gebruiker.abonnement = data["type"]
         db.commit()
         session["Gebruiker"]["abonnement"] = data["type"]
+
+        soort = data["type"].lower()
+        start_datum = datetime.utcnow()
+
+        # normalizeer input (bv. 'dagpas', 'weekpas', 'jaarkaart')
+        if soort in ["dag", "dagpas"]:
+            eind_datum = start_datum + timedelta(days=1)
+            soort = "dag"
+        elif soort in ["week", "weekpas"]:
+            eind_datum = start_datum + timedelta(weeks=1)
+            soort = "week"
+        elif soort in ["jaar", "jaarkaart"]:
+            eind_datum = None
+            soort = "jaar"
+        else:
+            db.close()
+            return "Ongeldig abonnementstype.", 400
+
+        nieuwe_pas = Pas(
+            gebruiker_id=gebruiker.id,  # ✅ correct gekoppeld
+            soort=soort,
+            pincode=data["pincode"],
+            start_datum=start_datum,
+            eind_datum=eind_datum
+        )
+        db.add(nieuwe_pas)
+        db.commit()
+
     db.close()
 
-    flash(f"{data['type']} succesvol geactiveerd!", "success")
-    return render_template("tarieven/bedankt.html", data=data)
+    # Einddatum formatteren
+    if soort in ["dag", "week"]:
+        einddatum_tekst = eind_datum.strftime("%d/%m/%Y")
+    else:
+        einddatum_tekst = "Zolang je abonnement actief is"
+
+    return render_template("tarieven/bedankt.html", gebruiker=gebruiker, data=data, einddatum=einddatum_tekst)
+
 
 @routes.route("/betaling-annulatie")
 def betaling_annulatie():
     flash("Je betaling werd geannuleerd.", "danger")
-    return redirect(url_for("routes.tarieven"))
+
+    return """
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <title>Betaling geannuleerd</title>
+    </head>
+    <body>
+        <h1>❌ Betaling geannuleerd</h1>
+        <p>Je betaling is niet voltooid. Geen zorgen, je kan het later opnieuw proberen.</p>
+        <a href="/">← Terug naar de startpagina</a>
+    </body>
+    </html>
+    """
 

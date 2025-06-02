@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block head %}
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 <!--SwiperJS gebruiken, das free en open-source :D-->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
@@ -11,10 +10,10 @@
 
 <div class="div1">
   <div class="text-spot">
-    <span class="bigtext">ANTWERPEN <span class="clr-red">BEWEEGT.</span> <br>JIJ <span class="clr-red">OOK?</span></span>
-    <span class="smoltext">Jouw rit, jouw stad, jouw tempo.<br>
-we need more tekst here, Make some Vélocity <br>
-Gebruik Velo voor een dag, een week of een jaar.</span>
+    <span class="bigtext">{{ _('ANTWERPEN') }} <span class="clr-red">{{ _('BEWEEGT.') }}</span> <br>{{ _('JIJ') }} <span class="clr-red">{{ _('OOK?') }}</span></span>
+    <span class="smoltext">{{ _('Jouw rit, jouw stad, jouw tempo.') }}<br>
+    {{ _('we need more tekst here, Make some Vélocity') }} <br>
+    {{ _('Gebruik Velo voor een dag, een week of een jaar.') }}</span>
     <img style="margin-top: 5px" src="../static/images/component1.svg">
   </div>
 </div>
@@ -25,47 +24,44 @@ Gebruik Velo voor een dag, een week of een jaar.</span>
     <li class="card-item swiper-slide">
       <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" alt="idk lmao" class="card-image">
       <div class="card-item__content">
-        <h1 class="card-item__title">FORMULES EN <span class="clr-red">TARIEVEN</span></h1>
+        <h1 class="card-item__title">{{ _('FORMULES EN') }} <span class="clr-red">{{ _('TARIEVEN') }}</span></h1>
         <img style="width: 90%;" src="../static/images/component1.svg">
-        <p class="card-item__text">lorum ipsum and all that good stuff. We got tarifs, we got bikes!
-What more could you need? What i need right now is more text here.
-I could just put lorum ipsum here but thats boring.
-Nothing beats a good copywriting in the morning, yup.
-Whoever is reading this, i'm sorry for wasting 3 minutes of your time.
-But thanks anyways! :D </p>
-        <a href="/tarieven"><button class="card-slider__button">KIES JE FORMULE</button></a>
+        <p class="card-item__text">{{ _('lorum ipsum and all that good stuff. We got tarifs, we got bikes!') }}<br>
+        {{ _('What more could you need? What i need right now is more text here.') }}<br>
+        {{ _('I could just put lorum ipsum here but thats boring.') }}<br>
+        {{ _('Nothing beats a good copywriting in the morning, yup.') }}<br>
+        {{ _('Whoever is reading this, i\'m sorry for wasting 3 minutes of your time.') }}<br>
+        {{ _('But thanks anyways! :D') }}</p>
+        <a href="/tarieven"><button class="card-slider__button">{{ _('KIES JE FORMULE') }}</button></a>
       </div>
-      <button class="card-button">-></button>
     </li>
     <li class="card-item swiper-slide">
       <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" alt="idk lmao" class="card-image">
       <div class="card-item__content">
-        <h1 class="card-item__title">DEEL 2 EN <span class="clr-red">DEEL 2</span></h1>
+        <h1 class="card-item__title">{{ _('DEEL 2 EN') }} <span class="clr-red">{{ _('DEEL 2') }}</span></h1>
         <img style="width: 90%;" src="../static/images/component1.svg">
-        <p class="card-item__text">lorum ipsum and all that good stuff. We got tarifs, we got bikes!
-What more could you need? What i need right now is more text here.
-I could just put lorum ipsum here but thats boring.
-Nothing beats a good copywriting in the morning, yup.
-Whoever is reading this, i'm sorry for wasting 3 minutes of your time.
-But thanks anyways! :D </p>
-        <a href="#"><button class="card-slider__button">KIES JE FORMULE</button></a>
+        <p class="card-item__text">{{ _('lorum ipsum and all that good stuff. We got tarifs, we got bikes!') }}<br>
+        {{ _('What more could you need? What i need right now is more text here.') }}<br>
+        {{ _('I could just put lorum ipsum here but thats boring.') }}<br>
+        {{ _('Nothing beats a good copywriting in the morning, yup.') }}<br>
+        {{ _('Whoever is reading this, i\'m sorry for wasting 3 minutes of your time.') }}<br>
+        {{ _('But thanks anyways! :D') }}</p>
+        <a href="#"><button class="card-slider__button">{{ _('KIES JE FORMULE') }}</button></a>
       </div>
-      <button class="card-button">-></button>
     </li>
     <li class="card-item swiper-slide">
       <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" alt="idk lmao" class="card-image">
       <div class="card-item__content">
-        <h1 class="card-item__title">DEEL 3 EN <span class="clr-red">DEEL 3</span></h1>
+        <h1 class="card-item__title">{{ _('DEEL 3 EN') }} <span class="clr-red">{{ _('DEEL 3') }}</span></h1>
         <img style="width: 90%;" src="../static/images/component1.svg">
-        <p class="card-item__text">lorum ipsum and all that good stuff. We got tarifs, we got bikes!
-What more could you need? What i need right now is more text here.
-I could just put lorum ipsum here but thats boring.
-Nothing beats a good copywriting in the morning, yup.
-Whoever is reading this, i'm sorry for wasting 3 minutes of your time.
-But thanks anyways! :D </p>
-        <a href="#"><button class="card-slider__button">KIES JE FORMULE</button></a>
+        <p class="card-item__text">{{ _('lorum ipsum and all that good stuff. We got tarifs, we got bikes!') }}<br>
+        {{ _('What more could you need? What i need right now is more text here.') }}<br>
+        {{ _('I could just put lorum ipsum here but thats boring.') }}<br>
+        {{ _('Nothing beats a good copywriting in the morning, yup.') }}<br>
+        {{ _('Whoever is reading this, i\'m sorry for wasting 3 minutes of your time.') }}<br>
+        {{ _('But thanks anyways! :D') }}</p>
+        <a href="#"><button class="card-slider__button">{{ _('KIES JE FORMULE') }}</button></a>
       </div>
-      <button class="card-button">-></button>
     </li>
   </ul>
 </div>
@@ -94,10 +90,10 @@ But thanks anyways! :D </p>
 
 <div class="div3">
   <div class="text-spot">
-    <h1 class="bigtext"><span class="clr-red">HULP</span> NODIG?</h1>
-    <span class="smoltext">Jouw rit, jouw stad, jouw tempo.<br>
-we hebben meer tekst nodig. Maak een beetje Vélocity <br>
-Gebruik Velo voor een dag, een week of een jaar.</span>
+    <h1 class="bigtext"><span class="clr-red">{{ _('HULP') }}</span> {{ _('NODIG?') }}</h1>
+    <span class="smoltext">{{ _('Jouw rit, jouw stad, jouw tempo.') }}<br>
+    {{ _('we hebben meer tekst nodig. Maak een beetje Vélocity') }} <br>
+    {{ _('Gebruik Velo voor een dag, een week of een jaar.') }}</span>
     <img style="margin-top: 5px" src="../static/images/component1.svg">
   </div>
 </div>
@@ -112,10 +108,10 @@ Gebruik Velo voor een dag, een week of een jaar.</span>
     <img src="../static/images/fietsvrouw.svg" style=" width: 450px">
   </div>
   <div class="copyright">
-    <p>Copyright Velo Antwerpen 2025 ALLE RECHTEN VOORBEHOUDEN</p>
+    <p>{{ _('Copyright Velo Antwerpen 2025 ALLE RECHTEN VOORBEHOUDEN') }}</p>
   </div>
   <div class="contact">
-    <h2 style="font-size:40px; margin-bottom:10px">CONTACT</h2>
+    <h2 style="font-size:40px; margin-bottom:10px">{{ _('CONTACT') }}</h2>
     <ul style="padding:0">
       <li>info@velo-antwerpen.be</li>
       <li>Vosseschijnstraat 16-20 2030 Antwerpen</li>
@@ -136,4 +132,3 @@ Gebruik Velo voor een dag, een week of een jaar.</span>
 </footer>
 
 {% endblock %}
-
