@@ -1,7 +1,7 @@
 {% extends 'base_admin.html' %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_simulatie.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_filter.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -43,7 +43,7 @@
       </li>
       <li><strong>Gemiddelde ritduur:</strong>
         {% if ritten %}
-          {{ (ritten | sum(attribute='duur_minuten') / ritten|length) | round(1) }} min
+          {{ (ritten | sum(attribute='duur_minuten') / (ritten|length)) | round(1) }} min
         {% else %}
           0 min
         {% endif %}
@@ -76,7 +76,6 @@
               <th>Van</th>
               <th>Tot</th>
               <th>Duur (min)</th>
-              <th>Prijs (€)</th>
             </tr>
           </thead>
           <tbody>
@@ -91,11 +90,6 @@
                     {{ "%.1f"|format(rit.duur_minuten) }}
                   {% endif %}
                 </td>
-                <td>
-                  {% if rit.prijs is not none %}
-                    {{ "%.2f"|format(rit.prijs) }}
-                  {% endif %}
-                </td>
               </tr>
             {% endfor %}
           </tbody>
@@ -106,5 +100,4 @@
     {% endif %}
   </div>
 {% endif %}
-
 {% endblock %}
