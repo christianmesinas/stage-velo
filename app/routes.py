@@ -6,7 +6,7 @@ from flask import jsonify
 
 import psycopg2
 import pytz
-from app.database.models import Usertable, Gebruiker
+from app.database.models import Usertable, Gebruiker, Station
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
@@ -25,6 +25,8 @@ from app.simulation import simulation
 from collections import Counter
 from functools import wraps
 from werkzeug.utils import secure_filename
+
+
 
 
 def admin_required(f):
@@ -585,11 +587,50 @@ def admin_data():
     return render_template("live_data.html", stations=stations, populairste_station=populairste_station)
 
 
-@routes.route("/admin/gebruikers")
+@routes.route("/admin/user_filter", methods=["GET", "POST"])
 @admin_required
-def admin_gebruikers():
-    gebruikers = simulation.gebruikers_lijst()  # voorbeeld
-    return render_template("admin/gebruikers.html", gebruikers=gebruikers)
+def admin_filter():
+    from sqlalchemy.orm import aliased
+    db = SessionLocal()
+    gebruikers = db.query(Gebruiker).all()
+
+    geselecteerde_gebruiker = None
+    ritten = []
+    ritten_per_dag = {}
+
+    if request.method == "POST":
+        gebruiker_id = request.form.get("gebruiker_id")
+        geselecteerde_gebruiker = db.query(Gebruiker).filter_by(id=gebruiker_id).first()
+
+        if geselecteerde_gebruiker:
+            StartStation = aliased(Station)
+            EindStation = aliased(Station)
+            ritten = (
+                db.query(Geschiedenis)
+                .filter_by(gebruiker_id=gebruiker_id)
+                .join(Fiets, Geschiedenis.fiets_id == Fiets.id)
+                .join(StartStation, Geschiedenis.start_station_naam == StartStation.naam)
+                .join(EindStation, Geschiedenis.eind_station_naam == EindStation.naam)
+                .all()
+            )
+            # Bereken ritten per dag
+            for rit in ritten:
+                if isinstance(rit.starttijd, str):
+                    datum = datetime.strptime(rit.starttijd, "%Y-%m-%d %H:%M:%S").date()
+                else:
+                    datum = rit.starttijd.date()
+                ritten_per_dag[datum] = ritten_per_dag.get(datum, 0) + 1
+
+    db.close()
+
+    return render_template(
+        "user_filter.html",
+        gebruikers=gebruikers,
+        geselecteerde_gebruiker=geselecteerde_gebruiker,
+        ritten=ritten,
+        ritten_per_dag=ritten_per_dag
+    )
+
 
 
 # ================= Stripe - Betalingen ====================
