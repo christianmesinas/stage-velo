@@ -196,59 +196,62 @@ def geschiedenis_to_csv_buffer(geschiedenis): #we gaan geschiedenis eerst in een
 
 
 # Simuleer ritten over tijd
-def simulatie(stations, gebruikers, fietsen,  dagen=1, ritten_per_fiets_per_dag=4):
+def simulatie(stations, gebruikers, fietsen, dagen=1, ritten_per_fiets_per_dag=4):
     geschiedenis = []
-    station_lookup = {s["id"]: s for s in stations}
-    # selecteer enkel fietsen die beschikbaar zijn en die gekoppelt zijn aan een station
+    vandaag = datetime.today().date()
+
+    # selecteer enkel fietsen die beschikbaar zijn en gekoppeld zijn aan een station
     beschikbare_fietsen = [f for f in fietsen if f["status"] == "beschikbaar" and f["station_naam"] is not None]
-    vandaag = datetime.today().date() #simulatie telt terug van de dag van vandaag, als default de voorbije 28dagen (1maand)
 
-    # loop over de opgegeven dagen
-    for dag_offset in range(dagen):#de simulatie telt de voorbije aantal dagen.
+    for dag_offset in range(dagen):
         datum = vandaag - timedelta(days=dag_offset)
-        print(f"\bSimulatie voor {datum}...")
+        print(f"\nSimulatie voor {datum}...")
 
-        for _ in range(random.randint(5, 20)):
-            if not beschikbare_fietsen:
-                print("Geen beschikbare fietsen op dit moment.")
-                break
-
-        #voor elke beschikbare fiets simuleren we een aantal ritten per dag
+        # voor elke beschikbare fiets simuleren we een aantal ritten per dag
         for fiets in beschikbare_fietsen:
             for _ in range(ritten_per_fiets_per_dag):
-                #we kizen een willekeurige gebruiker voor de rit
                 gebruiker = random.choice(gebruikers)
-                # beginstation op basis van de locatie van de gebruikte fiets voor de rit
-                begin_station = station_lookup.get(fiets["station_naam"])
-                # willekeurige eindstation
-                bepaling_eind_station = [s for s in stations if s["name"] != begin_station["name"]] #de eindstation mag niet hetzelfde zijn als waar de fiets wordt genomen.
-                if not begin_station or not bepaling_eind_station:
+
+                # beginstation zoeken op basis van de station_naam van de fiets
+                begin_station = next((s for s in stations if s["name"] == fiets["station_naam"]), None)
+                if not begin_station:
                     continue
 
-                eind_station = random.choice(bepaling_eind_station) #de eind_station (eindpunt van rit) moet random bepaalt worden.
-                duur = random.randint(2,30)
+                # kies een willekeurig eindstation dat verschillend is
+                mogelijke_eindstations = [s for s in stations if s["name"] != begin_station["name"]]
+                if not mogelijke_eindstations:
+                    continue
+                eind_station = random.choice(mogelijke_eindstations)
+
+                duur = random.randint(2, 30)
                 starttijd = gewogen_starttijd(datum)
                 eindtijd = starttijd + timedelta(minutes=duur)
 
-                geschiedenis.append({ #rit toeveogen aan de lijst
+                geschiedenis.append({
                     "gebruiker_id": gebruiker["id"],
                     "fiets_id": fiets["id"],
                     "begin_station_naam": begin_station["name"],
                     "eind_station_naam": eind_station["name"],
                     "starttijd": starttijd.strftime("%Y-%m-%d %H:%M:%S"),
                     "eindtijd": eindtijd.strftime("%Y-%m-%d %H:%M:%S"),
-                    "duur_minuten": duur
+                    "duur_minuten": duur,
                 })
 
-                fiets["station_id"] = eind_station["id"] #de fiets moet gelinkt worden aan de eindstation.
-                begin_station["free_bikes"] = max(0, begin_station["free_bikes"] - 1)
-                begin_station["free_slots"] += 1 #er komt een slot vrij bij de station waar de fiets wordt gepakt.
-                eind_station["free_bikes"] += 1 #er komt een fiets erbij bij de station waar de fiets wordt achter gelaten.
-                eind_station["free_slots"] = max(0, eind_station["free_slots"] - 1)
+                # fiets verhuist naar het nieuwe station
+                fiets["station_naam"] = eind_station["name"]
+
+                # update slots en fietsen (optioneel – alleen als je simulatie stationsdata wil bijhouden)
+                begin_station["free_bikes"] = max(0, begin_station.get("free_bikes", 0) - 1)
+                begin_station["free_slots"] = begin_station.get("free_slots", 0) + 1
+
+                eind_station["free_bikes"] = eind_station.get("free_bikes", 0) + 1
+                eind_station["free_slots"] = max(0, eind_station.get("free_slots", 0) - 1)
+
                 print(f"- {starttijd.strftime('%H:%M')} Fiets {fiets['id']} van {begin_station['name']} naar {eind_station['name']} ({duur} min)")
 
-    print(f"Simulatie voltooid met {len(geschiedenis)} ritten over {dagen}")
+    print(f"\nSimulatie voltooid met {len(geschiedenis)} ritten over {dagen} dag(en).")
     return geschiedenis
+
 
 
 def sla_stations_op_in_db(stations):
