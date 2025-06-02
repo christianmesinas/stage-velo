@@ -54,7 +54,7 @@ body.dark-mode .card-item {
 }
 
 body.dark-mode .streep {
-  background-color: #ed5f45;
+  background-color: red;
 }
 
 .defect-form .form-group {
@@ -92,8 +92,8 @@ body.dark-mode .defect-form select {
 }
 
 .defect-form button:hover {
-  border-color: #ed5f45;
-  color: #ed5f45;
+  border-color: red;
+  color: red;
 }
 
 body.dark-mode .defect-form button {
@@ -102,8 +102,8 @@ body.dark-mode .defect-form button {
 }
 
 body.dark-mode .defect-form button:hover {
-  border-color: #ed5f45;
-  color: #ed5f45;
+  border-color: red;
+  color: red;
 }
 
 /* Footerblok onderaan */

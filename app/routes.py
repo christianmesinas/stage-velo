@@ -13,6 +13,7 @@ from dotenv import load_dotenv, find_dotenv
 from urllib.parse import quote_plus, urlencode
 from os import environ as env
 import requests
+import re
 import csv
 import uuid
 import os
@@ -183,18 +184,14 @@ def markers():
     stations = cur.fetchall()
     markers = []
     for station in stations:
-        if station[3] is not None and station[4] is not None:
-            try:
-                markers.append({
-                    'lat': float(station[3]),
-                    'lon': float(station[4]),
-                    'name': station[1],
-                    'free-bikes': station[8],
-                    'empty-slots': station[7],
-                    'status': station[6],
-                })
-            except (ValueError, TypeError):
-                continue  # sla stations met ongeldige coördinaten over
+        markers.append({
+            'lat': float(station[3]),
+            'lon': float(station[4]),
+            'name': station[1],
+            'free-bikes': station[8],
+            'empty-slots': station[7],
+            'status': station[6],
+        })
     cur.close()
     conn.close()
     return render_template("maps.html", markers=markers)
@@ -776,6 +773,7 @@ def betaling_annulatie():
 def annulatie():
     return "<h1>❌ Betaling geannuleerd.</h1>"
 
+
 @routes.route("/contact", methods=["GET", "POST"])
 def contact():
     foutmelding = None
@@ -788,20 +786,16 @@ def contact():
         onderwerp = request.form.get("onderwerp")
         bericht = request.form.get("bericht")
 
-        # Regex validatie
         email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         telefoon_regex = r"^(?:\+32|0)[1-9][0-9]{7,8}$"
 
-        if not request.match(email_regex, email):
+        if not re.match(email_regex, email):  # ✅ HIER aangepast
             foutmelding = "❌ Ongeldig e-mailadres. Voorbeeld: naam@voorbeeld.be"
-
-        elif telefoon and not request.match(telefoon_regex, telefoon):
+        elif telefoon and not re.match(telefoon_regex, telefoon):  # ✅ ook hier
             foutmelding = "❌ Ongeldig telefoonnummer. Voorbeeld: 0471234567 of +32471234567"
-
         elif not naam or not email or not reden or not onderwerp or not bericht:
             foutmelding = "❌ Gelieve alle verplichte velden in te vullen."
 
-        # Alles geldig → flash success
         if not foutmelding:
             print("📩 Nieuw contactbericht ontvangen:")
             print("Naam:", naam)
@@ -811,22 +805,11 @@ def contact():
             print("Onderwerp:", onderwerp)
             print("Bericht:", bericht)
 
-            flash("✅ Bedankt voor je bericht! We nemen zo snel mogelijk contact met je op.", "success")
-            return redirect(url_for("routes.contact"))
+            return redirect(url_for("routes.contact_bevestiging"))
 
     return render_template("contact.html", foutmelding=foutmelding)
-    return """
-    <!DOCTYPE html>
-    <html lang="nl">
-    <head>
-        <meta charset="UTF-8">
-        <title>Betaling geannuleerd</title>
-    </head>
-    <body>
-        <h1>❌ Betaling geannuleerd</h1>
-        <p>Je betaling is niet voltooid. Geen zorgen, je kan het later opnieuw proberen.</p>
-        <a href="/">← Terug naar de startpagina</a>
-    </body>
-    </html>
-    """
 
+
+@routes.route("/contact/bevestiging")
+def contact_bevestiging():
+    return render_template("contact_bevestiging.html")

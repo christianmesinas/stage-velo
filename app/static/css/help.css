@@ -113,26 +113,6 @@ details p {
   line-height: 1.6;
   color: #555;
   margin: 0;
-/* Dark mode text altijd wit houden */
-body.dark-mode .question,
-body.dark-mode .question:hover,
-body.dark-mode .question.active {
-  color: white;
-}
-
-/* Ook het plusje wit maken */
-body.dark-mode .question::after,
-body.dark-mode .question.active::after {
-  color: white;
-}
-
-/* Linkjes donkerroze vervangen door wit of ander accent indien gewenst */
-body.dark-mode a {
-  color: white;
-}
-
-body.dark-mode a:hover {
-  text-decoration: underline;
 }
 
 @media screen and (max-width: 790px) {
