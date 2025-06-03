@@ -1,0 +1,103 @@
+{% extends 'base_admin.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_filter.css') }}">
+{% endblock %}
+
+{% block content %}
+<h2>👤 Gebruiker filteren</h2>
+
+<form method="POST" class="inline-form">
+  <label for="gebruiker_id">Kies een gebruiker:
+    <select name="gebruiker_id" id="gebruiker_id">
+      {% for g in gebruikers %}
+        <option value="{{ g.id }}"
+          {% if geselecteerde_gebruiker and g.id == geselecteerde_gebruiker.id %}selected{% endif %}>
+          {{ g.voornaam }} {{ g.achternaam }}
+        </option>
+      {% endfor %}
+    </select>
+  </label>
+  <button type="submit">Toon ritten</button>
+</form>
+
+{% if geselecteerde_gebruiker %}
+  <div class="stats">
+    <h3>Info over {{ geselecteerde_gebruiker.voornaam }} {{ geselecteerde_gebruiker.achternaam }}</h3>
+    <ul>
+      <li><strong>Email:</strong> {{ geselecteerde_gebruiker.email }}</li>
+      <li><strong>Abonnement:</strong> {{ geselecteerde_gebruiker.abonnementstype }}</li>
+      <li><strong>Postcode:</strong> {{ geselecteerde_gebruiker.postcode }}</li>
+    </ul>
+  </div>
+
+  <div class="stats">
+    <h3>📊 Statistieken</h3>
+    <ul>
+      <li><strong>Totaal aantal ritten:</strong> {{ ritten|length }}</li>
+      <li><strong>Totaal aantal minuten:</strong>
+        {{ ritten | sum(attribute='duur_minuten') | round(1) if ritten else 0 }}
+      </li>
+      <li><strong>Geschat totaal aantal km:</strong>
+        {{ (ritten|length * 2) if ritten else 0 }} km
+      </li>
+      <li><strong>Gemiddelde ritduur:</strong>
+        {% if ritten %}
+          {{ (ritten | sum(attribute='duur_minuten') / (ritten|length)) | round(1) }} min
+        {% else %}
+          0 min
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+
+  <div class="stats">
+    <h3>Ritten per dag</h3>
+    {% if ritten_per_dag %}
+      <ul>
+        {% for dag, aantal in ritten_per_dag.items() %}
+          <li>{{ dag }}: {{ aantal }} ritten</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <em>Geen ritten gevonden voor deze gebruiker.</em>
+    {% endif %}
+  </div>
+
+  <div class="table-container">
+    <h3>Alle ritten</h3>
+    {% if ritten %}
+      <div class="scrollbox">
+        <table class="fixed-header-table">
+          <thead>
+            <tr>
+              <th>Starttijd</th>
+              <th>Eindtijd</th>
+              <th>Van</th>
+              <th>Tot</th>
+              <th>Duur (min)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rit in ritten %}
+              <tr>
+                <td>{{ rit.starttijd.strftime("%Y-%m-%d %H:%M") if rit.starttijd else "" }}</td>
+                <td>{{ rit.eindtijd.strftime("%Y-%m-%d %H:%M") if rit.eindtijd else "" }}</td>
+                <td>{{ rit.start_station_naam }}</td>
+                <td>{{ rit.eind_station_naam }}</td>
+                <td>
+                  {% if rit.duur_minuten is not none %}
+                    {{ "%.1f"|format(rit.duur_minuten) }}
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <em>Geen ritten om te tonen.</em>
+    {% endif %}
+  </div>
+{% endif %}
+{% endblock %}

@@ -6,7 +6,7 @@ from flask import jsonify
 
 import psycopg2
 import pytz
-from app.database.models import Usertable, Gebruiker
+from app.database.models import Usertable, Gebruiker, Station
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
@@ -19,7 +19,7 @@ import os
 import copy
 from app.api import api as api
 from app.api.api import get_alle_stations, get_info
-from app.database.models import Usertable, Defect, Fiets, Geschiedenis, Station
+from app.database.models import Usertable, Defect, Fiets, Geschiedenis
 from app.database import SessionLocal
 from app.simulation import simulation
 from collections import Counter
@@ -597,7 +597,7 @@ def admin_simulatie():
     gemiddelde_duur = 0
     langste_rit = 0
     meest_gebruikte_fiets = 0
-    populairst_station = 0
+    populairst_station = None
     drukste_per_station = []
 
     stations_copy = None
@@ -621,25 +621,24 @@ def admin_simulatie():
             fiets_teller = Counter(r["fiets_id"] for r in ritten)
             meest_gebruikte_fiets = fiets_teller.most_common(1)[0][0] if fiets_teller else None
 
-            station_teller = Counter(r["begin_station_id"] for r in ritten)
-            populairst_station = station_teller.most_common(1)[0][0] if station_teller else None
+            station_teller = Counter(r["begin_station_naam"] for r in ritten)
+            populairst_station = station_teller.most_common(1)[0] if station_teller else None
 
             # ⏰ Drukste momenten per station
             station_uren_counter = {}
             for rit in ritten:
-                station_id = rit["begin_station_id"]
+                station_naam = rit["begin_station_naam"]
                 starttijd = rit["starttijd"]
                 if isinstance(starttijd, str):
                     startuur = datetime.strptime(starttijd, "%Y-%m-%d %H:%M:%S").hour
                 else:
                     startuur = starttijd.hour
-                station_uren_counter.setdefault(station_id, Counter())[startuur] += 1
+                station_uren_counter.setdefault(station_naam, Counter())[startuur] += 1
 
             for station in stations_copy:
-                sid = station["id"]
                 naam = station["name"]
-                if sid in station_uren_counter:
-                    meest_uur, aantal = station_uren_counter[sid].most_common(1)[0]
+                if naam in station_uren_counter:
+                    meest_uur, aantal = station_uren_counter[naam].most_common(1)[0]
                     tijdvak = f"{meest_uur:02d}:00 - {meest_uur:02d}:59"
                     drukste_per_station.append({
                         "naam": naam,
@@ -653,13 +652,13 @@ def admin_simulatie():
             csv_bestand = f"/tmp/ritten_{uuid.uuid4().hex}.csv"
             with open(csv_bestand, mode="w", newline="") as file:
                 writer = csv.writer(file)
-                writer.writerow(["gebruiker_id", "fiets_id", "begin_station_id", "eind_station_id", "duur_minuten"])
+                writer.writerow(["gebruiker_id", "fiets_id", "begin_station_naam", "eind_station_naam", "duur_minuten"])
                 for rit in ritten:
                     writer.writerow([
                         rit["gebruiker_id"],
                         rit["fiets_id"],
-                        rit["begin_station_id"],
-                        rit["eind_station_id"],
+                        rit["begin_station_naam"],
+                        rit["eind_station_naam"],
                         rit["duur_minuten"]
                     ])
             session["laatste_csv"] = csv_bestand
@@ -732,16 +731,49 @@ def admin_data():
     return render_template("live_data.html", stations=stations, populairste_station=populairste_station)
 
 
-
-
-@routes.route("/admin/gebruikers")
+@routes.route("/admin/user_filter", methods=["GET", "POST"])
 @admin_required
+def admin_filter():
+    from sqlalchemy.orm import aliased
+    db = SessionLocal()
+    gebruikers = db.query(Gebruiker).all()
 
+    geselecteerde_gebruiker = None
+    ritten = []
+    ritten_per_dag = {}
 
-def admin_gebruikers():
-    gebruikers = simulation.gebruikers_lijst()  # voorbeeld
-    return render_template("admin/gebruikers.html", gebruikers=gebruikers)
+    if request.method == "POST":
+        gebruiker_id = request.form.get("gebruiker_id")
+        geselecteerde_gebruiker = db.query(Gebruiker).filter_by(id=gebruiker_id).first()
 
+        if geselecteerde_gebruiker:
+            StartStation = aliased(Station)
+            EindStation = aliased(Station)
+            ritten = (
+                db.query(Geschiedenis)
+                .filter_by(gebruiker_id=gebruiker_id)
+                .join(Fiets, Geschiedenis.fiets_id == Fiets.id)
+                .join(StartStation, Geschiedenis.start_station_naam == StartStation.naam)
+                .join(EindStation, Geschiedenis.eind_station_naam == EindStation.naam)
+                .all()
+            )
+            # Bereken ritten per dag
+            for rit in ritten:
+                if isinstance(rit.starttijd, str):
+                    datum = datetime.strptime(rit.starttijd, "%Y-%m-%d %H:%M:%S").date()
+                else:
+                    datum = rit.starttijd.date()
+                ritten_per_dag[datum] = ritten_per_dag.get(datum, 0) + 1
+
+    db.close()
+
+    return render_template(
+        "user_filter.html",
+        gebruikers=gebruikers,
+        geselecteerde_gebruiker=geselecteerde_gebruiker,
+        ritten=ritten,
+        ritten_per_dag=ritten_per_dag
+    )
 
 
 
