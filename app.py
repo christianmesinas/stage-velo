@@ -1,6 +1,7 @@
 from flask import Flask, session, request, render_template, redirect, url_for
 from dotenv import load_dotenv
 from os import getenv
+from datetime import datetime
 import stripe
 from app.database import SessionLocal
 from app.database.models import Base
@@ -23,21 +24,23 @@ app.config['BABEL_SUPPORTED_LOCALES'] = ['nl', 'en', 'fr', 'es', 'de']
 
 def get_locale():
     # Check query parameter
+    #check taal van de site
     if 'lang' in request.args:
         language = request.args.get('lang')
         if language in ['nl', 'en', 'fr', 'es', 'de']:
             session['language'] = language
             logging.debug(f"Set language from query param: {language}")
             return language
-    # Check session
+    # Check session als het niet in de url zit
     if 'language' in session:
         language = session['language']
         logging.debug(f"Language from session: {language}")
         return language
-    # Default to Dutch
+    # standaardtaal Nederlands
     logging.debug("Using default language: nl")
     return 'nl'
 
+#initialiseer babel
 babel = Babel(app, locale_selector=get_locale)
 
 app.secret_key = getenv("SECRET_KEY", "fallback-secret")
@@ -61,6 +64,7 @@ oauth.register(
 # ✅ Registreer je Blueprint-routes
 app.register_blueprint(routes)
 
+#zorg dat de databasetabellen automatisch worden aangemaakt bij het opstarten van de app
 with app.app_context():
     db = SessionLocal()
     Base.metadata.create_all(bind=db.bind)
@@ -69,9 +73,13 @@ with app.app_context():
 
 
 @app.context_processor
-def inject_user():
+def inject_user(): #voeg ingelogde gebruiker toe aan elke template
     return dict(user=session.get("user"))
 
+@app.context_processor
+def inject_datetime():
+    return dict(datetime=datetime)
 
+#opstart app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)

@@ -6,7 +6,7 @@ from flask import jsonify
 
 import psycopg2
 import pytz
-from app.database.models import Usertable, Gebruiker
+from app.database.models import Usertable, Gebruiker, Station
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
@@ -32,11 +32,23 @@ from werkzeug.utils import secure_filename
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        gebruiker = session.get("Gebruiker") #eerst checken of er is ingelogd
+        if not gebruiker:
+            return redirect(url_for("routes.login", next=request.path))
+        if gebruiker.get("email") != os.getenv("ADMIN_EMAIL"): #hierna checken we of de user email overeenkomt met admin_email
+            return "❌ Geen toegang: je bent geen administrator", 403
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def transport_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
         gebruiker = session.get("Gebruiker")
         if not gebruiker:
             return redirect(url_for("routes.login", next=request.path))
-        if gebruiker.get("email") != os.getenv("ADMIN_EMAIL"):
-            return "❌ Geen toegang: je bent geen administrator", 403
+        if gebruiker.get("email") != os.getenv("TRANSPORT_EMAIL"):
+            return "❌ Geen toegang: je bent geen transporteur", 403
         return f(*args, **kwargs)
     return decorated_function
 
@@ -44,7 +56,6 @@ def admin_required(f):
 
 # ✅ Создание Blueprint / Maak een Blueprint
 routes = Blueprint("routes", __name__)
-
 # ======================
 # .env en Auth0 configuratie
 # ======================
@@ -63,6 +74,7 @@ oauth.register(
     },
     server_metadata_url=f"https://{env.get('AUTH0_DOMAIN')}/.well-known/openid-configuration"
 )
+
 
 # ======================
 # ✅ Обработка авторизации / AUTHENTICATIE
@@ -111,6 +123,7 @@ def process_auth():
 
     return redirect(redirect_to)
 
+
 # ✅ Выход / Afmelden
 @routes.route("/logout")
 def logout():
@@ -122,6 +135,7 @@ def logout():
         }, quote_plus)
     )
 
+
 # ======================
 # ✅ Общие маршруты / Algemene routes
 # ======================
@@ -131,6 +145,7 @@ def index():
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"))
 
+
 @routes.route("/login")
 def login():
     next_url = request.args.get("next", "/profile")
@@ -138,6 +153,7 @@ def login():
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"),
                            next_url=next_url)
+
 
 @routes.route("/profile")
 def profile():
@@ -173,7 +189,7 @@ def help():
 @routes.route("/maps")
 def markers():
     import psycopg2
-    conn = psycopg2.connect(
+    conn = psycopg2.connect( #connecteren met de database voor de stations data
         dbname="velo_community",
         user=env.get("POSTGRES_USER"),
         password=env.get("POSTGRES_PASSWORD"),
@@ -184,7 +200,7 @@ def markers():
     cur.execute("SELECT * FROM stations")
     stations = cur.fetchall()
     markers = []
-    for station in stations:
+    for station in stations: #filteren van de data met een loop
         markers.append({
             'lat': float(station[3]),
             'lon': float(station[4]),
@@ -221,12 +237,10 @@ def dagpas():
         pincode = request.form.get("pincode")
         bevestig_pincode = request.form.get("bevestig_pincode")
 
-        if pincode != bevestig_pincode:
+        if pincode != bevestig_pincode: #checken of de pincodes met elkaar overeenkomen
             foutmelding = "De pincodes komen niet overeen!"
-            db.close()
             return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        # 🔐 Bewaar formulierdata tijdelijk in sessie
         session["abonnement_data"] = {
             "type": "Dagpas",
             "voornaam": request.form.get("voornaam"),
@@ -243,8 +257,7 @@ def dagpas():
             "Jaarkaart": 3000
         }
 
-        # 💳 Start Stripe-betaalsessie
-        try:
+        try: #stripe checkout sessie aanmaken
             stripe_session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
                 line_items=[{
@@ -340,7 +353,6 @@ def weekpass():
     return render_template("tarieven/weekpas.html", formdata={})
 
 
-
 @routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
 def jaarkaart():
     if "Gebruiker" not in session:
@@ -360,7 +372,6 @@ def jaarkaart():
 
         if pincode != bevestig_pincode:
             foutmelding = "De pincodes komen niet overeen!"
-            db.close()
             return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding, formdata=request.form)
 
         session["abonnement_data"] = {
@@ -373,16 +384,14 @@ def jaarkaart():
             "pincode": pincode
         }
 
-        db.close()
         return redirect(url_for("routes.create_checkout_session", abonnement_type="jaarkaart"))
 
-    db.close()
     return render_template("tarieven/jaarkaart.html", formdata={})
 
 
 @routes.route('/defect', methods=['GET', 'POST'])
 def defect():
-    if 'Gebruiker' not in session:
+    if 'Gebruiker' not in session: #controle of gebruiker is ingelogd
         return redirect(url_for("routes.login", next=request.path))
 
     foutmelding = None
@@ -394,23 +403,23 @@ def defect():
         if not fiets_id or not probleem:
             foutmelding = 'Gelieve alle velden in te vullen.'
         else:
-            db = SessionLocal()
+            db = SessionLocal() #database sessie openen
             try:
-                fiets = db.query(Fiets).filter_by(id=fiets_id).first()
+                fiets = db.query(Fiets).filter_by(id=fiets_id).first() #zoekt de fiets in de database
                 if not fiets:
                     foutmelding = "⚠️ Deze fiets bestaat niet in het systeem."
                 else:
-                    nieuw_defect = Defect(
+                    nieuw_defect = Defect( #een record aanmaken van de defect
                         fiets_id=int(fiets_id),
                         station_naam=fiets.station_naam,
                         probleem=probleem
                     )
-                    db.add(nieuw_defect)
+                    db.add(nieuw_defect) #toevoegen aan de database
                     db.commit()
                     flash('✅ Je melding is doorgestuurd naar de administratie.', 'success')
                     return redirect(url_for('routes.profile'))
             except Exception as e:
-                db.rollback()
+                db.rollback() #bij foutmelding de db query annuleren
                 foutmelding = f"Er ging iets mis bij het opslaan van de melding: {str(e)}"
             finally:
                 db.close()
@@ -468,14 +477,15 @@ def instellingen():
     db.close()
     return render_template("instellingen.html", user=gebruiker)
 
+
 @routes.route("/delete_account", methods=["POST"])
 def delete_account():
     if "Gebruiker" not in session:
         return redirect(url_for("routes.login"))
 
-    db = SessionLocal()
+    db = SessionLocal() #database connectie en checken of gebruiker in database is
     gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-    if gebruiker:
+    if gebruiker: #als gebruiker in database is , wordt hij/zij verwijdert
         db.delete(gebruiker)
         db.commit()
     db.close()
@@ -483,14 +493,153 @@ def delete_account():
     flash("Uw account is verwijderd.", "danger")
     return redirect(url_for("routes.index"))
 
+
 @routes.app_errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
+
 
 @routes.app_errorhandler(500)
 def internal_server_error(error):
     return render_template('500.html'), 500
 
+# ======================
+# TRANSPORT ROUTE
+# ======================
+@routes.route('/transport_dashboard')
+@transport_required
+def transport_dashboard():
+    db_session = SessionLocal()
+    stations = db_session.query(Station).all()
+
+    # Haal defecte fietsen op
+    defecten = db_session.query(Defect, Fiets, Station).join(Fiets, Defect.fiets_id == Fiets.id).join(Station, Defect.station_naam == Station.naam).all()
+
+    LEEG_DREMPEL = 5  # minder dan 5 fietsen
+    VOL_DREMPEL = 0.9  # 90% vol
+
+    lege_stations = [s for s in stations if s.parked_bikes < LEEG_DREMPEL]
+    volle_stations = [s for s in stations if s.parked_bikes / s.capaciteit > VOL_DREMPEL]
+
+    # Haal fietsen op voor elk vol station
+    station_fietsen = {}
+    for station in volle_stations:
+        fietsen = db_session.query(Fiets).filter(Fiets.station_naam == station.naam).all()
+        station_fietsen[station.id] = [{"id": fiets.id, "status": fiets.status} for fiets in fietsen]
+        print(f"Station {station.naam} (ID: {station.id}): {len(fietsen)} fietsen")  # Debug logging
+
+    print("station_fietsen:", station_fietsen)
+    # Sluit de database sessie
+    db_session.close()
+
+    return render_template(
+        'transport.html',
+        lege_stations=lege_stations,
+        volle_stations=volle_stations,
+        defecten=defecten,
+        stations=stations,
+        station_fietsen=station_fietsen
+    )
+
+@routes.route('/verplaats_geselecteerde_fietsen', methods=['POST'])
+@transport_required
+def verplaats_geselecteerde_fietsen():
+    db_session = SessionLocal()
+    try:
+        from_station_id = request.form['from_station_id']  # Geen int() nodig
+        to_station_id = request.form['to_station_id']      # Geen int() nodig
+        fiets_ids = request.form.getlist('fiets_ids')      # Meerdere fiets-ID's
+
+        if not fiets_ids:
+            db_session.close()
+            return redirect(url_for('routes.transport_dashboard', _anchor='volle_stations', message="Geen fietsen geselecteerd."))
+
+        from_station = db_session.query(Station).filter_by(id=from_station_id).first()
+        to_station = db_session.query(Station).filter_by(id=to_station_id).first()
+
+        # Validatie
+        if not from_station or not to_station:
+            message = "Station niet gevonden."
+        elif len(fiets_ids) > from_station.parked_bikes:
+            message = f"Niet genoeg fietsen in {from_station.naam}."
+        elif to_station.parked_bikes + len(fiets_ids) > to_station.capaciteit:
+            message = f"{to_station.naam} heeft niet genoeg ruimte."
+        else:
+            # Update fietsen
+            for fiets_id in fiets_ids:
+                fiets = db_session.query(Fiets).filter_by(id=int(fiets_id)).first()  # fiets_id is een integer
+                if fiets and fiets.station_naam == from_station.naam:
+                    fiets.station_naam = to_station.naam
+
+            # Update stations
+            from_station.parked_bikes -= len(fiets_ids)
+            to_station.parked_bikes += len(fiets_ids)
+            db_session.commit()
+            message = f"{len(fiets_ids)} fiets(en) verplaatst van {from_station.naam} naar {to_station.naam}."
+
+    except Exception as e:
+        db_session.rollback()
+        message = f"Fout: {str(e)}"
+    finally:
+        db_session.close()
+
+    return redirect(url_for('routes.transport_dashboard', _anchor='volle_stations', message=message))
+
+@routes.route('/verplaats_defecte_fiets', methods=['POST'])
+@transport_required
+def verplaats_defecte_fiets():
+    db_session = SessionLocal()
+    try:
+        fiets_id = int(request.form['fiets_id'])
+        defect_id = int(request.form['defect_id'])
+        to_station_id = request.form['to_station_id']
+        nieuwe_status = request.form['status']
+
+        print(f"DEBUG: fiets_id={fiets_id}, defect_id={defect_id}, to_station_id={to_station_id}, status={nieuwe_status}")
+
+
+        # Haal fiets, defect en bestemmingsstation op
+        fiets = db_session.query(Fiets).filter_by(id=fiets_id).first()
+        defect = db_session.query(Defect).filter_by(id=defect_id).first()
+        to_station = db_session.query(Station).filter_by(id=to_station_id).first()
+
+        print(f"DEBUG: fiets={fiets}, defect={defect}, to_station={to_station}")
+
+        if not fiets or not defect or not to_station:
+            db_session.close()
+            return redirect(url_for('routes.transport_dashboard', _anchor='defecten', message="Fiets, defect of station niet gevonden."))
+
+        # Controleer of het bestemmingsstation ruimte heeft
+        if to_station.parked_bikes >= to_station.capaciteit:
+            db_session.close()
+            return redirect(url_for('routes.transport_dashboard', _anchor='defecten', message=f"{to_station.naam} heeft geen ruimte meer."))
+
+        # Huidige station bijwerken (fiets verwijderen)
+        from_station = db_session.query(Station).filter_by(naam=fiets.station_naam).first()
+        if from_station:
+            from_station.parked_bikes -= 1
+
+        # Bestemmingsstation bijwerken (fiets toevoegen)
+        to_station.parked_bikes += 1
+
+        # Fiets en defect bijwerken
+        fiets.station_naam = to_station.naam
+        fiets.status = nieuwe_status
+        defect.station_naam = to_station.naam
+
+        # Als status niet meer "onderhoud" is, verwijder het defect
+        if nieuwe_status != "onderhoud":
+            db_session.delete(defect)
+
+        db_session.commit()
+        message = f"Fiets {fiets_id} verplaatst naar {to_station.naam} met status '{nieuwe_status}'."
+    except Exception as e:
+        db_session.rollback()
+        message = f"Fout: {str(e)}"
+    finally:
+        db_session.close()
+
+    return redirect(url_for('routes.transport_dashboard', _anchor='defecten', message=message))
 
 # ======================
 # ADMIN ROUTE
@@ -513,17 +662,17 @@ def admin_simulatie():
     gemiddelde_duur = 0
     langste_rit = 0
     meest_gebruikte_fiets = 0
-    populairst_station = 0
+    populairst_station = None
     drukste_per_station = []
 
     stations_copy = None
 
     if request.method == "POST":
-        try:
+        try: #de aantallen voor de simulatie
             gebruikers_aantal = int(request.form.get("gebruikers"))
             fietsen_aantal = int(request.form.get("fietsen"))
             dagen = int(request.form.get("dagen"))
-
+            #functies aanroepen die de simulatie starten
             gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
             stations_copy = copy.deepcopy(simulation.stations)
             fietsen = simulation.genereer_fietsen(fietsen_aantal, stations_copy)
@@ -537,25 +686,25 @@ def admin_simulatie():
             fiets_teller = Counter(r["fiets_id"] for r in ritten)
             meest_gebruikte_fiets = fiets_teller.most_common(1)[0][0] if fiets_teller else None
 
-            station_teller = Counter(r["begin_station_id"] for r in ritten)
-            populairst_station = station_teller.most_common(1)[0][0] if station_teller else None
+            station_teller = Counter(r["begin_station_naam"] for r in ritten)
+            populairst_station = station_teller.most_common(1)[0] if station_teller else None
 
             # ⏰ Drukste momenten per station
             station_uren_counter = {}
             for rit in ritten:
-                station_id = rit["begin_station_id"]
+                station_naam = rit["begin_station_naam"]
                 starttijd = rit["starttijd"]
                 if isinstance(starttijd, str):
                     startuur = datetime.strptime(starttijd, "%Y-%m-%d %H:%M:%S").hour
                 else:
                     startuur = starttijd.hour
-                station_uren_counter.setdefault(station_id, Counter())[startuur] += 1
+                station_uren_counter.setdefault(station_naam, Counter())[startuur] += 1
 
             for station in stations_copy:
                 sid = station["id"]
                 naam = station["name"]
-                if sid in station_uren_counter:
-                    meest_uur, aantal = station_uren_counter[sid].most_common(1)[0]
+                if naam in station_uren_counter:
+                    meest_uur, aantal = station_uren_counter[naam].most_common(1)[0]
                     tijdvak = f"{meest_uur:02d}:00 - {meest_uur:02d}:59"
                     drukste_per_station.append({
                         "naam": naam,
@@ -569,13 +718,13 @@ def admin_simulatie():
             csv_bestand = f"/tmp/ritten_{uuid.uuid4().hex}.csv"
             with open(csv_bestand, mode="w", newline="") as file:
                 writer = csv.writer(file)
-                writer.writerow(["gebruiker_id", "fiets_id", "begin_station_id", "eind_station_id", "duur_minuten"])
+                writer.writerow(["gebruiker_id", "fiets_id", "begin_station_naam", "eind_station_naam", "duur_minuten"])
                 for rit in ritten:
                     writer.writerow([
                         rit["gebruiker_id"],
                         rit["fiets_id"],
-                        rit["begin_station_id"],
-                        rit["eind_station_id"],
+                        rit["begin_station_naam"],
+                        rit["eind_station_naam"],
                         rit["duur_minuten"]
                     ])
             session["laatste_csv"] = csv_bestand
@@ -614,6 +763,7 @@ def admin_simulatie():
         drukste_per_station=drukste_per_station,
     )
 
+
 @routes.route("/admin/download_csv")
 @admin_required
 def download_csv():
@@ -628,11 +778,8 @@ def download_csv():
     return send_file(csv_path, as_attachment=True)
 
 
-
 @routes.route("/admin/data")
 @admin_required
-
-
 def admin_data():
     stations = get_alle_stations()
     info = get_info()
@@ -648,16 +795,49 @@ def admin_data():
     return render_template("live_data.html", stations=stations, populairste_station=populairste_station)
 
 
-
-
-@routes.route("/admin/gebruikers")
+@routes.route("/admin/user_filter", methods=["GET", "POST"])
 @admin_required
+def admin_filter():
+    from sqlalchemy.orm import aliased
+    db = SessionLocal()
+    gebruikers = db.query(Gebruiker).all()
 
+    geselecteerde_gebruiker = None
+    ritten = []
+    ritten_per_dag = {}
 
-def admin_gebruikers():
-    gebruikers = simulation.gebruikers_lijst()  # voorbeeld
-    return render_template("admin/gebruikers.html", gebruikers=gebruikers)
+    if request.method == "POST":
+        gebruiker_id = request.form.get("gebruiker_id")
+        geselecteerde_gebruiker = db.query(Gebruiker).filter_by(id=gebruiker_id).first()
 
+        if geselecteerde_gebruiker:
+            StartStation = aliased(Station)
+            EindStation = aliased(Station)
+            ritten = (
+                db.query(Geschiedenis)
+                .filter_by(gebruiker_id=gebruiker_id)
+                .join(Fiets, Geschiedenis.fiets_id == Fiets.id)
+                .join(StartStation, Geschiedenis.start_station_naam == StartStation.naam)
+                .join(EindStation, Geschiedenis.eind_station_naam == EindStation.naam)
+                .all()
+            )
+            # Bereken ritten per dag
+            for rit in ritten:
+                if isinstance(rit.starttijd, str):
+                    datum = datetime.strptime(rit.starttijd, "%Y-%m-%d %H:%M:%S").date()
+                else:
+                    datum = rit.starttijd.date()
+                ritten_per_dag[datum] = ritten_per_dag.get(datum, 0) + 1
+
+    db.close()
+
+    return render_template(
+        "user_filter.html",
+        gebruikers=gebruikers,
+        geselecteerde_gebruiker=geselecteerde_gebruiker,
+        ritten=ritten,
+        ritten_per_dag=ritten_per_dag
+    )
 
 
 
@@ -669,7 +849,7 @@ def betalen():
 
 @routes.route("/create-checkout-session")
 def create_checkout_session():
-    abonnement_type = request.args.get("abonnement_type", "dagpas")
+    abonnement_type = request.args.get("abonnement_type", "dagpas") #type abonnement van url halen
 
     prijzen = {
         "dagpas": 500,
@@ -680,7 +860,7 @@ def create_checkout_session():
     bedrag = prijzen.get(abonnement_type, 500)
 
     try:
-        session = stripe.checkout.Session.create(
+        session = stripe.checkout.Session.create( #stripe cheeckout sessie
             payment_method_types=["card"],
             line_items=[{
                 "price_data": {
@@ -703,6 +883,9 @@ def create_checkout_session():
 
 @routes.route("/betaling-succes")
 def betaling_succes():
+    if "Gebruiker" not in session or "id" not in session["Gebruiker"]:
+        return "Geen geldige sessie gevonden. Log opnieuw in.", 401
+
     data = session.pop("abonnement_data", None)
     if not data:
         return "Geen gegevens gevonden.", 400
@@ -715,6 +898,14 @@ def betaling_succes():
     gebruiker = None
     if "Gebruiker" in session:
         gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    if not gebruiker:
+        db.close()
+        return "Gebruiker niet gevonden.", 400
+
+    gebruiker.abonnement = data["type"]
+    db.commit()
+    session["Gebruiker"]["abonnement"] = data["type"]
 
     soort = data["type"].lower()
     start_datum = datetime.utcnow()
@@ -816,7 +1007,3 @@ def contact():
 
     return render_template("contact.html", foutmelding=foutmelding)
 
-
-@routes.route("/contact/bevestiging")
-def contact_bevestiging():
-    return render_template("contact_bevestiging.html")

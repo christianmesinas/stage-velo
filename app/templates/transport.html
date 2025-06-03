@@ -1,0 +1,184 @@
+{% extends 'base_transport.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_stationstatus.css') }}">
+<script src="{{ url_for('static', filename='js/alert.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popup.js') }}"></script>
+<!-- Script om de fiets id te kunnen parsen per station -->
+<script id="station-fietsen-data" type="application/json">
+{{ station_fietsen | tojson | safe }}
+</script>
+<script>
+console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | safe }});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="main-title"><i class="fas fa-bicycle"></i> Stationstatus voor transporteurs</h2>
+
+  <!-- Meldingen -->
+  {% if message %}
+    <div class="alert">
+      <i class="fas fa-info-circle"></i> {{ message }}
+    </div>
+  {% endif %}
+
+  <!-- Lege stations -->
+  <div class="table-container">
+    <h2><i class="fas fa-exclamation-circle"></i> Lege stations (bijvullen nodig)</h2>
+    <table class="fixed-header-table">
+      <thead>
+        <tr>
+          <th>Station</th>
+          <th>Fietsen</th>
+          <th>Capaciteit</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="scrollbox">
+      <table class="fixed-header-table">
+        <tbody>
+          {% for station in lege_stations %}
+          <tr>
+            <td>{{ station.naam }}</td>
+            <td>{{ station.parked_bikes }}</td>
+            <td>{{ station.capaciteit }}</td>
+            <td>{{ station.status or 'Onbekend' }}</td>
+          </tr>
+          {% endfor %}
+          {% if not lege_stations %}
+          <tr>
+            <td colspan="4" class="no-data">Geen lege stations gevonden.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Volle stations -->
+  <div class="table-container">
+    <h2><i class="fas fa-check-circle"></i> Volle stations (fietsen ophalen)</h2>
+    <table class="fixed-header-table">
+      <thead>
+        <tr>
+          <th>Station</th>
+          <th>Fietsen</th>
+          <th>Capaciteit</th>
+          <th>Status</th>
+          <th>Actie</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="scrollbox">
+      <table class="fixed-header-table">
+        <tbody>
+          {% for station in volle_stations %}
+          <tr>
+            <td>{{ station.naam }}</td>
+            <td>{{ station.parked_bikes }}</td>
+            <td>{{ station.capaciteit }}</td>
+            <td>{{ station.status or 'Onbekend' }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm open-popup" data-station-id="{{ station.id }}">
+                <i class="fas fa-bicycle"></i> Toon fietsen
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+          {% if not volle_stations %}
+          <tr>
+            <td colspan="5" class="no-data">Geen volle stations gevonden.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Popup voor fietsen -->
+  <div class="popup" id="fiets-popup">
+    <div class="popup-content">
+      <h3 class="popup-title">Fietsen verplaatsen vanaf <span id="popup-station-name"></span></h3>
+      <form method="post" action="{{ url_for('routes.verplaats_geselecteerde_fietsen') }}" class="inline-form">
+        <input type="hidden" name="from_station_id" id="from_station_id">
+        <div class="form-group">
+          <label>Fietsen:</label>
+          <div class="fiets-checkboxes" id="fiets-checkboxes"></div>
+        </div>
+        <div class="form-group">
+          <label for="to_station_popup">Verplaats naar:</label>
+          <select name="to_station_id" id="to_station_popup" class="form-control" required>
+            {% for station in lege_stations %}
+              <option value="{{ station.id }}">{{ station.naam }} ({{ station.parked_bikes }}/{{ station.capaciteit }})</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="popup-buttons">
+          <button type="submit" class="btn btn-primary"><i class="fas fa-exchange-alt"></i> Verplaats</button>
+          <button type="button" class="btn btn-secondary close-popup"><i class="fas fa-times"></i> Annuleren</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Defecte fietsen -->
+  <div class="table-container">
+    <h2><i class="fas fa-tools"></i> Defecte fietsen (onderhoud nodig)</h2>
+    <table class="fixed-header-table">
+      <thead>
+        <tr>
+          <th>Fiets ID</th>
+          <th>Station</th>
+          <th>Probleem</th>
+          <th>Status</th>
+          <th>Actie</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="scrollbox">
+      <table class="fixed-header-table">
+        <tbody>
+          {% for defect, fiets, station in defecten %}
+          <tr>
+            <td>{{ fiets.id }}</td>
+            <td>{{ station.naam }}</td>
+            <td>{{ defect.probleem }}</td>
+            <td>{{ fiets.status or 'Onbekend' }}</td>
+            <td>
+              <form method="post" action="{{ url_for('routes.verplaats_defecte_fiets') }}" class="inline-form">
+                <input type="hidden" name="fiets_id" value="{{ fiets.id }}">
+                <input type="hidden" name="defect_id" value="{{ defect.id }}">
+                <div class="form-group">
+                  <select name="to_station_id" class="form-control" required>
+                    {% for s in stations %}
+                      <option value="{{ s.id }}">{{ s.naam }} ({{ s.parked_bikes }}/{{ s.capaciteit }})</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group">
+                  <select name="status" class="form-control" required>
+                    <option value="onderhoud">Onderhoud</option>
+                    <option value="beschikbaar">Beschikbaar</option>
+                    <option value="in reparatie">In reparatie</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-exchange-alt"></i> Verplaats</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+          {% if not defecten %}
+          <tr>
+            <td colspan="5" class="no-data">Geen defecte fietsen gemeld.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
