@@ -16,7 +16,6 @@ class Usertable(Base):
     name = Column(String)
     profile_picture = Column(String, nullable=False, default="img/default.png")
 
-
     voornaam = Column(String)
     achternaam = Column(String)
     telefoonnummer = Column(String)
@@ -103,14 +102,13 @@ class Geschiedenis(Base):
     starttijd = Column(DateTime, default=datetime.utcnow)
     eindtijd = Column(DateTime)
     duur_minuten = Column(DECIMAL)
-    prijs = Column(DECIMAL)
 
     gebruiker = relationship("Gebruiker", back_populates="geschiedenis")
     fiets = relationship("Fiets", back_populates="geschiedenis")
     start_station = relationship("Station", foreign_keys=[start_station_naam], back_populates="start_geschiedenis")
     end_station = relationship("Station", foreign_keys=[eind_station_naam], back_populates="end_geschiedenis")
 
-# Defecte fietsen met probleem opslaan in de databank
+# 🚧 Defecte fietsen
 class Defect(Base):
     __tablename__ = "defecten"
     id = Column(Integer, primary_key=True)
@@ -120,7 +118,6 @@ class Defect(Base):
 
     fiets = relationship("Fiets")
     station = relationship("Station", foreign_keys=[station_naam])
-
 
 def add_defect(db: Session, fiets_id: int, station_naam: str, probleem: str):
     defect = Defect(fiets_id=fiets_id, station_naam=station_naam, probleem=probleem)
@@ -141,21 +138,7 @@ def update_fiets_status_defect(mapper, connection, target):
         .values(status="onderhoud")
     )
 
-''' WORK IN PROGRESS (IGNORE)
-@event.listens_for(Defect, "after_delete")
-def update_fiets_status_fixed(mapper, connection, target):
-    defect_count = connection.execute(
-        select(func.count(Defect.id))
-        .where(Defect.fiets_id == target.fiets_id)
-    ).scalar()
-
-    if defect_count == 0:
-        connection.execute(
-            Fiets.__table__.update()
-            .where(Fiets.id == target.fiets_id)
-            .values(status="beschikbaar")
-        )'''
-
+# 🎫 Passen voor ingelogde gebruikers
 class Pas(Base):
     __tablename__ = "passen"
 
@@ -168,4 +151,17 @@ class Pas(Base):
 
     gebruiker = relationship("Usertable", backref="passen")
 
+# 🧾 Gastpassen voor niet-ingelogde gebruikers
+class GastPas(Base):
+    __tablename__ = "gastpassen"
 
+    id = Column(Integer, primary_key=True)
+    type = Column(String, nullable=False)  # dag of week
+    voornaam = Column(String, nullable=False)
+    achternaam = Column(String, nullable=False)
+    email = Column(String, nullable=False)
+    telefoon = Column(String)
+    geboortedatum = Column(DateTime, nullable=False)
+    pincode = Column(String, nullable=False)
+    start_datum = Column(DateTime, default=datetime.utcnow)
+    eind_datum = Column(DateTime, nullable=True)
