@@ -530,10 +530,15 @@ def verplaats_defecte_fiets():
         to_station_id = request.form['to_station_id']
         nieuwe_status = request.form['status']
 
+        print(f"DEBUG: fiets_id={fiets_id}, defect_id={defect_id}, to_station_id={to_station_id}, status={nieuwe_status}")
+
+
         # Haal fiets, defect en bestemmingsstation op
         fiets = db_session.query(Fiets).filter_by(id=fiets_id).first()
         defect = db_session.query(Defect).filter_by(id=defect_id).first()
         to_station = db_session.query(Station).filter_by(id=to_station_id).first()
+
+        print(f"DEBUG: fiets={fiets}, defect={defect}, to_station={to_station}")
 
         if not fiets or not defect or not to_station:
             db_session.close()
