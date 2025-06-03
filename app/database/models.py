@@ -165,3 +165,15 @@ class GastPas(Base):
     pincode = Column(String, nullable=False)
     start_datum = Column(DateTime, default=datetime.utcnow)
     eind_datum = Column(DateTime, nullable=True)
+
+class ContactBericht(Base):
+    __tablename__ = "contact_berichten"
+
+    id = Column(Integer, primary_key=True)
+    naam = Column(String, nullable=False)
+    email = Column(String, nullable=False)
+    telefoon = Column(String)
+    reden = Column(String, nullable=False)
+    onderwerp = Column(String, nullable=False)
+    bericht = Column(String, nullable=False)
+    datum = Column(DateTime, default=datetime.utcnow)

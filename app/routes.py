@@ -21,6 +21,7 @@ import copy
 from app.api import api as api
 from app.api.api import get_alle_stations, get_info
 from app.database.models import Usertable, Defect, Fiets, Geschiedenis
+from app.database.models import ContactBericht
 from app.database import SessionLocal
 from app.simulation import simulation
 from collections import Counter
@@ -791,21 +792,25 @@ def contact():
         email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         telefoon_regex = r"^(?:\+32|0)[1-9][0-9]{7,8}$"
 
-        if not re.match(email_regex, email):  # ✅ HIER aangepast
+        if not re.match(email_regex, email):
             foutmelding = "❌ Ongeldig e-mailadres. Voorbeeld: naam@voorbeeld.be"
-        elif telefoon and not re.match(telefoon_regex, telefoon):  # ✅ ook hier
+        elif telefoon and not re.match(telefoon_regex, telefoon):
             foutmelding = "❌ Ongeldig telefoonnummer. Voorbeeld: 0471234567 of +32471234567"
         elif not naam or not email or not reden or not onderwerp or not bericht:
             foutmelding = "❌ Gelieve alle verplichte velden in te vullen."
-
-        if not foutmelding:
-            print("📩 Nieuw contactbericht ontvangen:")
-            print("Naam:", naam)
-            print("E-mail:", email)
-            print("Telefoon:", telefoon or "—")
-            print("Reden:", reden)
-            print("Onderwerp:", onderwerp)
-            print("Bericht:", bericht)
+        else:
+            db = SessionLocal()
+            nieuw_bericht = ContactBericht(
+                naam=naam,
+                email=email,
+                telefoon=telefoon,
+                reden=reden,
+                onderwerp=onderwerp,
+                bericht=bericht
+            )
+            db.add(nieuw_bericht)
+            db.commit()
+            db.close()
 
             return redirect(url_for("routes.contact_bevestiging"))
 
