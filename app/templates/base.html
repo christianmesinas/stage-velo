@@ -2,7 +2,7 @@
 <html lang="{{ language }}">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}Velo App{% endblock %}</title>
+  <title>{% block title %}{{ _('Velo App') }}{% endblock %}</title>
 
   <!-- ✅ Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,16 +17,16 @@
 <header>
   <a href="/">
     <div class="logo">
-      <img src="{{ url_for('static', filename='images/LOGO2.png') }}" alt="vrouw op fiets" width="100" height="50">
+      <img src="{{ url_for('static', filename='images/LOGO2.png') }}" alt="{{ _('vrouw op fiets') }}" width="100" height="50">
     </div>
   </a>
 
   <nav class="nav-links">
-    <a href="#">Hoe het werkt</a>
-    <a href="/tarieven">Tarieven</a>
-    <a href="maps">Vind een fiets</a>
-    <a href="help">Help</a>
-    <a href="/contact">Contact</a>
+    <a href="#">{{ _('Hoe het werkt') }}</a>
+    <a href="/tarieven">{{ _('Tarieven') }}</a>
+    <a href="maps">{{ _('Vind een fiets') }}</a>
+    <a href="help">{{ _('Help') }}</a>
+    <a href="/contact">{{ _('Contact') }}</a>
     <div class="dropdown">
       <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">{{ _('Meer ▼') }}</a>
       <div class="dropdown-menu">
@@ -59,7 +59,7 @@
 </header>
 <noscript>
   <div class="alert alert-warning text-center m-0 no-js-alert" role="alert" style="border-radius: 0;">
-    ⚠️ JavaScript is uitgeschakeld in je browser. Voor een optimale ervaring op deze site moet JavaScript ingeschakeld zijn.
+    ⚠️ {{ _('JavaScript is uitgeschakeld in je browser. Voor een optimale ervaring op deze site moet JavaScript ingeschakeld zijn.') }}
   </div>
 </noscript>
 {% endblock %}
