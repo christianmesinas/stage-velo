@@ -151,20 +151,7 @@ class Pas(Base):
 
     gebruiker = relationship("Usertable", backref="passen")
 
-# 🧾 Gastpassen voor niet-ingelogde gebruikers
-class GastPas(Base):
-    __tablename__ = "gastpassen"
 
-    id = Column(Integer, primary_key=True)
-    type = Column(String, nullable=False)  # dag of week
-    voornaam = Column(String, nullable=False)
-    achternaam = Column(String, nullable=False)
-    email = Column(String, nullable=False)
-    telefoon = Column(String)
-    geboortedatum = Column(DateTime, nullable=False)
-    pincode = Column(String, nullable=False)
-    start_datum = Column(DateTime, default=datetime.utcnow)
-    eind_datum = Column(DateTime, nullable=True)
 
 class ContactBericht(Base):
     __tablename__ = "contact_berichten"
