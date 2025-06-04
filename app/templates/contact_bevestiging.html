@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Contactbevestiging{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/contact_bevestiging.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="card-slider">
+  <div class="card-item">
+    <h2 class="card-item__title">📩 Bedankt voor je bericht!</h2>
+    <p>We hebben je bericht goed ontvangen en nemen zo snel mogelijk contact met je op.</p>
+
+    <a href="/" class="terug-btn">🏠 Terug naar startpagina</a>
+    <a href="{{ url_for('routes.contact') }}" class="terug-btn">📨 Stuur een nieuw bericht</a>
+  </div>
+</div>
+{% endblock %}

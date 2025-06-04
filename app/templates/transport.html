@@ -150,7 +150,7 @@ console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | sa
             <td>
               <form method="post" action="{{ url_for('routes.verplaats_defecte_fiets') }}" class="inline-form">
                 <input type="hidden" name="fiets_id" value="{{ fiets.id }}">
-                <input type="hidden" name="defect_id" value="{{ fiets.id }}">
+                <input type="hidden" name="defect_id" value="{{ defect.id }}">
                 <div class="form-group">
                   <select name="to_station_id" class="form-control" required>
                     {% for s in stations %}

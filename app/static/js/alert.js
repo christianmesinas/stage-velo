@@ -5,4 +5,3 @@ document.querySelectorAll('.btn-close').forEach(button => {
     setTimeout(() => alert.remove(), 300);
   });
 });
-

@@ -1,6 +1,7 @@
 from flask import Flask, session, request, render_template, redirect, url_for
 from dotenv import load_dotenv
 from os import getenv
+from datetime import datetime
 import stripe
 from app.database import SessionLocal
 from app.database.models import Base
@@ -63,17 +64,21 @@ oauth.register(
 # ✅ Registreer je Blueprint-routes
 app.register_blueprint(routes)
 
-#zorg dat de databasetabellen automatisch worden aangemaakt bij het opstarten van de app
-with app.app_context():
-    db = SessionLocal()
-    Base.metadata.create_all(bind=db.bind)
-    db.close()
-    print("✅ Tabellen automatisch aangemaakt bij opstart!")
+# #zorg dat de databasetabellen automatisch worden aangemaakt bij het opstarten van de app
+# with app.app_context():
+#     db = SessionLocal()
+#     Base.metadata.create_all(bind=db.bind)
+#     db.close()
+#     print("✅ Tabellen automatisch aangemaakt bij opstart!")
 
 
 @app.context_processor
 def inject_user(): #voeg ingelogde gebruiker toe aan elke template
     return dict(user=session.get("user"))
+
+@app.context_processor
+def inject_datetime():
+    return dict(datetime=datetime)
 
 #opstart app
 if __name__ == "__main__":

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="contact-section d-flex flex-column justify-content-between">
+
+  <div class="container card-slider">
+    <div class="card-item">
+
+      <!-- Afbeelding groter weergegeven -->
+      <img src="{{ url_for('static', filename='images/afbeelding_contact.png') }}"
+           alt="Contacteer ons"
+           class="card-image-full">
+
+      <div class="card-item__content">
+        <h2 class="card-item__title">📬 Contacteer ons</h2>
+        <div class="streep"></div>
+        <p>Heb je een vraag, probleem of suggestie? Vul onderstaand formulier in.</p>
+
+        {% if foutmelding %}
+          <div class="alert alert-danger">{{ foutmelding }}</div>
+        {% endif %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="defect-form">
+          <div class="form-group">
+            <label for="naam">Volledige naam *</label>
+            <input type="text" id="naam" name="naam" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-mailadres *</label>
+            <input type="email" id="email" name="email"
+                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                   title="Bijv. naam@voorbeeld.be" required>
+          </div>
+
+          <div class="form-group">
+            <label for="telefoon">Telefoonnummer (optioneel)</label>
+            <input type="tel" id="telefoon" name="telefoon"
+                   pattern="^(?:\+32|0)[1-9][0-9]{7,8}$"
+                   title="Bijv. 0471234567 of +32471234567"
+                   placeholder="Bijv. 0471234567 of +32471234567">
+          </div>
+
+          <div class="form-group">
+            <label for="reden">Reden van contact *</label>
+            <select id="reden" name="reden" required>
+              <option value="" disabled selected>Kies een optie</option>
+              <option>Vraag over abonnement</option>
+              <option>Probleem met fiets</option>
+              <option>Fout bij betaling</option>
+              <option>Suggestie</option>
+              <option>Klacht</option>
+              <option>Andere</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="onderwerp">Onderwerp *</label>
+            <input type="text" id="onderwerp" name="onderwerp" required>
+          </div>
+
+          <div class="form-group">
+            <label for="bericht">Bericht *</label>
+            <textarea id="bericht" name="bericht" rows="5" required></textarea>
+          </div>
+
+          <button type="submit">Verzend bericht</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer id="footer">
+  <div class="footerwrapper">
+  <div class="footerfiets">
+    <img src="../static/images/fietsvrouw.svg" style=" width: 450px">
+  </div>
+  <div class="copyright">
+    <p>Copyright Velo Antwerpen 2025 ALLE RECHTEN VOORBEHOUDEN</p>
+  </div>
+  <div class="contact">
+    <h2 style="font-size:40px; margin-bottom:10px">CONTACT</h2>
+    <ul style="padding:0">
+      <li>info@velo-antwerpen.be</li>
+      <li>Vosseschijnstraat 16-20 2030 Antwerpen</li>
+      <li>+32 (0)3 206 50 30</li>
+    </ul>
+  </div>
+  <div class="socials">
+    <ul>
+      <li><a href="#"><img src="../static/images/Logo_Linkedin.png"></a></li>
+      <li><a href="#"><img src="../static/images/Logo_Tiktok.png"></a></li>
+      <li><a href ="#"><img src="../static/images/Logo_Facebook.png"></a></li>
+      <li><a href="#"><img src="../static/images/Logo_Youtube.png"></a></li>
+      <li><a href="#"><img src="../static/images/Logo_Insta.png"></a></li>
+    </ul>
+  </div>
+
+  </div>
+</footer>
+{% endblock %}

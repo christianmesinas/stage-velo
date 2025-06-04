@@ -8,6 +8,13 @@
 body {
   font-family: Arial, sans-serif;
   background-color: white;
+  transition: background-color 0.3s ease;
+}
+
+/* Donkere modus body-achtergrond (milder zwart) */
+body.dark-mode {
+  background-color: #202020;
+  color: white;
 }
 
 /* Formulier container */
@@ -20,52 +27,68 @@ body {
   margin: auto;
 }
 
-body.dark-mode .form-container{
-  background-color: black;
+body.dark-mode .form-container {
+  background-color: #1e1e1e;
   padding: 15px;
   border-radius: 8px;
   width: 100%;
   max-width: 500px;
   margin: auto;
 }
+
 /* Formulier rij voor de velden */
 .form-row {
-  display: flex;           /* Flexbox activeert naast elkaar plaatsen */
-  flex-wrap: wrap;         /* Flexbox laat de items naar de volgende regel verplaatsen als er geen ruimte is */
-  gap: 5px;               /* Ruimte tussen de velden */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
   margin-bottom: 15px;
   margin-top: 15px;
 }
 
 /* Formuliergroep voor elk veld in de rij */
 .form-row .form-group {
-  flex: 1 1 49%;               /* Zorgt ervoor dat de velden 45% van de breedte krijgen, en flexibel zijn */
+  flex: 1 1 49%;
   display: flex;
-  flex-direction: column;      /* Zorg ervoor dat de inhoud binnen de .form-group verticaal uitgelijnd is */
+  flex-direction: column;
 }
 
-/* Formuliervelden (tekst, email, telefoon, enz.) */
+/* Formuliervelden */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="date"],
 input[type="password"],
 input[type="checkbox"] {
-  width: 100%;             /* Zorg ervoor dat de invoervelden de breedte van .form-group vullen */
+  width: 100%;
   padding: 10px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-/* Labels voor formulier */
+/* Donkere modus voor invoervelden */
+body.dark-mode input[type="text"],
+body.dark-mode input[type="email"],
+body.dark-mode input[type="tel"],
+body.dark-mode input[type="date"],
+body.dark-mode input[type="password"] {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 1px solid #444;
+}
+
+/* Labels */
 label {
   font-size: 14px;
   margin-bottom: 5px;
   display: block;
 }
 
-/* Submitknop stijl */
+body.dark-mode label {
+  color: #dddddd;
+}
+
+/* Submitknop standaard */
 button[type="submit"] {
   padding: 6px 14px;
   border-radius: 20px;
@@ -82,39 +105,64 @@ button[type="submit"]:hover {
   color: #D41444;
 }
 
+/* Submitknop in dark mode */
+body.dark-mode button[type="submit"] {
+  border: 3px solid #dddddd;
+  color: #dddddd;
+  background: none;
+}
+
+body.dark-mode button[type="submit"]:hover {
+  border-color: #D41444;
+  color: #D41444;
+}
+
 /* Checkbox stijl */
 input[type="checkbox"] {
   width: auto;
   margin-right: 10px;
 }
 
-/* Zorg ervoor dat de laatste form-group geen extra marge heeft */
+body.dark-mode input[type="checkbox"] {
+  filter: brightness(120%);
+}
+
+/* Links in dark mode */
+body.dark-mode a {
+  color: #84aaff;
+}
+
+/* Foutmeldingen in dark mode */
+body.dark-mode p[style*="color: red"] {
+  color: #ff7070 !important;
+}
+
+/* Laatste form-group zonder extra marge */
 .form-group:last-child {
   margin-bottom: 0;
 }
 
-/* Stijl voor de knoppen onderaan het formulier */
+/* Knoppen onderaan */
 .buttons {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-/* Div2 hoogte instelling */
+/* Extra div */
 .div2 {
   height: 35rem;
 }
 
-/* Specifieke stijl voor voornaam veld */
+/* Specifiek veld styling */
 .voornaam {
   padding: 20px;
   border-radius: 8px;
   margin-top: 10px;
 }
 
-/* Stijl voor de kaartslider */
+/* Kaartstijl */
 .card-slider .card-item {
-  /*display: flex;*/
   align-items: center;
   justify-content: center;
   position: relative;
@@ -130,20 +178,11 @@ input[type="checkbox"] {
 }
 
 body.dark-mode .card-slider .card-item {
-  /*display: flex;*/
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  max-width: 90%;
-  margin: 50px auto;
-  background: black;
+  background-color: #1e1e1e;
   box-shadow: 0 10px 10px rgba(34, 35, 58, 0.2);
-  padding: 30px;
-  border-radius: 25px;
-  min-height: 300px;
-  border: 2px solid transparent;
-  transition: 0.2s ease;
-/* Inhoud van de kaart */
+}
+
+/* Kaartinhoud */
 .card-item__content {
   margin-left: 20rem;
   flex: 1;
@@ -152,25 +191,25 @@ body.dark-mode .card-slider .card-item {
   justify-content: center;
 }
 
-/* Titel van de kaart */
+/* Titel */
 .card-item__title {
   font-size: 38px;
 }
 
-/* Streep onder de titel */
+/* Streep onder titel */
 .streep {
   width: 60px;
   height: 4px;
-  margin-top: 8px; /* Ruimte tussen titel en streep */
+  margin-top: 8px;
   border-radius: 2px;
 }
 
-/* Ruimte voor de kaart */
+/* Rand rechts */
 .card-item {
   margin-right: 8rem;
 }
 
-/* Afbeelding van de kaart */
+/* Afbeelding */
 .card-image {
   width: 20%;
   height: 80%;
@@ -181,7 +220,7 @@ body.dark-mode .card-slider .card-item {
   border-radius: 20px;
 }
 
-/* Knop in de kaartslider */
+/* Kaartknop */
 .card-slider__button {
   padding: 6px 14px;
   margin-top: 20px;
@@ -199,13 +238,12 @@ body.dark-mode .card-slider .card-item {
   color: #D41444;
 }
 
-/* Wanneer een kaart wordt ingedrukt */
+/* Indrukken effect */
 .card-slider .card-item.pressed {
   box-shadow: none;
   transform: translateY(2px);
 }
 
-body.dark-mode .div.card-item{
-  background-color: black;
+body.dark-mode .div.card-item {
+  background-color: #1e1e1e;
 }
-

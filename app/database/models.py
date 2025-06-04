@@ -16,7 +16,6 @@ class Usertable(Base):
     name = Column(String)
     profile_picture = Column(String, nullable=False, default="img/default.png")
 
-
     voornaam = Column(String)
     achternaam = Column(String)
     telefoonnummer = Column(String)
@@ -109,7 +108,7 @@ class Geschiedenis(Base):
     start_station = relationship("Station", foreign_keys=[start_station_naam], back_populates="start_geschiedenis")
     end_station = relationship("Station", foreign_keys=[eind_station_naam], back_populates="end_geschiedenis")
 
-# Defecte fietsen met probleem opslaan in de databank
+# 🚧 Defecte fietsen
 class Defect(Base):
     __tablename__ = "defecten"
     id = Column(Integer, primary_key=True)
@@ -119,7 +118,6 @@ class Defect(Base):
 
     fiets = relationship("Fiets")
     station = relationship("Station", foreign_keys=[station_naam])
-
 
 def add_defect(db: Session, fiets_id: int, station_naam: str, probleem: str):
     defect = Defect(fiets_id=fiets_id, station_naam=station_naam, probleem=probleem)
@@ -140,21 +138,7 @@ def update_fiets_status_defect(mapper, connection, target):
         .values(status="onderhoud")
     )
 
-''' WORK IN PROGRESS (IGNORE)
-@event.listens_for(Defect, "after_delete")
-def update_fiets_status_fixed(mapper, connection, target):
-    defect_count = connection.execute(
-        select(func.count(Defect.id))
-        .where(Defect.fiets_id == target.fiets_id)
-    ).scalar()
-
-    if defect_count == 0:
-        connection.execute(
-            Fiets.__table__.update()
-            .where(Fiets.id == target.fiets_id)
-            .values(status="beschikbaar")
-        )'''
-
+# 🎫 Passen voor ingelogde gebruikers
 class Pas(Base):
     __tablename__ = "passen"
 
@@ -168,3 +152,15 @@ class Pas(Base):
     gebruiker = relationship("Usertable", backref="passen")
 
 
+
+class ContactBericht(Base):
+    __tablename__ = "contact_berichten"
+
+    id = Column(Integer, primary_key=True)
+    naam = Column(String, nullable=False)
+    email = Column(String, nullable=False)
+    telefoon = Column(String)
+    reden = Column(String, nullable=False)
+    onderwerp = Column(String, nullable=False)
+    bericht = Column(String, nullable=False)
+    datum = Column(DateTime, default=datetime.utcnow)

@@ -1,16 +1,26 @@
-/* ✅ Общий фон всей страницы / Algemene achtergrond van de pagina */
+/* ✅ Algemene achtergrond van de pagina */
 .background {
     background-color: #f8f9fa;
     padding: 2rem;
     border-radius: 1rem;
 }
 
-/* ✅ Отступы / Marges */
-.mt-5 { margin-top: 2rem; }       /* Отступ сверху / Bovenmarge */
-.mb-4 { margin-bottom: 1.5rem; }  /* Отступ снизу / Ondermarge */
-.mb-5 { margin-bottom: 3rem; }    /* Отступ снизу / Ondermarge */
+body.dark-mode {
+    background: linear-gradient(to bottom, #1e1e1e, #2a2a2a); /* ✅ Gradient van top naar bodem */
+    color: white;
+}
 
-/* ✅ Кнопка Instellingen справа сверху / Instellingen-knop rechtsboven */
+body.dark-mode .background {
+    background-color: #2a2a2a; /* ✅ Minder zwart dan voorheen */
+    color: white;
+}
+
+/* ✅ Marges */
+.mt-5 { margin-top: 2rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mb-5 { margin-bottom: 3rem; }
+
+/* ✅ Instellingen-knop rechtsboven */
 .instellingen-button-topright {
     display: flex;
     justify-content: flex-end;
@@ -20,12 +30,26 @@
 }
 
 .instellingen-button-topright .btn-primary {
-    position: static; /* Убираем абсолютное позиционирование / Geen absolute positionering */
+    position: static;
     top: auto;
     right: auto;
 }
 
-/* ✅ Фото пользователя / Profielfoto */
+body.dark-mode .instellingen-button-topright .btn-primary {
+    background: none;
+    border: 3px solid white;
+    color: white;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: 0.5s ease;
+}
+
+body.dark-mode .instellingen-button-topright .btn-primary:hover {
+    border-color: #D41444;
+    color: #D41444;
+}
+
+/* ✅ Profielfoto */
 .profile-foto {
     margin-left: auto;
     margin-right: auto;
@@ -38,23 +62,26 @@
     user-select: none;
 }
 
-/* ✅ Карточки (инфо, история и т.д.) / Kaarten (info, geschiedenis enz.) */
+/* ✅ Kaarten (info, geschiedenis enz.) */
 .card {
     border-radius: 0.75rem;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease;
     user-select: none;
     border: none;
+    background-color: white;
+    padding: 1.5rem;
 }
 
 .card:hover {
-    transform: translateY(-5px); /* Эффект при наведении / Hover-effect */
+    transform: translateY(-5px);
 }
 
 .card .card-title {
     font-weight: bold;
     font-size: 1.2rem;
     margin-bottom: 1rem;
+    color: #000;
 }
 
 .card .card-text {
@@ -62,97 +89,84 @@
     color: #333;
 }
 
-.card .btn {
-    margin-top: 1rem;
-    font-weight: bold;
+body.dark-mode .card {
+    background-color: #3a3a3a; /* ✅ Extra visueel onderscheid t.o.v. de achtergrond */
+    color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    border: none;
 }
 
-/* ✅ Список поездок / Fietsgeschiedenis-lijst */
+body.dark-mode .card .card-title,
+body.dark-mode .card .card-text {
+    color: white;
+}
+
+/* ✅ Knoppenstijl */
+.card-slider__button,
+button[type="submit"] {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: bolder;
+    border: 3px solid #2B2D42;
+    color: #2B2D42;
+    background: none;
+    transition: 0.5s ease;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.card-slider__button:hover,
+button[type="submit"]:hover {
+    border-color: #D41444;
+    color: #D41444;
+}
+
+body.dark-mode .card-slider__button,
+body.dark-mode button[type="submit"] {
+    border: 3px solid white;
+    color: white;
+}
+
+body.dark-mode .card-slider__button:hover,
+body.dark-mode button[type="submit"]:hover {
+    border-color: #D41444;
+    color: #D41444;
+}
+
+/* ✅ Geschiedenis-lijst */
 .card ul {
     padding-left: 0;
 }
 
-.card li {
-    margin-bottom: 1rem;
+/* ✅ Formulier (optioneel als je forms gebruikt op profielpagina) */
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    color: black;
 }
 
-/* ✅ Flash-сообщение по центру / Flashmelding in het midden */
-#flash-overlay,
-.flash-overlay {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-    background-color: rgba(47, 255, 0, 0.95); /* Ярко-зелёный / Felgroen */
+body.dark-mode input,
+body.dark-mode textarea {
+    background-color: #2a2a2a;
     color: white;
-    padding: 1.5rem 2.5rem;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    transition: opacity 0.4s ease;
-    display: none;
+    border: 1px solid #555;
 }
 
-/* ✅ Агрессивное предупреждение при незаполненных данных / Agressieve waarschuwing bij onvolledig profiel */
-.alert-instellingen {
-    background-color: #ff0000;       /* Красный фон / Rode achtergrond */
-    color: #fff700;                  /* Ядовито-жёлтый текст / Geel gifkleurig tekst */
-    padding: 14px 20px;
-    border: 4px dashed #ffffff;
-    border-radius: 12px;
-    font-weight: 900;
-    font-size: 1.05rem;
-    text-align: center;
-    animation: knipper 0.6s infinite; /* Мерцание / Knipperende animatie */
-    max-width: 450px;
-    margin: 1rem auto 0 auto;
-    box-shadow: 0 0 25px #ff0000, 0 0 25px #ff0000;
+label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
 }
 
-/* ✅ Анимация мерцания и пульсации / Knipper- en pulse-effect */
-@keyframes knipper {
-    0%   { opacity: 1; transform: scale(1); }
-    50%  { opacity: 0.6; transform: scale(1.04); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-/* ✅ Поддержка тёмной темы / Donkere modus ondersteuning */
-body.dark-mode {
-    background-color: #121212;
-    color: #f0f0f0;
-}
-
-body.dark-mode .background {
-    background-color: #1a1a1a;
-}
-
-body.dark-mode .card {
-    background-color: #2c2c2c;
-    color: #f0f0f0;
-    border-color: #444;
-}
-
-body.dark-mode .card .btn-outline-primary {
-    color: #f0f0f0;
-    border-color: #888;
-}
-
-body.dark-mode .card .btn-outline-primary:hover {
-    background-color: #444;
-    color: #fff;
-    border-color: #666;
-}
-
-body.dark-mode .card .btn-danger {
-    background-color: #b00020;
-    border: none;
-}
-
-body.dark-mode .alert-instellingen {
-    background-color: #660000;   /* Тёмно-красный / Donkerrood */
-    color: #ffff00;              /* Ярко-жёлтый / Felgeel */
-    border-color: #ffffff;
-    box-shadow: 0 0 15px #ff0000;
+/* ✅ Gebruiksvriendelijkheid: tekstselectie blokkeren (optioneel) */
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }

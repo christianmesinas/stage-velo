@@ -62,22 +62,43 @@ body {
   margin-top: 1.5rem;
 }
 
-.button-group .btn {
-  padding: 0.6rem 1.2rem;
+/* Algemene knopstijl (lichtmodus) */
+.btn {
+  padding: 6px 14px;
   font-size: 1rem;
-  border-radius: 5px;
+  font-weight: bold;
+  border: 3px solid #2B2D42;
+  border-radius: 20px;
+  background: none;
+  color: #2B2D42;
+  transition: 0.5s ease;
+  cursor: pointer;
+  text-align: center;
 }
 
-/* Verwijder-knop */
+.btn:hover {
+  border-color: #D41444;
+  color: #D41444;
+}
+
+/* Verwijder-knop: altijd rood */
 .danger-button {
-  background-color: #e74c3c;
-  color: white;
+  background-color: red !important;
+  color: white !important;
   width: 100%;
   margin-top: 2rem;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 5px;
+  padding: 0.9rem;
+  border: none !important;
+  border-radius: 8px;
   cursor: pointer;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.danger-button:hover {
+  background-color: #cc0000 !important;
 }
 
 /* Flash alerts */
@@ -110,31 +131,36 @@ body {
 
 /* Donkere modus */
 body.dark-mode {
-  background-color: #121212;
-  color: #f0f0f0;
+  background-color: #1e1e1e;
+  color: white;
 }
 
 body.dark-mode .settings-box {
-  background-color: #1f1f1f;
-  color: #f0f0f0;
+  background-color: #2a2a2a;
+  color: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  border: none;
 }
 
 body.dark-mode input,
 body.dark-mode select {
   background-color: #2a2a2a;
-  color: #f0f0f0;
+  color: white;
   border: 1px solid #555;
 }
 
-body.dark-mode .btn,
-body.dark-mode .danger-button {
-  background-color: #333;
+/* Donkere modus voor knoppen */
+body.dark-mode .btn {
+  border: 3px solid white;
   color: white;
+  background: none;
 }
 
-body.dark-mode .btn:hover,
-body.dark-mode .danger-button:hover {
-  background-color: #555;
+body.dark-mode .btn:hover {
+  border-color: #D41444;
+  color: #D41444;
 }
 
 body.dark-mode .alert-success {

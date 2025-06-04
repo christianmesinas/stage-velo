@@ -249,5 +249,41 @@ ul li {
   color: #D41444;
 }
 
+/* Aanpassingen voor consistente dark mode */
 
+body {
+  background-color: #f4f4f4;
+}
 
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+body.dark-mode .card-slider .card-item {
+  background-color: #2a2a2a;
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .card-slider__button {
+  border: 3px solid white;
+  color: white;
+}
+
+body.dark-mode .card-slider__button:hover {
+  border-color: #D41444;
+  color: #D41444;
+}
+
+body.dark-mode .bigtext,
+body.dark-mode .smoltext {
+  color: white;
+}
+
+/* Optioneel: achtergronden naar #1e1e1e voor exacte match met defect.css */
+body.dark-mode .div1,
+body.dark-mode .div3,
+body.dark-mode .footerwrapper {
+  background-color: #1e1e1e;
+}

@@ -1,0 +1,84 @@
+.card-slider .card-item {
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 90%;
+  margin: 50px auto;
+  background: #fff;
+  box-shadow: 0 10px 10px rgba(34, 35, 58, 0.2);
+  padding: 30px;
+  border-radius: 25px;
+  min-height: 300px;
+  border: 2px solid transparent;
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+.card-item__title {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.card-slider p {
+  padding: 10px;
+  font-size: 1.2rem;
+}
+
+.terug-btn {
+  margin: 20px 10px 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bolder;
+  border: 3px solid #2B2D42;
+  color: #2B2D42;
+  background: none;
+  transition: 0.5s ease;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.terug-btn:hover {
+  border-color: #D41444;
+  color: #D41444;
+}
+
+body.dark-mode .card-item {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+body.dark-mode .terug-btn {
+  border: 3px solid white;
+  color: white;
+}
+
+body.dark-mode .terug-btn:hover {
+  border-color: #D41444;
+  color: #D41444;
+}
+
+/* Achtergrondkleur in dark-mode */
+body.dark-mode {
+  background-color: #1e1e1e; /* ↳ of kies een andere egale grijstint */
+  color: white;
+}
+
+/* Kaderkleur van de bevestigingskaart */
+body.dark-mode .card-item {
+  background-color: #2a2a2a;  /* dezelfde als in jouw kader */
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+}
+
+/* Donkere knoppen blijven contrasterend wit */
+body.dark-mode .terug-btn {
+  border: 3px solid white;
+  color: white;
+}
+
+body.dark-mode .terug-btn:hover {
+  border-color: #D41444;
+  color: #D41444;
+}
