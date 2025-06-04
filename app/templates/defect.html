@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Fiets Defect Melden{% endblock %}
+{% block title %}{{ _('Fiets Defect Melden') }}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/defect.css') }}">
@@ -8,44 +8,42 @@
 
 {% block content %}
 <div class="div4">
-        <ul class="card-slider">
-            <li class="card-item">
-                <!-- Afbeelding uit de map img -->
-                <img src="{{ url_for('static', filename='img/fiets_kapot.png') }}"
-                     class="card-image" alt="Fiets defect">
+    <ul class="card-slider">
+        <li class="card-item">
+            <!-- Afbeelding uit de map img -->
+            <img src="{{ url_for('static', filename='img/fiets_kapot.png') }}"
+                 class="card-image" alt="{{ _('Fiets defect') }}">
 
+            <!-- Inhoud rechts -->
+            <div class="card-item__content">
+                <h1 class="card-item__title">{{ _('FIETS DEFECT') }}</h1>
+                <img class="streep" src="{{ url_for('static', filename='images/streep.svg') }}" alt="{{ _('decoratief lijntje') }}">
 
-                <!-- Inhoud rechts -->
-                <div class="card-item__content">
-                    <h1 class="card-item__title">FIETS DEFECT</h1>
-                    <img class="streep" src="{{ url_for('static', filename='images/streep.svg') }}" alt="decoratief lijntje">
+                <form method="POST" action="{{ url_for('routes.defect') }}" class="defect-form">
+                    <div class="form-group">
+                        <label for="fiets_id">{{ _('Fiets ID') }}</label>
+                        <input type="text" id="fiets_id" name="fiets_id" placeholder="{{ _('Bijv. 1234') }}" required>
+                    </div>
 
-                    <form method="POST" action="{{ url_for('routes.defect') }}" class="defect-form">
-                        <div class="form-group">
-                            <label for="fiets_id">Fiets ID</label>
-                            <input type="text" id="fiets_id" name="fiets_id" placeholder="Bijv. 1234" required>
+                    <div class="form-group">
+                        <label for="probleem">{{ _('Wat is er aan de hand?') }}</label>
+                        <textarea id="probleem" name="probleem" rows="4" placeholder="{{ _('Beschrijf het probleem...') }}" required></textarea>
+                    </div>
+
+                    <button type="submit" class="card-slider__button">{{ _('MELD NU') }}</button>
+                </form>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
                         </div>
-
-                        <div class="form-group">
-                            <label for="probleem">Wat is er aan de hand?</label>
-                            <textarea id="probleem" name="probleem" rows="4" placeholder="Beschrijf het probleem..." required></textarea>
-                        </div>
-
-                        <button type="submit" class="card-slider__button">MELD NU</button>
-                    </form>
-
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            <div class="flash-messages">
-                                {% for category, message in messages %}
-                                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    {% endwith %}
-                </div>
-            </li>
-        </ul>
-    </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </li>
+    </ul>
 </div>
 {% endblock %}

@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}500 - Server Fout{% endblock %}
+{% block title %}{{ _('500 - Server Fout') }}{% endblock %}
 
 {% block content %}
 <div class="container text-center mt-5">
   <h1 class="display-4">500</h1>
-  <p class="lead">Oeps! Er is iets misgegaan aan onze kant.</p>
-  <p class="lead">Probeer het later opnieuw of neem contact met ons op als het probleem aanhoudt.</p>
-  <a href="{{ url_for('routes.login') }}" class="btn btn-primary mt-3">Terug naar login</a>
+  <p class="lead">{{ _('Oeps! Er is iets misgegaan aan onze kant.') }}</p>
+  <p class="lead">{{ _('Probeer het later opnieuw of neem contact met ons op als het probleem aanhoudt.') }}</p>
+  <a href="{{ url_for('routes.login') }}" class="btn btn-primary mt-3">{{ _('Terug naar login') }}</a>
 </div>
 {% endblock %}
-

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-21 15:22+0200\n"
+"POT-Creation-Date: 2025-06-02 15:06+0200\n"
 "PO-Revision-Date: 2025-05-21 12:18+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,67 +18,222 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: static/maps.js:14
-msgid "Station met fietsen"
+#: static/js/maps.js:23
+#, fuzzy
+msgid "Stations met fietsen"
 msgstr "Station mit Fahrrädern"
 
-#: static/maps.js:15
+#: static/js/maps.js:24 templates/maps.html:24
 msgid "Volle stations"
 msgstr "Volle Stationen"
 
-#: static/maps.js:16
+#: static/js/maps.js:25 templates/maps.html:25
 msgid "Lege stations"
 msgstr "Leere Stationen"
 
-#: static/maps.js:17
+#: static/js/maps.js:26 templates/maps.html:26
 msgid "Gesloten stations"
 msgstr "Geschlossene Stationen"
 
-#: templates/base.html:15
+#: templates/admin.html:10
+msgid "Welkom terug, admin"
+msgstr ""
+
+#: templates/admin.html:14
+msgid "Simulatie correct uitgevoerd op"
+msgstr ""
+
+#: templates/admin.html:16
+msgid "Nog geen simulatie uitgevoerd"
+msgstr ""
+
+#: templates/admin.html:21
+msgid "Start Simulatie"
+msgstr ""
+
+#: templates/admin.html:22
+msgid "Bekijk Live Data"
+msgstr ""
+
+#: templates/admin.html:23
+msgid "Gebruikersoverzicht"
+msgstr ""
+
+#: templates/admin.html:24
+msgid "CSV-overzicht"
+msgstr ""
+
+#: templates/admin_simulatie.html:9
+msgid "Simulatie starten"
+msgstr ""
+
+#: templates/admin_simulatie.html:15
+msgid "Aantal gebruikers"
+msgstr ""
+
+#: templates/admin_simulatie.html:16
+#, fuzzy
+msgid "Aantal fietsen"
+msgstr "Station mit Fahrrädern"
+
+#: templates/admin_simulatie.html:17
+#, fuzzy
+msgid "Aantal dagen"
+msgstr "Beantragen"
+
+#: templates/admin_simulatie.html:18
+msgid "Start simulatie"
+msgstr ""
+
+#: templates/admin_simulatie.html:23
+msgid "Simulatie-inzichten"
+msgstr ""
+
+#: templates/admin_simulatie.html:25
+msgid "Aantal ritten"
+msgstr ""
+
+#: templates/admin_simulatie.html:26
+msgid "Gemiddelde ritduur"
+msgstr ""
+
+#: templates/admin_simulatie.html:26 templates/admin_simulatie.html:27
+msgid "min"
+msgstr ""
+
+#: templates/admin_simulatie.html:27
+msgid "Langste rit"
+msgstr ""
+
+#: templates/admin_simulatie.html:28
+msgid "Meest gebruikte fiets"
+msgstr ""
+
+#: templates/admin_simulatie.html:29
+msgid "Populairst beginstation"
+msgstr ""
+
+#: templates/admin_simulatie.html:33
+msgid "Drukste momenten per station"
+msgstr ""
+
+#: templates/admin_simulatie.html:38
+#, fuzzy
+msgid "Station"
+msgstr "Leere Stationen"
+
+#: templates/admin_simulatie.html:39
+msgid "Tijdvak"
+msgstr ""
+
+#: templates/admin_simulatie.html:40
+msgid "Aantal ritten gestart"
+msgstr ""
+
+#: templates/admin_simulatie.html:62
+msgid "Download CSV-bestand"
+msgstr ""
+
+#: templates/admin_simulatie.html:65
+msgid "Resultaten"
+msgstr ""
+
+#: templates/admin_simulatie.html:70
+msgid "Gebruiker"
+msgstr ""
+
+#: templates/admin_simulatie.html:71
+msgid "Fiets"
+msgstr ""
+
+#: templates/admin_simulatie.html:72
+msgid "Van"
+msgstr ""
+
+#: templates/admin_simulatie.html:73
+msgid "Naar"
+msgstr ""
+
+#: templates/admin_simulatie.html:74
+msgid "Duur (min)"
+msgstr ""
+
+#: templates/admin_simulatie.html:92
+#, python-format
+msgid ""
+"Hier zijn de eerste 1000 ritten. Download het CSV-bestand om alle "
+"%(aantal)s ritten te bekijken."
+msgstr ""
+
+#: templates/base.html:26
 msgid "Hoe het werkt"
 msgstr "Wie es funktioniert"
 
-#: templates/base.html:16 templates/tarieven.html:3
+#: templates/base.html:27 templates/tarieven.html:3
 msgid "Tarieven"
 msgstr "Tarife"
 
-#: templates/base.html:17
+#: templates/base.html:28
 msgid "Vind een fiets"
 msgstr "Finde ein Fahrrad"
 
-#: templates/base.html:18
+#: templates/base.html:29
 msgid "Help"
 msgstr "Hilfe"
 
-#: templates/base.html:19
+#: templates/base.html:30
 msgid "Contact"
 msgstr "Kontakt"
 
-#: templates/base.html:21
+#: templates/base.html:33
 msgid "Meer ▼"
 msgstr "Mehr ▼"
 
-#: templates/base.html:23
+#: templates/base.html:35
 msgid "Fiets defect?"
 msgstr "Fahrrad defekt?"
 
-#: templates/base.html:24
+#: templates/base.html:36
 msgid "optie 2"
 msgstr "Option 2"
 
-#: templates/base.html:35
+#: templates/base.html:41
+msgid "Selecteer taal"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Nederlands ▼"
+msgstr ""
+
+#: templates/base.html:43
+msgid "English ▼"
+msgstr ""
+
+#: templates/base.html:44
+msgid "Français ▼"
+msgstr ""
+
+#: templates/base.html:45
+msgid "Español ▼"
+msgstr ""
+
+#: templates/base.html:46
+msgid "Deutsch ▼"
+msgstr ""
+
+#: templates/base.html:54
 msgid "Profiel"
 msgstr "Profil"
 
-#: templates/base.html:36
+#: templates/base.html:55
 msgid "Uitloggen"
 msgstr "Abmelden"
 
-#: templates/base.html:38
+#: templates/base.html:57
 msgid "Inloggen"
 msgstr "Anmelden"
 
-#: templates/base.html:39
+#: templates/base.html:58
 msgid "Account aanmaken"
 msgstr "Konto erstellen"
 
@@ -98,7 +253,7 @@ msgstr "DU"
 msgid "OOK?"
 msgstr "AUCH?"
 
-#: templates/index.html:14 templates/index.html:97
+#: templates/index.html:14 templates/index.html:94
 msgid "Jouw rit, jouw stad, jouw tempo."
 msgstr "Deine Fahrt, deine Stadt, dein Tempo."
 
@@ -106,7 +261,7 @@ msgstr "Deine Fahrt, deine Stadt, dein Tempo."
 msgid "we need more tekst here, Make some Vélocity"
 msgstr "Wir brauchen mehr Text hier, mach etwas Vélocity"
 
-#: templates/index.html:16 templates/index.html:99
+#: templates/index.html:16 templates/index.html:96
 msgid "Gebruik Velo voor een dag, een week of een jaar."
 msgstr "Nutze Velo für einen Tag, eine Woche oder ein Jahr."
 
@@ -118,79 +273,83 @@ msgstr "FORMELN UND"
 msgid "TARIEVEN"
 msgstr "TARIFE"
 
-#: templates/index.html:29 templates/index.html:44 templates/index.html:59
+#: templates/index.html:29 templates/index.html:43 templates/index.html:57
 #: templates/tarieven.html:19 templates/tarieven.html:33
 #: templates/tarieven.html:47
 msgid "lorum ipsum and all that good stuff. We got tarifs, we got bikes!"
 msgstr "Lorem ipsum und all das gute Zeug. Wir haben Tarife, wir haben Fahrräder!"
 
-#: templates/index.html:30 templates/index.html:45 templates/index.html:60
+#: templates/index.html:30 templates/index.html:44 templates/index.html:58
 msgid "What more could you need? What i need right now is more text here."
 msgstr "Was braucht man mehr? Was ich jetzt brauche, ist mehr Text hier."
 
-#: templates/index.html:31 templates/index.html:46 templates/index.html:61
+#: templates/index.html:31 templates/index.html:45 templates/index.html:59
 msgid "I could just put lorum ipsum here but thats boring."
 msgstr "Ich könnte einfach Lorem ipsum hier einfügen, aber das ist langweilig."
 
-#: templates/index.html:32 templates/index.html:47 templates/index.html:62
+#: templates/index.html:32 templates/index.html:46 templates/index.html:60
 #: templates/tarieven.html:22 templates/tarieven.html:36
 #: templates/tarieven.html:50
 msgid "Nothing beats a good copywriting in the morning, yup."
 msgstr "Nichts schlägt gutes Texten am Morgen, jep."
 
-#: templates/index.html:33 templates/index.html:48 templates/index.html:63
+#: templates/index.html:33 templates/index.html:47 templates/index.html:61
 msgid "Whoever is reading this, i'm sorry for wasting 3 minutes of your time."
 msgstr ""
 "Wer auch immer das liest, es tut mir leid, dass ich 3 Minuten deiner Zeit"
 " verschwendet habe."
 
-#: templates/index.html:34 templates/index.html:49 templates/index.html:64
+#: templates/index.html:34 templates/index.html:48 templates/index.html:62
 #: templates/tarieven.html:24 templates/tarieven.html:38
 #: templates/tarieven.html:52
 msgid "But thanks anyways! :D"
 msgstr "Aber trotzdem danke! :D"
 
-#: templates/index.html:35 templates/index.html:50 templates/index.html:65
+#: templates/index.html:35 templates/index.html:49 templates/index.html:63
 msgid "KIES JE FORMULE"
 msgstr "WÄHLE DEINEN PLAN"
 
-#: templates/index.html:42
+#: templates/index.html:41
 msgid "DEEL 2 EN"
 msgstr "TEIL 2 UND"
 
-#: templates/index.html:42
+#: templates/index.html:41
 msgid "DEEL 2"
 msgstr "TEIL 2"
 
-#: templates/index.html:57
+#: templates/index.html:55
 msgid "DEEL 3 EN"
 msgstr "TEIL 3 UND"
 
-#: templates/index.html:57
+#: templates/index.html:55
 msgid "DEEL 3"
 msgstr "TEIL 3"
 
-#: templates/index.html:96
+#: templates/index.html:93
 msgid "HULP"
 msgstr "HILFE"
 
-#: templates/index.html:96
+#: templates/index.html:93
 msgid "NODIG?"
 msgstr "NÖTIG?"
 
-#: templates/index.html:98
+#: templates/index.html:95
 msgid "we hebben meer tekst nodig. Maak een beetje Vélocity"
 msgstr "Wir brauchen mehr Text. Mach etwas Vélocity"
 
-#: templates/index.html:114
+#: templates/index.html:111
 msgid "Copyright Velo Antwerpen 2025 ALLE RECHTEN VOORBEHOUDEN"
 msgstr "Copyright Velo Antwerpen 2025 ALLE RECHTE VORBEHALTEN"
 
-#: templates/index.html:117
+#: templates/index.html:114
 msgid "CONTACT"
 msgstr "KONTAKT"
 
-#: templates/maps.html:49
+#: templates/maps.html:23
+msgid "Station met fietsen"
+msgstr "Station mit Fahrrädern"
+
+#: templates/maps.html:62
 msgid "Closed"
 msgstr ""
 

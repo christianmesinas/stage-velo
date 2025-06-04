@@ -2,7 +2,7 @@
 
 {% block head %}
 <!-- ✅ Подключение CSS + базовая стилизация страницы настроек /
-     Koppelen van CSS + basisstijl voor de instellingenpagina -->
+     {{ _('Koppelen van CSS + basisstijl voor de instellingenpagina') }} -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/instellingen.css') }}">
 <style>
   .settings-wrapper {
@@ -45,97 +45,92 @@
 {#{% block header %}{% endblock %} <!-- deze block is nodig om de header te verbergen, dus met deze kan jij bepalen of dit block moet verborgen worden of niet -->#}
 
 {% block content %}
-<!-- ✅ Кнопка возврата на профиль / Terug naar profiel knop -->
+<!-- ✅ Кнопка возврата на профиль / {{ _('Terug naar profiel knop') }} -->
 <div class="return-button">
-  <a href="{{ url_for('routes.profile') }}" class="btn btn-outline-secondary">← Terug naar profiel</a>
+  <a href="{{ url_for('routes.profile') }}" class="btn btn-outline-secondary">← {{ _('Terug naar profiel') }}</a>
 </div>
 
 <div class="settings-wrapper">
-  <h2 class="form-title">Instellingen</h2>
+  <h2 class="form-title">{{ _('Instellingen') }}</h2>
 
-  <!-- ✅ Показываем флеш-сообщения об успехе / Weergeven van flashberichten -->
+  <!-- ✅ Показываем флеш-сообщения об успехе / {{ _('Weergeven van flashberichten') }} -->
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       <div class="mb-4">
         {% for category, message in messages %}
           <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
             {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ _('Sluiten') }}"></button>
           </div>
         {% endfor %}
       </div>
     {% endif %}
   {% endwith %}
 
-  <!-- ✅ Форма настроек пользователя / Gebruikersinstellingenformulier -->
+  <!-- ✅ Форма настроек пользователя / {{ _('Gebruikersinstellingenformulier') }} -->
   <form method="POST" action="{{ url_for('routes.instellingen') }}">
     <div class="mb-3">
-      <label for="titel" class="form-label">Aanspreekvorm</label>
+      <label for="titel" class="form-label">{{ _('Aanspreekvorm') }}</label>
       <select class="form-select" id="titel" name="titel" autocomplete="honorific-prefix">
-        <option value="" {% if not user.titel %}selected{% endif %}>...</option>
-        <option value="heer" {% if user.titel == 'heer' %}selected{% endif %}>Heer</option>
-        <option value="vrouw" {% if user.titel == 'vrouw' %}selected{% endif %}>Vrouw</option>
+        <option value="" {% if not user.titel %}selected{% endif %}>{{ _('...') }}</option>
+        <option value="heer" {% if user.titel == 'heer' %}selected{% endif %}>{{ _('Heer') }}</option>
+        <option value="vrouw" {% if user.titel == 'vrouw' %}selected{% endif %}>{{ _('Vrouw') }}</option>
       </select>
     </div>
 
     <div class="mb-3">
-      <label for="voornaam" class="form-label">Voornaam</label>
+      <label for="voornaam" class="form-label">{{ _('Voornaam') }}</label>
       <input type="text" class="form-control" id="voornaam" name="voornaam" autocomplete="given-name" value="{{ user.voornaam or '' }}">
     </div>
 
     <div class="mb-3">
-      <label for="achternaam" class="form-label">Achternaam</label>
+      <label for="achternaam" class="form-label">{{ _('Achternaam') }}</label>
       <input type="text" class="form-control" id="achternaam" name="achternaam" autocomplete="family-name" value="{{ user.achternaam or '' }}">
     </div>
 
     <div class="mb-3">
-      <label for="telefoonnummer" class="form-label">Telefoonnummer</label>
-  <input type="tel" class="form-control" id="telefoonnummer" name="telefoonnummer"
-         pattern="^(0|\+)[1-9][0-9]{7,14}$"
-         title="Voer een geldig telefoonnummer in. Begin met 0 of +, gevolgd door 8 tot 15 cijfers. Geen spaties of symbolen."
-         autocomplete="tel"
-         required
-         value="{{ user.telefoonnummer or '' }}">
-        <div class="form-text text-danger">
-        Bijv. 0478123456 of +32478123456 (geen spaties of leestekens)
-        </div>
+      <label for="telefoonnummer" class="form-label">{{ _('Telefoonnummer') }}</label>
+      <input type="tel" class="form-control" id="telefoonnummer" name="telefoonnummer"
+             pattern="^(0|\+)[1-9][0-9]{7,14}$"
+             title="{{ _('Voer een geldig telefoonnummer in. Begin met 0 of +, gevolgd door 8 tot 15 cijfers. Geen spaties of symbolen.') }}"
+             autocomplete="tel"
+             required
+             value="{{ user.telefoonnummer or '' }}">
+      <div class="form-text text-danger">
+        {{ _('Bijv. 0478123456 of +32478123456 (geen spaties of leestekens)') }}
+      </div>
     </div>
 
-
     <div class="mb-4">
-      <label for="email" class="form-label">E-mailadres</label>
+      <label for="email" class="form-label">{{ _('E-mailadres') }}</label>
       <input type="email" class="form-control" id="email" name="email"
              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-             title="Voer een geldig e-mailadres in, bv. naam@example.com"
+             title="{{ _('Voer een geldig e-mailadres in, bv. naam@example.com') }}"
              required
              autocomplete="email"
              value="{{ user.email or '' }}">
-  <div class="form-text text-danger">Bijv. naam@example.com</div>
+      <div class="form-text text-danger">{{ _('Bijv. naam@example.com') }}</div>
     </div>
 
-
-    <!-- ✅ Кнопки отправки и отмены / Opslaan en annuleren knoppen -->
+    <!-- ✅ Кнопки отправки и отмены / {{ _('Opslaan en annuleren knoppen') }} -->
     <div class="d-flex justify-content-between">
-      <button type="submit" class="btn btn-primary">Opslaan</button>
-      <a href="{{ url_for('routes.profile') }}" class="btn btn-secondary">Annuleren</a>
+      <button type="submit" class="btn btn-primary">{{ _('Opslaan') }}</button>
+      <a href="{{ url_for('routes.profile') }}" class="btn btn-secondary">{{ _('Annuleren') }}</a>
     </div>
   </form>
 
   <hr class="my-4">
 
-  <!-- ✅ Форма удаления аккаунта / Formulier voor account verwijderen -->
+  <!-- ✅ Форма удаления аккаунта / {{ _('Formulier voor account verwijderen') }} -->
   <form method="POST" action="{{ url_for('routes.delete_account') }}">
     <button type="submit" class="btn btn-danger w-100"
-            onclick="return confirm('Weet u zeker dat u uw account permanent wilt verwijderen?')">
-      Verwijder account
+            onclick="return confirm('{{ _('Weet u zeker dat u uw account permanent wilt verwijderen?') }}')">
+      {{ _('Verwijder account') }}
     </button>
   </form>
 </div>
 {% endblock %}
 
-
-<!-- ✅Deze JavaScript-code controleert of de verplichte velden in een formulier (voornaam, achternaam, telefoonnummer, e-mailadres) correct zijn ingevuld.-->
-<!-- ✅ iets ontbreekt of ongeldig is, verschijnt er een waarschuwing (alert), en wordt het formulier niet verzonden.-->
 {% block scripts %}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -143,10 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', function (e) {
     const requiredFields = [
-      { id: 'voornaam', label: 'voornaam' },
-      { id: 'achternaam', label: 'achternaam' },
-      { id: 'telefoonnummer', label: 'telefoonnummer' },
-      { id: 'email', label: 'e-mailadres' }
+      { id: 'voornaam', label: '{{ _("voornaam") }}' },
+      { id: 'achternaam', label: '{{ _("achternaam") }}' },
+      { id: 'telefoonnummer', label: '{{ _("telefoonnummer") }}' },
+      { id: 'email', label: '{{ _("e-mailadres") }}' }
     ];
 
     let fouten = [];
@@ -154,18 +149,17 @@ document.addEventListener('DOMContentLoaded', () => {
     requiredFields.forEach(field => {
       const input = document.getElementById(field.id);
       if (!input.value.trim()) {
-        fouten.push(`• Vul het veld '${field.label}' in.`);
+        fouten.push(`• {{ _('Vul het veld') }} '${field.label}' {{ _('in.') }}`);
       } else if (!input.checkValidity()) {
-        fouten.push(`• Ongeldige invoer bij '${field.label}'.`);
+        fouten.push(`• {{ _('Ongeldige invoer bij') }} '${field.label}'.`);
       }
     });
 
     if (fouten.length > 0) {
       e.preventDefault(); // voorkom dat formulier wordt verzonden
-      alert("Foutmelding:\n\n" + fouten.join("\n"));
+      alert("{{ _('Foutmelding:') }}\n\n" + fouten.join("\n"));
     }
   });
 });
 </script>
 {% endblock %}
-

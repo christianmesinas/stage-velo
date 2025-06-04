@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Transport Dashboard</title>
+    <title>{{ _('Transport Dashboard') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base_admin.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -15,8 +15,7 @@
         <div class="image-text">
             <span class="image"></span>
             <div class="text logo-text">
-                <span class="name">Transport</span>
-
+                <span class="name">{{ _('Transport') }}</span>
             </div>
         </div>
         <i class='bx bx-chevron-right toggle'></i>
@@ -25,7 +24,7 @@
     <div class="menu-bar">
 
         <div class="bottom-content">
-            <li><a href="{{ url_for('routes.logout') }}"><i class='bx bx-log-out icon'></i><span class="text nav-text">Logout</span></a></li>
+            <li><a href="{{ url_for('routes.logout') }}"><i class='bx bx-log-out icon'></i><span class="text nav-text">{{ _('Logout') }}</span></a></li>
         </div>
     </div>
 </nav>
@@ -34,11 +33,9 @@
 {% block content %}{% endblock %}
 </section>
 
-
-
 {% block scripts %}
 
-    <script>
+<script>
 const body = document.querySelector('body');
 const sidebar = document.querySelector('nav.sidebar');
 const toggle = document.querySelector(".toggle");
@@ -56,14 +53,11 @@ searchBtn.addEventListener("click", () => {
 
 modeSwitch.addEventListener("click", () => {
     body.classList.toggle("dark");
-    modeText.innerText = body.classList.contains("dark") ? "Light mode" : "Dark mode";
+    modeText.innerText = body.classList.contains("dark") ? "{{ _('Light mode') }}" : "{{ _('Dark mode') }}";
 });
 </script>
 
-
 {% endblock %}
-
-
 
 </body>
 </html>
