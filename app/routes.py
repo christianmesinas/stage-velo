@@ -81,21 +81,17 @@ oauth.register(
 # ======================
 @routes.route("/auth/process", methods=["POST"])
 def process_auth():
-    '''token = request.json.get("access_token")
-    if not token:
-        return {"error": "Access token ontbreekt"}, 400'''
-
     token = request.json.get("access_token")
-    redirect_to = request.json.get("redirect_to", "/profile")
+    redirect_to = request.json.get("redirect_to")
 
     if not token:
-        return {"error": "Access token ontbreekt"}, 400  # Нет токена / Geen toegangstoken
+        return {"error": "Access token ontbreekt"}, 400
 
-    headers = {'Authorization': f'Bearer {token}'}  # Заголовок с токеном / Authorization-header
+    headers = {'Authorization': f'Bearer {token}'}
     try:
         user_info = requests.get(
             f'https://{env.get("AUTH0_DOMAIN")}/userinfo', headers=headers
-        ).json()  # Получение инфо о юзере / Haal gebruikersinfo op
+        ).json()
     except Exception as e:
         return {"error": f"Fout bij ophalen userinfo: {str(e)}"}, 500
 
@@ -104,7 +100,7 @@ def process_auth():
     name = user_info.get("name", "")
     profile_picture = user_info.get("picture", "img/default.png")
 
-    session["Gebruiker"] = {  # Сохранить в сессию / Sla op in sessie
+    session["Gebruiker"] = {
         "id": user_id,
         "email": email,
         "name": name
@@ -118,10 +114,16 @@ def process_auth():
         email=email,
         name=name,
         profile_picture=profile_picture
-    )  # Создание или обновление пользователя / Maak of update gebruiker
+    )
     db.close()
 
-    return redirect(redirect_to)
+    # ✅ Automatische redirect op basis van rol/e-mail
+    if email == os.getenv("ADMIN_EMAIL"):
+        return redirect(url_for("routes.admin"))
+    elif email == os.getenv("TRANSPORT_EMAIL"):
+        return redirect(url_for("routes.transport_dashboard"))
+    else:
+        return redirect(redirect_to or url_for("routes.profile"))
 
 
 # ✅ Выход / Afmelden
