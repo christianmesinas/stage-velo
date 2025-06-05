@@ -2,10 +2,11 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Transport Dashboard</title>
+    <title>{{ _('Transport Dashboard') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base_admin.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     {% block head %}{% endblock %}
 </head>
 <body>
@@ -43,7 +44,7 @@
 </nav>
 
 <section class="home">
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 </section>
 
 <!-- 🌗 Emoji-animatie boven de knop -->
@@ -93,6 +94,8 @@
   });
 </script>
 {% endblock %}
+
+
 
 </body>
 </html>

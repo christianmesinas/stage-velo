@@ -1,9 +1,6 @@
 from datetime import datetime
-
 import stripe
 from flask import jsonify
-
-
 import psycopg2
 import pytz
 from app.database.models import Usertable, Gebruiker, Station
@@ -27,6 +24,7 @@ from app.simulation import simulation
 from collections import Counter
 from functools import wraps
 from werkzeug.utils import secure_filename
+from app.utils.email import send_abonnement_email
 
 
 def admin_required(f):
@@ -147,6 +145,10 @@ def index():
                            auth0_client_id=env.get("AUTH0_CLIENT_ID"),
                            auth0_domain=env.get("AUTH0_DOMAIN"))
 
+
+@routes.route("/contact/bevestiging")
+def contact_bevestiging():
+    return render_template("contact_bevestiging.html",)
 
 @routes.route("/login")
 def login():
@@ -786,7 +788,9 @@ def admin_data():
     stations = get_alle_stations()
     info = get_info()
 
-    # voorbeeld: update tijd registreren
+    # DEBUG output:
+    print("DEBUG: voorbeeldstation =", stations[0])
+
     session["live_data_update"] = datetime.now().strftime("%H:%M:%S")
 
     populairste_station = {
@@ -797,12 +801,14 @@ def admin_data():
     return render_template("live_data.html", stations=stations, populairste_station=populairste_station)
 
 
+
 @routes.route("/admin/user_filter", methods=["GET", "POST"])
 @admin_required
 def admin_filter():
     from sqlalchemy.orm import aliased
     db = SessionLocal()
     gebruikers = db.query(Gebruiker).all()
+    print("DEBUG: gebruikers list =", gebruikers)  # <--- voeg dit toe
 
     geselecteerde_gebruiker = None
     ritten = []
@@ -811,28 +817,11 @@ def admin_filter():
     if request.method == "POST":
         gebruiker_id = request.form.get("gebruiker_id")
         geselecteerde_gebruiker = db.query(Gebruiker).filter_by(id=gebruiker_id).first()
-
         if geselecteerde_gebruiker:
-            StartStation = aliased(Station)
-            EindStation = aliased(Station)
-            ritten = (
-                db.query(Geschiedenis)
-                .filter_by(gebruiker_id=gebruiker_id)
-                .join(Fiets, Geschiedenis.fiets_id == Fiets.id)
-                .join(StartStation, Geschiedenis.start_station_naam == StartStation.naam)
-                .join(EindStation, Geschiedenis.eind_station_naam == EindStation.naam)
-                .all()
-            )
-            # Bereken ritten per dag
-            for rit in ritten:
-                if isinstance(rit.starttijd, str):
-                    datum = datetime.strptime(rit.starttijd, "%Y-%m-%d %H:%M:%S").date()
-                else:
-                    datum = rit.starttijd.date()
-                ritten_per_dag[datum] = ritten_per_dag.get(datum, 0) + 1
+            # … je bestaande logic …
+            pass
 
     db.close()
-
     return render_template(
         "user_filter.html",
         gebruikers=gebruikers,
@@ -840,6 +829,7 @@ def admin_filter():
         ritten=ritten,
         ritten_per_dag=ritten_per_dag
     )
+
 
 
 
@@ -893,7 +883,7 @@ def betaling_succes():
         return "Geen gegevens gevonden.", 400
 
     from app.database import SessionLocal
-    from app.database.models import Usertable, Pas, GastPas
+    from app.database.models import Usertable, Pas
     from datetime import datetime, timedelta
 
     db = SessionLocal()
@@ -907,8 +897,28 @@ def betaling_succes():
 
     gebruiker.abonnement = data["type"]
     db.commit()
-    session["Gebruiker"]["abonnement"] = data["type"]
 
+
+    session["Gebruiker"]["abonnement"] = data["type"]
+    #email bevestiging na de dbcommit
+    #eerst bepalen we de einddatum
+    eind_datum = ''
+    if session["Gebruiker"]["abonnement"] == "dag":
+        eind_datum = datetime.today() + timedelta(days=1)
+    elif session["Gebruiker"]["abonnement"] == "week":
+        eind_datum = datetime.today() + timedelta(days=7)
+    elif session["Gebruiker"]["abonnement"] == "jaar":
+        eind_datum = datetime.today() + timedelta(days=365)
+
+    ontvanger_email = gebruiker.email if gebruiker else data["email"]
+    ontvanger_voornaam = gebruiker.voornaam if gebruiker else data["voornaam"]
+
+    send_abonnement_email(
+        to_email="komutsalih@gmail.com",
+        voornaam="salih",
+        abonnement_type=session["Gebruiker"]["abonnement"],
+        einddatum=eind_datum,
+    )
     soort = data["type"].lower()
     start_datum = datetime.utcnow()
 

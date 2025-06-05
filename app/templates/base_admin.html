@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <title>{{ _('Admin Dashboard') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base_admin.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -16,8 +16,7 @@
         <div class="image-text">
             <span class="image"></span>
             <div class="text logo-text">
-                <span class="name">ADMIN</span>
-
+                <span class="name">{{ _('ADMIN') }}</span>
             </div>
         </div>
         <i class='bx bx-chevron-right toggle'></i>
@@ -28,15 +27,13 @@
 
             </li>
             <ul class="menu-links">
-                <li class="nav-link"><a href="{{ url_for('routes.admin') }}"><i class='bx bx-home-alt icon'></i><span class="text nav-text">Dashboard</span></a></li>
-                <li class="nav-link"><a href="{{ url_for('routes.admin_simulatie') }}"><i class='bx bx-stats icon'></i><span class="text nav-text">Admin</span></a></li>
-                <li class="nav-link"><a href="{{ url_for('routes.admin_data') }}"><i class='bx bx-bell icon'></i><span class="text nav-text">Notifications</span></a></li>
-                <li class="nav-link"><a href="{{ url_for('routes.admin_filter') }}"><i class='bx bx-pie-chart-alt icon'></i><span class="text nav-text">Analytics</span></a></li>
+                <li class="nav-link"><a href="{{ url_for('routes.admin') }}"><i class='bx bx-home-alt icon'></i><span class="text nav-text">{{ _('Dashboard') }}</span></a></li>
+                <li class="nav-link"><a href="{{ url_for('routes.admin_simulatie') }}"><i class='bx bx-stats icon'></i><span class="text nav-text">{{ _('Admin') }}</span></a></li>
+                <li class="nav-link"><a href="{{ url_for('routes.admin_data') }}"><i class='bx bx-bell icon'></i><span class="text nav-text">{{ _('Notifications') }}</span></a></li>
+                <li class="nav-link"><a href="{{ url_for('routes.admin_filter') }}"><i class='bx bx-pie-chart-alt icon'></i><span class="text nav-text">{{ _('Analytics') }}</span></a></li>
 
             </ul>
         </div>
-
-
 
         <div class="bottom-content">
             <button id="darkModeToggle" class="dark-toggle-btn" >🌙</button>
@@ -47,7 +44,7 @@
                     <i class='bx bx-moon icon moon'></i>
                     <i class='bx bx-sun icon sun'></i>
                 </div>
-                <span class="mode-text text">Dark mode</span>
+                <span class="mode-text text">{{ _('Dark mode') }}</span>
                 <div class="toggle-switch">
                     <span class="switch"></span>
                 </div> -->
@@ -64,7 +61,7 @@
 
 {% block scripts %}
 
-    <script>
+<script>
 const body = document.querySelector('body');
 const sidebar = document.querySelector('nav.sidebar');
 const toggle = document.querySelector(".toggle");
@@ -82,7 +79,7 @@ searchBtn.addEventListener("click", () => {
 
 modeSwitch.addEventListener("click", () => {
     body.classList.toggle("dark");
-    modeText.innerText = body.classList.contains("dark") ? "Light mode" : "Dark mode";
+    modeText.innerText = body.classList.contains("dark") ? "{{ _('Light mode') }}" : "{{ _('Dark mode') }}";
 });
 </script>
 

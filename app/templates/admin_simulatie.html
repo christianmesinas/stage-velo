@@ -7,40 +7,39 @@
 
 {% block content %}
 
-<h2>🛠 Simulatie starten</h2>
+<h2>🛠 {{ _('Simulatie starten') }}</h2>
 {% if boodschap %}
   <div class="alert">{{ boodschap }}</div>
 {% endif %}
 
 <form method="post" action="{{ url_for('routes.admin_simulatie') }}" class="inline-form">
-  <label>Aantal gebruikers<input type="number" name="gebruikers" value="58000"></label>
-  <label>Aantal fietsen<input type="number" name="fietsen" value="10000"></label>
-  <label>Aantal dagen<input type="number" name="dagen" value="30"></label>
-  <button type="submit">Start simulatie</button>
+  <label>{{ _('Aantal gebruikers') }}<input type="number" name="gebruikers" value="58000"></label>
+  <label>{{ _('Aantal fietsen') }}<input type="number" name="fietsen" value="10000"></label>
+  <label>{{ _('Aantal dagen') }}<input type="number" name="dagen" value="30"></label>
+  <button type="submit">{{ _('Start simulatie') }}</button>
 </form>
 
 {# Alleen tonen als er al eens op “Start simulatie” is gedrukt #}
 {% if aantal_ritten is not none %}
   <div class="stats">
-    <h2>📈 Simulatie-inzichten</h2>
+    <h2>📈 {{ _('Simulatie-inzichten') }}</h2>
     <ul>
-      <li>Aantal ritten: {{ aantal_ritten }}</li>
-      <li>Gemiddelde ritduur: {{ gemiddelde_duur }} min</li>
-      <li>Langste rit: {{ langste_rit }} min</li>
-      <li>Meest gebruikte fiets: ID {{ meest_gebruikte_fiets }}</li>
-      <li>Populairst beginstation: {{ populairst_station[0] if populairst_station else "–" }}</li>
-        {# populairst_station is een tuple (naam, aantal) #}
+      <li>{{ _('Aantal ritten') }}: {{ aantal_ritten }}</li>
+      <li>{{ _('Gemiddelde ritduur') }}: {{ gemiddelde_duur }} {{ _('min') }}</li>
+      <li>{{ _('Langste rit') }}: {{ langste_rit }} {{ _('min') }}</li>
+      <li>{{ _('Meest gebruikte fiets') }}: ID {{ meest_gebruikte_fiets }}</li>
+      <li>{{ _('Populairst beginstation') }}: ID {{ populairst_station }}</li>
     </ul>
   </div>
 
-  <h2>⏰ Drukste momenten per station</h2>
+  <h2>⏰ {{ _('Drukste momenten per station') }}</h2>
   <div class="table-container">
     <table class="fixed-header-table">
       <thead>
         <tr>
-          <th>Station</th>
-          <th>Tijdvak</th>
-          <th>Aantal ritten gestart</th>
+          <th>{{ _('Station') }}</th>
+          <th>{{ _('Tijdvak') }}</th>
+          <th>{{ _('Aantal ritten gestart') }}</th>
         </tr>
       </thead>
     </table>
@@ -63,19 +62,19 @@
 {# Resultaten-tabel: alleen tonen als er ritten zijn #}
 {% if ritten %}
   {% if csv_bestand %}
-  <a href="{{ url_for('routes.download_csv') }}" download class="download-btn">📥 Download CSV-bestand</a>
+    <a href="{{ url_for('routes.download_csv') }}" download class="download-btn">📥 {{ _('Download CSV-bestand') }}</a>
   {% endif %}
 
-  <h2>Resultaten</h2>
+  <h2>{{ _('Resultaten') }}</h2>
   <div class="table-container">
     <table class="fixed-header-table">
       <thead>
         <tr>
-          <th>Gebruiker</th>
-          <th>Fiets</th>
-          <th>Van</th>
-          <th>Naar</th>
-          <th>Duur (min)</th>
+          <th>{{ _('Gebruiker') }}</th>
+          <th>{{ _('Fiets') }}</th>
+          <th>{{ _('Van') }}</th>
+          <th>{{ _('Naar') }}</th>
+          <th>{{ _('Duur (min)') }}</th>
         </tr>
       </thead>
     </table>
@@ -95,7 +94,7 @@
           <tr>
             <td colspan="5">
               <div class="alert">
-                Hier zijn de eerste 1000 ritten. Download het CSV-bestand om alle {{ ritten|length }} ritten te bekijken.
+                {{ _('Hier zijn de eerste 1000 ritten. Download het CSV-bestand om alle %(aantal)s ritten te bekijken.', aantal=ritten|length) }}
               </div>
             </td>
           </tr>

@@ -9,13 +9,13 @@
 {{ station_fietsen | tojson | safe }}
 </script>
 <script>
-console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | safe }});
+console.log('{{ _("station_fietsen vanuit template:") }}', {{ station_fietsen | tojson | safe }});
 </script>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-  <h2 class="main-title"><i class="fas fa-bicycle"></i> Stationstatus voor transporteurs</h2>
+  <h2 class="main-title"><i class="fas fa-bicycle"></i> {{ _('Stationstatus voor transporteurs') }}</h2>
 
   <!-- Meldingen -->
   {% if message %}
@@ -26,14 +26,14 @@ console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | sa
 
   <!-- Lege stations -->
   <div class="table-container">
-    <h2><i class="fas fa-exclamation-circle"></i> Lege stations (bijvullen nodig)</h2>
+    <h2><i class="fas fa-exclamation-circle"></i> {{ _('Lege stations (bijvullen nodig)') }}</h2>
     <table class="fixed-header-table">
       <thead>
         <tr>
-          <th>Station</th>
-          <th>Fietsen</th>
-          <th>Capaciteit</th>
-          <th>Status</th>
+          <th>{{ _('Station') }}</th>
+          <th>{{ _('Fietsen') }}</th>
+          <th>{{ _('Capaciteit') }}</th>
+          <th>{{ _('Status') }}</th>
         </tr>
       </thead>
     </table>
@@ -45,12 +45,12 @@ console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | sa
             <td>{{ station.naam }}</td>
             <td>{{ station.parked_bikes }}</td>
             <td>{{ station.capaciteit }}</td>
-            <td>{{ station.status or 'Onbekend' }}</td>
+            <td>{{ station.status or _('Onbekend') }}</td>
           </tr>
           {% endfor %}
           {% if not lege_stations %}
           <tr>
-            <td colspan="4" class="no-data">Geen lege stations gevonden.</td>
+            <td colspan="4" class="no-data">{{ _('Geen lege stations gevonden.') }}</td>
           </tr>
           {% endif %}
         </tbody>
@@ -60,15 +60,15 @@ console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | sa
 
   <!-- Volle stations -->
   <div class="table-container">
-    <h2><i class="fas fa-check-circle"></i> Volle stations (fietsen ophalen)</h2>
+    <h2><i class="fas fa-check-circle"></i> {{ _('Volle stations (fietsen ophalen)') }}</h2>
     <table class="fixed-header-table">
       <thead>
         <tr>
-          <th>Station</th>
-          <th>Fietsen</th>
-          <th>Capaciteit</th>
-          <th>Status</th>
-          <th>Actie</th>
+          <th>{{ _('Station') }}</th>
+          <th>{{ _('Fietsen') }}</th>
+          <th>{{ _('Capaciteit') }}</th>
+          <th>{{ _('Status') }}</th>
+          <th>{{ _('Actie') }}</th>
         </tr>
       </thead>
     </table>
@@ -80,17 +80,17 @@ console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | sa
             <td>{{ station.naam }}</td>
             <td>{{ station.parked_bikes }}</td>
             <td>{{ station.capaciteit }}</td>
-            <td>{{ station.status or 'Onbekend' }}</td>
+            <td>{{ station.status or _('Onbekend') }}</td>
             <td>
               <button class="btn btn-primary btn-sm open-popup" data-station-id="{{ station.id }}">
-                <i class="fas fa-bicycle"></i> Toon fietsen
+                <i class="fas fa-bicycle"></i> {{ _('Toon fietsen') }}
               </button>
             </td>
           </tr>
           {% endfor %}
           {% if not volle_stations %}
           <tr>
-            <td colspan="5" class="no-data">Geen volle stations gevonden.</td>
+            <td colspan="5" class="no-data">{{ _('Geen volle stations gevonden.') }}</td>
           </tr>
           {% endif %}
         </tbody>
@@ -101,15 +101,15 @@ console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | sa
   <!-- Popup voor fietsen -->
   <div class="popup" id="fiets-popup">
     <div class="popup-content">
-      <h3 class="popup-title">Fietsen verplaatsen vanaf <span id="popup-station-name"></span></h3>
+      <h3 class="popup-title">{{ _('Fietsen verplaatsen vanaf') }} <span id="popup-station-name"></span></h3>
       <form method="post" action="{{ url_for('routes.verplaats_geselecteerde_fietsen') }}" class="inline-form">
         <input type="hidden" name="from_station_id" id="from_station_id">
         <div class="form-group">
-          <label>Fietsen:</label>
+          <label>{{ _('Fietsen:') }}</label>
           <div class="fiets-checkboxes" id="fiets-checkboxes"></div>
         </div>
         <div class="form-group">
-          <label for="to_station_popup">Verplaats naar:</label>
+          <label for="to_station_popup">{{ _('Verplaats naar:') }}</label>
           <select name="to_station_id" id="to_station_popup" class="form-control" required>
             {% for station in lege_stations %}
               <option value="{{ station.id }}">{{ station.naam }} ({{ station.parked_bikes }}/{{ station.capaciteit }})</option>
@@ -117,8 +117,8 @@ console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | sa
           </select>
         </div>
         <div class="popup-buttons">
-          <button type="submit" class="btn btn-primary"><i class="fas fa-exchange-alt"></i> Verplaats</button>
-          <button type="button" class="btn btn-secondary close-popup"><i class="fas fa-times"></i> Annuleren</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-exchange-alt"></i> {{ _('Verplaats') }}</button>
+          <button type="button" class="btn btn-secondary close-popup"><i class="fas fa-times"></i> {{ _('Annuleren') }}</button>
         </div>
       </form>
     </div>
@@ -126,15 +126,15 @@ console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | sa
 
   <!-- Defecte fietsen -->
   <div class="table-container">
-    <h2><i class="fas fa-tools"></i> Defecte fietsen (onderhoud nodig)</h2>
+    <h2><i class="fas fa-tools"></i> {{ _('Defecte fietsen (onderhoud nodig)') }}</h2>
     <table class="fixed-header-table">
       <thead>
         <tr>
-          <th>Fiets ID</th>
-          <th>Station</th>
-          <th>Probleem</th>
-          <th>Status</th>
-          <th>Actie</th>
+          <th>{{ _('Fiets ID') }}</th>
+          <th>{{ _('Station') }}</th>
+          <th>{{ _('Probleem') }}</th>
+          <th>{{ _('Status') }}</th>
+          <th>{{ _('Actie') }}</th>
         </tr>
       </thead>
     </table>
@@ -146,7 +146,7 @@ console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | sa
             <td>{{ fiets.id }}</td>
             <td>{{ station.naam }}</td>
             <td>{{ defect.probleem }}</td>
-            <td>{{ fiets.status or 'Onbekend' }}</td>
+            <td>{{ fiets.status or _('Onbekend') }}</td>
             <td>
               <form method="post" action="{{ url_for('routes.verplaats_defecte_fiets') }}" class="inline-form">
                 <input type="hidden" name="fiets_id" value="{{ fiets.id }}">
@@ -160,19 +160,19 @@ console.log('station_fietsen vanuit template:', {{ station_fietsen | tojson | sa
                 </div>
                 <div class="form-group">
                   <select name="status" class="form-control" required>
-                    <option value="onderhoud">Onderhoud</option>
-                    <option value="beschikbaar">Beschikbaar</option>
-                    <option value="in reparatie">In reparatie</option>
+                    <option value="onderhoud">{{ _('Onderhoud') }}</option>
+                    <option value="beschikbaar">{{ _('Beschikbaar') }}</option>
+                    <option value="in reparatie">{{ _('In reparatie') }}</option>
                   </select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-exchange-alt"></i> Verplaats</button>
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-exchange-alt"></i> {{ _('Verplaats') }}</button>
               </form>
             </td>
           </tr>
           {% endfor %}
           {% if not defecten %}
           <tr>
-            <td colspan="5" class="no-data">Geen defecte fietsen gemeld.</td>
+            <td colspan="5" class="no-data">{{ _('Geen defecte fietsen gemeld.') }}</td>
           </tr>
           {% endif %}
         </tbody>

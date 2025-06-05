@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Testbetaling</title>
+    <title>{{ _('Testbetaling') }}</title>
      <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
-    <h2>Betaal €5 voor een abonnement</h2>
-  <button id="checkout-button">Betaal nu</button>
+    <h2>{{ _('Betaal €5 voor een abonnement') }}</h2>
+  <button id="checkout-button">{{ _('Betaal nu') }}</button>
 
   <script>
     const stripe = Stripe("{{ public_key }}");
