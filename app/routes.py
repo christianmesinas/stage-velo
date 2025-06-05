@@ -146,6 +146,10 @@ def index():
                            auth0_domain=env.get("AUTH0_DOMAIN"))
 
 
+@routes.route("/contact/bevestiging")
+def contact_bevestiging():
+    return render_template("contact_bevestiging.html",)
+
 @routes.route("/login")
 def login():
     next_url = request.args.get("next", "/profile")
