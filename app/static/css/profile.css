@@ -90,7 +90,7 @@ body.dark-mode .instellingen-button-topright .btn-primary:hover {
 }
 
 body.dark-mode .card {
-    background-color: #3a3a3a; /* ✅ Extra visueel onderscheid t.o.v. de achtergrond */
+    background-color: #1f1f1f; /* ✅ Extra visueel onderscheid t.o.v. de achtergrond */
     color: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     border: none;

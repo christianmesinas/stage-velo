@@ -130,3 +130,42 @@ tr:hover {
   font-size: 1rem;
   color: #999;
 }
+
+body.dark-mode .sidebar{
+  background: #1e1e1e;
+}
+
+body.dark-mode .stat-card{
+  background: #1e1e1e;
+
+}
+
+body.dark-mode .stat-card h3 {
+  color: whitesmoke;
+}
+
+body.dark-mode .fixed-header-table td {
+  background: #1e1e1e;
+}
+
+body.dark-mode .sidebar.close ~ .home {
+  background: #1a1a1a;
+}
+
+body.dark-mode .home {
+  background: #1a1a1a;
+}
+
+body.dark-mode .scrollbox {
+    background: #1e1e1e;
+    border:none
+}
+
+body.dark-mode .fixed-header-table th{
+    border-bottom: none;
+}
+
+body.dark-mode .stat-card5 {
+  background: #1e1e1e;
+  color: whitesmoke;
+}

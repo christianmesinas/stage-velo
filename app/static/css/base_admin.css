@@ -334,9 +334,9 @@ body.dark-mode .container{
     background: #1e1e1e;
 }
 
-/* 🌙 DARK MODE — exact met #1e1e1e */
+/* 🌙 DARK MODE
 body.dark {
-  background-color: #1e1e1e;
+  background-color: #1a1a1a;
   color: #f0f0f0;
 }
 
