@@ -1,3 +1,6 @@
+// Mock _() functie voor pybabel extractie
+function _(str) { return str; }
+
 document.addEventListener('DOMContentLoaded', () => {
   const popup = document.getElementById('fiets-popup');
   const popupStationName = document.getElementById('popup-station-name');
@@ -11,36 +14,36 @@ document.addEventListener('DOMContentLoaded', () => {
   try {
     const dataElement = document.getElementById('station-fietsen-data');
     if (!dataElement) {
-      console.error('station-fietsen-data element niet gevonden');
+      console.error(_('station-fietsen-data element niet gevonden'));
       stationFietsen = {};
     } else {
-      console.log('Ruwe station-fietsen-data:', dataElement.textContent); // Debug
+      console.log(_('Ruwe station-fietsen-data:'), dataElement.textContent); // Debug
       stationFietsen = JSON.parse(dataElement.textContent);
-      console.log('Station fietsen:', stationFietsen);
-      console.log('Station fietsen sleutels:', Object.keys(stationFietsen));
+      console.log(_('Station fietsen:'), stationFietsen);
+      console.log(_('Station fietsen sleutels:'), Object.keys(stationFietsen));
     }
   } catch (e) {
-    console.error('Fout bij parsen van stationFietsen:', e);
+    console.error(_('Fout bij parsen van stationFietsen:'), e);
     stationFietsen = {};
   }
 
   // Controleer DOM-elementen
   if (!popup || !popupStationName || !fietsCheckboxes || !fromStationIdInput || !closePopupButton) {
-    console.error('DOM-elementen niet gevonden:', {
+    console.error(_('DOM-elementen niet gevonden:'), {
       popup, popupStationName, fietsCheckboxes, fromStationIdInput, closePopupButton
     });
     return;
   }
 
   openPopupButtons.forEach(button => {
-    console.log('Knop station ID:', button.dataset.stationId); // Debug
+    console.log(_('Knop station ID:'), button.dataset.stationId); // Debug
     button.addEventListener('click', () => {
       const stationId = button.dataset.stationId;
       const stationCard = button.closest('.station-card');
-      const stationName = stationCard ? stationCard.querySelector('.station-card-header').textContent : 'Onbekend';
+      const stationName = stationCard ? stationCard.querySelector('.station-card-header').textContent : _('Onbekend');
       const fietsen = stationFietsen[stationId] || [];
 
-      console.log('Open popup voor station:', { stationId, stationName, fietsen });
+      console.log(_('Open popup voor station:'), { stationId, stationName, fietsen });
 
       // Vul popup
       popupStationName.textContent = stationName;
@@ -49,10 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ? fietsen.map(fiets => `
             <label>
               <input type="checkbox" name="fiets_ids" value="${fiets.id}">
-              Fiets ID: ${fiets.id} (Status: ${fiets.status || 'Onbekend'})
+              ${_('Fiets ID')}: ${fiets.id} (${_('Status')}: ${fiets.status || _('Onbekend')})
             </label>
           `).join('')
-        : '<p>Geen beschikbare fietsen op dit station.</p>';
+        : `<p>${_('Geen beschikbare fietsen op dit station.')}</p>`;
 
       popup.style.display = 'flex';
     });

@@ -178,6 +178,15 @@ a {
   background-color: #f8d7da;
 }
 
+/* Hamburger Menu */
+.hamburger {
+  display: none; /* Verberg standaard */
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
 /* ✅ Flash meldingen */
 .alert {
   padding: 1rem 1.25rem;
@@ -365,4 +374,47 @@ body.dark-mode .dark-toggle-btn:hover {
   background-color: white;
   color: black;
   border-color: white;
+}
+
+/* ====== Responsive Design ======= */
+@media (max-width: 1135px) {
+  .nav-links {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: #2c2c2c;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+  }
+
+  .nav-links.open {
+    max-height: 500px;
+    transition: max-height 0.3s ease-in;
+  }
+
+  .nav-links a,
+  .dropdown-toggle,
+  .language-selector {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    border-radius: 0;
+    background: #eee;
+  }
+
+  .dropdown-menu a {
+    padding-left: 2rem;
+  }
+
+  .hamburger {
+    display: block;
+  }
 }
