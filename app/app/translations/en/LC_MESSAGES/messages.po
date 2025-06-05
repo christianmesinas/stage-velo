@@ -1,0 +1,1031 @@
+# English translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-06-05 11:26+0200\n"
+"PO-Revision-Date: 2025-06-04 14:02+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#~ msgid "Stations met fietsen"
+#~ msgstr ""
+
+#~ msgid "Volle stations"
+#~ msgstr ""
+
+#~ msgid "Lege stations"
+#~ msgstr ""
+
+#~ msgid "Gesloten stations"
+#~ msgstr ""
+
+#~ msgid "station-fietsen-data element niet gevonden"
+#~ msgstr ""
+
+#~ msgid "Ruwe station-fietsen-data:"
+#~ msgstr ""
+
+#~ msgid "Station fietsen:"
+#~ msgstr ""
+
+#~ msgid "Station fietsen sleutels:"
+#~ msgstr ""
+
+#~ msgid "Fout bij parsen van stationFietsen:"
+#~ msgstr ""
+
+#~ msgid "DOM-elementen niet gevonden:"
+#~ msgstr ""
+
+#~ msgid "Knop station ID:"
+#~ msgstr ""
+
+#~ msgid "Onbekend"
+#~ msgstr ""
+
+#~ msgid "Open popup voor station:"
+#~ msgstr ""
+
+#~ msgid "404 - Niet gevonden"
+#~ msgstr ""
+
+#~ msgid "404 - Pagina niet gevonden"
+#~ msgstr ""
+
+#~ msgid "Sorry, de pagina die je zoekt bestaat niet."
+#~ msgstr ""
+
+#~ msgid "Terug naar login"
+#~ msgstr ""
+
+#~ msgid "500 - Server Fout"
+#~ msgstr ""
+
+#~ msgid "Oeps! Er is iets misgegaan aan onze kant."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Probeer het later opnieuw of neem "
+#~ "contact met ons op als het "
+#~ "probleem aanhoudt."
+#~ msgstr ""
+
+#~ msgid "Welkom terug, admin"
+#~ msgstr ""
+
+#~ msgid "Simulatie correct uitgevoerd op"
+#~ msgstr ""
+
+#~ msgid "Nog geen simulatie uitgevoerd"
+#~ msgstr ""
+
+#~ msgid "Start Simulatie"
+#~ msgstr ""
+
+#~ msgid "Bekijk Live Data"
+#~ msgstr ""
+
+#~ msgid "Gebruikersoverzicht"
+#~ msgstr ""
+
+#~ msgid "CSV-overzicht"
+#~ msgstr ""
+
+#~ msgid "Simulatie starten"
+#~ msgstr ""
+
+#~ msgid "Aantal gebruikers"
+#~ msgstr ""
+
+#~ msgid "Aantal fietsen"
+#~ msgstr ""
+
+#~ msgid "Aantal dagen"
+#~ msgstr ""
+
+#~ msgid "Start simulatie"
+#~ msgstr ""
+
+#~ msgid "Simulatie-inzichten"
+#~ msgstr ""
+
+#~ msgid "Aantal ritten"
+#~ msgstr ""
+
+#~ msgid "Gemiddelde ritduur"
+#~ msgstr ""
+
+#~ msgid "min"
+#~ msgstr ""
+
+#~ msgid "Langste rit"
+#~ msgstr ""
+
+#~ msgid "Meest gebruikte fiets"
+#~ msgstr ""
+
+#~ msgid "Populairst beginstation"
+#~ msgstr ""
+
+#~ msgid "Drukste momenten per station"
+#~ msgstr ""
+
+#~ msgid "Station"
+#~ msgstr ""
+
+#~ msgid "Tijdvak"
+#~ msgstr ""
+
+#~ msgid "Aantal ritten gestart"
+#~ msgstr ""
+
+#~ msgid "Download CSV-bestand"
+#~ msgstr ""
+
+#~ msgid "Resultaten"
+#~ msgstr ""
+
+#~ msgid "Gebruiker"
+#~ msgstr ""
+
+#~ msgid "Fiets"
+#~ msgstr ""
+
+#~ msgid "Van"
+#~ msgstr ""
+
+#~ msgid "Naar"
+#~ msgstr ""
+
+#~ msgid "Duur (min)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Hier zijn de eerste 1000 ritten. "
+#~ "Download het CSV-bestand om alle "
+#~ "%(aantal)s ritten te bekijken."
+#~ msgstr ""
+
+#~ msgid "Velo App"
+#~ msgstr ""
+
+#~ msgid "vrouw op fiets"
+#~ msgstr ""
+
+#~ msgid "Hoe het werkt"
+#~ msgstr ""
+
+#~ msgid "Tarieven"
+#~ msgstr ""
+
+#~ msgid "Vind een fiets"
+#~ msgstr ""
+
+#~ msgid "Help"
+#~ msgstr ""
+
+#~ msgid "Contact"
+#~ msgstr ""
+
+#~ msgid "Meer ▼"
+#~ msgstr ""
+
+#~ msgid "Fiets defect?"
+#~ msgstr ""
+
+#~ msgid "optie 2"
+#~ msgstr ""
+
+#~ msgid "Selecteer taal"
+#~ msgstr ""
+
+#~ msgid "Nederlands ▼"
+#~ msgstr ""
+
+#~ msgid "English ▼"
+#~ msgstr ""
+
+#~ msgid "Français ▼"
+#~ msgstr ""
+
+#~ msgid "Español ▼"
+#~ msgstr ""
+
+#~ msgid "Deutsch ▼"
+#~ msgstr ""
+
+#~ msgid "Profiel"
+#~ msgstr ""
+
+#~ msgid "Uitloggen"
+#~ msgstr ""
+
+#~ msgid "Inloggen"
+#~ msgstr ""
+
+#~ msgid "Account aanmaken"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "JavaScript is uitgeschakeld in je "
+#~ "browser. Voor een optimale ervaring op"
+#~ " deze site moet JavaScript ingeschakeld "
+#~ "zijn."
+#~ msgstr ""
+
+#~ msgid "Admin Dashboard"
+#~ msgstr ""
+
+#~ msgid "ADMIN"
+#~ msgstr ""
+
+#~ msgid "Dashboard"
+#~ msgstr ""
+
+#~ msgid "Admin"
+#~ msgstr ""
+
+#~ msgid "Notifications"
+#~ msgstr ""
+
+#~ msgid "Analytics"
+#~ msgstr ""
+
+#~ msgid "Logout"
+#~ msgstr ""
+
+#~ msgid "Dark mode"
+#~ msgstr ""
+
+#~ msgid "Light mode"
+#~ msgstr ""
+
+#~ msgid "Transport Dashboard"
+#~ msgstr ""
+
+#~ msgid "Transport"
+#~ msgstr ""
+
+#~ msgid "Testbetaling"
+#~ msgstr ""
+
+#~ msgid "Betaal €5 voor een abonnement"
+#~ msgstr ""
+
+#~ msgid "Betaal nu"
+#~ msgstr ""
+
+#~ msgid "Contacteer ons"
+#~ msgstr ""
+
+#~ msgid "Heb je een vraag, probleem of suggestie? Vul onderstaand formulier in."
+#~ msgstr ""
+
+#~ msgid "Close"
+#~ msgstr ""
+
+#~ msgid "Volledige naam"
+#~ msgstr ""
+
+#~ msgid "E-mailadres"
+#~ msgstr ""
+
+#~ msgid "Bijv. naam@voorbeeld.be"
+#~ msgstr ""
+
+#~ msgid "Telefoonnummer (optioneel)"
+#~ msgstr ""
+
+#~ msgid "Bijv. 0471234567 of +32471234567"
+#~ msgstr ""
+
+#~ msgid "Reden van contact"
+#~ msgstr ""
+
+#~ msgid "Kies een optie"
+#~ msgstr ""
+
+#~ msgid "Vraag over abonnement"
+#~ msgstr ""
+
+#~ msgid "Probleem met fiets"
+#~ msgstr ""
+
+#~ msgid "Fout bij betaling"
+#~ msgstr ""
+
+#~ msgid "Suggestie"
+#~ msgstr ""
+
+#~ msgid "Klacht"
+#~ msgstr ""
+
+#~ msgid "Andere"
+#~ msgstr ""
+
+#~ msgid "Onderwerp"
+#~ msgstr ""
+
+#~ msgid "Bericht"
+#~ msgstr ""
+
+#~ msgid "Verzend bericht"
+#~ msgstr ""
+
+#~ msgid "Copyright Velo Antwerpen 2025 ALLE RECHTEN VOORBEHOUDEN"
+#~ msgstr ""
+
+#~ msgid "CONTACT"
+#~ msgstr ""
+
+#~ msgid "Vosseschijnstraat 16-20 2030 Antwerpen"
+#~ msgstr ""
+
+#~ msgid "Contactbevestiging"
+#~ msgstr ""
+
+#~ msgid "Bedankt voor je bericht!"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We hebben je bericht goed ontvangen "
+#~ "en nemen zo snel mogelijk contact "
+#~ "met je op."
+#~ msgstr ""
+
+#~ msgid "Terug naar startpagina"
+#~ msgstr ""
+
+#~ msgid "Stuur een nieuw bericht"
+#~ msgstr ""
+
+#~ msgid "Fiets Defect Melden"
+#~ msgstr ""
+
+#~ msgid "Fiets defect"
+#~ msgstr ""
+
+#~ msgid "FIETS DEFECT"
+#~ msgstr ""
+
+#~ msgid "decoratief lijntje"
+#~ msgstr ""
+
+#~ msgid "Fiets ID"
+#~ msgstr ""
+
+#~ msgid "Bijv. 1234"
+#~ msgstr ""
+
+#~ msgid "Wat is er aan de hand?"
+#~ msgstr ""
+
+#~ msgid "Beschrijf het probleem..."
+#~ msgstr ""
+
+#~ msgid "MELD NU"
+#~ msgstr ""
+
+#~ msgid "Account & Betaling"
+#~ msgstr ""
+
+#~ msgid "Hoe maak ik een account aan?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Ga naar de registratiepagina, vul je "
+#~ "gegevens in en bevestig je e-mail "
+#~ "via de link die je ontvangt."
+#~ msgstr ""
+
+#~ msgid "Welke betaalmethodes worden geaccepteerd?"
+#~ msgstr ""
+
+#~ msgid "Je kunt betalen met iDEAL, Bancontact, Visa en Mastercard."
+#~ msgstr ""
+
+#~ msgid "Hoe verander ik mijn betaalmethode?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Ga naar \"Mijn profiel\" > "
+#~ "\"Betalingsgegevens\" en klik op \"Bewerken\""
+#~ " om een andere betaalmethode toe te"
+#~ " voegen."
+#~ msgstr ""
+
+#~ msgid "Wanneer wordt mijn betaling afgeschreven?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Betalingen worden binnen 24 uur na "
+#~ "bevestiging van je bestelling afgeschreven."
+#~ msgstr ""
+
+#~ msgid "Verhuur & Gebruik"
+#~ msgstr ""
+
+#~ msgid "Hoe huur ik een fiets?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Open de app, selecteer een beschikbaar"
+#~ " station, scan de QR-code op de"
+#~ " fiets en je rit start automatisch."
+#~ msgstr ""
+
+#~ msgid "Wat als de fiets defect is?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Maak een foto in de app en "
+#~ "meld het defect direct via “Probleem "
+#~ "melden”. We zorgen voor vervanging of"
+#~ " reparatie."
+#~ msgstr ""
+
+#~ msgid "Hoe eindig ik mijn rit?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Plaats de fiets terug in een vrije"
+#~ " parkeerplek, sluit de ketting en "
+#~ "bevestig in de app dat je bent "
+#~ "geeindigd."
+#~ msgstr ""
+
+#~ msgid "Mag ik buiten de stad fietsen?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Je mag tot 5 km buiten de "
+#~ "stad grens fietsen, daarna worden extra"
+#~ " kosten per kilometer gerekend."
+#~ msgstr ""
+
+#~ msgid "Abonnementen"
+#~ msgstr ""
+
+#~ msgid "Welke abonnementen zijn er?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We bieden dag-, week-, maand- en "
+#~ "jaarabonnementen aan. Kijk op de "
+#~ "tarievenpagina voor details."
+#~ msgstr ""
+
+#~ msgid "Kan ik mijn abonnement pauzeren?"
+#~ msgstr ""
+
+#~ msgid "Ja, in je profiel kun je per maand één keer een pauze aanvragen."
+#~ msgstr ""
+
+#~ msgid "Hoe annuleer ik mijn abonnement?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Ga naar \"Mijn abonnement\" en klik "
+#~ "op \"Opzeggen\". Je abonnement stopt aan"
+#~ " het eind van de huidige periode."
+#~ msgstr ""
+
+#~ msgid "Veiligheid & Regels"
+#~ msgstr ""
+
+#~ msgid "Moet ik een helm dragen?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Het is niet verplicht, maar we "
+#~ "raden het sterk aan voor je eigen"
+#~ " veiligheid."
+#~ msgstr ""
+
+#~ msgid "Wat zijn de verkeersregels voor fietsers?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Volg altijd de borden, fiets in de"
+#~ " fietslaan en geef handgebaren bij "
+#~ "afslaan."
+#~ msgstr ""
+
+#~ msgid "Mag ik met twee personen op één fiets?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Nee, onze fietsen zijn ontworpen voor"
+#~ " één persoon om veiligheidsredenen."
+#~ msgstr ""
+
+#~ msgid "Klantenservice & Ondersteuning"
+#~ msgstr ""
+
+#~ msgid "Hoe bereik ik de klantenservice?"
+#~ msgstr ""
+
+#~ msgid "Stuur een e-mail naar support@velo-antwerpen.be of bel naar 0800-12345."
+#~ msgstr ""
+
+#~ msgid "Wat zijn de openingstijden van support?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Onze klantenservice is bereikbaar van "
+#~ "maandag t/m vrijdag van 8u tot "
+#~ "18u."
+#~ msgstr ""
+
+#~ msgid "Waar vind ik de gebruikershandleiding?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "De handleiding staat online via de "
+#~ "link \"Help\" in de footer of "
+#~ "direct op onze website."
+#~ msgstr ""
+
+#~ msgid "ANTWERPEN"
+#~ msgstr ""
+
+#~ msgid "BEWEEGT."
+#~ msgstr ""
+
+#~ msgid "JIJ"
+#~ msgstr ""
+
+#~ msgid "OOK?"
+#~ msgstr ""
+
+#~ msgid "Jouw rit, jouw stad, jouw tempo."
+#~ msgstr ""
+
+#~ msgid "we need more tekst here, Make some Vélocity"
+#~ msgstr ""
+
+#~ msgid "Gebruik Velo voor een dag, een week of een jaar."
+#~ msgstr ""
+
+#~ msgid "FORMULES EN"
+#~ msgstr ""
+
+#~ msgid "TARIEVEN"
+#~ msgstr ""
+
+#~ msgid "lorum ipsum and all that good stuff. We got tarifs, we got bikes!"
+#~ msgstr ""
+
+#~ msgid "What more could you need? What i need right now is more text here."
+#~ msgstr ""
+
+#~ msgid "I could just put lorum ipsum here but thats boring."
+#~ msgstr ""
+
+#~ msgid "Nothing beats a good copywriting in the morning, yup."
+#~ msgstr ""
+
+#~ msgid "Whoever is reading this, i'm sorry for wasting 3 minutes of your time."
+#~ msgstr ""
+
+#~ msgid "But thanks anyways! :D"
+#~ msgstr ""
+
+#~ msgid "KIES JE FORMULE"
+#~ msgstr ""
+
+#~ msgid "DEEL 2 EN"
+#~ msgstr ""
+
+#~ msgid "DEEL 2"
+#~ msgstr ""
+
+#~ msgid "DEEL 3 EN"
+#~ msgstr ""
+
+#~ msgid "DEEL 3"
+#~ msgstr ""
+
+#~ msgid "HULP"
+#~ msgstr ""
+
+#~ msgid "NODIG?"
+#~ msgstr ""
+
+#~ msgid "we hebben meer tekst nodig. Maak een beetje Vélocity"
+#~ msgstr ""
+
+#~ msgid "Koppelen van CSS + basisstijl voor de instellingenpagina"
+#~ msgstr ""
+
+#~ msgid "Terug naar profiel knop"
+#~ msgstr ""
+
+#~ msgid "Terug naar profiel"
+#~ msgstr ""
+
+#~ msgid "Instellingen"
+#~ msgstr ""
+
+#~ msgid "Weergeven van flashberichten"
+#~ msgstr ""
+
+#~ msgid "Sluiten"
+#~ msgstr ""
+
+#~ msgid "Gebruikersinstellingenformulier"
+#~ msgstr ""
+
+#~ msgid "Aanspreekvorm"
+#~ msgstr ""
+
+#~ msgid "..."
+#~ msgstr ""
+
+#~ msgid "Heer"
+#~ msgstr ""
+
+#~ msgid "Vrouw"
+#~ msgstr ""
+
+#~ msgid "Voornaam"
+#~ msgstr ""
+
+#~ msgid "Achternaam"
+#~ msgstr ""
+
+#~ msgid "Telefoonnummer"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Voer een geldig telefoonnummer in. Begin"
+#~ " met 0 of +, gevolgd door 8 "
+#~ "tot 15 cijfers. Geen spaties of "
+#~ "symbolen."
+#~ msgstr ""
+
+#~ msgid "Bijv. 0478123456 of +32478123456 (geen spaties of leestekens)"
+#~ msgstr ""
+
+#~ msgid "Voer een geldig e-mailadres in, bv. naam@example.com"
+#~ msgstr ""
+
+#~ msgid "Bijv. naam@example.com"
+#~ msgstr ""
+
+#~ msgid "Opslaan en annuleren knoppen"
+#~ msgstr ""
+
+#~ msgid "Opslaan"
+#~ msgstr ""
+
+#~ msgid "Annuleren"
+#~ msgstr ""
+
+#~ msgid "Formulier voor account verwijderen"
+#~ msgstr ""
+
+#~ msgid "Weet u zeker dat u uw account permanent wilt verwijderen?"
+#~ msgstr ""
+
+#~ msgid "Verwijder account"
+#~ msgstr ""
+
+#~ msgid "voornaam"
+#~ msgstr ""
+
+#~ msgid "achternaam"
+#~ msgstr ""
+
+#~ msgid "telefoonnummer"
+#~ msgstr ""
+
+#~ msgid "e-mailadres"
+#~ msgstr ""
+
+#~ msgid "Vul het veld"
+#~ msgstr ""
+
+#~ msgid "in."
+#~ msgstr ""
+
+#~ msgid "Ongeldige invoer bij"
+#~ msgstr ""
+
+#~ msgid "Foutmelding:"
+#~ msgstr ""
+
+#~ msgid "Live Data Fietsstations (Antwerpen)"
+#~ msgstr ""
+
+#~ msgid "Totaal aantal stations"
+#~ msgstr ""
+
+#~ msgid "Totaal aantal fietsen"
+#~ msgstr ""
+
+#~ msgid "Totaal aantal lege slots"
+#~ msgstr ""
+
+#~ msgid "Totaal capaciteit"
+#~ msgstr ""
+
+#~ msgid "Naam"
+#~ msgstr ""
+
+#~ msgid "Adres"
+#~ msgstr ""
+
+#~ msgid "Status"
+#~ msgstr ""
+
+#~ msgid "Beschikbaar"
+#~ msgstr ""
+
+#~ msgid "Lege slots"
+#~ msgstr ""
+
+#~ msgid "Capaciteit"
+#~ msgstr ""
+
+#~ msgid "Populairste station vandaag"
+#~ msgstr ""
+
+#~ msgid "%(ritten)d ritten gestart"
+#~ msgstr ""
+
+#~ msgid "Station met fietsen"
+#~ msgstr ""
+
+#~ msgid "Vrouw op fiets"
+#~ msgstr ""
+
+#~ msgid "Heer op fiets"
+#~ msgstr ""
+
+#~ msgid "Standaard foto"
+#~ msgstr ""
+
+#~ msgid "Persoonlijke gegevens"
+#~ msgstr ""
+
+#~ msgid "Aanspreekvorm:"
+#~ msgstr ""
+
+#~ msgid "geen"
+#~ msgstr ""
+
+#~ msgid "Voornaam:"
+#~ msgstr ""
+
+#~ msgid "Niet ingesteld"
+#~ msgstr ""
+
+#~ msgid "Achternaam:"
+#~ msgstr ""
+
+#~ msgid "Telefoonnummer:"
+#~ msgstr ""
+
+#~ msgid "Niet ingesteld (optioneel)"
+#~ msgstr ""
+
+#~ msgid "Email:"
+#~ msgstr ""
+
+#~ msgid "Abonnement:"
+#~ msgstr ""
+
+#~ msgid "Geen abonnement"
+#~ msgstr ""
+
+#~ msgid "geen abonnement"
+#~ msgstr ""
+
+#~ msgid "Abonnement kopen? klik op geen abonnement om naar tarieven te gaan."
+#~ msgstr ""
+
+#~ msgid "Fietsgeschiedenis"
+#~ msgstr ""
+
+#~ msgid "ID:"
+#~ msgstr ""
+
+#~ msgid "Van:"
+#~ msgstr ""
+
+#~ msgid "Tot:"
+#~ msgstr ""
+
+#~ msgid "Start:"
+#~ msgstr ""
+
+#~ msgid "N/A"
+#~ msgstr ""
+
+#~ msgid "Prijs:"
+#~ msgstr ""
+
+#~ msgid "Geen fietsgeschiedenis beschikbaar."
+#~ msgstr ""
+
+#~ msgid "Je profiel is NIET volledig — klik NU op Instellingen en vul alles in!"
+#~ msgstr ""
+
+#~ msgid "DAGPAS"
+#~ msgstr ""
+
+#~ msgid "What more could you need? What I need right now is more text here."
+#~ msgstr ""
+
+#~ msgid "I could just put lorum ipsum here but that’s boring."
+#~ msgstr ""
+
+#~ msgid "Whoever is reading this, I'm sorry for wasting 3 minutes of your time."
+#~ msgstr ""
+
+#~ msgid "KOOP NU"
+#~ msgstr ""
+
+#~ msgid "WEEKPAS"
+#~ msgstr ""
+
+#~ msgid "JAARKAART"
+#~ msgstr ""
+
+#~ msgid "station_fietsen vanuit template:"
+#~ msgstr ""
+
+#~ msgid "Stationstatus voor transporteurs"
+#~ msgstr ""
+
+#~ msgid "Lege stations (bijvullen nodig)"
+#~ msgstr ""
+
+#~ msgid "Fietsen"
+#~ msgstr ""
+
+#~ msgid "Geen lege stations gevonden."
+#~ msgstr ""
+
+#~ msgid "Volle stations (fietsen ophalen)"
+#~ msgstr ""
+
+#~ msgid "Actie"
+#~ msgstr ""
+
+#~ msgid "Toon fietsen"
+#~ msgstr ""
+
+#~ msgid "Geen volle stations gevonden."
+#~ msgstr ""
+
+#~ msgid "Fietsen verplaatsen vanaf"
+#~ msgstr ""
+
+#~ msgid "Fietsen:"
+#~ msgstr ""
+
+#~ msgid "Verplaats naar:"
+#~ msgstr ""
+
+#~ msgid "Verplaats"
+#~ msgstr ""
+
+#~ msgid "Defecte fietsen (onderhoud nodig)"
+#~ msgstr ""
+
+#~ msgid "Probleem"
+#~ msgstr ""
+
+#~ msgid "Onderhoud"
+#~ msgstr ""
+
+#~ msgid "In reparatie"
+#~ msgstr ""
+
+#~ msgid "Geen defecte fietsen gemeld."
+#~ msgstr ""
+
+#~ msgid "Gebruiker filteren"
+#~ msgstr ""
+
+#~ msgid "Kies een gebruiker:"
+#~ msgstr ""
+
+#~ msgid "Toon ritten"
+#~ msgstr ""
+
+#~ msgid "Info over"
+#~ msgstr ""
+
+#~ msgid "Postcode:"
+#~ msgstr ""
+
+#~ msgid "Statistieken"
+#~ msgstr ""
+
+#~ msgid "Totaal aantal ritten:"
+#~ msgstr ""
+
+#~ msgid "Totaal aantal minuten:"
+#~ msgstr ""
+
+#~ msgid "Geschat totaal aantal km:"
+#~ msgstr ""
+
+#~ msgid "Gemiddelde ritduur:"
+#~ msgstr ""
+
+#~ msgid "Ritten per dag"
+#~ msgstr ""
+
+#~ msgid "ritten"
+#~ msgstr ""
+
+#~ msgid "Geen ritten gevonden voor deze gebruiker."
+#~ msgstr ""
+
+#~ msgid "Alle ritten"
+#~ msgstr ""
+
+#~ msgid "Starttijd"
+#~ msgstr ""
+
+#~ msgid "Eindtijd"
+#~ msgstr ""
+
+#~ msgid "Tot"
+#~ msgstr ""
+
+#~ msgid "Geen ritten om te tonen."
+#~ msgstr ""
+
+#~ msgid "Bedankt voor je aanvraag"
+#~ msgstr ""
+
+#~ msgid "Bedankt voor je aanvraag!"
+#~ msgstr ""
+
+#~ msgid "We hebben je gegevens goed ontvangen."
+#~ msgstr ""
+
+#~ msgid "E-mail:"
+#~ msgstr ""
+
+#~ msgid "Geboortedatum:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Je gekozen pincode is veilig opgeslagen."
+#~ " Je kunt nu gebruik maken van "
+#~ "je pas!"
+#~ msgstr ""
+
+#~ msgid "Ga terug naar startpagina"
+#~ msgstr ""
+
+#~ msgid "Dagpas Aanvragen"
+#~ msgstr ""
+
+#~ msgid "E-mailadres:"
+#~ msgstr ""
+
+#~ msgid "Voer een telefoonnummer in"
+#~ msgstr ""
+
+#~ msgid "Pincode (4 cijfers):"
+#~ msgstr ""
+
+#~ msgid "Voer een pincode van 4 cijfers in."
+#~ msgstr ""
+
+#~ msgid "Bevestig Pincode:"
+#~ msgstr ""
+
+#~ msgid "Ik ga akkoord met de"
+#~ msgstr ""
+
+#~ msgid "algemene voorwaarden"
+#~ msgstr ""
+
+#~ msgid "Aanvragen"
+#~ msgstr ""
+
+#~ msgid "Jaarkaart Aanvragen"
+#~ msgstr ""
+
+#~ msgid "Weekpas Aanvragen"
+#~ msgstr ""
+
