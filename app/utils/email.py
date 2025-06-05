@@ -19,11 +19,13 @@ def send_abonnement_email(to_email, voornaam, abonnement_type, einddatum):
 
     try:
         response = ses.send_email(
-            Source="komutsalih@gmail.com",
+            Source="noreply@grandpabob.net",
             Destination={"ToAddresses": [to_email]},
             Message={
                 "Subject": {"Data": subject},
-                "Body": {"Text": {"Data": body}},
+                "Body": {
+                    "Text": {"Data": body}
+                },
             }
         )
         return response["MessageId"]

@@ -1,9 +1,6 @@
 from datetime import datetime
-
 import stripe
 from flask import jsonify
-
-
 import psycopg2
 import pytz
 from app.database.models import Usertable, Gebruiker, Station
@@ -27,6 +24,7 @@ from app.simulation import simulation
 from collections import Counter
 from functools import wraps
 from werkzeug.utils import secure_filename
+from app.utils.email import send_abonnement_email
 
 
 def admin_required(f):
@@ -895,7 +893,7 @@ def betaling_succes():
         return "Geen gegevens gevonden.", 400
 
     from app.database import SessionLocal
-    from app.database.models import Usertable, Pas, GastPas
+    from app.database.models import Usertable, Pas
     from datetime import datetime, timedelta
 
     db = SessionLocal()
@@ -909,8 +907,28 @@ def betaling_succes():
 
     gebruiker.abonnement = data["type"]
     db.commit()
-    session["Gebruiker"]["abonnement"] = data["type"]
 
+
+    session["Gebruiker"]["abonnement"] = data["type"]
+    #email bevestiging na de dbcommit
+    #eerst bepalen we de einddatum
+    eind_datum = ''
+    if session["Gebruiker"]["abonnement"] == "dag":
+        eind_datum = datetime.today() + timedelta(days=1)
+    elif session["Gebruiker"]["abonnement"] == "week":
+        eind_datum = datetime.today() + timedelta(days=7)
+    elif session["Gebruiker"]["abonnement"] == "jaar":
+        eind_datum = datetime.today() + timedelta(days=365)
+
+    ontvanger_email = gebruiker.email if gebruiker else data["email"]
+    ontvanger_voornaam = gebruiker.voornaam if gebruiker else data["voornaam"]
+
+    send_abonnement_email(
+        to_email="komutsalih@gmail.com",
+        voornaam="salih",
+        abonnement_type=session["Gebruiker"]["abonnement"],
+        einddatum=eind_datum,
+    )
     soort = data["type"].lower()
     start_datum = datetime.utcnow()
 
