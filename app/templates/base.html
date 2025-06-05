@@ -30,21 +30,15 @@
     <a href="maps">{{ _('Vind een fiets') }}</a>
     <a href="help">{{ _('Help') }}</a>
     <a href="/contact">{{ _('Contact') }}</a>
-    <div class="dropdown">
-      <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">{{ _('Meer ▼') }}</a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="{{ url_for('routes.defect') }}">{{ _('Fiets defect?') }}</a>
-        <a class="dropdown-item" href="#">{{ _('optie 2') }}</a>
-      </div>
-    </div>
+    <a href="/defect">{{ _('Fiets defect?') }}</a>
 
     <div class="language-selector">
       <select id="language-selector" onchange="changeLanguage()" aria-label="{{ _('Selecteer taal') }}">
-        <option value="nl" {% if language == 'nl' %}selected{% endif %}>{{ _('Nederlands ▼') }}</option>
-        <option value="en" {% if language == 'en' %}selected{% endif %}>{{ _('English ▼') }}</option>
-        <option value="fr" {% if language == 'fr' %}selected{% endif %}>{{ _('Français ▼') }}</option>
-        <option value="es" {% if language == 'es' %}selected{% endif %}>{{ _('Español ▼') }}</option>
-        <option value="de" {% if language == 'de' %}selected{% endif %}>{{ _('Deutsch ▼') }}</option>
+        <option value="nl" {% if language == 'nl' %}selected{% endif %}>Nederlands ▼</option>
+          <option value="en" {% if language == 'en' %}selected{% endif %}>English ▼</option>
+          <option value="fr" {% if language == 'fr' %}selected{% endif %}>Français ▼</option>
+          <option value="es" {% if language == 'es' %}selected{% endif %}>Español ▼</option>
+          <option value="de" {% if language == 'de' %}selected{% endif %}>Deutsch ▼</option>
       </select>
     </div>
   </nav>
