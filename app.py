@@ -80,6 +80,13 @@ def inject_user(): #voeg ingelogde gebruiker toe aan elke template
 def inject_datetime():
     return dict(datetime=datetime)
 
+@app.context_processor
+def inject_language():
+    # Ensure the current locale is always available to templates as {{ language }}
+    return {
+        'language': str(get_locale())  # Convert Locale object to string like "en", "fr", etc.
+    }
+
 #opstart app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)

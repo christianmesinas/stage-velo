@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="dashboard-header">🚲 Live Data Fietsstations (Antwerpen)</h2>
+<h2 class="dashboard-header">🚲 {{ _('Live Data Fietsstations (Antwerpen)') }}</h2>
 
 <div class="stats-grid">
   <div class="stat-card">
-    <h3>Totaal aantal stations</h3>
+    <h3>{{ _('Totaal aantal stations') }}</h3>
     <p>{{ stations|length }}</p>
   </div>
 
@@ -52,12 +52,12 @@
   <table class="fixed-header-table">
     <thead>
       <tr>
-        <th>Naam</th>
-        <th>Adres</th>
-        <th>Status</th>
-        <th>Beschikbaar</th>
-        <th>Lege slots</th>
-        <th>Capaciteit</th>
+        <th>{{ _('Naam') }}</th>
+        <th>{{ _('Adres') }}</th>
+        <th>{{ _('Status') }}</th>
+        <th>{{ _('Beschikbaar') }}</th>
+        <th>{{ _('Lege slots') }}</th>
+        <th>{{ _('Capaciteit') }}</th>
       </tr>
     </thead>
   </table>
@@ -88,7 +88,7 @@
 </div>
 
 <div class="stat-card5" style="max-width: 400px; margin-bottom: 2rem;">
-  <h3>🔥 Populairste station vandaag</h3>
+  <h3>🔥 {{ _('Populairste station vandaag') }}</h3>
   <p style="font-size: 1.4rem; color: #2c3e50;">
     {{ populairste_station.naam|default('—') }}<br>
     <small style="color: #999;">
