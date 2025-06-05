@@ -895,13 +895,11 @@ def betaling_succes():
         return "Geen gegevens gevonden.", 400
 
     from app.database import SessionLocal
-    from app.database.models import Usertable, Pas, GastPas
+    from app.database.models import Usertable, Pas
     from datetime import datetime, timedelta
 
     db = SessionLocal()
-    gebruiker = None
-    if "Gebruiker" in session:
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+
     gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
     if not gebruiker:
         db.close()
@@ -927,35 +925,15 @@ def betaling_succes():
         db.close()
         return "Ongeldig abonnementstype.", 400
 
-    if gebruiker:
-        gebruiker.abonnement = data["type"]
-        session["Gebruiker"]["abonnement"] = data["type"]
-
-        nieuwe_pas = Pas(
-            gebruiker_id=gebruiker.id,
-            soort=soort,
-            pincode=data["pincode"],
-            start_datum=start_datum,
-            eind_datum=eind_datum
-        )
-        db.add(nieuwe_pas)
-        db.commit()
-    else:
-        # Alleen gastregistratie toestaan voor dag/week
-        if soort in ["dag", "week"]:
-            nieuwe_gastpas = GastPas(
-                type=soort,
-                voornaam=data["voornaam"],
-                achternaam=data["achternaam"],
-                email=data["email"],
-                telefoon=data["telefoon"],
-                geboortedatum=datetime.strptime(data["geboortedatum"], "%Y-%m-%d"),
-                pincode=data["pincode"],
-                start_datum=start_datum,
-                eind_datum=eind_datum
-            )
-            db.add(nieuwe_gastpas)
-            db.commit()
+    nieuwe_pas = Pas(
+        gebruiker_id=gebruiker.id,
+        soort=soort,
+        pincode=data["pincode"],
+        start_datum=start_datum,
+        eind_datum=eind_datum
+    )
+    db.add(nieuwe_pas)
+    db.commit()
 
     db.close()
 
