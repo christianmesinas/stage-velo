@@ -1,16 +1,17 @@
 import os
 from os import access
-
 import boto3
 from botocore.exceptions import ClientError
 
+#Functie voor een bevesitingsmail bij successvolle betaling.
 def send_abonnement_email(to_email, voornaam, abonnement_type, einddatum):
+    # controleren of er een e-mailadres is opgegeven.
     if not to_email:
         print("❌ Geen geldig e-mailadres opgegeven. E-mail niet verzonden.")
         return
-
-    ses = boto3.client('ses', region_name='eu-west-1',aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'))  # pas regio aan indien nodig
-
+    #simple service client (inloggen en connecteren met aws systeem)
+    ses = boto3.client('ses', region_name='eu-west-1',aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'))
+    #onderwerp en tekts in de email declareren
     subject = "Bevestiging van je abonnement"
     body_text = f"""
     Beste {voornaam},
@@ -25,12 +26,13 @@ def send_abonnement_email(to_email, voornaam, abonnement_type, einddatum):
     """
 
     try:
+        # verstuur de e-mail via de ses client
         response = ses.send_email(
-            Source="noreply@grandpabob.net",  # <- Verified domain
-            Destination={"ToAddresses": [to_email]},
+            Source="noreply@grandpabob.net",  # de domeinnaam in aws hier zetten
+            Destination={"ToAddresses": [to_email]}, #ontvanger
             Message={
-                "Subject": {"Data": subject, "Charset": "UTF-8"},
-                "Body": {
+                "Subject": {"Data": subject, "Charset": "UTF-8"}, #onderwerp
+                "Body": { #inhoud
                     "Text": {"Data": body_text, "Charset": "UTF-8"}
                     # Je kan hier ook 'Html' toevoegen als je HTML-mails wilt
                 },
