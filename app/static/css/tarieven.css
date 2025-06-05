@@ -130,7 +130,7 @@ body.dark-mode .card-item {
 }
 
 body.dark-mode .dag-layout {
-    background-color: #1e1e1e;
+    background-color: black;
     border: 2px solid #2196F3;
     color: white;
 }
@@ -163,7 +163,7 @@ body.dark-mode .streep {
 }
 
 body.dark-mode .swiper-wrapper {
-    background-color: #212121;
+    background-color: #1a1a1a;
 }
 
 /* ✅ Verwijder witte randen rondom afbeelding door te snijden */

@@ -1,42 +1,63 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
-.background {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: flex-end;
-    width: auto;
-    height: 80vh;
-    background-repeat: no-repeat;
-    margin: 20px;
-    background-color: white;
-    color: black;
-    border-radius: 20px;
-}
-
-body.dark-mode {
-    background-color: #1e1e1e;
-    color: white;
-}
-
-body.dark-mode .background {
-    background-color: #1e1e1e;
-    color: white;
-}
-
 
 * {
   font-family: Lato, sans-serif;
   padding: 0;
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
 
+body {
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+}
 
+body::selection {
+  background: transparent;
+}
+
+html, body {
+  oncontextmenu: return false;
+}
+
+/* Donkere modus instellingen */
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+body.dark-mode .background,
+body.dark-mode .container {
+  background-color: #2a2a2a;
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Algemene layout */
+.background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: flex-end;
+  width: auto;
+  height: 80vh;
+  background-repeat: no-repeat;
+  margin: 20px;
+  background-color: white;
+  color: black;
+  border-radius: 20px;
 }
 
 .wrapper {
   width: 60%;
   margin: 0 auto;
+}
 
 .faq-category h2 {
   font-size: 1.5rem;
@@ -44,42 +65,38 @@ body.dark-mode .background {
   color: #333;
 }
 
-/* Verberg het standaard marker-icoon van <summary> */
 details summary::-webkit-details-marker {
   display: none;
 }
 details summary::marker {
-  font-size: 0; /* voor Firefox */
-}
-
-body.dark-mode .container {
-  background-color: #2a2a2a;
-  color: white;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  font-size: 0;
 }
 
 .question {
   font-size: 1.2rem;
-/* Styling van de vraagregel */
+}
+
 details summary {
   cursor: pointer;
   position: relative;
-  padding: 12px 20px;
+  padding: 20px 80px 20px 20px;
   margin-bottom: 8px;
   font-size: 1rem;
   font-weight: 600;
   background-color: #f7f7f7;
   border-radius: 8px;
   list-style: none;
-  padding: 20px 80px 20px 20px;
-  position: relative;
   display: flex;
   align-items: center;
-  cursor: pointer;
   color: black;
 }
 
-/* plus-icoon */
+body.dark-mode details summary {
+  background-color: #2a2a2a;
+  color: white;
+  border: 1px solid #555;
+}
+
 details summary::after {
   content: "+";
   position: absolute;
@@ -87,13 +104,27 @@ details summary::after {
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.4rem;
-  transition: transform 0.2s;
   transition: 0.2s;
   color: black;
 }
 
-.question.active::after {
-  transform: rotate(45deg);
+body.dark-mode details summary::after {
+  color: white;
+}
+
+details[open] summary::after {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+details p {
+  padding: 0 20px 15px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+
+body.dark-mode details p {
+  color: #ccc;
 }
 
 .answercont {
@@ -102,29 +133,18 @@ details summary::after {
   transition: 0.3s;
 }
 
-/* kruisje wanneer open */
-details[open] summary::after {
-  transform: translateY(-50%) rotate(45deg);
-}
-
-/* antwoordtekst */
-details p {
-  padding: 0 20px 15px;
-  line-height: 1.6;
-  color: #555;
-  margin: 0;
-}
-
 @media screen and (max-width: 790px) {
-  html {
-    font-size: 14px;
-/* Responsive: op kleinere schermen minder kolommen */
-@media screen and (max-width: 600px) {
-  .faq-wrapper {
-    grid-template-columns: 1fr;
-  }
-  .wrapper {
-    width: 80%;
-  }
+    html {
+        font-size: 14px;
+    }
+}
 
+body.dark-mode .faq-category h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
 
+body.dark-mode .faq-category h2 {
+  color: white;
+}

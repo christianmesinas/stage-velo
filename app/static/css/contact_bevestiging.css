@@ -60,7 +60,7 @@ body.dark-mode .terug-btn:hover {
 
 /* Achtergrondkleur in dark-mode */
 body.dark-mode {
-  background-color: #1e1e1e; /* ↳ of kies een andere egale grijstint */
+  background-color: #1a1a1a; /* ↳ of kies een andere egale grijstint */
   color: white;
 }
 

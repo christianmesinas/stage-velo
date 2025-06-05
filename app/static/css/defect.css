@@ -11,7 +11,7 @@ body {
 }
 
 body.dark-mode {
-  background-color: #1e1e1e;
+  background-color: #1a1a1a;
   color: white;
 }
 
@@ -24,7 +24,7 @@ body.dark-mode {
 }
 
 body.dark-mode .div4 {
-  background-color: #1e1e1e;
+  background-color: #1a1a1a;
 }
 
 /* Wrapper fix */

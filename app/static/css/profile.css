@@ -11,7 +11,7 @@ body.dark-mode {
 }
 
 body.dark-mode .background {
-    background-color: #2a2a2a; /* ✅ Minder zwart dan voorheen */
+    background-color: #1a1a1a; /* ✅ Minder zwart dan voorheen */
     color: white;
 }
 
