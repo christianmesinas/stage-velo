@@ -7,235 +7,730 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-02 15:06+0200\n"
-"PO-Revision-Date: 2025-05-21 12:18+0200\n"
+"POT-Creation-Date: 2025-06-04 13:58+0200\n"
+"PO-Revision-Date: 2025-06-04 14:24+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
-"Language-Team: German <LL@li.org>\n"
+"Language-Team: de <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: static/js/maps.js:23
-#, fuzzy
-msgid "Stations met fietsen"
+#: static/js/maps.js:23 templates/maps.html:39
+msgid "Station met fietsen"
 msgstr "Station mit Fahrrädern"
 
-#: static/js/maps.js:24 templates/maps.html:24
+#: static/js/maps.js:24 templates/maps.html:40
 msgid "Volle stations"
 msgstr "Volle Stationen"
 
-#: static/js/maps.js:25 templates/maps.html:25
+#: static/js/maps.js:25 templates/maps.html:41
 msgid "Lege stations"
 msgstr "Leere Stationen"
 
-#: static/js/maps.js:26 templates/maps.html:26
+#: static/js/maps.js:26 templates/maps.html:42
 msgid "Gesloten stations"
 msgstr "Geschlossene Stationen"
 
+#: static/js/popup.js:19
+msgid "station-fietsen-data element niet gevonden"
+msgstr "Element station-fietsen-data nicht gefunden"
+
+#: static/js/popup.js:22
+msgid "Ruwe station-fietsen-data:"
+msgstr "Rohdaten der Station-Fahrräder:"
+
+#: static/js/popup.js:25
+msgid "Station fietsen:"
+msgstr "Station Fahrräder:"
+
+#: static/js/popup.js:26
+msgid "Station fietsen sleutels:"
+msgstr "Schlüssel der Station-Fahrräder:"
+
+#: static/js/popup.js:29
+msgid "Fout bij parsen van stationFietsen:"
+msgstr "Fehler beim Parsen von stationFietsen:"
+
+#: static/js/popup.js:36
+msgid "DOM-elementen niet gevonden:"
+msgstr "DOM-Elemente nicht gefunden:"
+
+#: static/js/popup.js:43
+msgid "Knop station ID:"
+msgstr "Stations-ID-Knopf:"
+
+#: static/js/popup.js:48 templates/profile.html:76 templates/profile.html:77
+#: templates/transport.html:48 templates/transport.html:83
+#: templates/transport.html:149
+msgid "Onbekend"
+msgstr "Unbekannt"
+
+#: static/js/popup.js:51
+msgid "Open popup voor station:"
+msgstr "Popup für Station öffnen:"
+
+#: templates/404.html:3
+msgid "404 - Niet gevonden"
+msgstr "404 - Nicht gefunden"
+
+#: templates/404.html:7
+msgid "404 - Pagina niet gevonden"
+msgstr "404 - Seite nicht gefunden"
+
+#: templates/404.html:8
+msgid "Sorry, de pagina die je zoekt bestaat niet."
+msgstr "Entschuldigung, die von dir gesuchte Seite existiert nicht."
+
+#: templates/404.html:9 templates/500.html:10
+msgid "Terug naar login"
+msgstr "Zurück zum Login"
+
+#: templates/500.html:3
+msgid "500 - Server Fout"
+msgstr "500 - Serverfehler"
+
+#: templates/500.html:8
+msgid "Oeps! Er is iets misgegaan aan onze kant."
+msgstr "Ups! Etwas ist auf unserer Seite schiefgelaufen."
+
+#: templates/500.html:9
+msgid ""
+"Probeer het later opnieuw of neem contact met ons op als het probleem "
+"aanhoudt."
+msgstr ""
+"Versuche es später erneut oder kontaktiere uns, wenn das Problem weiterhin "
+"besteht."
+
 #: templates/admin.html:10
 msgid "Welkom terug, admin"
-msgstr ""
+msgstr "Willkommen zurück, Admin"
 
 #: templates/admin.html:14
 msgid "Simulatie correct uitgevoerd op"
-msgstr ""
+msgstr "Simulation erfolgreich durchgeführt am"
 
 #: templates/admin.html:16
 msgid "Nog geen simulatie uitgevoerd"
-msgstr ""
+msgstr "Noch keine Simulation durchgeführt"
 
 #: templates/admin.html:21
 msgid "Start Simulatie"
-msgstr ""
+msgstr "Simulation starten"
 
 #: templates/admin.html:22
 msgid "Bekijk Live Data"
-msgstr ""
+msgstr "Live-Daten anzeigen"
 
 #: templates/admin.html:23
 msgid "Gebruikersoverzicht"
-msgstr ""
+msgstr "Benutzerübersicht"
 
 #: templates/admin.html:24
 msgid "CSV-overzicht"
-msgstr ""
+msgstr "CSV-Übersicht"
 
 #: templates/admin_simulatie.html:9
 msgid "Simulatie starten"
-msgstr ""
+msgstr "Simulation starten"
 
 #: templates/admin_simulatie.html:15
 msgid "Aantal gebruikers"
-msgstr ""
+msgstr "Anzahl der Benutzer"
 
 #: templates/admin_simulatie.html:16
-#, fuzzy
 msgid "Aantal fietsen"
-msgstr "Station mit Fahrrädern"
+msgstr "Anzahl der Fahrräder"
 
 #: templates/admin_simulatie.html:17
-#, fuzzy
 msgid "Aantal dagen"
-msgstr "Beantragen"
+msgstr "Anzahl der Tage"
 
 #: templates/admin_simulatie.html:18
 msgid "Start simulatie"
-msgstr ""
+msgstr "Simulation starten"
 
-#: templates/admin_simulatie.html:23
+#: templates/admin_simulatie.html:24
 msgid "Simulatie-inzichten"
-msgstr ""
-
-#: templates/admin_simulatie.html:25
-msgid "Aantal ritten"
-msgstr ""
+msgstr "Simulationserkenntnisse"
 
 #: templates/admin_simulatie.html:26
-msgid "Gemiddelde ritduur"
-msgstr ""
-
-#: templates/admin_simulatie.html:26 templates/admin_simulatie.html:27
-msgid "min"
-msgstr ""
+msgid "Aantal ritten"
+msgstr "Anzahl der Fahrten"
 
 #: templates/admin_simulatie.html:27
-msgid "Langste rit"
-msgstr ""
+msgid "Gemiddelde ritduur"
+msgstr "Durchschnittliche Fahrtzeit"
+
+#: templates/admin_simulatie.html:27 templates/admin_simulatie.html:28
+#: templates/user_filter.html:46 templates/user_filter.html:48
+msgid "min"
+msgstr "Min"
 
 #: templates/admin_simulatie.html:28
-msgid "Meest gebruikte fiets"
-msgstr ""
+msgid "Langste rit"
+msgstr "Längste Fahrt"
 
 #: templates/admin_simulatie.html:29
+msgid "Meest gebruikte fiets"
+msgstr "Meistgenutztes Fahrrad"
+
+#: templates/admin_simulatie.html:30
 msgid "Populairst beginstation"
-msgstr ""
+msgstr "Beliebteste Startstation"
 
-#: templates/admin_simulatie.html:33
+#: templates/admin_simulatie.html:34
 msgid "Drukste momenten per station"
-msgstr ""
+msgstr "Belebteste Zeiten pro Station"
 
-#: templates/admin_simulatie.html:38
-#, fuzzy
+#: templates/admin_simulatie.html:39 templates/transport.html:33
+#: templates/transport.html:67 templates/transport.html:134
 msgid "Station"
-msgstr "Leere Stationen"
-
-#: templates/admin_simulatie.html:39
-msgid "Tijdvak"
-msgstr ""
+msgstr "Station"
 
 #: templates/admin_simulatie.html:40
+msgid "Tijdvak"
+msgstr "Zeitfenster"
+
+#: templates/admin_simulatie.html:41
 msgid "Aantal ritten gestart"
-msgstr ""
+msgstr "Anzahl der gestarteten Fahrten"
 
-#: templates/admin_simulatie.html:62
+#: templates/admin_simulatie.html:64
 msgid "Download CSV-bestand"
-msgstr ""
+msgstr "CSV-Datei herunterladen"
 
-#: templates/admin_simulatie.html:65
+#: templates/admin_simulatie.html:67
 msgid "Resultaten"
-msgstr ""
-
-#: templates/admin_simulatie.html:70
-msgid "Gebruiker"
-msgstr ""
-
-#: templates/admin_simulatie.html:71
-msgid "Fiets"
-msgstr ""
+msgstr "Ergebnisse"
 
 #: templates/admin_simulatie.html:72
-msgid "Van"
-msgstr ""
+msgid "Gebruiker"
+msgstr "Benutzer"
 
 #: templates/admin_simulatie.html:73
+msgid "Fiets"
+msgstr "Fahrrad"
+
+#: templates/admin_simulatie.html:74 templates/user_filter.html:76
+msgid "Van"
+msgstr "Von"
+
+#: templates/admin_simulatie.html:75
 msgid "Naar"
-msgstr ""
+msgstr "Nach"
 
-#: templates/admin_simulatie.html:74
+#: templates/admin_simulatie.html:76 templates/user_filter.html:78
 msgid "Duur (min)"
-msgstr ""
+msgstr "Dauer (Min)"
 
-#: templates/admin_simulatie.html:92
+#: templates/admin_simulatie.html:96
 #, python-format
 msgid ""
 "Hier zijn de eerste 1000 ritten. Download het CSV-bestand om alle "
 "%(aantal)s ritten te bekijken."
 msgstr ""
+"Hier sind die ersten 1000 Fahrten. Lade die CSV-Datei herunter, um alle "
+"%(aantal)s Fahrten anzuzeigen."
 
-#: templates/base.html:26
+#: templates/base.html:5
+msgid "Velo App"
+msgstr "Velo-App"
+
+#: templates/base.html:20
+msgid "vrouw op fiets"
+msgstr "Frau auf Fahrrad"
+
+#: templates/base.html:25
 msgid "Hoe het werkt"
 msgstr "Wie es funktioniert"
 
-#: templates/base.html:27 templates/tarieven.html:3
+#: templates/base.html:26 templates/tarieven.html:3
 msgid "Tarieven"
 msgstr "Tarife"
 
-#: templates/base.html:28
+#: templates/base.html:27
 msgid "Vind een fiets"
 msgstr "Finde ein Fahrrad"
 
-#: templates/base.html:29
+#: templates/base.html:28
 msgid "Help"
 msgstr "Hilfe"
 
-#: templates/base.html:30
+#: templates/base.html:29
 msgid "Contact"
 msgstr "Kontakt"
 
-#: templates/base.html:33
+#: templates/base.html:31
 msgid "Meer ▼"
 msgstr "Mehr ▼"
 
-#: templates/base.html:35
+#: templates/base.html:33
 msgid "Fiets defect?"
 msgstr "Fahrrad defekt?"
 
-#: templates/base.html:36
+#: templates/base.html:34
 msgid "optie 2"
 msgstr "Option 2"
 
-#: templates/base.html:41
+#: templates/base.html:39
 msgid "Selecteer taal"
-msgstr ""
+msgstr "Sprache auswählen"
+
+#: templates/base.html:40
+msgid "Nederlands ▼"
+msgstr "Niederländisch ▼"
+
+#: templates/base.html:41
+msgid "English ▼"
+msgstr "Englisch ▼"
 
 #: templates/base.html:42
-msgid "Nederlands ▼"
-msgstr ""
+msgid "Français ▼"
+msgstr "Französisch ▼"
 
 #: templates/base.html:43
-msgid "English ▼"
-msgstr ""
+msgid "Español ▼"
+msgstr "Spanisch ▼"
 
 #: templates/base.html:44
-msgid "Français ▼"
-msgstr ""
-
-#: templates/base.html:45
-msgid "Español ▼"
-msgstr ""
-
-#: templates/base.html:46
 msgid "Deutsch ▼"
-msgstr ""
+msgstr "Deutsch ▼"
 
-#: templates/base.html:54
+#: templates/base.html:52
 msgid "Profiel"
 msgstr "Profil"
 
-#: templates/base.html:55
+#: templates/base.html:53
 msgid "Uitloggen"
 msgstr "Abmelden"
 
-#: templates/base.html:57
+#: templates/base.html:55
 msgid "Inloggen"
 msgstr "Anmelden"
 
-#: templates/base.html:58
+#: templates/base.html:56
 msgid "Account aanmaken"
 msgstr "Konto erstellen"
+
+#: templates/base.html:62
+msgid ""
+"JavaScript is uitgeschakeld in je browser. Voor een optimale ervaring op "
+"deze site moet JavaScript ingeschakeld zijn."
+msgstr ""
+"JavaScript ist in deinem Browser deaktiviert. Für eine optimale Erfahrung auf "
+"dieser Website muss JavaScript aktiviert sein."
+
+#: templates/base_admin.html:5
+msgid "Admin Dashboard"
+msgstr "Admin-Dashboard"
+
+#: templates/base_admin.html:18
+msgid "ADMIN"
+msgstr "ADMIN"
+
+#: templates/base_admin.html:29
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: templates/base_admin.html:30
+msgid "Admin"
+msgstr "Admin"
+
+#: templates/base_admin.html:31
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+#: templates/base_admin.html:32
+msgid "Analytics"
+msgstr "Analysen"
+
+#: templates/base_admin.html:38 templates/base_transport.html:27
+msgid "Logout"
+msgstr "Abmelden"
+
+#: templates/base_admin.html:45 templates/base_admin.html:78
+#: templates/base_transport.html:56
+msgid "Dark mode"
+msgstr "Dunkelmodus"
+
+#: templates/base_admin.html:78 templates/base_transport.html:56
+msgid "Light mode"
+msgstr "Hellmodus"
+
+#: templates/base_transport.html:5
+msgid "Transport Dashboard"
+msgstr "Transport-Dashboard"
+
+#: templates/base_transport.html:18
+msgid "Transport"
+msgstr "Transport"
+
+#: templates/betalen.html:5
+msgid "Testbetaling"
+msgstr "Testzahlung"
+
+#: templates/betalen.html:9
+msgid "Betaal €5 voor een abonnement"
+msgstr "Zahle €5 für ein Abonnement"
+
+#: templates/betalen.html:10
+msgid "Betaal nu"
+msgstr "Jetzt bezahlen"
+
+#: templates/contact.html:15 templates/contact.html:19
+msgid "Contacteer ons"
+msgstr "Kontaktiere uns"
+
+#: templates/contact.html:21
+msgid "Heb je een vraag, probleem of suggestie? Vul onderstaand formulier in."
+msgstr "Hast du eine Frage, ein Problem oder einen Vorschlag? Fülle das untenstehende Formular aus."
+
+#: templates/contact.html:32
+msgid "Close"
+msgstr "Schließen"
+
+#: templates/contact.html:40
+msgid "Volledige naam"
+msgstr "Vollständiger Name"
+
+#: templates/contact.html:45 templates/instellingen.html:105
+msgid "E-mailadres"
+msgstr "E-Mail-Adresse"
+
+#: templates/contact.html:48
+msgid "Bijv. naam@voorbeeld.be"
+msgstr "Z. B. name@beispiel.de"
+
+#: templates/contact.html:52
+msgid "Telefoonnummer (optioneel)"
+msgstr "Telefonnummer (optional)"
+
+#: templates/contact.html:55 templates/contact.html:56
+msgid "Bijv. 0471234567 of +32471234567"
+msgstr "Z. B. 0471234567 oder +32471234567"
+
+#: templates/contact.html:60
+msgid "Reden van contact"
+msgstr "Grund für die Kontaktaufnahme"
+
+#: templates/contact.html:62
+msgid "Kies een optie"
+msgstr "Wähle eine Option"
+
+#: templates/contact.html:63
+msgid "Vraag over abonnement"
+msgstr "Frage zum Abonnement"
+
+#: templates/contact.html:64
+msgid "Probleem met fiets"
+msgstr "Problem mit dem Fahrrad"
+
+#: templates/contact.html:65
+msgid "Fout bij betaling"
+msgstr "Fehler bei der Zahlung"
+
+#: templates/contact.html:66
+msgid "Suggestie"
+msgstr "Vorschlag"
+
+#: templates/contact.html:67
+msgid "Klacht"
+msgstr "Beschwerde"
+
+#: templates/contact.html:68
+msgid "Andere"
+msgstr "Sonstiges"
+
+#: templates/contact.html:73
+msgid "Onderwerp"
+msgstr "Betreff"
+
+#: templates/contact.html:78
+msgid "Bericht"
+msgstr "Nachricht"
+
+#: templates/contact.html:82
+msgid "Verzend bericht"
+msgstr "Nachricht senden"
+
+#: templates/contact.html:94 templates/index.html:111
+msgid "Copyright Velo Antwerpen 2025 ALLE RECHTEN VOORBEHOUDEN"
+msgstr "Copyright Velo Antwerpen 2025 ALLE RECHTE VORBEHALTEN"
+
+#: templates/contact.html:97 templates/index.html:114
+msgid "CONTACT"
+msgstr "KONTAKT"
+
+#: templates/contact.html:100
+msgid "Vosseschijnstraat 16-20 2030 Antwerpen"
+msgstr "Vosseschijnstraße 16-20, 2030 Antwerpen"
+
+#: templates/contact_bevestiging.html:3
+msgid "Contactbevestiging"
+msgstr "Kontaktbestätigung"
+
+#: templates/contact_bevestiging.html:12
+msgid "Bedankt voor je bericht!"
+msgstr "Danke für deine Nachricht!"
+
+#: templates/contact_bevestiging.html:13
+msgid ""
+"We hebben je bericht goed ontvangen en nemen zo snel mogelijk contact met"
+" je op."
+msgstr ""
+"Wir haben deine Nachricht erfolgreich erhalten und werden so schnell wie möglich "
+"Kontakt mit dir aufnehmen."
+
+#: templates/contact_bevestiging.html:15
+msgid "Terug naar startpagina"
+msgstr "Zurück zur Startseite"
+
+#: templates/contact_bevestiging.html:16
+msgid "Stuur een nieuw bericht"
+msgstr "Neue Nachricht senden"
+
+#: templates/defect.html:3
+msgid "Fiets Defect Melden"
+msgstr "Fahrrad defekt melden"
+
+#: templates/defect.html:15
+msgid "Fiets defect"
+msgstr "Fahrrad defekt"
+
+#: templates/defect.html:19
+msgid "FIETS DEFECT"
+msgstr "FAHRRAD DEFEKT"
+
+#: templates/defect.html:20
+msgid "decoratief lijntje"
+msgstr "Dekorative Linie"
+
+#: templates/defect.html:24 templates/transport.html:133
+msgid "Fiets ID"
+msgstr "Fahrrad-ID"
+
+#: templates/defect.html:25
+msgid "Bijv. 1234"
+msgstr "Z. B. 1234"
+
+#: templates/defect.html:29
+msgid "Wat is er aan de hand?"
+msgstr "Was ist los?"
+
+#: templates/defect.html:30
+msgid "Beschrijf het probleem..."
+msgstr "Beschreibe das Problem..."
+
+#: templates/defect.html:33
+msgid "MELD NU"
+msgstr "JETZT MELDEN"
+
+#: templates/help.html:12
+msgid "Account & Betaling"
+msgstr "Konto & Zahlung"
+
+#: templates/help.html:14
+msgid "Hoe maak ik een account aan?"
+msgstr "Wie erstelle ich ein Konto?"
+
+#: templates/help.html:15
+msgid ""
+"Ga naar de registratiepagina, vul je gegevens in en bevestig je e-mail "
+"via de link die je ontvangt."
+msgstr ""
+"Gehe zur Registrierungsseite, fülle deine Daten aus und bestätige deine E-Mail "
+"über den Link, den du erhältst."
+
+#: templates/help.html:18
+msgid "Welke betaalmethodes worden geaccepteerd?"
+msgstr "Welche Zahlungsmethoden werden akzeptiert?"
+
+#: templates/help.html:19
+msgid "Je kunt betalen met iDEAL, Bancontact, Visa en Mastercard."
+msgstr "Du kannst mit iDEAL, Bancontact, Visa und Mastercard bezahlen."
+
+#: templates/help.html:22
+msgid "Hoe verander ik mijn betaalmethode?"
+msgstr "Wie ändere ich meine Zahlungsmethode?"
+
+#: templates/help.html:23
+msgid ""
+"Ga naar \"Mijn profiel\" > \"Betalingsgegevens\" en klik op \"Bewerken\" "
+"om een andere betaalmethode toe te voegen."
+msgstr ""
+"Gehe zu „Mein Profil“ > „Zahlungsdaten“ und klicke auf „Bearbeiten“, um eine "
+"andere Zahlungsmethode hinzuzufügen."
+
+#: templates/help.html:26
+msgid "Wanneer wordt mijn betaling afgeschreven?"
+msgstr "Wann wird meine Zahlung abgebucht?"
+
+#: templates/help.html:27
+msgid ""
+"Betalingen worden binnen 24 uur na bevestiging van je bestelling "
+"afgeschreven."
+msgstr ""
+"Zahlungen werden innerhalb von 24 Stunden nach Bestätigung deiner Bestellung "
+"abgebucht."
+
+#: templates/help.html:33
+msgid "Verhuur & Gebruik"
+msgstr "Verleih & Nutzung"
+
+#: templates/help.html:35
+msgid "Hoe huur ik een fiets?"
+msgstr "Wie leihe ich ein Fahrrad?"
+
+#: templates/help.html:36
+msgid ""
+"Open de app, selecteer een beschikbaar station, scan de QR-code op de "
+"fiets en je rit start automatisch."
+msgstr ""
+"Öffne die App, wähle ein verfügbares Station aus, scanne den QR-Code auf dem "
+"Fahrrad, und deine Fahrt beginnt automatisch."
+
+#: templates/help.html:39
+msgid "Wat als de fiets defect is?"
+msgstr "Was ist, wenn das Fahrrad defekt ist?"
+
+#: templates/help.html:40
+msgid ""
+"Maak een foto in de app en meld het defect direct via “Probleem melden”. "
+"We zorgen voor vervanging of reparatie."
+msgstr ""
+"Mache ein Foto in der App und melde den Defekt direkt über „Problem melden“. "
+"Wir kümmern uns um Ersatz oder Reparatur."
+
+#: templates/help.html:43
+msgid "Hoe eindig ik mijn rit?"
+msgstr "Wie beende ich meine Fahrt?"
+
+#: templates/help.html:44
+msgid ""
+"Plaats de fiets terug in een vrije parkeerplek, sluit de ketting en "
+"bevestig in de app dat je bent geeindigd."
+msgstr ""
+"Stelle das Fahrrad zurück in einen freien Stellplatz, schließe die Kette und "
+"bestätige in der App, dass du fertig bist."
+
+#: templates/help.html:47
+msgid "Mag ik buiten de stad fietsen?"
+msgstr "Darf ich außerhalb der Stadt fahren?"
+
+#: templates/help.html:48
+msgid ""
+"Je mag tot 5 km buiten de stad grens fietsen, daarna worden extra kosten "
+"per kilometer gerekend."
+msgstr ""
+"Du darfst bis zu 5 km außerhalb der Stadtgrenze fahren, danach werden zusätzliche "
+"Kosten pro Kilometer berechnet."
+
+#: templates/help.html:54
+msgid "Abonnementen"
+msgstr "Abonnements"
+
+#: templates/help.html:56
+msgid "Welke abonnementen zijn er?"
+msgstr "Welche Abonnements gibt es?"
+
+#: templates/help.html:57
+msgid ""
+"We bieden dag-, week-, maand- en jaarabonnementen aan. Kijk op de "
+"tarievenpagina voor details."
+msgstr ""
+"Wir bieten Tages-, Wochen-, Monats- und Jahresabonnements an. Details findest du "
+"auf der Tarifseite."
+
+#: templates/help.html:60
+msgid "Kan ik mijn abonnement pauzeren?"
+msgstr "Kann ich mein Abonnement pausieren?"
+
+#: templates/help.html:61
+msgid "Ja, in je profiel kun je per maand één keer een pauze aanvragen."
+msgstr "Ja, in deinem Profil kannst du einmal pro Monat eine Pause beantragen."
+
+#: templates/help.html:64
+msgid "Hoe annuleer ik mijn abonnement?"
+msgstr "Wie kündige ich mein Abonnement?"
+
+#: templates/help.html:65
+msgid ""
+"Ga naar \"Mijn abonnement\" en klik op \"Opzeggen\". Je abonnement stopt "
+"aan het eind van de huidige periode."
+msgstr ""
+"Gehe zu „Mein Abonnement“ und klicke auf „Kündigen“. Dein Abonnement endet am "
+"Ende des aktuellen Zeitraums."
+
+#: templates/help.html:71
+msgid "Veiligheid & Regels"
+msgstr "Sicherheit & Regeln"
+
+#: templates/help.html:73
+msgid "Moet ik een helm dragen?"
+msgstr "Muss ich einen Helm tragen?"
+
+#: templates/help.html:74
+msgid ""
+"Het is niet verplicht, maar we raden het sterk aan voor je eigen "
+"veiligheid."
+msgstr ""
+"Es ist nicht verpflichtend, aber wir empfehlen es dringend für deine eigene "
+"Sicherheit."
+
+#: templates/help.html:77
+msgid "Wat zijn de verkeersregels voor fietsers?"
+msgstr "Was sind die Verkehrsregeln für Radfahrer?"
+
+#: templates/help.html:78
+msgid ""
+"Volg altijd de borden, fiets in de fietslaan en geef handgebaren bij "
+"afslaan."
+msgstr ""
+"Befolge immer die Schilder, fahre auf dem Radweg und gib Handzeichen beim "
+"Abbiegen."
+
+#: templates/help.html:81
+msgid "Mag ik met twee personen op één fiets?"
+msgstr "Darf ich mit zwei Personen auf einem Fahrrad fahren?"
+
+#: templates/help.html:82
+msgid "Nee, onze fietsen zijn ontworpen voor één persoon om veiligheidsredenen."
+msgstr "Nein, unsere Fahrräder sind aus Sicherheitsgründen für eine Person ausgelegt."
+
+#: templates/help.html:88
+msgid "Klantenservice & Ondersteuning"
+msgstr "Kundenservice & Unterstützung"
+
+#: templates/help.html:90
+msgid "Hoe bereik ik de klantenservice?"
+msgstr "Wie erreiche ich den Kundenservice?"
+
+#: templates/help.html:91
+msgid "Stuur een e-mail naar support@velo-antwerpen.be of bel naar 0800-12345."
+msgstr "Sende eine E-Mail an support@velo-antwerpen.de oder rufe 0800-12345 an."
+
+#: templates/help.html:94
+msgid "Wat zijn de openingstijden van support?"
+msgstr "Was sind die Öffnungszeiten des Supports?"
+
+#: templates/help.html:95
+msgid "Onze klantenservice is bereikbaar van maandag t/m vrijdag van 8u tot 18u."
+msgstr "Unser Kundenservice ist von Montag bis Freitag von 8 bis 18 Uhr erreichbar."
+
+#: templates/help.html:98
+msgid "Waar vind ik de gebruikershandleiding?"
+msgstr "Wo finde ich die Bedienungsanleitung?"
+
+#: templates/help.html:99
+msgid ""
+"De handleiding staat online via de link \"Help\" in de footer of direct "
+"op onze website."
+msgstr ""
+"Die Anleitung ist online über den Link „Hilfe“ in der Fußzeile oder direkt auf "
+"unserer Website verfügbar."
 
 #: templates/index.html:13
 msgid "ANTWERPEN"
@@ -274,8 +769,8 @@ msgid "TARIEVEN"
 msgstr "TARIFE"
 
 #: templates/index.html:29 templates/index.html:43 templates/index.html:57
-#: templates/tarieven.html:19 templates/tarieven.html:33
-#: templates/tarieven.html:47
+#: templates/tarieven.html:24 templates/tarieven.html:38
+#: templates/tarieven.html:52
 msgid "lorum ipsum and all that good stuff. We got tarifs, we got bikes!"
 msgstr "Lorem ipsum und all das gute Zeug. Wir haben Tarife, wir haben Fahrräder!"
 
@@ -288,20 +783,18 @@ msgid "I could just put lorum ipsum here but thats boring."
 msgstr "Ich könnte einfach Lorem ipsum hier einfügen, aber das ist langweilig."
 
 #: templates/index.html:32 templates/index.html:46 templates/index.html:60
-#: templates/tarieven.html:22 templates/tarieven.html:36
-#: templates/tarieven.html:50
+#: templates/tarieven.html:27 templates/tarieven.html:41
+#: templates/tarieven.html:55
 msgid "Nothing beats a good copywriting in the morning, yup."
 msgstr "Nichts schlägt gutes Texten am Morgen, jep."
 
 #: templates/index.html:33 templates/index.html:47 templates/index.html:61
 msgid "Whoever is reading this, i'm sorry for wasting 3 minutes of your time."
-msgstr ""
-"Wer auch immer das liest, es tut mir leid, dass ich 3 Minuten deiner Zeit"
-" verschwendet habe."
+msgstr "Wer auch immer das liest, es tut mir leid, dass ich 3 Minuten deiner Zeit verschwendet habe."
 
 #: templates/index.html:34 templates/index.html:48 templates/index.html:62
-#: templates/tarieven.html:24 templates/tarieven.html:38
-#: templates/tarieven.html:52
+#: templates/tarieven.html:29 templates/tarieven.html:43
+#: templates/tarieven.html:57
 msgid "But thanks anyways! :D"
 msgstr "Aber trotzdem danke! :D"
 
@@ -337,55 +830,483 @@ msgstr "NÖTIG?"
 msgid "we hebben meer tekst nodig. Maak een beetje Vélocity"
 msgstr "Wir brauchen mehr Text. Mach etwas Vélocity"
 
-#: templates/index.html:111
-msgid "Copyright Velo Antwerpen 2025 ALLE RECHTEN VOORBEHOUDEN"
-msgstr "Copyright Velo Antwerpen 2025 ALLE RECHTE VORBEHALTEN"
+#: templates/instellingen.html:5
+msgid "Koppelen van CSS + basisstijl voor de instellingenpagina"
+msgstr "Verknüpfung von CSS + Basisstil für die Einstellungsseite"
 
-#: templates/index.html:114
-msgid "CONTACT"
-msgstr "KONTAKT"
+#: templates/instellingen.html:48
+msgid "Terug naar profiel knop"
+msgstr "Zurück zum Profil-Knopf"
 
-#: templates/maps.html:23
-msgid "Station met fietsen"
-msgstr "Station mit Fahrrädern"
+#: templates/instellingen.html:50
+msgid "Terug naar profiel"
+msgstr "Zurück zum Profil"
 
-#: templates/maps.html:62
-msgid "Closed"
+#: templates/instellingen.html:54 templates/profile.html:19
+msgid "Instellingen"
+msgstr "Einstellungen"
+
+#: templates/instellingen.html:56
+msgid "Weergeven van flashberichten"
+msgstr "Anzeige von Flash-Nachrichten"
+
+#: templates/instellingen.html:63
+msgid "Sluiten"
+msgstr "Schließen"
+
+#: templates/instellingen.html:70
+msgid "Gebruikersinstellingenformulier"
+msgstr "Benutzereinstellungsformular"
+
+#: templates/instellingen.html:73
+msgid "Aanspreekvorm"
+msgstr "Anrede"
+
+#: templates/instellingen.html:75
+msgid "..."
+msgstr "..."
+
+#: templates/instellingen.html:76
+msgid "Heer"
+msgstr "Herr"
+
+#: templates/instellingen.html:77
+msgid "Vrouw"
+msgstr "Frau"
+
+#: templates/instellingen.html:82
+msgid "Voornaam"
+msgstr "Vorname"
+
+#: templates/instellingen.html:87
+msgid "Achternaam"
+msgstr "Nachname"
+
+#: templates/instellingen.html:92
+msgid "Telefoonnummer"
+msgstr "Telefonnummer"
+
+#: templates/instellingen.html:95
+msgid ""
+"Voer een geldig telefoonnummer in. Begin met 0 of +, gevolgd door 8 tot "
+"15 cijfers. Geen spaties of symbolen."
 msgstr ""
+"Gib eine gültige Telefonnummer ein. Beginne mit 0 oder +, gefolgt von 8 bis 15 "
+"Ziffern. Keine Leerzeichen oder Symbole."
 
-#: templates/tarieven.html:17
+#: templates/instellingen.html:100
+msgid "Bijv. 0478123456 of +32478123456 (geen spaties of leestekens)"
+msgstr "Z. B. 0478123456 oder +32478123456 (keine Leerzeichen oder Satzzeichen)"
+
+#: templates/instellingen.html:108
+msgid "Voer een geldig e-mailadres in, bv. naam@example.com"
+msgstr "Gib eine gültige E-Mail-Adresse ein, z. B. name@example.com"
+
+#: templates/instellingen.html:112
+msgid "Bijv. naam@example.com"
+msgstr "Z. B. name@example.com"
+
+#: templates/instellingen.html:115
+msgid "Opslaan en annuleren knoppen"
+msgstr "Speichern- und Abbrechen-Knöpfe"
+
+#: templates/instellingen.html:117
+msgid "Opslaan"
+msgstr "Speichern"
+
+#: templates/instellingen.html:118 templates/transport.html:121
+msgid "Annuleren"
+msgstr "Abbrechen"
+
+#: templates/instellingen.html:124
+msgid "Formulier voor account verwijderen"
+msgstr "Formular zum Löschen des Kontos"
+
+#: templates/instellingen.html:127
+msgid "Weet u zeker dat u uw account permanent wilt verwijderen?"
+msgstr "Bist du sicher, dass du dein Konto dauerhaft löschen möchtest?"
+
+#: templates/instellingen.html:128
+msgid "Verwijder account"
+msgstr "Konto löschen"
+
+#: templates/instellingen.html:141
+msgid "voornaam"
+msgstr "Vorname"
+
+#: templates/instellingen.html:142
+msgid "achternaam"
+msgstr "Nachname"
+
+#: templates/instellingen.html:143
+msgid "telefoonnummer"
+msgstr "Telefonnummer"
+
+#: templates/instellingen.html:144
+msgid "e-mailadres"
+msgstr "E-Mail-Adresse"
+
+#: templates/instellingen.html:152
+msgid "Vul het veld"
+msgstr "Fülle das Feld aus"
+
+#: templates/instellingen.html:152
+msgid "in."
+msgstr "aus."
+
+#: templates/instellingen.html:154
+msgid "Ongeldige invoer bij"
+msgstr "Ungültige Eingabe bei"
+
+#: templates/instellingen.html:160
+msgid "Foutmelding:"
+msgstr "Fehlermeldung:"
+
+#: templates/live_data.html:8
+msgid "Live Data Fietsstations (Antwerpen)"
+msgstr "Live-Daten Fahrradstationen (Antwerpen)"
+
+#: templates/live_data.html:12
+msgid "Totaal aantal stations"
+msgstr "Gesamtzahl der Stationen"
+
+#: templates/live_data.html:17
+msgid "Totaal aantal fietsen"
+msgstr "Gesamtzahl der Fahrräder"
+
+#: templates/live_data.html:22
+msgid "Totaal aantal lege slots"
+msgstr "Gesamtzahl der leeren Plätze"
+
+#: templates/live_data.html:27
+msgid "Totaal capaciteit"
+msgstr "Gesamtkapazität"
+
+#: templates/live_data.html:36
+msgid "Naam"
+msgstr "Name"
+
+#: templates/live_data.html:37
+msgid "Adres"
+msgstr "Adresse"
+
+#: templates/live_data.html:38 templates/transport.html:36
+#: templates/transport.html:70 templates/transport.html:136
+msgid "Status"
+msgstr "Status"
+
+#: templates/live_data.html:39 templates/transport.html:164
+msgid "Beschikbaar"
+msgstr "Verfügbar"
+
+#: templates/live_data.html:40
+msgid "Lege slots"
+msgstr "Leere Plätze"
+
+#: templates/live_data.html:41 templates/transport.html:35
+#: templates/transport.html:69
+msgid "Capaciteit"
+msgstr "Kapazität"
+
+#: templates/live_data.html:65
+msgid "Populairste station vandaag"
+msgstr "Beliebteste Station heute"
+
+#: templates/live_data.html:68
+#, python-format
+msgid "%(ritten)d ritten gestart"
+msgstr "%(ritten)d Fahrten gestartet"
+
+#: templates/profile.html:30
+msgid "Vrouw op fiets"
+msgstr "Frau auf Fahrrad"
+
+#: templates/profile.html:32
+msgid "Heer op fiets"
+msgstr "Herr auf Fahrrad"
+
+#: templates/profile.html:34
+msgid "Standaard foto"
+msgstr "Standardfoto"
+
+#: templates/profile.html:44
+msgid "Persoonlijke gegevens"
+msgstr "Persönliche Daten"
+
+#: templates/profile.html:45
+msgid "Aanspreekvorm:"
+msgstr "Anrede:"
+
+#: templates/profile.html:45
+msgid "geen"
+msgstr "keine"
+
+#: templates/profile.html:46 templates/tarieven/bedankt.html:16
+#: templates/tarieven/dagpas.html:25 templates/tarieven/jaarkaart.html:25
+#: templates/tarieven/weekpas.html:25
+msgid "Voornaam:"
+msgstr "Vorname:"
+
+#: templates/profile.html:46 templates/profile.html:47
+#: templates/profile.html:49
+msgid "Niet ingesteld"
+msgstr "Nicht eingestellt"
+
+#: templates/profile.html:47 templates/tarieven/bedankt.html:17
+#: templates/tarieven/dagpas.html:30 templates/tarieven/jaarkaart.html:30
+#: templates/tarieven/weekpas.html:30
+msgid "Achternaam:"
+msgstr "Nachname:"
+
+#: templates/profile.html:48 templates/tarieven/bedankt.html:19
+#: templates/tarieven/dagpas.html:42 templates/tarieven/jaarkaart.html:42
+#: templates/tarieven/weekpas.html:42
+msgid "Telefoonnummer:"
+msgstr "Telefonnummer:"
+
+#: templates/profile.html:48
+msgid "Niet ingesteld (optioneel)"
+msgstr "Nicht eingestellt (optional)"
+
+#: templates/profile.html:49 templates/user_filter.html:28
+msgid "Email:"
+msgstr "E-Mail:"
+
+#: templates/profile.html:50 templates/user_filter.html:29
+msgid "Abonnement:"
+msgstr "Abonnement:"
+
+#: templates/profile.html:51
+msgid "Geen abonnement"
+msgstr "Kein Abonnement"
+
+#: templates/profile.html:55
+msgid "geen abonnement"
+msgstr "kein Abonnement"
+
+#: templates/profile.html:58
+msgid "Abonnement kopen? klik op geen abonnement om naar tarieven te gaan."
+msgstr "Abonnement kaufen? Klicke auf „kein Abonnement“, um zu den Tarifen zu gelangen."
+
+#: templates/profile.html:70
+msgid "Fietsgeschiedenis"
+msgstr "Fahrradgeschichte"
+
+#: templates/profile.html:75
+msgid "ID:"
+msgstr "ID:"
+
+#: templates/profile.html:76
+msgid "Van:"
+msgstr "Von:"
+
+#: templates/profile.html:77
+msgid "Tot:"
+msgstr "Bis:"
+
+#: templates/profile.html:78
+msgid "Start:"
+msgstr "Start:"
+
+#: templates/profile.html:78 templates/profile.html:79
+msgid "N/A"
+msgstr "N/A"
+
+#: templates/profile.html:79
+msgid "Prijs:"
+msgstr "Preis:"
+
+#: templates/profile.html:85
+msgid "Geen fietsgeschiedenis beschikbaar."
+msgstr "Keine Fahrradgeschichte verfügbar."
+
+#: templates/profile.html:96
+msgid "Je profiel is NIET volledig — klik NU op Instellingen en vul alles in!"
+msgstr "Dein Profil ist NICHT vollständig – klicke JETZT auf Einstellungen und fülle alles aus!"
+
+#: templates/tarieven.html:22
 msgid "DAGPAS"
 msgstr "TAGESPASS"
 
-#: templates/tarieven.html:20 templates/tarieven.html:34
-#: templates/tarieven.html:48
+#: templates/tarieven.html:25 templates/tarieven.html:39
+#: templates/tarieven.html:53
 msgid "What more could you need? What I need right now is more text here."
 msgstr "Was braucht man mehr? Was ich jetzt brauche, ist mehr Text hier."
 
-#: templates/tarieven.html:21 templates/tarieven.html:35
-#: templates/tarieven.html:49
+#: templates/tarieven.html:26 templates/tarieven.html:40
+#: templates/tarieven.html:54
 msgid "I could just put lorum ipsum here but that’s boring."
 msgstr "Ich könnte einfach Lorem ipsum hier einfügen, aber das ist langweilig."
 
-#: templates/tarieven.html:23 templates/tarieven.html:37
-#: templates/tarieven.html:51
+#: templates/tarieven.html:28 templates/tarieven.html:42
+#: templates/tarieven.html:56
 msgid "Whoever is reading this, I'm sorry for wasting 3 minutes of your time."
-msgstr ""
-"Wer auch immer das liest, es tut mir leid, dass ich 3 Minuten deiner Zeit"
-" verschwendet habe."
+msgstr "Wer auch immer das liest, es tut mir leid, dass ich 3 Minuten deiner Zeit verschwendet habe."
 
-#: templates/tarieven.html:25 templates/tarieven.html:39
-#: templates/tarieven.html:53
+#: templates/tarieven.html:30 templates/tarieven.html:44
+#: templates/tarieven.html:58
 msgid "KOOP NU"
 msgstr "JETZT KAUFEN"
 
-#: templates/tarieven.html:31
+#: templates/tarieven.html:36
 msgid "WEEKPAS"
 msgstr "WOCHENPASS"
 
-#: templates/tarieven.html:45
+#: templates/tarieven.html:50
 msgid "JAARKAART"
-msgstr "JAHRESKART"
+msgstr "JAHRESKARTE"
+
+#: templates/transport.html:12
+msgid "station_fietsen vanuit template:"
+msgstr "station_fietsen aus Vorlage:"
+
+#: templates/transport.html:18
+msgid "Stationstatus voor transporteurs"
+msgstr "Stationsstatus für Transportunternehmen"
+
+#: templates/transport.html:29
+msgid "Lege stations (bijvullen nodig)"
+msgstr "Leere Stationen (Nachfüllen erforderlich)"
+
+#: templates/transport.html:34 templates/transport.html:68
+msgid "Fietsen"
+msgstr "Fahrräder"
+
+#: templates/transport.html:53
+msgid "Geen lege stations gevonden."
+msgstr "Keine leeren Stationen gefunden."
+
+#: templates/transport.html:63
+msgid "Volle stations (fietsen ophalen)"
+msgstr "Volle Stationen (Fahrräder abholen)"
+
+#: templates/transport.html:71 templates/transport.html:137
+msgid "Actie"
+msgstr "Aktion"
+
+#: templates/transport.html:86
+msgid "Toon fietsen"
+msgstr "Fahrräder anzeigen"
+
+#: templates/transport.html:93
+msgid "Geen volle stations gevonden."
+msgstr "Keine vollen Stationen gefunden."
+
+#: templates/transport.html:104
+msgid "Fietsen verplaatsen vanaf"
+msgstr "Fahrräder verplaatsen von"
+
+#: templates/transport.html:108
+msgid "Fietsen:"
+msgstr "Fahrräder:"
+
+#: templates/transport.html:112
+msgid "Verplaats naar:"
+msgstr "Verschieben nach:"
+
+#: templates/transport.html:120 templates/transport.html:168
+msgid "Verplaats"
+msgstr "Verschieben"
+
+#: templates/transport.html:129
+msgid "Defecte fietsen (onderhoud nodig)"
+msgstr "Defekte Fahrräder (Wartung erforderlich)"
+
+#: templates/transport.html:135
+msgid "Probleem"
+msgstr "Problem"
+
+#: templates/transport.html:163
+msgid "Onderhoud"
+msgstr "Wartung"
+
+#: templates/transport.html:165
+msgid "In reparatie"
+msgstr "In Reparatur"
+
+#: templates/transport.html:175
+msgid "Geen defecte fietsen gemeld."
+msgstr "Keine defekten Fahrräder gemeldet."
+
+#: templates/user_filter.html:8
+msgid "Gebruiker filteren"
+msgstr "Benutzer filtern"
+
+#: templates/user_filter.html:11
+msgid "Kies een gebruiker:"
+msgstr "Wähle einen Benutzer:"
+
+#: templates/user_filter.html:21
+msgid "Toon ritten"
+msgstr "Fahrten anzeigen"
+
+#: templates/user_filter.html:26
+msgid "Info over"
+msgstr "Info über"
+
+#: templates/user_filter.html:28
+msgid "Email:"
+msgstr "E-Mail:"
+
+#: templates/user_filter.html:29
+msgid "Abonnement:"
+msgstr "Abonnement:"
+
+#: templates/user_filter.html:30
+msgid "Postcode:"
+msgstr "Postleitzahl:"
+
+#: templates/user_filter.html:35
+msgid "Statistieken"
+msgstr "Statistiken"
+
+#: templates/user_filter.html:37
+msgid "Totaal aantal ritten:"
+msgstr "Gesamtzahl der Fahrten:"
+
+#: templates/user_filter.html:38
+msgid "Totaal aantal minuten:"
+msgstr "Gesamtzahl der Minuten:"
+
+#: templates/user_filter.html:41
+msgid "Geschat totaal aantal km:"
+msgstr "Geschätzte Gesamtzahl an km:"
+
+#: templates/user_filter.html:44
+msgid "Gemiddelde ritduur:"
+msgstr "Durchschnittliche Fahrtzeit:"
+
+#: templates/user_filter.html:55
+msgid "Ritten per dag"
+msgstr "Fahrten pro Tag"
+
+#: templates/user_filter.html:59
+msgid "ritten"
+msgstr "Fahrten"
+
+#: templates/user_filter.html:63
+msgid "Geen ritten gevonden voor deze gebruiker."
+msgstr "Keine Fahrten für diesen Benutzer gefunden."
+
+#: templates/user_filter.html:68
+msgid "Alle ritten"
+msgstr "Alle Fahrten"
+
+#: templates/user_filter.html:74
+msgid "Starttijd"
+msgstr "Startzeit"
+
+#: templates/user_filter.html:75
+msgid "Eindtijd"
+msgstr "Endzeit"
+
+#: templates/user_filter.html:77
+msgid "Tot"
+msgstr "Bis"
+
+#: templates/user_filter.html:99
+msgid "Geen ritten om te tonen."
+msgstr "Keine Fahrten zum Anzeigen."
 
 #: templates/tarieven/bedankt.html:3
 msgid "Bedankt voor je aanvraag"
@@ -399,27 +1320,12 @@ msgstr "Danke für deine Anfrage!"
 msgid "We hebben je gegevens goed ontvangen."
 msgstr "Wir haben deine Daten erfolgreich erhalten."
 
-#: templates/tarieven/bedankt.html:16 templates/tarieven/dagpas.html:22
-#: templates/tarieven/jaarkaart.html:22 templates/tarieven/weekpas.html:22
-msgid "Voornaam:"
-msgstr "Vorname:"
-
-#: templates/tarieven/bedankt.html:17 templates/tarieven/dagpas.html:27
-#: templates/tarieven/jaarkaart.html:27 templates/tarieven/weekpas.html:27
-msgid "Achternaam:"
-msgstr "Nachname:"
-
 #: templates/tarieven/bedankt.html:18
 msgid "E-mail:"
 msgstr "E-Mail:"
 
-#: templates/tarieven/bedankt.html:19 templates/tarieven/dagpas.html:39
-#: templates/tarieven/jaarkaart.html:39 templates/tarieven/weekpas.html:39
-msgid "Telefoonnummer:"
-msgstr "Telefonnummer:"
-
-#: templates/tarieven/bedankt.html:20 templates/tarieven/dagpas.html:44
-#: templates/tarieven/jaarkaart.html:44 templates/tarieven/weekpas.html:44
+#: templates/tarieven/bedankt.html:20 templates/tarieven/dagpas.html:47
+#: templates/tarieven/jaarkaart.html:47 templates/tarieven/weekpas.html:47
 msgid "Geboortedatum:"
 msgstr "Geburtsdatum:"
 
@@ -428,63 +1334,61 @@ msgid ""
 "Je gekozen pincode is veilig opgeslagen. Je kunt nu gebruik maken van je "
 "pas!"
 msgstr ""
-"Dein gewählter PIN wurde sicher gespeichert. Du kannst jetzt deinen Pass "
-"nutzen!"
+"Dein gewählter PIN wurde sicher gespeichert. Du kannst jetzt deinen Pass nutzen!"
 
 #: templates/tarieven/bedankt.html:25
 msgid "Ga terug naar startpagina"
 msgstr "Zurück zur Startseite"
 
-#: templates/tarieven/dagpas.html:3 templates/tarieven/dagpas.html:17
+#: templates/tarieven/dagpas.html:3 templates/tarieven/dagpas.html:20
 msgid "Dagpas Aanvragen"
 msgstr "Tagespass beantragen"
 
-#: templates/tarieven/dagpas.html:33 templates/tarieven/jaarkaart.html:33
-#: templates/tarieven/weekpas.html:33
+#: templates/tarieven/dagpas.html:36 templates/tarieven/jaarkaart.html:36
+#: templates/tarieven/weekpas.html:36
 msgid "E-mailadres:"
 msgstr "E-Mail-Adresse:"
 
-#: templates/tarieven/dagpas.html:40 templates/tarieven/jaarkaart.html:40
-#: templates/tarieven/weekpas.html:40
+#: templates/tarieven/dagpas.html:43 templates/tarieven/jaarkaart.html:43
+#: templates/tarieven/weekpas.html:43
 msgid "Voer een telefoonnummer in"
 msgstr "Gib eine Telefonnummer ein"
 
-#: templates/tarieven/dagpas.html:51 templates/tarieven/jaarkaart.html:51
-#: templates/tarieven/weekpas.html:51
+#: templates/tarieven/dagpas.html:54 templates/tarieven/jaarkaart.html:54
+#: templates/tarieven/weekpas.html:54
 msgid "Pincode (4 cijfers):"
 msgstr "PIN (4 Ziffern):"
 
-#: templates/tarieven/dagpas.html:52 templates/tarieven/dagpas.html:57
-#: templates/tarieven/jaarkaart.html:52 templates/tarieven/jaarkaart.html:57
-#: templates/tarieven/weekpas.html:52 templates/tarieven/weekpas.html:57
+#: templates/tarieven/dagpas.html:55 templates/tarieven/dagpas.html:60
+#: templates/tarieven/jaarkaart.html:55 templates/tarieven/jaarkaart.html:60
+#: templates/tarieven/weekpas.html:55 templates/tarieven/weekpas.html:60
 msgid "Voer een pincode van 4 cijfers in."
 msgstr "Gib einen PIN mit 4 Ziffern ein."
 
-#: templates/tarieven/dagpas.html:56 templates/tarieven/jaarkaart.html:56
-#: templates/tarieven/weekpas.html:56
+#: templates/tarieven/dagpas.html:59 templates/tarieven/jaarkaart.html:59
+#: templates/tarieven/weekpas.html:59
 msgid "Bevestig Pincode:"
 msgstr "PIN bestätigen:"
 
-#: templates/tarieven/dagpas.html:68 templates/tarieven/jaarkaart.html:68
-#: templates/tarieven/weekpas.html:68
+#: templates/tarieven/dagpas.html:71 templates/tarieven/jaarkaart.html:71
+#: templates/tarieven/weekpas.html:71
 msgid "Ik ga akkoord met de"
 msgstr "Ich stimme den"
 
-#: templates/tarieven/dagpas.html:68 templates/tarieven/jaarkaart.html:68
-#: templates/tarieven/weekpas.html:68
+#: templates/tarieven/dagpas.html:71 templates/tarieven/jaarkaart.html:71
+#: templates/tarieven/weekpas.html:71
 msgid "algemene voorwaarden"
 msgstr "Allgemeinen Geschäftsbedingungen"
 
-#: templates/tarieven/dagpas.html:73 templates/tarieven/jaarkaart.html:73
-#: templates/tarieven/weekpas.html:73
+#: templates/tarieven/dagpas.html:76 templates/tarieven/jaarkaart.html:76
+#: templates/tarieven/weekpas.html:76
 msgid "Aanvragen"
 msgstr "Beantragen"
 
-#: templates/tarieven/jaarkaart.html:3 templates/tarieven/jaarkaart.html:17
+#: templates/tarieven/jaarkaart.html:3 templates/tarieven/jaarkaart.html:20
 msgid "Jaarkaart Aanvragen"
 msgstr "Jahreskarte beantragen"
 
-#: templates/tarieven/weekpas.html:3 templates/tarieven/weekpas.html:17
+#: templates/tarieven/weekpas.html:3 templates/tarieven/weekpas.html:20
 msgid "Weekpas Aanvragen"
 msgstr "Wochenpass beantragen"
-

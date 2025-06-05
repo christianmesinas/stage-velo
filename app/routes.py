@@ -786,7 +786,9 @@ def admin_data():
     stations = get_alle_stations()
     info = get_info()
 
-    # voorbeeld: update tijd registreren
+    # DEBUG output:
+    print("DEBUG: voorbeeldstation =", stations[0])
+
     session["live_data_update"] = datetime.now().strftime("%H:%M:%S")
 
     populairste_station = {
@@ -797,12 +799,14 @@ def admin_data():
     return render_template("live_data.html", stations=stations, populairste_station=populairste_station)
 
 
+
 @routes.route("/admin/user_filter", methods=["GET", "POST"])
 @admin_required
 def admin_filter():
     from sqlalchemy.orm import aliased
     db = SessionLocal()
     gebruikers = db.query(Gebruiker).all()
+    print("DEBUG: gebruikers list =", gebruikers)  # <--- voeg dit toe
 
     geselecteerde_gebruiker = None
     ritten = []
@@ -811,28 +815,11 @@ def admin_filter():
     if request.method == "POST":
         gebruiker_id = request.form.get("gebruiker_id")
         geselecteerde_gebruiker = db.query(Gebruiker).filter_by(id=gebruiker_id).first()
-
         if geselecteerde_gebruiker:
-            StartStation = aliased(Station)
-            EindStation = aliased(Station)
-            ritten = (
-                db.query(Geschiedenis)
-                .filter_by(gebruiker_id=gebruiker_id)
-                .join(Fiets, Geschiedenis.fiets_id == Fiets.id)
-                .join(StartStation, Geschiedenis.start_station_naam == StartStation.naam)
-                .join(EindStation, Geschiedenis.eind_station_naam == EindStation.naam)
-                .all()
-            )
-            # Bereken ritten per dag
-            for rit in ritten:
-                if isinstance(rit.starttijd, str):
-                    datum = datetime.strptime(rit.starttijd, "%Y-%m-%d %H:%M:%S").date()
-                else:
-                    datum = rit.starttijd.date()
-                ritten_per_dag[datum] = ritten_per_dag.get(datum, 0) + 1
+            # … je bestaande logic …
+            pass
 
     db.close()
-
     return render_template(
         "user_filter.html",
         gebruikers=gebruikers,
@@ -840,6 +827,7 @@ def admin_filter():
         ritten=ritten,
         ritten_per_dag=ritten_per_dag
     )
+
 
 
 
