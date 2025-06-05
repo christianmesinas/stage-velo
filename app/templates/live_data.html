@@ -14,18 +14,37 @@
   </div>
 
   <div class="stat-card">
-    <h3>{{ _('Totaal aantal fietsen') }}</h3>
-    <p>{{ stations | sum(attribute=6) }}</p>
+    <h3>Totaal aantal fietsen</h3>
+    <p>
+      {% set totaal = 0 %}
+      {% for s in stations %}
+        {# gebruik default(0) als 'free_bikes' ontbreekt #}
+        {% set totaal = totaal + (s['free_bikes']|default(0)) %}
+      {% endfor %}
+      {{ totaal }}
+    </p>
   </div>
 
   <div class="stat-card">
-    <h3>{{ _('Totaal aantal lege slots') }}</h3>
-    <p>{{ stations | sum(attribute=7) }}</p>
+    <h3>Totaal aantal lege slots</h3>
+    <p>
+      {% set totaal = 0 %}
+      {% for s in stations %}
+        {% set totaal = totaal + (s['empty_slots']|default(0)) %}
+      {% endfor %}
+      {{ totaal }}
+    </p>
   </div>
 
   <div class="stat-card">
-    <h3>{{ _('Totaal capaciteit') }}</h3>
-    <p>{{ stations | sum(attribute=8) }}</p>
+    <h3>Totaal capaciteit</h3>
+    <p>
+      {% set totaal = 0 %}
+      {% for s in stations %}
+        {% set totaal = totaal + (s['capacity']|default(0)) %}
+      {% endfor %}
+      {{ totaal }}
+    </p>
   </div>
 </div>
 
@@ -48,12 +67,19 @@
       <tbody>
         {% for s in stations %}
         <tr>
-          <td>{{ s[1] }}</td>
-          <td>{{ s[2] }}</td>
-          <td>{{ s[3] }}</td>
-          <td>{{ s[6] }}</td>
-          <td>{{ s[7] }}</td>
-          <td>{{ s[8] }}</td>
+          <td>{{ s['name']|default('—') }}</td>
+          <td>
+            {# als adres in nested dict staat, gebruik safe lookup; anders lege string #}
+            {% if s.get('extra') and s['extra'].get('address') %}
+              {{ s['extra']['address'] }}
+            {% else %}
+              {{ s['address']|default('—') }}
+            {% endif %}
+          </td>
+          <td>{{ s['status']|default('—') }}</td>
+          <td>{{ s['free_bikes']|default(0) }}</td>
+          <td>{{ s['empty_slots']|default(0) }}</td>
+          <td>{{ s['capacity']|default(0) }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -64,8 +90,10 @@
 <div class="stat-card5" style="max-width: 400px; margin-bottom: 2rem;">
   <h3>🔥 {{ _('Populairste station vandaag') }}</h3>
   <p style="font-size: 1.4rem; color: #2c3e50;">
-    {{ populairste_station.naam }}<br>
-    <small style="color: #999;">{{ _('%(ritten)d ritten gestart', ritten=populairste_station.ritten) }}</small>
+    {{ populairste_station.naam|default('—') }}<br>
+    <small style="color: #999;">
+      {{ populairste_station.ritten|default(0) }} ritten gestart
+    </small>
   </p>
 </div>
 {% endblock %}
