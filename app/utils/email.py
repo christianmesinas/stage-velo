@@ -1,17 +1,21 @@
 import os
-from os import access
-import boto3
-from botocore.exceptions import ClientError
+import smtplib
+from email.mime.text import MIMEText
 
-#Functie voor een bevesitingsmail bij successvolle betaling.
 def send_abonnement_email(to_email, voornaam, abonnement_type, einddatum):
-    # controleren of er een e-mailadres is opgegeven.
     if not to_email:
         print("❌ Geen geldig e-mailadres opgegeven. E-mail niet verzonden.")
         return
-    #simple service client (inloggen en connecteren met aws systeem)
-    ses = boto3.client('ses', region_name='eu-west-1',aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'))
-    #onderwerp en tekts in de email declareren
+
+    # Gmail SMTP-configuratie (gebruik omgevingsvariabelen voor veiligheid)
+    GMAIL_EMAIL = os.getenv("GMAIL_EMAIL")         # jouw Gmail-adres
+    GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")  # App-wachtwoord van Gmail
+
+    if not GMAIL_EMAIL or not GMAIL_APP_PASSWORD:
+        print("❌ Gmail-gegevens ontbreken. Controleer je omgevingsvariabelen.")
+        return
+
+    # Mailinhoud
     subject = "Bevestiging van je abonnement"
     body_text = f"""
     Beste {voornaam},
@@ -25,22 +29,23 @@ def send_abonnement_email(to_email, voornaam, abonnement_type, einddatum):
     Het Grandpabob Team
     """
 
-    try:
-        # verstuur de e-mail via de ses client
-        response = ses.send_email(
-            Source="noreply@grandpabob.net",  # de domeinnaam in aws hier zetten
-            Destination={"ToAddresses": [to_email]}, #ontvanger
-            Message={
-                "Subject": {"Data": subject, "Charset": "UTF-8"}, #onderwerp
-                "Body": { #inhoud
-                    "Text": {"Data": body_text, "Charset": "UTF-8"}
-                    # Je kan hier ook 'Html' toevoegen als je HTML-mails wilt
-                },
-            },
-        )
-        print(f"✅ E-mail verzonden: {response['MessageId']}")
-        return response['MessageId']
+    # Opmaak van de e-mail
+    msg = MIMEText(body_text)
+    msg['Subject'] = subject
+    msg['From'] = f"Grandpabob <{GMAIL_EMAIL}>"
+    msg['To'] = to_email
 
-    except ClientError as e:
-        print(f"❌ Fout bij verzenden e-mail: {e.response['Error']['Message']}")
-        return None
+    try:
+        # Verbind met Gmail SMTP-server
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(GMAIL_EMAIL, GMAIL_APP_PASSWORD)
+            server.send_message(msg)
+            print(f"✅ E-mail succesvol verzonden naar {to_email}")
+            return True
+
+    except smtplib.SMTPException as e:
+        print(f"❌ SMTP-fout bij verzenden: {str(e)}")
+        return False
+    except Exception as e:
+        print(f"❌ Onverwachte fout: {str(e)}")
+        return False

@@ -899,24 +899,8 @@ def betaling_succes():
 
     session["Gebruiker"]["abonnement"] = data["type"]
     #email bevestiging na de dbcommit
-    #eerst bepalen we de einddatum
-    eind_datum = ''
-    if session["Gebruiker"]["abonnement"] == "dag":
-        eind_datum = datetime.today() + timedelta(days=1)
-    elif session["Gebruiker"]["abonnement"] == "week":
-        eind_datum = datetime.today() + timedelta(days=7)
-    elif session["Gebruiker"]["abonnement"] == "jaar":
-        eind_datum = datetime.today() + timedelta(days=365)
-
     ontvanger_email = gebruiker.email if gebruiker else data["email"]
     ontvanger_voornaam = gebruiker.voornaam if gebruiker else data["voornaam"]
-
-    send_abonnement_email(
-        to_email="komutsalih@gmail.com",
-        voornaam="salih",
-        abonnement_type=session["Gebruiker"]["abonnement"],
-        einddatum=eind_datum,
-    )
     soort = data["type"].lower()
     start_datum = datetime.utcnow()
 
@@ -927,11 +911,17 @@ def betaling_succes():
         eind_datum = start_datum + timedelta(weeks=1)
         soort = "week"
     elif soort in ["jaar", "jaarkaart"]:
-        eind_datum = None
+        eind_datum = start_datum + timedelta(hours=365)
         soort = "jaar"
     else:
         db.close()
         return "Ongeldig abonnementstype.", 400
+    send_abonnement_email(
+        to_email=session["Gebruiker"]["email"],
+        voornaam="salih",
+        abonnement_type=session["Gebruiker"]["abonnement"],
+        einddatum=eind_datum.strftime("%d-%m-%Y") + " 23:59",
+    )
 
     if gebruiker:
         gebruiker.abonnement = data["type"]
