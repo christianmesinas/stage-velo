@@ -16,6 +16,8 @@ body {
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent;
   pointer-events: auto;
+  background-color: #fff;
+  color: #000;
 }
 
 body::selection {
@@ -39,32 +41,60 @@ body.dark-mode .container {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Algemene layout */
+/* Achtergrond */
 .background {
   display: flex;
   justify-content: center;
   align-items: center;
-  justify-content: flex-end;
   width: auto;
-  height: 80vh;
-  background-repeat: no-repeat;
+  min-height: 80vh;
   margin: 20px;
   background-color: white;
   color: black;
   border-radius: 20px;
+  padding: 20px;
 }
 
-.wrapper {
-  width: 60%;
-  margin: 0 auto;
+/* ✅ NETTE LAYOUT VAN DE FAQ CATEGORIEËN */
+.faq-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: auto;
 }
 
+.faq-category {
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.faq-category:hover {
+  transform: translateY(-5px);
+}
+
+body.dark-mode .faq-category {
+  background-color: #2a2a2a;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* FAQ titels */
 .faq-category h2 {
   font-size: 1.5rem;
   margin-bottom: 15px;
   color: #333;
 }
 
+body.dark-mode .faq-category h2 {
+  color: white;
+}
+
+/* Vragen en antwoorden */
 details summary::-webkit-details-marker {
   display: none;
 }
@@ -133,18 +163,9 @@ body.dark-mode details p {
   transition: 0.3s;
 }
 
+/* ✅ Mobielvriendelijk */
 @media screen and (max-width: 790px) {
-    html {
-        font-size: 14px;
-    }
-}
-
-body.dark-mode .faq-category h2 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: #333;
-}
-
-body.dark-mode .faq-category h2 {
-  color: white;
+  html {
+    font-size: 14px;
+  }
 }
