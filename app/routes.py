@@ -902,19 +902,29 @@ def download_csv():
 @admin_required
 def admin_data():
     stations = get_alle_stations()
-    info = get_info()
+    print("DEBUG: voorbeeldstation =", stations[0] if stations else "No stations")
+    if not stations:
+        flash("Failed to fetch station data from API", "error")
 
-    # DEBUG output:
-    print("DEBUG: voorbeeldstation =", stations[0])
+    # Calculate totals
+    total_bikes = sum(int(s['free-bikes']) for s in stations if s.get('free-bikes') is not None)
+    total_slots = sum(int(s['empty-slots']) for s in stations if s.get('empty-slots') is not None)
+    total_capacity = sum(int(s['capacity']) for s in stations if s.get('capacity') is not None)
+    print(f"DEBUG: Totals - bikes: {total_bikes}, slots: {total_slots}, capacity: {total_capacity}")
 
     session["live_data_update"] = datetime.now().strftime("%H:%M:%S")
-
     populairste_station = {
         "naam": "Station Zuid",
         "ritten": 23
     }
-
-    return render_template("live_data.html", stations=stations, populairste_station=populairste_station)
+    return render_template(
+        "live_data.html",
+        stations=stations,
+        populairste_station=populairste_station,
+        total_bikes=total_bikes,
+        total_slots=total_slots,
+        total_capacity=total_capacity
+    )
 
 
 
