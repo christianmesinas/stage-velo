@@ -25,6 +25,13 @@ from collections import Counter
 from functools import wraps
 from werkzeug.utils import secure_filename
 from app.utils.email import send_abonnement_email
+from flask import request, render_template, session
+import copy
+import csv
+import uuid
+from datetime import datetime
+import pytz
+from collections import Counter
 
 
 def admin_required(f):
@@ -680,15 +687,17 @@ def admin_simulatie():
     stations_copy = None
 
     if request.method == "POST":
-        try: #de aantallen voor de simulatie
+        try:
+            # De aantallen voor de simulatie
             gebruikers_aantal = int(request.form.get("gebruikers"))
             fietsen_aantal = int(request.form.get("fietsen"))
             dagen = int(request.form.get("dagen"))
-            #functies aanroepen die de simulatie starten
+            # Functies aanroepen die de simulatie starten
             gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
             stations_copy = copy.deepcopy(simulation.stations)
             fietsen = simulation.genereer_fietsen(fietsen_aantal, stations_copy)
-            ritten = simulation.simulatie(stations_copy, gebruikers, fietsen, dagen)
+            # Corrigeer de volgorde van parameters
+            ritten = simulation.genereer_geschiedenis(gebruikers, fietsen, stations_copy, dagen)
 
             # 📊 Inzichten
             aantal_ritten = len(ritten)
