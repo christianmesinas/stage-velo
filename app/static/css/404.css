@@ -1,0 +1,35 @@
+.mt-3{
+    padding: 6px 14px;
+    font-size: 16px;
+    border-radius: 20px;
+    font-weight: bolder;
+    border: 3px solid #2B2D42;
+    color: #2B2D42;
+    background: none;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+.mt-3:hover{
+    background: none;
+    border-color: #D41444;
+    color: #D41444;
+}
+
+body.dark-mode .mt-3{
+    padding: 6px 14px;
+    font-size: 16px;
+    border-radius: 20px;
+    font-weight: bolder;
+    border: 3px solid white;
+    color: white;
+    background: none;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+body.dark-mode .mt-3:hover{
+    background: none;
+    border-color: #D41444;
+    color: #D41444;
+}

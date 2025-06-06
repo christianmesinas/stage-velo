@@ -12,10 +12,10 @@
 {% endblock %}
 
 {% block scripts %}
-  <!-- Auth0 Script (NE PAS TOUCHER) -->
+  <!-- Auth0 Script -->
   <script>
     const redirectAfterLogin = "{{ next_url | safe }}";
-    const language = "{{ language | safe }}"; // Language from Flask-Babel
+    const language = "{{ language | safe }}";
 
     const translations = {
       'nl': {
@@ -88,7 +88,7 @@
       theme: {
         primaryColor: '#2b2d42',
         backgroundColor: '#000000',
-        logo: 'LOGO' // Replace with actual logo URL if needed
+        logo: 'LOGO'
       },
       language: language,
       languageDictionary: translations[language],
@@ -116,9 +116,14 @@
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ access_token: authResult.accessToken })
+          body: JSON.stringify({
+            access_token: authResult.accessToken,
+            redirect_to: redirectAfterLogin
+          })
         }).then((res) => {
-          if (res.ok) {
+          if (res.redirected) {
+            window.location.href = res.url;
+          } else if (res.ok) {
             window.location.href = redirectAfterLogin || "/profile";
           } else {
             console.error("❌ Backend verwerkte token niet correct");

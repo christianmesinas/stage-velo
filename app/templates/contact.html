@@ -12,13 +12,13 @@
 
       <!-- Afbeelding groter weergegeven -->
       <img src="{{ url_for('static', filename='images/afbeelding_contact.png') }}"
-           alt="Contacteer ons"
+           alt="{{ _('Contacteer ons') }}"
            class="card-image-full">
 
       <div class="card-item__content">
-        <h2 class="card-item__title">📬 Contacteer ons</h2>
+        <h2 class="card-item__title">📬 {{ _('Contacteer ons') }}</h2>
         <div class="streep"></div>
-        <p>Heb je een vraag, probleem of suggestie? Vul onderstaand formulier in.</p>
+        <p>{{ _('Heb je een vraag, probleem of suggestie? Vul onderstaand formulier in.') }}</p>
 
         {% if foutmelding %}
           <div class="alert alert-danger">{{ foutmelding }}</div>
@@ -29,7 +29,7 @@
             {% for category, message in messages %}
               <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
                 {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ _('Close') }}"></button>
               </div>
             {% endfor %}
           {% endif %}
@@ -37,80 +37,79 @@
 
         <form method="POST" class="defect-form">
           <div class="form-group">
-            <label for="naam">Volledige naam *</label>
+            <label for="naam">{{ _('Volledige naam') }} *</label>
             <input type="text" id="naam" name="naam" required>
           </div>
 
           <div class="form-group">
-            <label for="email">E-mailadres *</label>
+            <label for="email">{{ _('E-mailadres') }} *</label>
             <input type="email" id="email" name="email"
                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                   title="Bijv. naam@voorbeeld.be" required>
+                   title="{{ _('Bijv. naam@voorbeeld.be') }}" required>
           </div>
 
           <div class="form-group">
-            <label for="telefoon">Telefoonnummer (optioneel)</label>
+            <label for="telefoon">{{ _('Telefoonnummer (optioneel)') }}</label>
             <input type="tel" id="telefoon" name="telefoon"
                    pattern="^(?:\+32|0)[1-9][0-9]{7,8}$"
-                   title="Bijv. 0471234567 of +32471234567"
-                   placeholder="Bijv. 0471234567 of +32471234567">
+                   title="{{ _('Bijv. 0471234567 of +32471234567') }}"
+                   placeholder="{{ _('Bijv. 0471234567 of +32471234567') }}">
           </div>
 
           <div class="form-group">
-            <label for="reden">Reden van contact *</label>
+            <label for="reden">{{ _('Reden van contact') }} *</label>
             <select id="reden" name="reden" required>
-              <option value="" disabled selected>Kies een optie</option>
-              <option>Vraag over abonnement</option>
-              <option>Probleem met fiets</option>
-              <option>Fout bij betaling</option>
-              <option>Suggestie</option>
-              <option>Klacht</option>
-              <option>Andere</option>
+              <option value="" disabled selected>{{ _('Kies een optie') }}</option>
+              <option>{{ _('Vraag over abonnement') }}</option>
+              <option>{{ _('Probleem met fiets') }}</option>
+              <option>{{ _('Fout bij betaling') }}</option>
+              <option>{{ _('Suggestie') }}</option>
+              <option>{{ _('Klacht') }}</option>
+              <option>{{ _('Andere') }}</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="onderwerp">Onderwerp *</label>
+            <label for="onderwerp">{{ _('Onderwerp') }} *</label>
             <input type="text" id="onderwerp" name="onderwerp" required>
           </div>
 
           <div class="form-group">
-            <label for="bericht">Bericht *</label>
+            <label for="bericht">{{ _('Bericht') }} *</label>
             <textarea id="bericht" name="bericht" rows="5" required></textarea>
           </div>
 
-          <button type="submit">Verzend bericht</button>
+          <button type="submit">{{ _('Verzend bericht') }}</button>
         </form>
       </div>
     </div>
   </div>
 
   <footer id="footer">
-  <div class="footerwrapper">
-  <div class="footerfiets">
-    <img src="../static/images/fietsvrouw.svg" style=" width: 450px">
-  </div>
-  <div class="copyright">
-    <p>Copyright Velo Antwerpen 2025 ALLE RECHTEN VOORBEHOUDEN</p>
-  </div>
-  <div class="contact">
-    <h2 style="font-size:40px; margin-bottom:10px">CONTACT</h2>
-    <ul style="padding:0">
-      <li>info@velo-antwerpen.be</li>
-      <li>Vosseschijnstraat 16-20 2030 Antwerpen</li>
-      <li>+32 (0)3 206 50 30</li>
-    </ul>
-  </div>
-  <div class="socials">
-    <ul>
-      <li><a href="#"><img src="../static/images/Logo_Linkedin.png"></a></li>
-      <li><a href="#"><img src="../static/images/Logo_Tiktok.png"></a></li>
-      <li><a href ="#"><img src="../static/images/Logo_Facebook.png"></a></li>
-      <li><a href="#"><img src="../static/images/Logo_Youtube.png"></a></li>
-      <li><a href="#"><img src="../static/images/Logo_Insta.png"></a></li>
-    </ul>
-  </div>
-
-  </div>
-</footer>
+    <div class="footerwrapper">
+      <div class="footerfiets">
+        <img src="{{ url_for('static', filename='images/fietsvrouw.svg') }}" style="width: 450px">
+      </div>
+      <div class="copyright">
+        <p>{{ _('Copyright Velo Antwerpen 2025 ALLE RECHTEN VOORBEHOUDEN') }}</p>
+      </div>
+      <div class="contact">
+        <h2 style="font-size:40px; margin-bottom:10px">{{ _('CONTACT') }}</h2>
+        <ul style="padding:0">
+          <li>info@velo-antwerpen.be</li>
+          <li>{{ _('Vosseschijnstraat 16-20 2030 Antwerpen') }}</li>
+          <li>+32 (0)3 206 50 30</li>
+        </ul>
+      </div>
+      <div class="socials">
+        <ul>
+          <li><a href="#"><img src="{{ url_for('static', filename='images/Logo_Linkedin.png') }}" alt="LinkedIn"></a></li>
+          <li><a href="#"><img src="{{ url_for('static', filename='images/Logo_Tiktok.png') }}" alt="TikTok"></a></li>
+          <li><a href="#"><img src="{{ url_for('static', filename='images/Logo_Facebook.png') }}" alt="Facebook"></a></li>
+          <li><a href="#"><img src="{{ url_for('static', filename='images/Logo_Youtube.png') }}" alt="YouTube"></a></li>
+          <li><a href="#"><img src="{{ url_for('static', filename='images/Logo_Insta.png') }}" alt="Instagram"></a></li>
+        </ul>
+      </div>
+    </div> <!-- Hier sluiten we footerwrapper div -->
+  </footer>
 {% endblock %}

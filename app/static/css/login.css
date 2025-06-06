@@ -37,7 +37,7 @@ body.dark-mode .background{
     height: 80vh;
     background-repeat: no-repeat;
     margin: 20px;
-    background-color: black;
+    background-color: #1e1e1e;
     border-radius: 20px;
 }
 
@@ -61,22 +61,22 @@ body.dark-mode .background{
 }
 
 .auth0-lock-header{
-    background-color: black !important;
+    background-color: #1e1e1e !important;
 
 }
 
 
 body.dark-mode .auth0-lock-cred-pane{
-    background-color: black !important;
+    background-color: #1e1e1e !important;
 }
 
 body.dark-mode .auth0-lock-tabs li a{
-    background-color: black;
+    background-color: #1e1e1e;
     color: rgb(180,180,180) !important;
 }
 
 body.dark-mode .auth0-lock-tabs-current{
-    background-color: black !important;
+    background-color: #1e1e1e !important;
 }
 
 body.dark-mode .auth0-lock-tabs-current span{
@@ -89,5 +89,35 @@ body.dark-mode .auth0-lock.auth0-lock.auth0-lock-opened-in-frame .auth0-lock-hea
 }
 
 body.dark-mode .auth0-lock.auth0-lock .auth0-lock-header-bg{
-    background-color: black;
+    background-color: #1e1e1e;
+    color: whitesmoke;
+}
+
+/* 1. Zwarte rand aanpassen naar #1e1e1e */
+body.dark-mode .auth0-lock-content-wrapper {
+    border-color: #1e1e1e !important;
+}
+
+/* 2. 'Auth0' tekst in de header wit maken */
+body.dark-mode .auth0-lock-header .auth0-lock-name {
+    color: white !important;
+}
+
+/* 3. 'Don't remember your password?' wit maken */
+body.dark-mode .auth0-lock-alternative {
+    color: white !important;
+}
+
+body.dark-mode,
+.auth0-lock.auth0-lock,
+.auth0-lock-form p{
+    color: white !important;
+}
+
+body.dark-mode,
+.auth0-lock.auth0-lock,
+.auth0-lock-form,
+.auth0-lock-alternative,
+.auth0-lock-alternative-link{
+    color: white !important;
 }

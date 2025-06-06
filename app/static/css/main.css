@@ -4,7 +4,7 @@
   background-color: white;
   border-radius: 20px;
   margin: 20px;
-  background-size: 53rem;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: right;
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.35);
@@ -256,12 +256,12 @@ body {
 }
 
 body.dark-mode {
-  background-color: #1e1e1e;
+  background-color: #1a1a1a;
   color: white;
 }
 
 body.dark-mode .card-slider .card-item {
-  background-color: #2a2a2a;
+  background-color: #1f1f1f;
   color: white;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }

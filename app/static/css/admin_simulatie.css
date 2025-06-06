@@ -524,3 +524,38 @@ h2 {
   border-radius: 5px;
   margin: 20px 0;
 }
+
+body.dark-mode .sidebar.close ~ .home {
+    background: #1a1a1a;
+}
+
+body.dark-mode .inline-form{
+    background: #1e1e1e;
+}
+
+body.dark-mode .sidebar {
+    background: #1e1e1e ;
+}
+
+body.dark-mode .home{
+    background: #1e1e1e ;
+}
+
+body.dark-mode .sidebar li{
+    background: #1e1e1e;
+}
+
+body.dark-mode .stats ul li {
+    background: #1e1e1e;
+
+}
+
+body.dark-mode .scrollbox {
+    background: #1e1e1e;
+    border:none;
+    color:black;
+}
+
+body.dark-mode .fixed-header-table th{
+    border-bottom: none;
+}

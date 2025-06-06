@@ -25,6 +25,9 @@
   font-weight: 500;
 }
 
+body.dark-mode .status-card {
+  color: black;
+}
 .status-card.success { border-left: 5px solid #2ecc71; }
 .status-card.warning { border-left: 5px solid #e67e22; }
 .status-card.info    { border-left: 5px solid #3498db; }
@@ -53,6 +56,61 @@
   background-color: #D1003C;
 }
 
+/* ✅ Donkere modus kleurstelling: #1e1e1e */
+body.dark-mode .home {
+  background: #1a1a1a;
+}
+
+body.dark-mode .sidebar {
+  background: #1e1e1e;
+}
+
+/* ✅ Donkere modus toggle knop */
+.dark-toggle-btn {
+  position: static;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 1rem;
+  background-color: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+body.dark-mode .dark-toggle-btn {
+  background-color: #1e1e1e;
+  color: white;
+  border: 2px solid white;
+}
+
+.dark-toggle-btn:hover {
+  background-color: #1e1e1e;
+  color: white;
+  border-color: #1e1e1e;
+}
+
+body.dark-mode .dark-toggle-btn:hover {
+  background-color: white;
+  color: #1e1e1e;
+  border-color: white;
+}
+
+/* ✅ Theme-icon animatie vanaf knop */
+.theme-icon {
+  position: fixed;
+  font-size: 3.5rem;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(0) scale(1);
+  transition: transform 0.8s ease-out, opacity 0.5s ease-in;
+}
+
+.theme-icon.show {
+  opacity: 1;
+  transform: translateY(120px) scale(1.4);
+}
 
 /* admin_popup.css */
 #admin-popup-overlay {

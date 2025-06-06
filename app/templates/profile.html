@@ -16,7 +16,7 @@
 
     <!-- ✅ Instellingen-knop rechtsboven -->
     <div class="instellingen-button-topright mb-4 text-end position-relative">
-      <a href="{{ url_for('routes.instellingen') }}" class="card-slider__button">Instellingen</a>
+      <a href="{{ url_for('routes.instellingen') }}" class="card-slider__button">{{ _('Instellingen') }}</a>
     </div>
 
     <!-- ✅ Bovenste kaarten: foto, gegevens, geschiedenis -->
@@ -27,11 +27,11 @@
         <div class="card h-100 border-0 shadow-sm">
           <div class="card-body p-0">
             {% if user.titel == 'vrouw' %}
-              <img class="profile-foto" src="{{ url_for('static', filename='img/vrouw.png') }}" alt="Vrouw op fiets">
+              <img class="profile-foto" src="{{ url_for('static', filename='img/vrouw.png') }}" alt="{{ _('Vrouw op fiets') }}">
             {% elif user.titel == 'heer' %}
-              <img class="profile-foto" src="{{ url_for('static', filename='img/man.png') }}" alt="Heer op fiets">
+              <img class="profile-foto" src="{{ url_for('static', filename='img/man.png') }}" alt="{{ _('Heer op fiets') }}">
             {% else %}
-              <img class="profile-foto" src="{{ url_for('static', filename='img/profielfoto_default.png') }}" alt="Standaard foto">
+              <img class="profile-foto" src="{{ url_for('static', filename='img/profielfoto_default.png') }}" alt="{{ _('Standaard foto') }}">
             {% endif %}
           </div>
         </div>
@@ -41,21 +41,21 @@
       <div class="col">
         <div class="card h-100 border-0 shadow-sm">
           <div class="card-body text-start">
-            <h5 class="card-title text-center">Persoonlijke gegevens</h5>
-            <p><strong>Aanspreekvorm:</strong> {{ user.titel or 'geen' }}</p>
-            <p><strong>Voornaam:</strong> {{ user.voornaam or 'Niet ingesteld' }}</p>
-            <p><strong>Achternaam:</strong> {{ user.achternaam or 'Niet ingesteld' }}</p>
-            <p><strong>Telefoonnummer:</strong> {{ user.telefoonnummer or 'Niet ingesteld (optioneel)' }}</p>
-            <p><strong>Email:</strong> {{ user.email or 'Niet ingesteld' }}</p>
-            <p><strong>Abonnement:</strong>
-              {% if user.abonnement != 'Geen abonnement' %}
+            <h5 class="card-title text-center">{{ _('Persoonlijke gegevens') }}</h5>
+            <p><strong>{{ _('Aanspreekvorm:') }}</strong> {{ user.titel or _('geen') }}</p>
+            <p><strong>{{ _('Voornaam:') }}</strong> {{ user.voornaam or _('Niet ingesteld') }}</p>
+            <p><strong>{{ _('Achternaam:') }}</strong> {{ user.achternaam or _('Niet ingesteld') }}</p>
+            <p><strong>{{ _('Telefoonnummer:') }}</strong> {{ user.telefoonnummer or _('Niet ingesteld (optioneel)') }}</p>
+            <p><strong>{{ _('Email:') }}</strong> {{ user.email or _('Niet ingesteld') }}</p>
+            <p><strong>{{ _('Abonnement:') }}</strong>
+              {% if user.abonnement != _('Geen abonnement') %}
                 <span class="text-success fw-bold">{{ user.abonnement }}</span>
               {% else %}
                 <a href="{{ url_for('routes.tarieven') }}" class="text-danger fw-bold" style="text-decoration: none;">
-                  geen abonnement
+                  {{ _('geen abonnement') }}
                 </a>
                 {% if user.titel and user.voornaam and user.achternaam and user.email %}
-                  <br><small class="text-red">Abonnement kopen? klik op geen abonnement om naar tarieven te gaan.</small>
+                  <br><small class="text-red">{{ _('Abonnement kopen? klik op geen abonnement om naar tarieven te gaan.') }}</small>
                 {% endif %}
               {% endif %}
             </p>
@@ -67,22 +67,22 @@
       <div class="col">
         <div class="card h-100 border-0 shadow-sm">
           <div class="card-body text-start">
-            <h5 class="card-title text-center">Fietsgeschiedenis</h5>
+            <h5 class="card-title text-center">{{ _('Fietsgeschiedenis') }}</h5>
             {% if rentals %}
               <ul class="list-unstyled small">
                 {% for rental in rentals %}
                   <li>
-                    <strong>ID:</strong> {{ rental.bike_id }}<br>
-                    <strong>Van:</strong> {{ rental.start_station.naam if rental.start_station else 'Onbekend' }}<br>
-                    <strong>Tot:</strong> {{ rental.end_station.naam if rental.end_station else 'Onbekend' }}<br>
-                    <strong>Start:</strong> {{ rental.starttijd.strftime('%d-%m-%Y %H:%M') if rental.starttijd else 'N/A' }}<br>
-                    <strong>Prijs:</strong> €{{ "%.2f"|format(rental.prijs) if rental.prijs else 'N/A' }}
+                    <strong>{{ _('ID:') }}</strong> {{ rental.bike_id }}<br>
+                    <strong>{{ _('Van:') }}</strong> {{ rental.start_station.naam if rental.start_station else _('Onbekend') }}<br>
+                    <strong>{{ _('Tot:') }}</strong> {{ rental.end_station.naam if rental.end_station else _('Onbekend') }}<br>
+                    <strong>{{ _('Start:') }}</strong> {{ rental.starttijd.strftime('%d-%m-%Y %H:%M') if rental.starttijd else _('N/A') }}<br>
+                    <strong>{{ _('Prijs:') }}</strong> €{{ "%.2f"|format(rental.prijs) if rental.prijs else _('N/A') }}
                   </li>
                   <hr>
                 {% endfor %}
               </ul>
             {% else %}
-              <p>Geen fietsgeschiedenis beschikbaar.</p>
+              <p>{{ _('Geen fietsgeschiedenis beschikbaar.') }}</p>
             {% endif %}
           </div>
         </div>
@@ -93,7 +93,7 @@
     <!-- ✅ Flashmelding ONDERAAN als profiel NIET volledig is (abonnement telt niet mee) -->
     {% if not user.titel or not user.voornaam or not user.achternaam or not user.email %}
       <div class="alert-instellingen mt-4">
-        ⚡ <strong>Je profiel is NIET volledig — klik NU op Instellingen en vul alles in!</strong>
+        ⚡ <strong>{{ _('Je profiel is NIET volledig — klik NU op Instellingen en vul alles in!') }}</strong>
       </div>
     {% endif %}
 

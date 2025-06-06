@@ -12,7 +12,7 @@
   <div class="text-spot">
     <span class="bigtext">{{ _('ANTWERPEN') }} <span class="clr-red">{{ _('BEWEEGT.') }}</span> <br>{{ _('JIJ') }} <span class="clr-red">{{ _('OOK?') }}</span></span>
     <span class="smoltext">{{ _('Jouw rit, jouw stad, jouw tempo.') }}<br>
-    {{ _('we need more tekst here, Make some Vélocity') }} <br>
+    {{ _('Als je vlot door de stad wil, huur je een deelfiets.') }} <br>
     {{ _('Gebruik Velo voor een dag, een week of een jaar.') }}</span>
     <img style="margin-top: 5px" src="../static/images/component1.svg">
   </div>
@@ -26,41 +26,36 @@
       <div class="card-item__content">
         <h1 class="card-item__title">{{ _('FORMULES EN') }} <span class="clr-red">{{ _('TARIEVEN') }}</span></h1>
         <img style="width: 90%;" src="../static/images/component1.svg">
-        <p class="card-item__text">{{ _('lorum ipsum and all that good stuff. We got tarifs, we got bikes!') }}<br>
-        {{ _('What more could you need? What i need right now is more text here.') }}<br>
-        {{ _('I could just put lorum ipsum here but thats boring.') }}<br>
-        {{ _('Nothing beats a good copywriting in the morning, yup.') }}<br>
-        {{ _('Whoever is reading this, i\'m sorry for wasting 3 minutes of your time.') }}<br>
-        {{ _('But thanks anyways! :D') }}</p>
+        <p class="card-item__text">{{ _('Kies jouw formule!') }}<br>
+        {{ _('Al jouw ritten van 30 minuten zijn inbegrepen in de prijs van jouw gekozen formule.') }}<br>
+        {{ _('Plaats na elke rit een fiets terug in een Velo-station dichtbij jouw bestemming.') }}<br>
+        {{ _('Je kan een pas kopen voor een dag, een week of een jaar.') }}<br>
+        </p>
         <a href="/tarieven"><button class="card-slider__button">{{ _('KIES JE FORMULE') }}</button></a>
       </div>
     </li>
     <li class="card-item swiper-slide">
       <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" alt="idk lmao" class="card-image">
       <div class="card-item__content">
-        <h1 class="card-item__title">{{ _('DEEL 2 EN') }} <span class="clr-red">{{ _('DEEL 2') }}</span></h1>
+        <h1 class="card-item__title">{{ _('FIETS') }} <span class="clr-red">{{ _('DEFECT?') }}</span></h1>
         <img style="width: 90%;" src="../static/images/component1.svg">
-        <p class="card-item__text">{{ _('lorum ipsum and all that good stuff. We got tarifs, we got bikes!') }}<br>
-        {{ _('What more could you need? What i need right now is more text here.') }}<br>
-        {{ _('I could just put lorum ipsum here but thats boring.') }}<br>
-        {{ _('Nothing beats a good copywriting in the morning, yup.') }}<br>
-        {{ _('Whoever is reading this, i\'m sorry for wasting 3 minutes of your time.') }}<br>
-        {{ _('But thanks anyways! :D') }}</p>
-        <a href="#"><button class="card-slider__button">{{ _('KIES JE FORMULE') }}</button></a>
+        <p class="card-item__text">{{ _('Meld een fiets als defect.') }}<br>
+        {{ _('Zo wordt de fiets automatisch geblokkeerd in het Velo-station en kunnen onze chauffeurs deze ophalen om te laten herstellen.') }}<br>
+        {{ _('Andere gebruikers zullen de fiets dan niet meer toegewezen krijgen.') }}<br>
+        {{ _('Het zadel omdraaien is handig, maar is geen must als je een melding gemaakt hebt.') }}<br></p>
+        <a href="/defect"><button class="card-slider__button">{{ _('DEFECT MELDEN') }}</button></a>
       </div>
     </li>
     <li class="card-item swiper-slide">
       <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" alt="idk lmao" class="card-image">
       <div class="card-item__content">
-        <h1 class="card-item__title">{{ _('DEEL 3 EN') }} <span class="clr-red">{{ _('DEEL 3') }}</span></h1>
+        <h1 class="card-item__title">{{ _('306 LOCATIES MET') }} <span class="clr-red">{{ _('FIETSEN') }}</span></h1>
         <img style="width: 90%;" src="../static/images/component1.svg">
-        <p class="card-item__text">{{ _('lorum ipsum and all that good stuff. We got tarifs, we got bikes!') }}<br>
-        {{ _('What more could you need? What i need right now is more text here.') }}<br>
-        {{ _('I could just put lorum ipsum here but thats boring.') }}<br>
-        {{ _('Nothing beats a good copywriting in the morning, yup.') }}<br>
-        {{ _('Whoever is reading this, i\'m sorry for wasting 3 minutes of your time.') }}<br>
-        {{ _('But thanks anyways! :D') }}</p>
-        <a href="#"><button class="card-slider__button">{{ _('KIES JE FORMULE') }}</button></a>
+        <p class="card-item__text">{{ _('Overal in Antwerpen staat er een fiets voor je klaar!') }}<br>
+        {{ _('✔ Fietsen 24/7 beschikbaar.') }}<br>
+        {{ _('✔ Herverdeling over de Velo-stations 7/7.') }}<br>
+        {{ _('✔ Kaart of app met live beschikbaarheid.') }}<br>
+        <a href="/maps"><button class="card-slider__button">{{ _('VIND EEN FIETS') }}</button></a>
       </div>
     </li>
   </ul>
@@ -92,7 +87,7 @@
   <div class="text-spot">
     <h1 class="bigtext"><span class="clr-red">{{ _('HULP') }}</span> {{ _('NODIG?') }}</h1>
     <span class="smoltext">{{ _('Jouw rit, jouw stad, jouw tempo.') }}<br>
-    {{ _('we hebben meer tekst nodig. Maak een beetje Vélocity') }} <br>
+    {{ _('Neem een Velo en doorkruis de stad. Plaats een fiets na elke rit terug in een Velo-station naar keuze.') }} <br>
     {{ _('Gebruik Velo voor een dag, een week of een jaar.') }}</span>
     <img style="margin-top: 5px" src="../static/images/component1.svg">
   </div>
