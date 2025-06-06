@@ -224,7 +224,6 @@ def tarieven():
 
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
-@routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
     if "Gebruiker" not in session:
         return redirect(url_for("routes.login", next="/tarieven/dagpas"))
