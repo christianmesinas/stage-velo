@@ -271,3 +271,17 @@ body.dark-mode .fixed-header-table td  {
   background: #1e1e1e;
   color: white;
 }
+
+body.dark-mode .popup-content {
+  background: #1e1e1e;
+}
+
+body.dark-mode .inline-form {
+  background: #1e1e1e;
+  color: whitesmoke;
+}
+
+body.dark-mode .form-control {
+  background: #1e1e1e;
+  color: whitesmoke;
+}

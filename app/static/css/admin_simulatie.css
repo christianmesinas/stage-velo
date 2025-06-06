@@ -546,9 +546,19 @@ body.dark-mode .stats ul li {
 
 body.dark-mode .scrollbox {
     background: #1e1e1e;
-    border:none
+    border:none;
+    color:black;
 }
 
 body.dark-mode .fixed-header-table th{
     border-bottom: none;
+}
+
+body.dark-mode .fixed-header-table td{
+    background: #1e1e1e;
+}
+
+body.dark-mode .fixed-header-table tr{
+    color: white;
+    background: black;
 }

@@ -112,3 +112,8 @@ button[type="submit"]:hover {
 body.dark-mode .card-item{
   background-color: #1f1f1f;
 }
+
+body.darkmode terug-btn {
+  border: white;
+  color: white;
+}
