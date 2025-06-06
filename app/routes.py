@@ -119,7 +119,13 @@ def process_auth():
     )  # Создание или обновление пользователя / Maak of update gebruiker
     db.close()
 
-    return redirect(redirect_to)
+    # ✅ Automatische redirect op basis van rol/e-mail
+    if email == os.getenv("ADMIN_EMAIL"):
+        return redirect(url_for("routes.admin"))
+    elif email == os.getenv("TRANSPORT_EMAIL"):
+        return redirect(url_for("routes.transport_dashboard"))
+    else:
+        return redirect(redirect_to or url_for("routes.profile"))
 
 
 # ✅ Выход / Afmelden
