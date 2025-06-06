@@ -875,9 +875,6 @@ def create_checkout_session():
 
 @routes.route("/betaling-succes")
 def betaling_succes():
-    if "Gebruiker" not in session or "id" not in session["Gebruiker"]:
-        return "Geen geldige sessie gevonden. Log opnieuw in.", 401
-
     data = session.pop("abonnement_data", None)
     if not data:
         return "Geen gegevens gevonden.", 400
@@ -885,47 +882,20 @@ def betaling_succes():
     from app.database import SessionLocal
     from app.database.models import Usertable, Pas
     from datetime import datetime, timedelta
+    from app.utils.email import send_abonnement_email  # Zorg dat dit pad juist is
 
     db = SessionLocal()
     gebruiker = None
     if "Gebruiker" in session:
         gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-    if not gebruiker:
+    else:
         db.close()
-        return "Gebruiker niet gevonden.", 400
+        return "Je moet ingelogd zijn om een abonnement aan te maken.", 403
 
-    gebruiker.abonnement = data["type"]
-    db.commit()
-
-
-    session["Gebruiker"]["abonnement"] = data["type"]
-    #email bevestiging na de dbcommit
-    #eerst bepalen we de einddatum
-    eind_datum = ''
-    if session["Gebruiker"]["abonnement"] == "dag":
-        eind_datum = datetime.today() + timedelta(days=1)
-    elif session["Gebruiker"]["abonnement"] == "week":
-        eind_datum = datetime.today() + timedelta(days=7)
-    elif session["Gebruiker"]["abonnement"] == "jaar":
-        eind_datum = datetime.today() + timedelta(days=365)
-
-    ontvanger_email = gebruiker.email if gebruiker else data["email"]
-    ontvanger_voornaam = gebruiker.voornaam if gebruiker else data["voornaam"]
-
-    send_abonnement_email(
-        to_email="komutsalih@gmail.com",
-        voornaam="salih",
-        abonnement_type=session["Gebruiker"]["abonnement"],
-        einddatum=eind_datum,
-    )
     soort = data["type"].lower()
     start_datum = datetime.utcnow()
 
-    if soort in ["dag", "dagpas"]:
-        eind_datum = start_datum + timedelta(days=1)
-        soort = "dag"
-    elif soort in ["week", "weekpas"]:
+    if soort in ["week", "weekpas"]:
         eind_datum = start_datum + timedelta(weeks=1)
         soort = "week"
     elif soort in ["jaar", "jaarkaart"]:
@@ -935,35 +905,19 @@ def betaling_succes():
         db.close()
         return "Ongeldig abonnementstype.", 400
 
-    if gebruiker:
-        gebruiker.abonnement = data["type"]
-        session["Gebruiker"]["abonnement"] = data["type"]
+    gebruiker.abonnement = data["type"]
+    session["Gebruiker"]["abonnement"] = data["type"]
 
-        nieuwe_pas = Pas(
-            gebruiker_id=gebruiker.id,
-            soort=soort,
-            pincode=data["pincode"],
-            start_datum=start_datum,
-            eind_datum=eind_datum
-        )
-        db.add(nieuwe_pas)
-        db.commit()
-    else:
-        # Alleen gastregistratie toestaan voor dag/week
-        if soort in ["dag", "week"]:
-            nieuwe_gastpas = GastPas(
-                type=soort,
-                voornaam=data["voornaam"],
-                achternaam=data["achternaam"],
-                email=data["email"],
-                telefoon=data["telefoon"],
-                geboortedatum=datetime.strptime(data["geboortedatum"], "%Y-%m-%d"),
-                pincode=data["pincode"],
-                start_datum=start_datum,
-                eind_datum=eind_datum
-            )
-            db.add(nieuwe_gastpas)
-            db.commit()
+    nieuwe_pas = Pas(
+        gebruiker_id=gebruiker.id,
+        soort=soort,
+        pincode=data["pincode"],
+        start_datum=start_datum,
+        eind_datum=eind_datum
+    )
+    db.add(nieuwe_pas)
+    db.commit()
+
 
     db.close()
 

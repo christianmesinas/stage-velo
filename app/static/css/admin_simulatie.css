@@ -546,7 +546,8 @@ body.dark-mode .stats ul li {
 
 body.dark-mode .scrollbox {
     background: #1e1e1e;
-    border:none
+    border:none;
+    color:black;
 }
 
 body.dark-mode .fixed-header-table th{
