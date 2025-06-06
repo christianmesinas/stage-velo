@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ _('Admin Dashboard') }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base_admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     {% block head %}{% endblock %}
@@ -27,7 +28,8 @@
             </li>
             <ul class="menu-links">
                 <li class="nav-link"><a href="{{ url_for('routes.admin') }}"><i class='bx bx-home-alt icon'></i><span class="text nav-text">{{ _('Dashboard') }}</span></a></li>
-                <li class="nav-link"><a href="{{ url_for('routes.admin_simulatie') }}"><i class='bx bx-stats icon'></i><span class="text nav-text">{{ _('Admin') }}</span></a></li>
+                <li class="nav-link"><a href="{{ url_for('routes.admin_livedata') }}"><i class='bx bx-stats icon'></i><span class="text nav-text">{{ _('Live data') }}</span></a></li>
+                <li class="nav-link"><a href="{{ url_for('routes.admin_simulatie') }}"><i class='bx bx-stats icon'></i><span class="text nav-text">{{ _('Simulatie') }}</span></a></li>
                 <li class="nav-link"><a href="{{ url_for('routes.admin_data') }}"><i class='bx bx-bell icon'></i><span class="text nav-text">{{ _('Notifications') }}</span></a></li>
                 <li class="nav-link"><a href="{{ url_for('routes.admin_filter') }}"><i class='bx bx-pie-chart-alt icon'></i><span class="text nav-text">{{ _('Analytics') }}</span></a></li>
 
@@ -35,7 +37,8 @@
         </div>
 
         <div class="bottom-content">
-            <li><a href="{{ url_for('routes.logout') }}"><i class='bx bx-log-out icon'></i><span class="text nav-text">{{ _('Logout') }}</span></a></li>
+            <button id="darkModeToggle" class="dark-toggle-btn" >🌙</button>
+            <li><a href="{{ url_for('routes.logout') }}"><i class='bx bx-log-out icon'></i><span class="text nav-text">Logout</span></a></li>
 
            <!---< <li class="mode">
                 <div class="sun-moon">
@@ -54,6 +57,8 @@
 <section class="home">
 {% block content %}{% endblock %}
 </section>
+
+
 
 {% block scripts %}
 
@@ -79,7 +84,45 @@ modeSwitch.addEventListener("click", () => {
 });
 </script>
 
+    <!-- ✅ Donkere modus -->
+<script>
+  const toggleButton = document.getElementById("darkModeToggle");
+  const themeIcon = document.getElementById("theme-icon-animation");
+  const prefersDark = localStorage.getItem("darkMode") === "true";
+
+  function updateToggleIcon(isDark) {
+    toggleButton.textContent = isDark ? "🌞" : "🌙";
+  }
+
+  if (prefersDark) {
+    document.body.classList.add("dark-mode");
+    updateToggleIcon(true);
+  } else {
+    updateToggleIcon(false);
+  }
+
+  toggleButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const nowDark = document.body.classList.contains("dark-mode");
+    localStorage.setItem("darkMode", nowDark);
+    updateToggleIcon(nowDark);
+
+    const rect = toggleButton.getBoundingClientRect();
+    themeIcon.textContent = nowDark ? "🌙" : "🌞";
+    themeIcon.style.left = `${rect.left + rect.width / 2 - 48}px`;
+    themeIcon.style.top = `${rect.top}px`;
+    themeIcon.classList.add("show");
+
+    setTimeout(() => {
+      themeIcon.classList.remove("show");
+    }, 2000);
+  });
+</script>
+
+
 {% endblock %}
+
+
 
 </body>
 </html>

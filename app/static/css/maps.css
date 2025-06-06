@@ -40,7 +40,7 @@ body.dark-mode .info.legend {
 }
 
 body.dark-mode #search-input {
-    background-color: #2a2a2a;
+    background-color: #1f1f1f;
     color: white;
     border: 1px solid #555;
 }
@@ -96,6 +96,10 @@ body.dark-mode #search-container button:hover {
     color: #D41444;
 }
 
+body.dark-mode .main {
+    background: #2a2a2a;
+}
+
 body.dark-mode #show-all-container button {
     border: 3px solid white;
     color: white;
@@ -147,7 +151,7 @@ body.dark-mode #station-list-container {
 }
 
 body.dark-mode #station-list li {
-    background-color: #2a2a2a;
+    background-color: #1a1a1a;
     color: white;
     border: 1px solid #555;
 }

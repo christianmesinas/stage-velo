@@ -64,7 +64,7 @@ oauth.register(
 # ✅ Registreer je Blueprint-routes
 app.register_blueprint(routes)
 
-# #zorg dat de databasetabellen automatisch worden aangemaakt bij het opstarten van de app
+#zorg dat de databasetabellen automatisch worden aangemaakt bij het opstarten van de app
 # with app.app_context():
 #     db = SessionLocal()
 #     Base.metadata.create_all(bind=db.bind)

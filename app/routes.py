@@ -84,16 +84,16 @@ def process_auth():
         return {"error": "Access token ontbreekt"}, 400'''
 
     token = request.json.get("access_token")
-    redirect_to = request.json.get("redirect_to", "/profile")
+    redirect_to = request.json.get("redirect_to")
 
     if not token:
-        return {"error": "Access token ontbreekt"}, 400  # Нет токена / Geen toegangstoken
+        return {"error": "Access token ontbreekt"}, 400
 
-    headers = {'Authorization': f'Bearer {token}'}  # Заголовок с токеном / Authorization-header
+    headers = {'Authorization': f'Bearer {token}'}
     try:
         user_info = requests.get(
             f'https://{env.get("AUTH0_DOMAIN")}/userinfo', headers=headers
-        ).json()  # Получение инфо о юзере / Haal gebruikersinfo op
+        ).json()
     except Exception as e:
         return {"error": f"Fout bij ophalen userinfo: {str(e)}"}, 500
 
@@ -102,7 +102,7 @@ def process_auth():
     name = user_info.get("name", "")
     profile_picture = user_info.get("picture", "img/default.png")
 
-    session["Gebruiker"] = {  # Сохранить в сессию / Sla op in sessie
+    session["Gebruiker"] = {
         "id": user_id,
         "email": email,
         "name": name
@@ -119,7 +119,13 @@ def process_auth():
     )  # Создание или обновление пользователя / Maak of update gebruiker
     db.close()
 
-    return redirect(redirect_to)
+    # ✅ Automatische redirect op basis van rol/e-mail
+    if email == os.getenv("ADMIN_EMAIL"):
+        return redirect(url_for("routes.admin"))
+    elif email == os.getenv("TRANSPORT_EMAIL"):
+        return redirect(url_for("routes.transport_dashboard"))
+    else:
+        return redirect(redirect_to or url_for("routes.profile"))
 
 
 # ✅ Выход / Afmelden
@@ -218,17 +224,30 @@ def markers():
 
 @routes.route("/tarieven")
 def tarieven():
+    if "Gebruiker" in session and "id" in session["Gebruiker"]:
+        db = SessionLocal()
+        try:
+            gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+            if gebruiker:
+                # updaten van sessie met de juiste abonnement van de gebruiker
+                session["Gebruiker"]["abonnement"] = gebruiker.abonnement
+                session.modified = True  # opslaan van sessie
+            else:
+                # als gebruiker niet bestaat de sessie leegmaken
+                session.pop("Gebruiker", None)
+        finally:
+            db.close()
     return render_template("tarieven.html")
 
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
-    db = SessionLocal()
-    gebruiker = None
+    # Controleer of gebruiker is ingelogd
+    if "Gebruiker" not in session:
+        return redirect(url_for("routes.login", next="/tarieven/dagpas"))
 
-    # Controleer of er een ingelogde gebruiker is
-    if "Gebruiker" in session:
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
     if request.method == "POST":
         if gebruiker and gebruiker.abonnement != "Geen abonnement":
@@ -239,8 +258,9 @@ def dagpas():
         pincode = request.form.get("pincode")
         bevestig_pincode = request.form.get("bevestig_pincode")
 
-        if pincode != bevestig_pincode: #checken of de pincodes met elkaar overeenkomen
+        if pincode != bevestig_pincode:
             foutmelding = "De pincodes komen niet overeen!"
+            db.close()
             return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
         session["abonnement_data"] = {
@@ -259,7 +279,7 @@ def dagpas():
             "Jaarkaart": 3000
         }
 
-        try: #stripe checkout sessie aanmaken
+        try:
             stripe_session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
                 line_items=[{
@@ -288,12 +308,12 @@ def dagpas():
 
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
 def weekpass():
-    db = SessionLocal()
-    gebruiker = None
+    # Controleer of gebruiker is ingelogd
+    if "Gebruiker" not in session:
+        return redirect(url_for("routes.login", next="/tarieven/weekpas"))
 
-    # Check of er een ingelogde gebruiker is
-    if "Gebruiker" in session:
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
     if request.method == "POST":
         if gebruiker and gebruiker.abonnement != "Geen abonnement":
@@ -335,9 +355,7 @@ def weekpass():
                     "price_data": {
                         "currency": "eur",
                         "unit_amount": prijzen["Weekpas"],
-                        "product_data": {
-                            "name": "Weekpas"
-                        }
+                        "product_data": {"name": "Weekpas"}
                     },
                     "quantity": 1
                 }],
@@ -349,7 +367,7 @@ def weekpass():
             return redirect(stripe_session.url)
         except Exception as e:
             db.close()
-            return f"Fout bij aanmaken Stripe sessie: {str(e)}", 500
+            return f"Fout bij aanmaken van Stripe sessie: {str(e)}", 500
 
     db.close()
     return render_template("tarieven/weekpas.html", formdata={})
@@ -653,12 +671,12 @@ def admin():
     return render_template("admin.html", laatste_simulatie=laatste_simulatie)
 
 
-@routes.route("/admin/simulatie", methods=["GET", "POST"])
+@routes.route("/admin/livedata", methods=["GET"])
 @admin_required
-def admin_simulatie():
+def admin_livedata():
     boodschap = None
     ritten = []
-    csv_bestand = None
+    data_bron = "database"
 
     aantal_ritten = 0
     gemiddelde_duur = 0
@@ -667,23 +685,24 @@ def admin_simulatie():
     populairst_station = None
     drukste_per_station = []
 
-    stations_copy = None
+    db = SessionLocal()
 
-    if request.method == "POST":
-        try: #de aantallen voor de simulatie
-            gebruikers_aantal = int(request.form.get("gebruikers"))
-            fietsen_aantal = int(request.form.get("fietsen"))
-            dagen = int(request.form.get("dagen"))
-            #functies aanroepen die de simulatie starten
-            gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
-            stations_copy = copy.deepcopy(simulation.stations)
-            fietsen = simulation.genereer_fietsen(fietsen_aantal, stations_copy)
-            ritten = simulation.simulatie(stations_copy, gebruikers, fietsen, dagen)
+    try:
+        db_ritten = db.query(Geschiedenis).all()
+        for rit in db_ritten:
+            ritten.append({
+                "gebruiker_id": rit.gebruiker_id,
+                "fiets_id": rit.fiets_id,
+                "begin_station_naam": rit.start_station_naam,
+                "eind_station_naam": rit.eind_station_naam,
+                "duur_minuten": float(rit.duur_minuten) if rit.duur_minuten else 0,
+                "starttijd": rit.starttijd
+            })
 
-            # 📊 Inzichten
+        if ritten:
             aantal_ritten = len(ritten)
-            gemiddelde_duur = round(sum(r["duur_minuten"] for r in ritten) / aantal_ritten, 2) if aantal_ritten > 0 else 0
-            langste_rit = max((r["duur_minuten"] for r in ritten), default=0)
+            gemiddelde_duur = round(sum(r["duur_minuten"] for r in ritten) / aantal_ritten, 2)
+            langste_rit = max(r["duur_minuten"] for r in ritten)
 
             fiets_teller = Counter(r["fiets_id"] for r in ritten)
             meest_gebruikte_fiets = fiets_teller.most_common(1)[0][0] if fiets_teller else None
@@ -691,65 +710,155 @@ def admin_simulatie():
             station_teller = Counter(r["begin_station_naam"] for r in ritten)
             populairst_station = station_teller.most_common(1)[0] if station_teller else None
 
-            # ⏰ Drukste momenten per station
             station_uren_counter = {}
             for rit in ritten:
                 station_naam = rit["begin_station_naam"]
                 starttijd = rit["starttijd"]
-                if isinstance(starttijd, str):
-                    startuur = datetime.strptime(starttijd, "%Y-%m-%d %H:%M:%S").hour
-                else:
-                    startuur = starttijd.hour
+                startuur = datetime.strptime(starttijd, "%Y-%m-%d %H:%M:%S").hour if isinstance(starttijd, str) else starttijd.hour
                 station_uren_counter.setdefault(station_naam, Counter())[startuur] += 1
 
-            for station in stations_copy:
-                sid = station["id"]
-                naam = station["name"]
-                if naam in station_uren_counter:
-                    meest_uur, aantal = station_uren_counter[naam].most_common(1)[0]
+            db_stations = db.query(Station).all()
+            for station in db_stations:
+                station_naam = station.naam
+                if station_naam in station_uren_counter:
+                    meest_uur, aantal = station_uren_counter[station_naam].most_common(1)[0]
                     tijdvak = f"{meest_uur:02d}:00 - {meest_uur:02d}:59"
                     drukste_per_station.append({
-                        "naam": naam,
+                        "naam": station_naam,
                         "tijdvak": tijdvak,
                         "aantal": aantal
                     })
 
             drukste_per_station.sort(key=lambda x: x["aantal"], reverse=True)
 
-            # 📥 CSV export
-            csv_bestand = f"/tmp/ritten_{uuid.uuid4().hex}.csv"
-            with open(csv_bestand, mode="w", newline="") as file:
-                writer = csv.writer(file)
-                writer.writerow(["gebruiker_id", "fiets_id", "begin_station_naam", "eind_station_naam", "duur_minuten"])
-                for rit in ritten:
-                    writer.writerow([
-                        rit["gebruiker_id"],
-                        rit["fiets_id"],
-                        rit["begin_station_naam"],
-                        rit["eind_station_naam"],
-                        rit["duur_minuten"]
-                    ])
-            session["laatste_csv"] = csv_bestand
+    except Exception as e:
+        boodschap = f"⚠️ Fout bij ophalen database data: {str(e)}"
 
-            # ✅ Tijd in Belgische tijdzone
-            brussel_tijd = datetime.now(pytz.timezone("Europe/Brussels"))
-            session["laatste_simulatie"] = brussel_tijd.strftime("%d-%m-%Y om %H:%M")
-            session.modified = True
-
-            boodschap = f"✅ Simulatie is gestart met {len(ritten)} ritten."
-
-        except Exception as e:
-            boodschap = f"❌ Fout bij simulatie: {str(e)}"
-
-    # 📍 Stationstatus
     stations_overzicht = []
-    bron_stations = stations_copy if request.method == "POST" else simulation.stations
-    for s in bron_stations:
-        stations_overzicht.append({
-            "naam": s["name"],
-            "fietsen": s["free_bikes"],
-            "vrij": s["free_slots"]
-        })
+    try:
+        db_stations = db.query(Station).all()
+        for s in db_stations:
+            stations_overzicht.append({
+                "naam": s.naam,
+                "fietsen": s.parked_bikes,
+                "vrij": s.free_slots
+            })
+    except:
+        boodschap = "⚠️ Fout bij ophalen stationgegevens."
+
+    return render_template(
+        "admin_livedata.html",
+        boodschap=boodschap,
+        ritten=ritten,
+        csv_bestand=None,
+        stations_overzicht=stations_overzicht,
+        aantal_ritten=aantal_ritten,
+        gemiddelde_duur=gemiddelde_duur,
+        langste_rit=langste_rit,
+        meest_gebruikte_fiets=meest_gebruikte_fiets,
+        populairst_station=populairst_station,
+        drukste_per_station=drukste_per_station,
+        data_bron=data_bron
+    )
+
+
+@routes.route("/admin/simulatie", methods=["GET", "POST"])
+@admin_required
+def admin_simulatie():
+    boodschap = None
+    ritten = []
+    csv_bestand = None
+    data_bron = "simulatie"
+    stations_copy = None
+    aantal_ritten = 0
+    gemiddelde_duur = 0
+    langste_rit = 0
+    meest_gebruikte_fiets = None
+    populairst_station = None
+    drukste_per_station = []
+
+    if request.method == "POST":
+        actie = request.form.get("actie", "")
+
+        if actie == "simulatie":
+            try:
+                gebruikers_aantal = int(request.form.get("gebruikers"))
+                fietsen_aantal = int(request.form.get("fietsen"))
+                dagen = int(request.form.get("dagen"))
+
+                gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
+                stations_copy = copy.deepcopy(simulation.stations)
+                fietsen = simulation.genereer_fietsen(fietsen_aantal, stations_copy)
+                ritten = simulation.simulatie(stations_copy, gebruikers, fietsen, dagen)
+
+                aantal_ritten = len(ritten)
+                gemiddelde_duur = round(sum(r["duur_minuten"] for r in ritten) / aantal_ritten, 2) if ritten else 0
+                langste_rit = max((r["duur_minuten"] for r in ritten), default=0)
+
+                fiets_teller = Counter(r["fiets_id"] for r in ritten)
+                meest_gebruikte_fiets = fiets_teller.most_common(1)[0][0] if fiets_teller else None
+
+                station_teller = Counter(r["begin_station_naam"] for r in ritten)
+                populairst_station = station_teller.most_common(1)[0] if station_teller else None
+
+                station_uren_counter = {}
+                for rit in ritten:
+                    station_naam = rit["begin_station_naam"]
+                    starttijd = rit["starttijd"]
+                    startuur = datetime.strptime(starttijd, "%Y-%m-%d %H:%M:%S").hour if isinstance(starttijd, str) else starttijd.hour
+                    station_uren_counter.setdefault(station_naam, Counter())[startuur] += 1
+
+                drukste_per_station = []
+                for station in stations_copy:
+                    naam = station["name"]
+                    if naam in station_uren_counter:
+                        meest_uur, aantal = station_uren_counter[naam].most_common(1)[0]
+                        tijdvak = f"{meest_uur:02d}:00 - {meest_uur:02d}:59"
+                        drukste_per_station.append({
+                            "naam": naam,
+                            "tijdvak": tijdvak,
+                            "aantal": aantal
+                        })
+
+                drukste_per_station.sort(key=lambda x: x["aantal"], reverse=True)
+
+                # CSV export
+                csv_bestand = f"/tmp/ritten_simulatie_{uuid.uuid4().hex}.csv"
+                with open(csv_bestand, mode="w", newline="") as file:
+                    writer = csv.writer(file)
+                    writer.writerow(["gebruiker_id", "fiets_id", "begin_station_naam", "eind_station_naam", "duur_minuten"])
+                    for rit in ritten:
+                        writer.writerow([
+                            rit["gebruiker_id"],
+                            rit["fiets_id"],
+                            rit["begin_station_naam"],
+                            rit["eind_station_naam"],
+                            rit["duur_minuten"]
+                        ])
+                session["laatste_csv"] = csv_bestand
+                session["laatste_simulatie"] = datetime.now(pytz.timezone("Europe/Brussels")).strftime("%d-%m-%Y om %H:%M")
+
+                boodschap = f"✅ Simulatie uitgevoerd met {len(ritten)} ritten."
+
+            except Exception as e:
+                boodschap = f"❌ Fout bij simulatie: {str(e)}"
+
+    # Stationen tonen
+    stations_overzicht = []
+    if stations_copy:
+        for s in stations_copy:
+            stations_overzicht.append({
+                "naam": s["name"],
+                "fietsen": s["free_bikes"],
+                "vrij": s["free_slots"]
+            })
+    else:
+        for s in simulation.stations:
+            stations_overzicht.append({
+                "naam": s["name"],
+                "fietsen": s["free_bikes"],
+                "vrij": s["free_slots"]
+            })
 
     return render_template(
         "admin_simulatie.html",
@@ -763,8 +872,8 @@ def admin_simulatie():
         meest_gebruikte_fiets=meest_gebruikte_fiets,
         populairst_station=populairst_station,
         drukste_per_station=drukste_per_station,
+        data_bron=data_bron
     )
-
 
 @routes.route("/admin/download_csv")
 @admin_required
@@ -830,7 +939,6 @@ def admin_filter():
 
 
 
-
 # ================= Stripe - Betalingen ====================
 @routes.route("/betalen")
 def betalen():
@@ -883,40 +991,20 @@ def betaling_succes():
     from app.database import SessionLocal
     from app.database.models import Usertable, Pas
     from datetime import datetime, timedelta
+    from app.utils.email import send_abonnement_email
 
     db = SessionLocal()
+
+    # Check of gebruiker ingelogd is
     gebruiker = None
-    if "Gebruiker" in session:
+    if "Gebruiker" in session and "id" in session["Gebruiker"]:
         gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-    if not gebruiker:
+    else:
         db.close()
-        return "Gebruiker niet gevonden.", 400
-
-    gebruiker.abonnement = data["type"]
-    db.commit()
+        return "Je moet ingelogd zijn om een abonnement aan te maken.", 403
 
 
-    session["Gebruiker"]["abonnement"] = data["type"]
-    #email bevestiging na de dbcommit
-    #eerst bepalen we de einddatum
-    eind_datum = ''
-    if session["Gebruiker"]["abonnement"] == "dag":
-        eind_datum = datetime.today() + timedelta(days=1)
-    elif session["Gebruiker"]["abonnement"] == "week":
-        eind_datum = datetime.today() + timedelta(days=7)
-    elif session["Gebruiker"]["abonnement"] == "jaar":
-        eind_datum = datetime.today() + timedelta(days=365)
-
-    ontvanger_email = gebruiker.email if gebruiker else data["email"]
-    ontvanger_voornaam = gebruiker.voornaam if gebruiker else data["voornaam"]
-
-    send_abonnement_email(
-        to_email="komutsalih@gmail.com",
-        voornaam="salih",
-        abonnement_type=session["Gebruiker"]["abonnement"],
-        einddatum=eind_datum,
-    )
+    # Bepaal soort en einddatum
     soort = data["type"].lower()
     start_datum = datetime.utcnow()
 
@@ -931,43 +1019,28 @@ def betaling_succes():
         soort = "jaar"
     else:
         db.close()
-        return "Ongeldig abonnementstype.", 400
+        return f"Ongeldig abonnementstype: {data['type']}", 400
 
-    if gebruiker:
-        gebruiker.abonnement = data["type"]
-        session["Gebruiker"]["abonnement"] = data["type"]
+    gebruiker.abonnement = data["type"]
+    session["Gebruiker"]["abonnement"] = data["type"]
 
-        nieuwe_pas = Pas(
-            gebruiker_id=gebruiker.id,
-            soort=soort,
-            pincode=data["pincode"],
-            start_datum=start_datum,
-            eind_datum=eind_datum
-        )
-        db.add(nieuwe_pas)
-        db.commit()
-    else:
-        # Alleen gastregistratie toestaan voor dag/week
-        if soort in ["dag", "week"]:
-            nieuwe_gastpas = GastPas(
-                type=soort,
-                voornaam=data["voornaam"],
-                achternaam=data["achternaam"],
-                email=data["email"],
-                telefoon=data["telefoon"],
-                geboortedatum=datetime.strptime(data["geboortedatum"], "%Y-%m-%d"),
-                pincode=data["pincode"],
-                start_datum=start_datum,
-                eind_datum=eind_datum
-            )
-            db.add(nieuwe_gastpas)
-            db.commit()
-
+    nieuwe_pas = Pas(
+        gebruiker_id=gebruiker.id,
+        soort=soort,
+        pincode=data["pincode"],
+        start_datum=start_datum,
+        eind_datum=eind_datum
+    )
+    db.add(nieuwe_pas)
+    db.commit()
     db.close()
 
-    einddatum_tekst = eind_datum.strftime("%d/%m/%Y") if eind_datum else "Zolang je abonnement actief is"
-    return render_template("tarieven/bedankt.html", gebruiker=gebruiker, data=data, einddatum=einddatum_tekst)
+    if soort in ["dag", "week"]:
+        einddatum_tekst = eind_datum.strftime("%d/%m/%Y")
+    else:
+        einddatum_tekst = "Zolang je abonnement actief is"
 
+    return render_template("tarieven/bedankt.html", gebruiker=gebruiker, data=data, einddatum=einddatum_tekst)
 
 @routes.route("/betaling-annulatie")
 def betaling_annulatie():

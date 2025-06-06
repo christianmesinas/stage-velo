@@ -46,7 +46,7 @@ def genereer_gebruikers(aantal):
             "achternaam": fake.last_name(),
             "email": f"{fake.last_name()}.{fake.first_name()}@example.com".lower(),
             "postcode": random.choice(antwerpen_postcodes),
-            "abonnementstype": random.choice(['Basis','Premium','Flex']),
+            "abonnementstype": random.choices(['Dagpas', 'Weekpas', 'Jaarkaart'],weights=[60, 10, 30],k=1)[0] #dit is gebaseerd op wereldwijde data
         })
     return gebruikers
 
@@ -367,15 +367,15 @@ def sla_geschiedenis_op_in_db(geschiedenis):
 
 #simulatie(stations,gebruikers,fietsen, 60)
 
-if __name__ == "__main__": #zorgt ervoor dat de functies enkel runnen wanneer ze worden opgeroepen, en niet tijdens import.
-    gebruikers = genereer_gebruikers(30000)
-    fietsen = genereer_fietsen(5800, stations)
-    geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
-    sla_stations_op_in_db(stations)
-    sla_fietsen_op_in_db(fietsen)
-    sla_gebruikers_op_in_db(gebruikers)
-    sla_geschiedenis_op_in_db(geschiedenis)
-
-    buffer = geschiedenis_to_csv_buffer(geschiedenis)
-    with open("simulatie_output_csv", "w") as f:
-        f.write(buffer.getvalue())
+# if __name__ == "__main__": #zorgt ervoor dat de functies enkel runnen wanneer ze worden opgeroepen, en niet tijdens import.
+#     gebruikers = genereer_gebruikers(30000)
+#     fietsen = genereer_fietsen(5800, stations)
+#     geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
+#     sla_stations_op_in_db(stations)
+#     sla_fietsen_op_in_db(fietsen)
+#     sla_gebruikers_op_in_db(gebruikers)
+#     sla_geschiedenis_op_in_db(geschiedenis)
+#
+#     buffer = geschiedenis_to_csv_buffer(geschiedenis)
+#     with open("simulatie_output_csv", "w") as f:
+#         f.write(buffer.getvalue())

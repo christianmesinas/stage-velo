@@ -466,7 +466,6 @@ body.dark .home .text{
 
 }
 
-
 .table-container {
   margin-bottom: 3vw;
 }
@@ -476,11 +475,17 @@ body.dark .home .text{
   overflow-y: auto;
   border: 1px solid #ccc;
   border-radius: 0 0 8px 8px;
+  padding: 10px;
+  background-color: #fff;
+  margin-top: 10px;
+  margin-bottom: 3vw;
+  padding-bottom: 20vw; /* keeps space when scrolling */
 }
 
 .fixed-header-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .fixed-header-table th,
@@ -499,9 +504,10 @@ body.dark .home .text{
   z-index: 2;
 }
 
-.scrollbox tr:hover {
+.fixed-header-table tbody tr:hover {
   background-color: #f9f9f9;
 }
+
 
 h2 {
 
@@ -517,4 +523,48 @@ h2 {
   padding: 10px 15px;
   border-radius: 5px;
   margin: 20px 0;
+}
+
+body.dark-mode .sidebar.close ~ .home {
+    background: #1a1a1a;
+}
+
+body.dark-mode .inline-form{
+    background: #1e1e1e;
+}
+
+body.dark-mode .sidebar {
+    background: #1e1e1e ;
+}
+
+body.dark-mode .home{
+    background: #1e1e1e ;
+}
+
+body.dark-mode .sidebar li{
+    background: #1e1e1e;
+}
+
+body.dark-mode .stats ul li {
+    background: #1e1e1e;
+
+}
+
+body.dark-mode .scrollbox {
+    background: #1e1e1e;
+    border:none;
+    color:black;
+}
+
+body.dark-mode .fixed-header-table th{
+    border-bottom: none;
+}
+
+body.dark-mode .fixed-header-table td{
+    background: #1e1e1e;
+}
+
+body.dark-mode .fixed-header-table tr{
+    color: white;
+    background: black;
 }
