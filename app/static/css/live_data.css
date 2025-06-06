@@ -169,3 +169,7 @@ body.dark-mode .stat-card5 {
   background: #1e1e1e;
   color: whitesmoke;
 }
+
+body.dark-mode .stat-card5 p {
+  color: white !important;
+}
