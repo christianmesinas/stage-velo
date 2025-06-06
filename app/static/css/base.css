@@ -187,6 +187,10 @@ a {
   cursor: pointer;
 }
 
+.menu-toggle {
+  display: none;
+}
+
 /* ✅ Flash meldingen */
 .alert {
   padding: 1rem 1.25rem;
@@ -377,7 +381,7 @@ body.dark-mode .dark-toggle-btn:hover {
 }
 
 /* ====== Responsive Design ======= */
-@media (max-width: 1150px) {
+@media (max-width: 1175px) {
   .nav-links {
     position: fixed;
     top: 56px;
@@ -389,6 +393,12 @@ body.dark-mode .dark-toggle-btn:hover {
     overflow: hidden;
     max-height: 0;
     transition: max-height 0.3s ease-out;
+  }
+
+  .menu-toggle:checked + .hamburger + .nav-links {
+    max-height: 500px;
+    padding: 1rem 0;
+    border-top: 1px solid #444;
   }
 
   .nav-links.open {
@@ -415,7 +425,15 @@ body.dark-mode .dark-toggle-btn:hover {
     padding-left: 2rem;
   }
 
+  /* Hamburger zichtbaar maken */
   .hamburger {
     display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: white;
+    z-index: 1000;
   }
 }
