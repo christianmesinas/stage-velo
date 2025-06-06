@@ -220,17 +220,29 @@ def markers():
 
 @routes.route("/tarieven")
 def tarieven():
+    if "Gebruiker" in session and "id" in session["Gebruiker"]:
+        db = SessionLocal()
+        try:
+            gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+            if gebruiker:
+                # updaten van sessie met de juiste abonnement van de gebruiker
+                session["Gebruiker"]["abonnement"] = gebruiker.abonnement
+                session.modified = True  # opslaan van sessie
+            else:
+                # als gebruiker niet bestaat de sessie leegmaken
+                session.pop("Gebruiker", None)
+        finally:
+            db.close()
     return render_template("tarieven.html")
-
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
-    db = SessionLocal()
-    gebruiker = None
+    # Controleer of gebruiker is ingelogd
+    if "Gebruiker" not in session:
+        return redirect(url_for("routes.login", next="/tarieven/dagpas"))
 
-    # Controleer of er een ingelogde gebruiker is
-    if "Gebruiker" in session:
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
     if request.method == "POST":
         if gebruiker and gebruiker.abonnement != "Geen abonnement":
@@ -241,7 +253,7 @@ def dagpas():
         pincode = request.form.get("pincode")
         bevestig_pincode = request.form.get("bevestig_pincode")
 
-        if pincode != bevestig_pincode: #checken of de pincodes met elkaar overeenkomen
+        if pincode != bevestig_pincode:
             foutmelding = "De pincodes komen niet overeen!"
             return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
@@ -261,7 +273,7 @@ def dagpas():
             "Jaarkaart": 3000
         }
 
-        try: #stripe checkout sessie aanmaken
+        try:
             stripe_session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
                 line_items=[{
@@ -286,16 +298,14 @@ def dagpas():
 
     db.close()
     return render_template("tarieven/dagpas.html", formdata={})
-
-
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
 def weekpass():
-    db = SessionLocal()
-    gebruiker = None
+    # Controleer of gebruiker is ingelogd
+    if "Gebruiker" not in session:
+        return redirect(url_for("routes.login", next="/tarieven/weekpas"))
 
-    # Check of er een ingelogde gebruiker is
-    if "Gebruiker" in session:
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    db = SessionLocal()
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
     if request.method == "POST":
         if gebruiker and gebruiker.abonnement != "Geen abonnement":
@@ -311,7 +321,6 @@ def weekpass():
             db.close()
             return render_template("tarieven/weekpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        # 🔐 Bewaar formulierdata tijdelijk in sessie
         session["abonnement_data"] = {
             "type": "Weekpas",
             "voornaam": request.form.get("voornaam"),
@@ -351,11 +360,10 @@ def weekpass():
             return redirect(stripe_session.url)
         except Exception as e:
             db.close()
-            return f"Fout bij aanmaken Stripe sessie: {str(e)}", 500
+            return f"Fout bij aanmaken van Stripe sessie: {str(e)}", 500
 
     db.close()
     return render_template("tarieven/weekpas.html", formdata={})
-
 
 @routes.route("/tarieven/jaarkaart", methods=["GET", "POST"])
 def jaarkaart():
@@ -832,7 +840,6 @@ def admin_filter():
 
 
 
-
 # ================= Stripe - Betalingen ====================
 @routes.route("/betalen")
 def betalen():
@@ -875,9 +882,6 @@ def create_checkout_session():
 
 @routes.route("/betaling-succes")
 def betaling_succes():
-    if "Gebruiker" not in session or "id" not in session["Gebruiker"]:
-        return "Geen geldige sessie gevonden. Log opnieuw in.", 401
-
     data = session.pop("abonnement_data", None)
     if not data:
         return "Geen gegevens gevonden.", 400
@@ -887,38 +891,37 @@ def betaling_succes():
     from datetime import datetime, timedelta
 
     db = SessionLocal()
+
+    # Check of gebruiker ingelogd is
     gebruiker = None
-    if "Gebruiker" in session:
+    if "Gebruiker" in session and "id" in session["Gebruiker"]:
         gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+
+    # Als geen ingelogde gebruiker, maak een nieuwe gebruiker aan
     if not gebruiker:
-        db.close()
-        return "Gebruiker niet gevonden.", 400
+        nieuwe_gebruiker = Usertable(
+            user_id=session["Gebruiker"]["id"] if "Gebruiker" in session else f"guest_{uuid.uuid4().hex}",  # Fallback for guest users
+            voornaam=data["voornaam"],
+            achternaam=data["achternaam"],
+            email=data["email"],
+            abonnement=data["type"]
+        )
+        db.add(nieuwe_gebruiker)
+        db.commit()
+        db.refresh(nieuwe_gebruiker)  # Refresh to get the generated id
+        gebruiker = nieuwe_gebruiker
 
-    gebruiker.abonnement = data["type"]
-    db.commit()
+        # updaten van abonnement
+        gebruiker.abonnement = data["type"]
+        db.commit()
+
+        # Update sessie
+        session["Gebruiker"]["abonnement"] = data["type"]
+        session.modified = True  # sessie veranderingen opslaan
+        print(f"DEBUG: Session updated - abonnement: {session['Gebruiker']['abonnement']}")  # Debugging
 
 
-    session["Gebruiker"]["abonnement"] = data["type"]
-    #email bevestiging na de dbcommit
-    #eerst bepalen we de einddatum
-    eind_datum = ''
-    if session["Gebruiker"]["abonnement"] == "dag":
-        eind_datum = datetime.today() + timedelta(days=1)
-    elif session["Gebruiker"]["abonnement"] == "week":
-        eind_datum = datetime.today() + timedelta(days=7)
-    elif session["Gebruiker"]["abonnement"] == "jaar":
-        eind_datum = datetime.today() + timedelta(days=365)
-
-    ontvanger_email = gebruiker.email if gebruiker else data["email"]
-    ontvanger_voornaam = gebruiker.voornaam if gebruiker else data["voornaam"]
-
-    send_abonnement_email(
-        to_email="komutsalih@gmail.com",
-        voornaam="salih",
-        abonnement_type=session["Gebruiker"]["abonnement"],
-        einddatum=eind_datum,
-    )
+    # Bepaal soort en einddatum
     soort = data["type"].lower()
     start_datum = datetime.utcnow()
 
@@ -935,41 +938,29 @@ def betaling_succes():
         db.close()
         return "Ongeldig abonnementstype.", 400
 
-    if gebruiker:
-        gebruiker.abonnement = data["type"]
-        session["Gebruiker"]["abonnement"] = data["type"]
+    # Maak nieuwe pas aan
+    user_id = getattr(gebruiker, 'id', None)  # Use the integer id from Usertable
+    if not user_id:
+        db.close()
+        return "Fout: Geen geldige gebruiker-ID gevonden.", 500
 
-        nieuwe_pas = Pas(
-            gebruiker_id=gebruiker.id,
-            soort=soort,
-            pincode=data["pincode"],
-            start_datum=start_datum,
-            eind_datum=eind_datum
-        )
-        db.add(nieuwe_pas)
-        db.commit()
-    else:
-        # Alleen gastregistratie toestaan voor dag/week
-        if soort in ["dag", "week"]:
-            nieuwe_gastpas = GastPas(
-                type=soort,
-                voornaam=data["voornaam"],
-                achternaam=data["achternaam"],
-                email=data["email"],
-                telefoon=data["telefoon"],
-                geboortedatum=datetime.strptime(data["geboortedatum"], "%Y-%m-%d"),
-                pincode=data["pincode"],
-                start_datum=start_datum,
-                eind_datum=eind_datum
-            )
-            db.add(nieuwe_gastpas)
-            db.commit()
-
+    nieuwe_pas = Pas(
+        gebruiker_id=user_id,  # Use the integer id
+        soort=soort,
+        pincode=data["pincode"],
+        start_datum=start_datum,
+        eind_datum=eind_datum
+    )
+    db.add(nieuwe_pas)
+    db.commit()
     db.close()
 
-    einddatum_tekst = eind_datum.strftime("%d/%m/%Y") if eind_datum else "Zolang je abonnement actief is"
-    return render_template("tarieven/bedankt.html", gebruiker=gebruiker, data=data, einddatum=einddatum_tekst)
+    if soort in ["dag", "week"]:
+        einddatum_tekst = eind_datum.strftime("%d/%m/%Y")
+    else:
+        einddatum_tekst = "Zolang je abonnement actief is"
 
+    return render_template("tarieven/bedankt.html", gebruiker=gebruiker, data=data, einddatum=einddatum_tekst)
 
 @routes.route("/betaling-annulatie")
 def betaling_annulatie():

@@ -13,6 +13,7 @@
 {% endif %}
 
 <form method="post" action="{{ url_for('routes.admin_simulatie') }}" class="inline-form">
+<input type="hidden" name="actie" value="simulatie">
   <label>{{ _('Aantal gebruikers') }}<input type="number" name="gebruikers" value="58000"></label>
   <label>{{ _('Aantal fietsen') }}<input type="number" name="fietsen" value="10000"></label>
   <label>{{ _('Aantal dagen') }}<input type="number" name="dagen" value="30"></label>

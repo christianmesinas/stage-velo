@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 4.0.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: static/js/maps.js:27
 msgid "Stations met fietsen"
@@ -97,8 +97,12 @@ msgid "Oeps! Er is iets misgegaan aan onze kant."
 msgstr "Oops! Etwas ist auf unserer Seite schiefgelaufen."
 
 #: templates/500.html:9
-msgid "Probeer het later opnieuw of neem contact met ons op als het probleem aanhoudt."
-msgstr "Versuchen Sie es später erneut oder kontaktieren Sie uns, wenn das Problem weiterhin besteht."
+msgid ""
+"Probeer het later opnieuw of neem contact met ons op als het probleem "
+"aanhoudt."
+msgstr ""
+"Versuchen Sie es später erneut oder kontaktieren Sie uns, wenn das "
+"Problem weiterhin besteht."
 
 #: templates/admin.html:10
 msgid "Welkom terug, admin"
@@ -224,8 +228,12 @@ msgstr "Dauer (Min)"
 
 #: templates/admin_simulatie.html:96
 #, python-format
-msgid "Hier zijn de eerste 1000 ritten. Download het CSV-bestand om alle %(aantal)s ritten te bekijken."
-msgstr "Hier sind die ersten 1000 Fahrten. Laden Sie die CSV-Datei herunter, um alle %(aantal)s Fahrten anzusehen."
+msgid ""
+"Hier zijn de eerste 1000 ritten. Download het CSV-bestand om alle "
+"%(aantal)s ritten te bekijken."
+msgstr ""
+"Hier sind die ersten 1000 Fahrten. Laden Sie die CSV-Datei herunter, um "
+"alle %(aantal)s Fahrten anzusehen."
 
 #: templates/base.html:5
 msgid "Velo App"
@@ -280,8 +288,12 @@ msgid "Account aanmaken"
 msgstr "Konto erstellen"
 
 #: templates/base.html:59
-msgid "JavaScript is uitgeschakeld in je browser. Voor een optimale ervaring op deze site moet JavaScript ingeschakeld zijn."
-msgstr "JavaScript ist in Ihrem Browser deaktiviert. Für ein optimales Erlebnis auf dieser Website muss JavaScript aktiviert sein."
+msgid ""
+"JavaScript is uitgeschakeld in je browser. Voor een optimale ervaring op "
+"deze site moet JavaScript ingeschakeld zijn."
+msgstr ""
+"JavaScript ist in Ihrem Browser deaktiviert. Für ein optimales Erlebnis "
+"auf dieser Website muss JavaScript aktiviert sein."
 
 #: templates/base_admin.html:5
 msgid "Admin Dashboard"
@@ -346,7 +358,9 @@ msgstr "Kontaktieren Sie uns"
 
 #: templates/contact.html:21
 msgid "Heb je een vraag, probleem of suggestie? Vul onderstaand formulier in."
-msgstr "Haben Sie eine Frage, ein Problem oder einen Vorschlag? Füllen Sie das untenstehende Formular aus."
+msgstr ""
+"Haben Sie eine Frage, ein Problem oder einen Vorschlag? Füllen Sie das "
+"untenstehende Formular aus."
 
 #: templates/contact.html:32
 msgid "Close"
@@ -437,8 +451,12 @@ msgid "Bedankt voor je bericht!"
 msgstr "Vielen Dank für Ihre Nachricht!"
 
 #: templates/contact_bevestiging.html:13
-msgid "We hebben je bericht goed ontvangen en nemen zo snel mogelijk contact met je op."
-msgstr "Wir haben Ihre Nachricht erhalten und werden uns so schnell wie möglich mit Ihnen in Verbindung setzen."
+msgid ""
+"We hebben je bericht goed ontvangen en nemen zo snel mogelijk contact met"
+" je op."
+msgstr ""
+"Wir haben Ihre Nachricht erhalten und werden uns so schnell wie möglich "
+"mit Ihnen in Verbindung setzen."
 
 #: templates/contact_bevestiging.html:15
 msgid "Terug naar startpagina"
@@ -493,8 +511,12 @@ msgid "Hoe maak ik een account aan?"
 msgstr "Wie erstelle ich ein Konto?"
 
 #: templates/help.html:15
-msgid "Ga naar de registratiepagina, vul je gegevens in en bevestig je e-mail via de link die je ontvangt."
-msgstr "Gehen Sie zur Registrierungsseite, geben Sie Ihre Daten ein und bestätigen Sie Ihre E-Mail über den erhaltenen Link."
+msgid ""
+"Ga naar de registratiepagina, vul je gegevens in en bevestig je e-mail "
+"via de link die je ontvangt."
+msgstr ""
+"Gehen Sie zur Registrierungsseite, geben Sie Ihre Daten ein und "
+"bestätigen Sie Ihre E-Mail über den erhaltenen Link."
 
 #: templates/help.html:18
 msgid "Welke betaalmethodes worden geaccepteerd?"
@@ -509,16 +531,24 @@ msgid "Hoe verander ik mijn betaalmethode?"
 msgstr "Wie ändere ich meine Zahlungsmethode?"
 
 #: templates/help.html:23
-msgid "Ga naar \"Mijn profiel\" > \"Betalingsgegevens\" en klik op \"Bewerken\" om een andere betaalmethode toe te voegen."
-msgstr "Gehen Sie zu „Mein Profil“ > „Zahlungsdetails“ und klicken Sie auf „Bearbeiten“, um eine andere Zahlungsmethode hinzuzufügen."
+msgid ""
+"Ga naar \"Mijn profiel\" > \"Betalingsgegevens\" en klik op \"Bewerken\" "
+"om een andere betaalmethode toe te voegen."
+msgstr ""
+"Gehen Sie zu „Mein Profil“ > „Zahlungsdetails“ und klicken Sie auf "
+"„Bearbeiten“, um eine andere Zahlungsmethode hinzuzufügen."
 
 #: templates/help.html:26
 msgid "Wanneer wordt mijn betaling afgeschreven?"
 msgstr "Wann wird meine Zahlung abgebucht?"
 
 #: templates/help.html:27
-msgid "Betalingen worden binnen 24 uur na bevestiging van je bestelling afgeschreven."
-msgstr "Zahlungen werden innerhalb von 24 Stunden nach Bestellbestätigung abgebucht."
+msgid ""
+"Betalingen worden binnen 24 uur na bevestiging van je bestelling "
+"afgeschreven."
+msgstr ""
+"Zahlungen werden innerhalb von 24 Stunden nach Bestellbestätigung "
+"abgebucht."
 
 #: templates/help.html:33
 msgid "Verhuur & Gebruik"
@@ -529,32 +559,48 @@ msgid "Hoe huur ik een fiets?"
 msgstr "Wie leihe ich ein Fahrrad?"
 
 #: templates/help.html:36
-msgid "Open de app, selecteer een beschikbaar station, scan de QR-code op de fiets en je rit start automatisch."
-msgstr "Öffnen Sie die App, wählen Sie eine verfügbare Station aus, scannen Sie den QR-Code am Fahrrad, und Ihre Fahrt beginnt automatisch."
+msgid ""
+"Open de app, selecteer een beschikbaar station, scan de QR-code op de "
+"fiets en je rit start automatisch."
+msgstr ""
+"Öffnen Sie die App, wählen Sie eine verfügbare Station aus, scannen Sie "
+"den QR-Code am Fahrrad, und Ihre Fahrt beginnt automatisch."
 
 #: templates/help.html:39
 msgid "Wat als de fiets defect is?"
 msgstr "Was tun, wenn das Fahrrad defekt ist?"
 
 #: templates/help.html:40
-msgid "Maak een foto in de app en meld het defect direct via “Probleem melden”. We zorgen voor vervanging of reparatie."
-msgstr "Machen Sie ein Foto in der App und melden Sie den Defekt direkt über „Problem melden“. Wir sorgen für Ersatz oder Reparatur."
+msgid ""
+"Maak een foto in de app en meld het defect direct via “Probleem melden”. "
+"We zorgen voor vervanging of reparatie."
+msgstr ""
+"Machen Sie ein Foto in der App und melden Sie den Defekt direkt über "
+"„Problem melden“. Wir sorgen für Ersatz oder Reparatur."
 
 #: templates/help.html:43
 msgid "Hoe eindig ik mijn rit?"
 msgstr "Wie beende ich meine Fahrt?"
 
 #: templates/help.html:44
-msgid "Plaats de fiets terug in een vrije parkeerplek, sluit de ketting en bevestig in de app dat je bent geeindigd."
-msgstr "Stellen Sie das Fahrrad an einen freien Stellplatz zurück, schließen Sie die Kette und bestätigen Sie in der App, dass Sie fertig sind."
+msgid ""
+"Plaats de fiets terug in een vrije parkeerplek, sluit de ketting en "
+"bevestig in de app dat je bent geeindigd."
+msgstr ""
+"Stellen Sie das Fahrrad an einen freien Stellplatz zurück, schließen Sie "
+"die Kette und bestätigen Sie in der App, dass Sie fertig sind."
 
 #: templates/help.html:47
 msgid "Mag ik buiten de stad fietsen?"
 msgstr "Darf ich außerhalb der Stadt fahren?"
 
 #: templates/help.html:48
-msgid "Je mag tot 5 km buiten de stad grens fietsen, daarna worden extra kosten per kilometer gerekend."
-msgstr "Sie dürfen bis 5 km außerhalb der Stadtgrenze fahren, danach werden zusätzliche Kosten pro Kilometer berechnet."
+msgid ""
+"Je mag tot 5 km buiten de stad grens fietsen, daarna worden extra kosten "
+"per kilometer gerekend."
+msgstr ""
+"Sie dürfen bis 5 km außerhalb der Stadtgrenze fahren, danach werden "
+"zusätzliche Kosten pro Kilometer berechnet."
 
 #: templates/help.html:54
 msgid "Abonnementen"
@@ -565,8 +611,12 @@ msgid "Welke abonnementen zijn er?"
 msgstr "Welche Abonnements gibt es?"
 
 #: templates/help.html:57
-msgid "We bieden dag-, week-, maand- en jaarabonnementen aan. Kijk op de tarievenpagina voor details."
-msgstr "Wir bieten Tages-, Wochen-, Monats- und Jahresabonnements an. Details finden Sie auf der Tarifseite."
+msgid ""
+"We bieden dag-, week-, maand- en jaarabonnementen aan. Kijk op de "
+"tarievenpagina voor details."
+msgstr ""
+"Wir bieten Tages-, Wochen-, Monats- und Jahresabonnements an. Details "
+"finden Sie auf der Tarifseite."
 
 #: templates/help.html:60
 msgid "Kan ik mijn abonnement pauzeren?"
@@ -581,8 +631,12 @@ msgid "Hoe annuleer ik mijn abonnement?"
 msgstr "Wie kündige ich mein Abonnement?"
 
 #: templates/help.html:65
-msgid "Ga naar \"Mijn abonnement\" en klik op \"Opzeggen\". Je abonnement stopt aan het eind van de huidige periode."
-msgstr "Gehen Sie zu „Mein Abonnement“ und klicken Sie auf „Kündigen“. Ihr Abonnement endet am Ende der aktuellen Periode."
+msgid ""
+"Ga naar \"Mijn abonnement\" en klik op \"Opzeggen\". Je abonnement stopt "
+"aan het eind van de huidige periode."
+msgstr ""
+"Gehen Sie zu „Mein Abonnement“ und klicken Sie auf „Kündigen“. Ihr "
+"Abonnement endet am Ende der aktuellen Periode."
 
 #: templates/help.html:71
 msgid "Veiligheid & Regels"
@@ -593,16 +647,24 @@ msgid "Moet ik een helm dragen?"
 msgstr "Muss ich einen Helm tragen?"
 
 #: templates/help.html:74
-msgid "Het is niet verplicht, maar we raden het sterk aan voor je eigen veiligheid."
-msgstr "Es ist nicht verpflichtend, aber wir empfehlen es dringend für Ihre eigene Sicherheit."
+msgid ""
+"Het is niet verplicht, maar we raden het sterk aan voor je eigen "
+"veiligheid."
+msgstr ""
+"Es ist nicht verpflichtend, aber wir empfehlen es dringend für Ihre "
+"eigene Sicherheit."
 
 #: templates/help.html:77
 msgid "Wat zijn de verkeersregels voor fietsers?"
 msgstr "Was sind die Verkehrsregeln für Radfahrer?"
 
 #: templates/help.html:78
-msgid "Volg altijd de borden, fiets in de fietslaan en geef handgebaren bij afslaan."
-msgstr "Befolgen Sie immer die Schilder, fahren Sie auf dem Radweg und geben Sie Handzeichen beim Abbiegen."
+msgid ""
+"Volg altijd de borden, fiets in de fietslaan en geef handgebaren bij "
+"afslaan."
+msgstr ""
+"Befolgen Sie immer die Schilder, fahren Sie auf dem Radweg und geben Sie "
+"Handzeichen beim Abbiegen."
 
 #: templates/help.html:81
 msgid "Mag ik met twee personen op één fiets?"
@@ -610,7 +672,9 @@ msgstr "Dürfen zwei Personen auf einem Fahrrad fahren?"
 
 #: templates/help.html:82
 msgid "Nee, onze fietsen zijn ontworpen voor één persoon om veiligheidsredenen."
-msgstr "Nein, unsere Fahrräder sind aus Sicherheitsgründen für eine Person ausgelegt."
+msgstr ""
+"Nein, unsere Fahrräder sind aus Sicherheitsgründen für eine Person "
+"ausgelegt."
 
 #: templates/help.html:88
 msgid "Klantenservice & Ondersteuning"
@@ -622,7 +686,9 @@ msgstr "Wie erreiche ich den Kundenservice?"
 
 #: templates/help.html:91
 msgid "Stuur een e-mail naar support@velo-antwerpen.be of bel naar 0800-12345."
-msgstr "Senden Sie eine E-Mail an support@velo-antwerpen.be oder rufen Sie 0800-12345 an."
+msgstr ""
+"Senden Sie eine E-Mail an support@velo-antwerpen.be oder rufen Sie "
+"0800-12345 an."
 
 #: templates/help.html:94
 msgid "Wat zijn de openingstijden van support?"
@@ -630,15 +696,21 @@ msgstr "Was sind die Öffnungszeiten des Supports?"
 
 #: templates/help.html:95
 msgid "Onze klantenservice is bereikbaar van maandag t/m vrijdag van 8u tot 18u."
-msgstr "Unser Kundenservice ist von Montag bis Freitag von 8 bis 18 Uhr erreichbar."
+msgstr ""
+"Unser Kundenservice ist von Montag bis Freitag von 8 bis 18 Uhr "
+"erreichbar."
 
 #: templates/help.html:98
 msgid "Waar vind ik de gebruikershandleiding?"
 msgstr "Wo finde ich die Bedienungsanleitung?"
 
 #: templates/help.html:99
-msgid "De handleiding staat online via de link \"Help\" in de footer of direct op onze website."
-msgstr "Die Anleitung ist online über den Link „Hilfe“ in der Fußzeile oder direkt auf unserer Website verfügbar."
+msgid ""
+"De handleiding staat online via de link \"Help\" in de footer of direct "
+"op onze website."
+msgstr ""
+"Die Anleitung ist online über den Link „Hilfe“ in der Fußzeile oder "
+"direkt auf unserer Website verfügbar."
 
 #: templates/index.html:13
 msgid "ANTWERPEN"
@@ -681,12 +753,20 @@ msgid "Kies jouw formule!"
 msgstr "Wähle dein Tarif!"
 
 #: templates/index.html:30
-msgid "Al jouw ritten van 30 minuten zijn inbegrepen in de prijs van jouw gekozen formule."
-msgstr "Alle deine Fahrten von 30 Minuten sind im Preis deines gewählten Tarifs enthalten."
+msgid ""
+"Al jouw ritten van 30 minuten zijn inbegrepen in de prijs van jouw "
+"gekozen formule."
+msgstr ""
+"Alle deine Fahrten von 30 Minuten sind im Preis deines gewählten Tarifs "
+"enthalten."
 
 #: templates/index.html:31
-msgid "Plaats na elke rit een fiets terug in een Velo-station dichtbij jouw bestemming."
-msgstr "Stelle das Fahrrad nach jeder Fahrt an einer Velo-Station in der Nähe deines Ziels zurück."
+msgid ""
+"Plaats na elke rit een fiets terug in een Velo-station dichtbij jouw "
+"bestemming."
+msgstr ""
+"Stelle das Fahrrad nach jeder Fahrt an einer Velo-Station in der Nähe "
+"deines Ziels zurück."
 
 #: templates/index.html:32
 msgid "Je kan een pas kopen voor een dag, een week of een jaar."
@@ -709,16 +789,24 @@ msgid "Meld een fiets als defect."
 msgstr "Melde ein Fahrrad als defekt."
 
 #: templates/index.html:43
-msgid "Zo wordt de fiets automatisch geblokkeerd in het Velo-station en kunnen onze chauffeurs deze ophalen om te laten herstellen."
-msgstr "So wird das Fahrrad automatisch in der Velo-Station gesperrt, und unsere Fahrer können es zur Reparatur abholen."
+msgid ""
+"Zo wordt de fiets automatisch geblokkeerd in het Velo-station en kunnen "
+"onze chauffeurs deze ophalen om te laten herstellen."
+msgstr ""
+"So wird das Fahrrad automatisch in der Velo-Station gesperrt, und unsere "
+"Fahrer können es zur Reparatur abholen."
 
 #: templates/index.html:44
 msgid "Andere gebruikers zullen de fiets dan niet meer toegewezen krijgen."
 msgstr "Andere Benutzer werden dieses Fahrrad nicht mehr zugewiesen bekommen."
 
 #: templates/index.html:45
-msgid "Het zadel omdraaien is handig, maar is geen must als je een melding gemaakt hebt."
-msgstr "Den Sattel umzudrehen ist hilfreich, aber nicht erforderlich, wenn du eine Meldung gemacht hast."
+msgid ""
+"Het zadel omdraaien is handig, maar is geen must als je een melding "
+"gemaakt hebt."
+msgstr ""
+"Den Sattel umzudrehen ist hilfreich, aber nicht erforderlich, wenn du "
+"eine Meldung gemacht hast."
 
 #: templates/index.html:46
 msgid "DEFECT MELDEN"
@@ -761,8 +849,12 @@ msgid "NODIG?"
 msgstr "BENÖTIGT?"
 
 #: templates/index.html:90
-msgid "Neem een Velo en doorkruis de stad. Plaats een fiets na elke rit terug in een Velo-station naar keuze."
-msgstr "Nimm ein Velo und erkunde die Stadt. Stelle das Fahrrad nach jeder Fahrt an einer Velo-Station deiner Wahl zurück."
+msgid ""
+"Neem een Velo en doorkruis de stad. Plaats een fiets na elke rit terug in"
+" een Velo-station naar keuze."
+msgstr ""
+"Nimm ein Velo und erkunde die Stadt. Stelle das Fahrrad nach jeder Fahrt "
+"an einer Velo-Station deiner Wahl zurück."
 
 #: templates/instellingen.html:5
 msgid "Koppelen van CSS + basisstijl voor de instellingenpagina"
@@ -821,8 +913,12 @@ msgid "Telefoonnummer"
 msgstr "Telefonnummer"
 
 #: templates/instellingen.html:95
-msgid "Voer een geldig telefoonnummer in. Begin met 0 of +, gevolgd door 8 tot 15 cijfers. Geen spaties of symbolen."
-msgstr "Geben Sie eine gültige Telefonnummer ein. Beginnen Sie mit 0 oder +, gefolgt von 8 bis 15 Ziffern. Keine Leerzeichen oder Symbole."
+msgid ""
+"Voer een geldig telefoonnummer in. Begin met 0 of +, gevolgd door 8 tot "
+"15 cijfers. Geen spaties of symbolen."
+msgstr ""
+"Geben Sie eine gültige Telefonnummer ein. Beginnen Sie mit 0 oder +, "
+"gefolgt von 8 bis 15 Ziffern. Keine Leerzeichen oder Symbole."
 
 #: templates/instellingen.html:100
 msgid "Bijv. 0478123456 of +32478123456 (geen spaties of leestekens)"
@@ -1064,7 +1160,9 @@ msgstr "kein Abonnement"
 
 #: templates/profile.html:58
 msgid "Abonnement kopen? klik op geen abonnement om naar tarieven te gaan."
-msgstr "Abonnement kaufen? Klicken Sie auf „Kein Abonnement“, um zu den Tarifen zu gelangen."
+msgstr ""
+"Abonnement kaufen? Klicken Sie auf „Kein Abonnement“, um zu den Tarifen "
+"zu gelangen."
 
 #: templates/profile.html:70
 msgid "Fietsgeschiedenis"
@@ -1100,7 +1198,9 @@ msgstr "Keine Fahrradhistorie verfügbar."
 
 #: templates/profile.html:96
 msgid "Je profiel is NIET volledig — klik NU op Instellingen en vul alles in!"
-msgstr "Ihr Profil ist NICHT vollständig — klicken Sie JETZT auf Einstellungen und füllen Sie alles aus!"
+msgstr ""
+"Ihr Profil ist NICHT vollständig — klicken Sie JETZT auf Einstellungen "
+"und füllen Sie alles aus!"
 
 #: templates/tarieven.html:22
 msgid "DAGPAS"
@@ -1118,12 +1218,18 @@ msgstr "Alle deine Fahrten von 30 Minuten sind inbegriffen."
 #: templates/tarieven.html:26 templates/tarieven.html:39
 #: templates/tarieven.html:52
 msgid "Plaats een fiets na elke rit terug in een Velo-station naar keuze."
-msgstr "Stelle das Fahrrad nach jeder Fahrt an einer Velo-Station deiner Wahl zurück."
+msgstr ""
+"Stelle das Fahrrad nach jeder Fahrt an einer Velo-Station deiner Wahl "
+"zurück."
 
 #: templates/tarieven.html:27 templates/tarieven.html:40
 #: templates/tarieven.html:53
-msgid "Een rit start van het moment je een fiets krijgt toegewezen in een Velo-station, "
-msgstr "Eine Fahrt beginnt, sobald dir ein Fahrrad an einer Velo-Station zugewiesen wird, "
+msgid ""
+"Een rit start van het moment je een fiets krijgt toegewezen in een Velo-"
+"station, "
+msgstr ""
+"Eine Fahrt beginnt, sobald dir ein Fahrrad an einer Velo-Station "
+"zugewiesen wird, "
 
 #: templates/tarieven.html:28 templates/tarieven.html:41
 #: templates/tarieven.html:54
@@ -1317,8 +1423,12 @@ msgid "Geboortedatum:"
 msgstr "Geburtsdatum:"
 
 #: templates/tarieven/bedankt.html:23
-msgid "Je gekozen pincode is veilig opgeslagen. Je kunt nu gebruik maken van je pas!"
-msgstr "Dein gewählter PIN wurde sicher gespeichert. Du kannst jetzt deinen Pass nutzen!"
+msgid ""
+"Je gekozen pincode is veilig opgeslagen. Je kunt nu gebruik maken van je "
+"pas!"
+msgstr ""
+"Dein gewählter PIN wurde sicher gespeichert. Du kannst jetzt deinen Pass "
+"nutzen!"
 
 #: templates/tarieven/bedankt.html:25
 msgid "Ga terug naar startpagina"
