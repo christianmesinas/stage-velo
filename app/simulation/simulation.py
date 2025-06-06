@@ -11,7 +11,7 @@ from faker import Faker
 import os
 import math
 
-# Dynamisch pad naar velo.csv (2 niveaus omhoog vanaf script)
+# Dynamisch pad naar velo.csv
 script_dir = os.path.dirname(__file__)
 csv_path = os.path.join(script_dir, "stations.csv")
 stations_df = pd.read_csv(csv_path)
@@ -35,8 +35,19 @@ for _, row in stations_df.iterrows():
         "status": 'OPN',
         "free_bikes": 0,
         "free_slots": 0,
-        "postcode": row.get("postcode", random.choice(antwerpen_postcodes))  # Voeg postcode toe voor voorkeur
+        "postcode": row.get("postcode", random.choice(antwerpen_postcodes))
     })
+
+
+# Cache afstanden tussen stations
+def cache_afstanden(stations):
+    afstanden = {}
+    for s1 in stations:
+        for s2 in stations:
+            if s1["name"] != s2["name"]:
+                afstand = bereken_afstand(s1["latitude"], s1["longitude"], s2["latitude"], s2["longitude"])
+                afstanden[(s1["name"], s2["name"])] = afstand
+    return afstanden
 
 
 # Helperfunctie voor afstandsberekening (Haversine formule)
@@ -51,11 +62,10 @@ def bereken_afstand(lat1, lon1, lat2, lon2):
 
 
 # Vind nabijgelegen station met beschikbare fietsen
-def vind_nabijgelegen_station(huidig_station, stations, fietsen):
+def vind_nabijgelegen_station(huidig_station, stations, fietsen, afstanden):
     nabijgelegen = sorted(
         [s for s in stations if s["name"] != huidig_station["name"] and s["free_bikes"] > 0],
-        key=lambda s: bereken_afstand(huidig_station["latitude"], huidig_station["longitude"], s["latitude"],
-                                      s["longitude"])
+        key=lambda s: afstanden.get((huidig_station["name"], s["name"]), float('inf'))
     )
     return nabijgelegen[0] if nabijgelegen else None
 
@@ -123,7 +133,7 @@ def genereer_fietsen(aantal, stations):
                 "status": status,
                 "ritten_vandaag": 0,
                 "onderhoud_teller": random.randint(10, 20),
-                "in_gebruik_tot": None  # Tijd tot wanneer fiets in gebruik is
+                "in_gebruik_tot": None
             })
             if status == "beschikbaar":
                 station_lookup[sid]["free_bikes"] += 1
@@ -146,6 +156,8 @@ def genereer_fietsen(aantal, stations):
 
 # Simuleer herverdeling van fietsen door operator
 def herverdeel_fietsen(stations, fietsen):
+    if not any(s["free_bikes"] <= s["capaciteit"] * 0.1 or s["free_bikes"] >= s["capaciteit"] * 0.9 for s in stations):
+        return
     station_lookup = {s["name"]: s for s in stations}
     volle_stations = [s for s in stations if s["free_bikes"] >= s["capaciteit"] * 0.9]
     lege_stations = [s for s in stations if s["free_bikes"] <= s["capaciteit"] * 0.1]
@@ -166,13 +178,27 @@ def herverdeel_fietsen(stations, fietsen):
                 doel_station["free_slots"] -= 1
 
 
+# Batch-update voor onderhoudsfietsen
+def update_onderhoud_fietsen(fietsen, stations, beschikbare_fietsen_per_station, stations_met_fietsen):
+    beschikbare_stations = [s for s in stations if s["free_slots"] > 0]
+    for fiets in [f for f in fietsen if f["status"] == "onderhoud" and random.random() < 0.1]:
+        if beschikbare_stations:
+            nieuw_station = random.choice(beschikbare_stations)
+            fiets["status"] = "beschikbaar"
+            fiets["station_naam"] = nieuw_station["name"]
+            nieuw_station["free_bikes"] += 1
+            nieuw_station["free_slots"] -= 1
+            fiets["in_gebruik_tot"] = None
+            beschikbare_fietsen_per_station[nieuw_station["name"]].append(fiets)
+            stations_met_fietsen.add(nieuw_station["name"])
+
+
 # Gewogen starttijd met weersfactor
 def gewogen_starttijd(datum):
     gewichten = []
     weersfactor = 1.0
-    # Simuleer eenvoudige weersinvloed: 30% kans op slecht weer (minder ritten)
     if random.random() < 0.3:
-        weersfactor = 0.5  # Minder ritten bij slecht weer
+        weersfactor = 0.5
     for uur in range(24):
         if 8 <= uur < 18:
             gewichten += [uur] * int(5 * weersfactor)
@@ -180,7 +206,7 @@ def gewogen_starttijd(datum):
             gewichten += [uur] * int(2 * weersfactor)
         else:
             gewichten += [uur] * int(1 * weersfactor)
-    if not gewichten:  # Fallback voor als weersfactor alles uitsluit
+    if not gewichten:
         gewichten = [random.randint(0, 23)]
     gekozen_uur = random.choice(gewichten)
     gekozen_minuten = random.randint(0, 59)
@@ -193,6 +219,9 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28):
     station_lookup = {s["name"]: s for s in stations}
     vandaag = datetime.today().date()
 
+    # Cache afstanden
+    afstanden = cache_afstanden(stations)
+
     # Ritlimieten per abonnementstype
     rit_limieten = {
         "Dagpas": (1, 3),
@@ -200,96 +229,108 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28):
         "Jaarkaart": (3, 6)
     }
 
-    # Lijst van populaire stations (bijv. treinstations)
-    populaire_stations = ["Centraal Station", "Groenplaats", "Antwerpen-Berchem"]  # Voorbeeldnamen
+    # Lijst van populaire stations
+    populaire_stations = ["Centraal Station", "Groenplaats", "Antwerpen-Berchem"]
     populaire_gewichten = {s["name"]: 2.0 if s["name"] in populaire_stations else 1.0 for s in stations}
 
-    # Houd ritten per gebruiker en fietsstatus bij
+    # Houd ritten per gebruiker bij
     ritten_per_gebruiker = {g["id"]: {} for g in gebruikers}
 
     for dag_offset in range(dagen):
         datum = vandaag - timedelta(days=(dagen - dag_offset - 1))
         herverdeel_fietsen(stations, fietsen)
 
-        for gebruiker in gebruikers:
+        # Selecteer actieve gebruikers (15% kans, gewogen op abonnementstype)
+        actieve_gebruikers = []
+        for g in gebruikers:
+            kans = 0.15 if g["abonnementstype"] == "Jaarkaart" else 0.10 if g["abonnementstype"] == "Weekpas" else 0.05
+            if random.random() < kans:
+                actieve_gebruikers.append(g)
+
+        # Maak sets en lijsten aan het begin van de dag
+        stations_met_fietsen = set(s["name"] for s in stations if s["free_bikes"] > 0)
+        beschikbare_fietsen_per_station = {
+            s["name"]: [f for f in fietsen if f["status"] == "beschikbaar" and f["station_naam"] == s["name"] and (
+                        f["in_gebruik_tot"] is None or f["in_gebruik_tot"] <= gewogen_starttijd(datum))]
+            for s in stations
+        }
+
+        # Batch-update onderhoudsfietsen
+        update_onderhoud_fietsen(fietsen, stations, beschikbare_fietsen_per_station, stations_met_fietsen)
+
+        for gebruiker in actieve_gebruikers:
+            # Pre-bereken gewichten voor beginstations
+            begin_gewichten = {
+                s["name"]: populaire_gewichten[s["name"]] * (3.0 if s["postcode"] == gebruiker["postcode"] else 1.0)
+                for s in stations if s["name"] in stations_met_fietsen
+            }
+
             min_ritten, max_ritten = rit_limieten[gebruiker["abonnementstype"]]
             aantal_ritten = random.randint(min_ritten, max_ritten)
 
             for _ in range(aantal_ritten):
-                # 5% kans op annulering (bijv. defecte fiets)
                 if random.random() < 0.05:
                     continue
 
-                # Selecteer beginstation, bij voorkeur dicht bij gebruikerspostcode
-                stations_met_fietsen = [s for s in stations if s["free_bikes"] > 0]
+                # Selecteer beginstation
                 if not stations_met_fietsen:
                     continue
-                gewichten = []
-                for s in stations_met_fietsen:
-                    # Hogere kans voor stations met zelfde postcode of populaire stations
-                    gewicht = populaire_gewichten[s["name"]]
-                    if s["postcode"] == gebruiker["postcode"]:
-                        gewicht *= 3.0
-                    gewichten.append(gewicht)
-                begin_station = random.choices(stations_met_fietsen, weights=gewichten, k=1)[0]
+                begin_station_naam = random.choices(
+                    list(stations_met_fietsen),
+                    weights=[begin_gewichten.get(s, 1.0) for s in stations_met_fietsen],
+                    k=1
+                )[0]
+                begin_station = station_lookup[begin_station_naam]
 
-                # Controleer of er een fiets beschikbaar is, anders zoek nabijgelegen station
-                if begin_station["free_bikes"] == 0:
-                    begin_station = vind_nabijgelegen_station(begin_station, stations, fietsen)
+                # Controleer fietsbeschikbaarheid
+                beschikbare_fietsen = beschikbare_fietsen_per_station[begin_station["name"]]
+                if not beschikbare_fietsen:
+                    begin_station = vind_nabijgelegen_station(begin_station, stations, fietsen, afstanden)
                     if not begin_station:
                         continue
+                    beschikbare_fietsen = beschikbare_fietsen_per_station[begin_station["name"]]
+                    if not beschikbare_fietsen:
+                        continue
 
-                # Selecteer beschikbare fiets
-                beschikbare_fietsen = [
-                    f for f in fietsen
-                    if f["status"] == "beschikbaar"
-                       and f["station_naam"] == begin_station["name"]
-                       and (f["in_gebruik_tot"] is None or f["in_gebruik_tot"] <= gewogen_starttijd(datum))
-                ]
-                if not beschikbare_fietsen:
-                    continue
                 fiets = random.choice(beschikbare_fietsen)
 
-                # Kies eindstation met vrije slots, gewogen op afstand en populariteit
+                # Pre-bereken gewichten voor eindstations
                 mogelijke_eindstations = [s for s in stations if
                                           s["name"] != begin_station["name"] and s["free_slots"] > 0]
                 if not mogelijke_eindstations:
                     continue
+                eind_gewichten = {
+                    s["name"]: (1 / (afstanden.get((begin_station["name"], s["name"]), 1.0) + 0.1)) *
+                               populaire_gewichten[s["name"]] *
+                               (3.0 if s["postcode"] == gebruiker["postcode"] else 1.0)
+                    for s in mogelijke_eindstations
+                }
 
-                gewichten = []
-                for eind_station in mogelijke_eindstations:
-                    afstand = bereken_afstand(
-                        begin_station["latitude"], begin_station["longitude"],
-                        eind_station["latitude"], eind_station["longitude"]
-                    )
-                    gewicht = (1 / (afstand + 0.1)) * populaire_gewichten[eind_station["name"]]
-                    if eind_station["postcode"] == gebruiker["postcode"]:
-                        gewicht *= 3.0
-                    gewichten.append(gewicht)
-
-                eind_station = random.choices(mogelijke_eindstations, weights=gewichten, k=1)[0]
+                eind_station = random.choices(
+                    mogelijke_eindstations,
+                    weights=[eind_gewichten[s["name"]] for s in mogelijke_eindstations],
+                    k=1
+                )[0]
 
                 # Bereken ritduur
-                afstand = bereken_afstand(
-                    begin_station["latitude"], begin_station["longitude"],
-                    eind_station["latitude"], eind_station["longitude"]
-                )
+                afstand = afstanden.get((begin_station["name"], eind_station["name"]), 1.0)
                 gemiddelde_snelheid = 15
                 duur = max(2, int((afstand / gemiddelde_snelheid) * 60 + random.uniform(-2, 2)))
 
-                # 1% kans op langdurige rit voor Dagpas
+                # Voor 1% van Dagpas-gebruikers: kans op langere rit (tot 45 minuten)
                 if gebruiker["abonnementstype"] == "Dagpas" and random.random() < 0.01:
-                    duur = random.randint(60, 180)  # 1-3 uur
+                    duur = random.randint(31, 45)
 
                 starttijd = gewogen_starttijd(datum)
                 eindtijd = starttijd + timedelta(minutes=duur)
 
-                # Controleer overlap met andere ritten van gebruiker
+                # Vereenvoudigde overlapcontrole: controleer alleen de laatste rit
                 ritten_van_dag = ritten_per_gebruiker[gebruiker["id"]].get(datum, [])
-                overlap = any(
-                    r["starttijd"] <= eindtijd and r["eindtijd"] >= starttijd
-                    for r in ritten_van_dag
-                )
+                overlap = False
+                if ritten_van_dag:
+                    laatste_rit = ritten_van_dag[-1]
+                    overlap = laatste_rit["starttijd"] <= eindtijd and laatste_rit["eindtijd"] >= starttijd
+
                 if overlap:
                     continue
 
@@ -320,6 +361,17 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28):
                     fiets["station_naam"] = None
                     fiets["onderhoud_teller"] = random.randint(10, 20)
 
+                # Update beschikbare fietsen en stations
+                beschikbare_fietsen_per_station[begin_station["name"]] = [
+                    f for f in beschikbare_fietsen_per_station[begin_station["name"]]
+                    if f["id"] != fiets["id"]
+                ]
+                beschikbare_fietsen_per_station[eind_station["name"]].append(fiets)
+                if begin_station["free_bikes"] == 0:
+                    stations_met_fietsen.discard(begin_station["name"])
+                if eind_station["free_bikes"] > 0:
+                    stations_met_fietsen.add(eind_station["name"])
+
                 # Registreer rit voor overlapcontrole
                 if datum not in ritten_per_gebruiker[gebruiker["id"]]:
                     ritten_per_gebruiker[gebruiker["id"]][datum] = []
@@ -327,17 +379,6 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28):
                     "starttijd": starttijd,
                     "eindtijd": eindtijd
                 })
-
-        # Zet willekeurige fietsen terug van onderhoud naar beschikbaar
-        for fiets in [f for f in fietsen if f["status"] == "onderhoud" and random.random() < 0.1]:
-            fiets["status"] = "beschikbaar"
-            beschikbare_stations = [s for s in stations if s["free_slots"] > 0]
-            if beschikbare_stations:
-                nieuw_station = random.choice(beschikbare_stations)
-                fiets["station_naam"] = nieuw_station["name"]
-                nieuw_station["free_bikes"] += 1
-                nieuw_station["free_slots"] -= 1
-                fiets["in_gebruik_tot"] = None
 
     return geschiedenis
 
@@ -453,15 +494,15 @@ def sla_geschiedenis_op_in_db(geschiedenis):
         session.close()
 
 
-# if __name__ == "__main__":
-#     gebruikers = genereer_gebruikers(100)
-#     fietsen = genereer_fietsen(50, stations)
-#     geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
-#     sla_stations_op_in_db(stations)
-#     sla_fietsen_op_in_db(fietsen)
-#     sla_gebruikers_op_in_db(gebruikers)
-#     sla_geschiedenis_op_in_db(geschiedenis)
-#
-#     buffer = geschiedenis_to_csv_buffer(geschiedenis)
-#     with open("simulatie_output.csv", "w") as f:
-#         f.write(buffer.getvalue())
+if __name__ == "__main__":
+    gebruikers = genereer_gebruikers(100)
+    fietsen = genereer_fietsen(50, stations)
+    geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
+    sla_stations_op_in_db(stations)
+    sla_fietsen_op_in_db(fietsen)
+    sla_gebruikers_op_in_db(gebruikers)
+    sla_geschiedenis_op_in_db(geschiedenis)
+
+    buffer = geschiedenis_to_csv_buffer(geschiedenis)
+    with open("simulatie_output.csv", "w") as f:
+        f.write(buffer.getvalue())
