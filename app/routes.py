@@ -920,7 +920,7 @@ def betaling_succes():
     #Bevestigingsmail
     send_abonnement_email(
         to_email=session["Gebruiker"]["email"],
-        voornaam="salih",
+        voornaam=session["Gebruiker"]["name"],
         abonnement_type=session["Gebruiker"]["abonnement"],
         einddatum=eind_datum.strftime("%d-%m-%Y") + " 23:59",
     )
