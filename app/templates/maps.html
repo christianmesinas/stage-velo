@@ -21,6 +21,16 @@
 
     <div id="map"></div>
 
+    <div id="pincode-popup" style="display: none;">
+        <div id="pincode-box">
+            <button id="close-popup">✖</button>
+            <h3>Voer je pincode in</h3>
+            <input type="password" id="pincode-input" placeholder="****" maxlength="10" />
+            <p id="pincode-error" style="color: red; margin-top: 5px; height: 1em;"></p>
+            <button id="submit-pincode">Bevestigen</button>
+        </div>
+    </div>
+
     <div id="show-all-container">
         <button onclick="showAvailableStations()">{{ _('Toon alle beschikbare stations') }}</button>
         <div id="station-count" style="text-align: center; font-size: 18px; font-weight: bold; margin-top: 10px;"></div>
@@ -174,5 +184,62 @@
         }
 
         updateStationCount();
+
+        // Cache DOM elementen
+const popupOverlay = document.getElementById("pincode-popup");
+const closeBtn = document.getElementById("close-popup");
+const submitBtn = document.getElementById("submit-pincode");
+const pincodeInput = document.getElementById("pincode-input");
+const errorMsg = document.getElementById("pincode-error");
+
+let selectedStation = null;
+
+// Open popup wanneer "Fiets Inhuren" knop wordt aangeklikt
+map.on('popupopen', function (e) {
+    const popupNode = e.popup.getElement();
+    const huurBtn = popupNode.querySelector('.btn-huren');
+
+    if (huurBtn) {
+        huurBtn.addEventListener('click', function () {
+            selectedStation = e.popup.getContent();
+            popupOverlay.style.display = "flex";
+            pincodeInput.value = ""; // reset vorige invoer
+            pincodeInput.focus();
+            errorMsg.textContent = ""; // reset fout
+            pincodeInput.focus();
+        });
+    }
+});
+
+// Sluiten van popup
+closeBtn.addEventListener("click", function () {
+    popupOverlay.style.display = "none";
+    errorMsg.textContent = "";
+});
+
+// Bevestigen van pincode
+submitBtn.addEventListener("click", function () {
+    const pincode = pincodeInput.value.trim();
+
+    if (pincode.length < 4) {
+        errorMsg.textContent = "Pincode moet minstens 4 cijfers bevatten.";
+        return;
+    }
+
+    errorMsg.textContent = ""; // weeral resetten
+
+    // Hier kun je een fetch naar backend doen als je wilt
+    console.log("Pincode ingevoerd:", pincode);
+    console.log("Voor station:", selectedStation);
+
+    popupOverlay.style.display = "none";
+});
+
+pincodeInput.addEventListener("input", function () {
+    if (pincodeInput.value.trim().length >= 4) {
+        errorMsg.textContent = "";
+    }
+});
+
     </script>
 {% endblock %}

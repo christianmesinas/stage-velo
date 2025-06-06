@@ -92,9 +92,21 @@ body.dark-mode #search-container button:hover {
 }
 
 .btn-huren{
-    padding: 5px 10px 5px 10px;
     margin-top: 5px;
+    padding: 6px 14px;
     font-size: 14px;
+    border-radius: 20px;
+    font-weight: bolder;
+    border: 3px solid #2B2D42;
+    color: #2B2D42;
+    background: none;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+.btn-huren:hover{
+    color: #D41444;
+    border-color: #D41444;
 }
 
 #show-all-container button:hover {
@@ -123,6 +135,67 @@ body.dark-mode #show-all-container button:hover {
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     color: black;
+}
+
+#pincode-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#pincode-box {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    height: 300px;
+    text-align: center;
+    position: relative;
+}
+
+#pincode-box input {
+    width: 80%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+#pincode-box button {
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: bolder;
+    border: 3px solid #2B2D42;
+    color: #2B2D42;
+    background: none;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+#close-popup{
+    border: none !important;
+}
+
+#pincode-box button:hover{
+    color: #D41444;
+    border-color: #D41444;
+}
+
+#close-popup {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 body.dark-mode #station-list-container {
