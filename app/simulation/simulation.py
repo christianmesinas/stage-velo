@@ -46,7 +46,7 @@ def genereer_gebruikers(aantal):
             "achternaam": fake.last_name(),
             "email": f"{fake.last_name()}.{fake.first_name()}@example.com".lower(),
             "postcode": random.choice(antwerpen_postcodes),
-            "abonnementstype": random.choices(['Dagpas', 'Weekpas', 'Jaarpas'],weights=[60, 10, 30],k=1)[0] #dit is gebaseerd op wereldwijde data
+            "abonnementstype": random.choices(['Dagpas', 'Weekpas', 'Jaarkaart'],weights=[60, 10, 30],k=1)[0] #dit is gebaseerd op wereldwijde data
         })
     return gebruikers
 
