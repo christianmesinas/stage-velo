@@ -884,7 +884,6 @@ def admin_simulatie():
         data_bron=data_bron
     )
 
-
 @routes.route("/admin/download_csv")
 @admin_required
 def download_csv():
@@ -946,7 +945,6 @@ def admin_filter():
         ritten=ritten,
         ritten_per_dag=ritten_per_dag
     )
-
 
 
 

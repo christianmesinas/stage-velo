@@ -32,12 +32,15 @@
         <h3>{{  _('Verder gaan met de huidige simulatie of een nieuwe starten?') }}</h3>
         <button class="button-popup" id="doorgaan-button">{{ _('Doorgaan') }}</button>
         <button class="button-popup" id="nieuwe-button">{{ _('Nieuwe simulatie') }}</button>
+        <button class="button-pu-startpagina" id="startpagina-button"><i class='bx bx-home-alt icon'></i>
+{{  _('Startpagina') }}</button>
     </div>
 </div>
 {% endblock %}
 
 
 {% block scripts %}
+{{ super() }}
 <script>
   window.onload = function() {
     if (!sessionStorage.getItem("adminPromptShown")) {
@@ -52,6 +55,11 @@
       document.getElementById("nieuwe-button").onclick = function() {
         sessionStorage.setItem("adminPromptShown", "true");
         window.location.href = "{{ url_for('routes.admin_simulatie') }}?reset=1";
+      };
+
+      document.getElementById("startpagina-button").onclick = function() {
+        sessionStorage.setItem("adminPromptShown", "true");
+        window.location.href = "{{ url_for('routes.admin') }}";
       };
     }
   };

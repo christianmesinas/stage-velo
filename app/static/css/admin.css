@@ -148,6 +148,19 @@ body.dark-mode .dark-toggle-btn:hover {
   font-size: 1rem;
 }
 
+.button-pu-startpagina {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin: 10px 0;
+  border: none;
+  background-color: lightgray;
+}
+
 .button-popup:hover {
   background-color: #7f0b22;
+}
+
+.button-pu-startpagina:hover {
+  background-color: darkgrey;
 }
