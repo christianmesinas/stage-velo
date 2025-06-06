@@ -798,7 +798,7 @@ def admin_simulatie():
                 gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
                 stations_copy = copy.deepcopy(simulation.stations)
                 fietsen = simulation.genereer_fietsen(fietsen_aantal, stations_copy)
-                ritten = simulation.geschiedenis(stations_copy, gebruikers, fietsen, dagen)
+                ritten = simulation.genereer_geschiedenis(gebruikers, fietsen, stations_copy, dagen)
 
                 aantal_ritten = len(ritten)
                 gemiddelde_duur = round(sum(r["duur_minuten"] for r in ritten) / aantal_ritten, 2) if ritten else 0
