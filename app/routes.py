@@ -911,17 +911,20 @@ def betaling_succes():
         eind_datum = start_datum + timedelta(weeks=1)
         soort = "week"
     elif soort in ["jaar", "jaarkaart"]:
-        eind_datum = start_datum + timedelta(hours=365)
+        eind_datum = None
         soort = "jaar"
     else:
         db.close()
         return "Ongeldig abonnementstype.", 400
+
+    #Bevestigingsmail
     send_abonnement_email(
         to_email=session["Gebruiker"]["email"],
         voornaam="salih",
         abonnement_type=session["Gebruiker"]["abonnement"],
         einddatum=eind_datum.strftime("%d-%m-%Y") + " 23:59",
     )
+    ##########################################################
 
     if gebruiker:
         gebruiker.abonnement = data["type"]
