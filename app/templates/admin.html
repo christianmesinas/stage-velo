@@ -46,7 +46,7 @@
 
       document.getElementById("doorgaan-button").onclick = function() {
         sessionStorage.setItem("adminPromptShown", "true");
-        window.location.href = "{{ url_for('routes.admin_simulatie') }}";
+        window.location.href = "{{ url_for('routes.admin_livedata') }}";
       };
 
       document.getElementById("nieuwe-button").onclick = function() {

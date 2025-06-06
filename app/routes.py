@@ -661,13 +661,12 @@ def admin():
     return render_template("admin.html", laatste_simulatie=laatste_simulatie)
 
 
-@routes.route("/admin/simulatie", methods=["GET", "POST"])
+@routes.route("/admin/livedata", methods=["GET"])
 @admin_required
-def admin_simulatie():
+def admin_livedata():
     boodschap = None
     ritten = []
-    csv_bestand = None
-    data_bron = "database" # Standaard database data tonen
+    data_bron = "database"
 
     aantal_ritten = 0
     gemiddelde_duur = 0
@@ -675,34 +674,11 @@ def admin_simulatie():
     meest_gebruikte_fiets = 0
     populairst_station = None
     drukste_per_station = []
-    stations_copy = None
 
     db = SessionLocal()
 
-    # reset de vorige simulatie stats voor nieuwe
-    reset = request.args.get("reset")
-    if request.method == "GET" and reset == "1":
-        # Return lege simulatiepagina zonder gegevens
-        return render_template(
-            "admin_simulatie.html",
-            boodschap=None,
-            ritten=[],
-            csv_bestand=None,
-            stations_overzicht=[],
-            aantal_ritten=0,
-            gemiddelde_duur=0,
-            langste_rit=0,
-            meest_gebruikte_fiets=None,
-            populairst_station=None,
-            drukste_per_station=[],
-            data_bron=data_bron,
-        )
-    # Knop doorgaan: Altijd de db data nemen
-    # Haal altijd eerst de database data op
     try:
-        # Database ritten ophalen uit Geschiedenis tabel
         db_ritten = db.query(Geschiedenis).all()
-        ritten = []
         for rit in db_ritten:
             ritten.append({
                 "gebruiker_id": rit.gebruiker_id,
@@ -713,7 +689,6 @@ def admin_simulatie():
                 "starttijd": rit.starttijd
             })
 
-        # Database statistieken berekenen
         if ritten:
             aantal_ritten = len(ritten)
             gemiddelde_duur = round(sum(r["duur_minuten"] for r in ritten) / aantal_ritten, 2)
@@ -725,18 +700,13 @@ def admin_simulatie():
             station_teller = Counter(r["begin_station_naam"] for r in ritten)
             populairst_station = station_teller.most_common(1)[0] if station_teller else None
 
-            # Drukste momenten per station berekenen
             station_uren_counter = {}
             for rit in ritten:
                 station_naam = rit["begin_station_naam"]
                 starttijd = rit["starttijd"]
-                if isinstance(starttijd, str):
-                    startuur = datetime.strptime(starttijd, "%Y-%m-%d %H:%M:%S").hour
-                else:
-                    startuur = starttijd.hour
+                startuur = datetime.strptime(starttijd, "%Y-%m-%d %H:%M:%S").hour if isinstance(starttijd, str) else starttijd.hour
                 station_uren_counter.setdefault(station_naam, Counter())[startuur] += 1
 
-            # Database stations ophalen
             db_stations = db.query(Station).all()
             for station in db_stations:
                 station_naam = station.naam
@@ -754,31 +724,65 @@ def admin_simulatie():
     except Exception as e:
         boodschap = f"⚠️ Fout bij ophalen database data: {str(e)}"
 
-    # POST request - simulatie uitvoeren
+    stations_overzicht = []
+    try:
+        db_stations = db.query(Station).all()
+        for s in db_stations:
+            stations_overzicht.append({
+                "naam": s.naam,
+                "fietsen": s.parked_bikes,
+                "vrij": s.free_slots
+            })
+    except:
+        boodschap = "⚠️ Fout bij ophalen stationgegevens."
+
+    return render_template(
+        "admin_livedata.html",
+        boodschap=boodschap,
+        ritten=ritten,
+        csv_bestand=None,
+        stations_overzicht=stations_overzicht,
+        aantal_ritten=aantal_ritten,
+        gemiddelde_duur=gemiddelde_duur,
+        langste_rit=langste_rit,
+        meest_gebruikte_fiets=meest_gebruikte_fiets,
+        populairst_station=populairst_station,
+        drukste_per_station=drukste_per_station,
+        data_bron=data_bron
+    )
+
+
+@routes.route("/admin/simulatie", methods=["GET", "POST"])
+@admin_required
+def admin_simulatie():
+    boodschap = None
+    ritten = []
+    csv_bestand = None
+    data_bron = "simulatie"
+    stations_copy = None
+    aantal_ritten = 0
+    gemiddelde_duur = 0
+    langste_rit = 0
+    meest_gebruikte_fiets = None
+    populairst_station = None
+    drukste_per_station = []
+
     if request.method == "POST":
         actie = request.form.get("actie", "")
 
         if actie == "simulatie":
             try:
-                # Simulatie parameters
                 gebruikers_aantal = int(request.form.get("gebruikers"))
                 fietsen_aantal = int(request.form.get("fietsen"))
                 dagen = int(request.form.get("dagen"))
 
-                # Simulatie uitvoeren
                 gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
                 stations_copy = copy.deepcopy(simulation.stations)
                 fietsen = simulation.genereer_fietsen(fietsen_aantal, stations_copy)
-                gesimuleerde_ritten = simulation.simulatie(stations_copy, gebruikers, fietsen, dagen)
+                ritten = simulation.simulatie(stations_copy, gebruikers, fietsen, dagen)
 
-                # Overschrijf de data met simulatie resultaten
-                ritten = gesimuleerde_ritten
-                data_bron = "simulatie"
-
-                # Herbereken statistieken voor simulatie data
                 aantal_ritten = len(ritten)
-                gemiddelde_duur = round(sum(r["duur_minuten"] for r in ritten) / aantal_ritten,
-                                        2) if aantal_ritten > 0 else 0
+                gemiddelde_duur = round(sum(r["duur_minuten"] for r in ritten) / aantal_ritten, 2) if ritten else 0
                 langste_rit = max((r["duur_minuten"] for r in ritten), default=0)
 
                 fiets_teller = Counter(r["fiets_id"] for r in ritten)
@@ -787,20 +791,15 @@ def admin_simulatie():
                 station_teller = Counter(r["begin_station_naam"] for r in ritten)
                 populairst_station = station_teller.most_common(1)[0] if station_teller else None
 
-                # Drukste momenten herberekenen
                 station_uren_counter = {}
-                drukste_per_station = []
                 for rit in ritten:
                     station_naam = rit["begin_station_naam"]
                     starttijd = rit["starttijd"]
-                    if isinstance(starttijd, str):
-                        startuur = datetime.strptime(starttijd, "%Y-%m-%d %H:%M:%S").hour
-                    else:
-                        startuur = starttijd.hour
+                    startuur = datetime.strptime(starttijd, "%Y-%m-%d %H:%M:%S").hour if isinstance(starttijd, str) else starttijd.hour
                     station_uren_counter.setdefault(station_naam, Counter())[startuur] += 1
 
+                drukste_per_station = []
                 for station in stations_copy:
-                    sid = station["id"]
                     naam = station["name"]
                     if naam in station_uren_counter:
                         meest_uur, aantal = station_uren_counter[naam].most_common(1)[0]
@@ -817,8 +816,7 @@ def admin_simulatie():
                 csv_bestand = f"/tmp/ritten_simulatie_{uuid.uuid4().hex}.csv"
                 with open(csv_bestand, mode="w", newline="") as file:
                     writer = csv.writer(file)
-                    writer.writerow(
-                        ["gebruiker_id", "fiets_id", "begin_station_naam", "eind_station_naam", "duur_minuten"])
+                    writer.writerow(["gebruiker_id", "fiets_id", "begin_station_naam", "eind_station_naam", "duur_minuten"])
                     for rit in ritten:
                         writer.writerow([
                             rit["gebruiker_id"],
@@ -828,28 +826,16 @@ def admin_simulatie():
                             rit["duur_minuten"]
                         ])
                 session["laatste_csv"] = csv_bestand
+                session["laatste_simulatie"] = datetime.now(pytz.timezone("Europe/Brussels")).strftime("%d-%m-%Y om %H:%M")
 
-                # Tijd in Belgische tijdzone
-                brussel_tijd = datetime.now(pytz.timezone("Europe/Brussels"))
-                session["laatste_simulatie"] = brussel_tijd.strftime("%d-%m-%Y om %H:%M")
-                session.modified = True
-
-                boodschap = f"✅ Simulatie uitgevoerd met {len(ritten)} ritten. Data is nu gebaseerd op simulatie."
+                boodschap = f"✅ Simulatie uitgevoerd met {len(ritten)} ritten."
 
             except Exception as e:
                 boodschap = f"❌ Fout bij simulatie: {str(e)}"
-                data_bron = "database"  # Terug naar database data bij fout
 
-        elif actie == "reset_database":
-            # Terug naar database data
-            data_bron = "database"
-            boodschap = "🔄 Data hersteld naar database gegevens."
-            # Database data is al geladen bovenaan
-
-    # Stationstatus bepalen
+    # Stationen tonen
     stations_overzicht = []
-    if data_bron == "simulatie" and stations_copy:
-        # Simulatie stations
+    if stations_copy:
         for s in stations_copy:
             stations_overzicht.append({
                 "naam": s["name"],
@@ -857,23 +843,12 @@ def admin_simulatie():
                 "vrij": s["free_slots"]
             })
     else:
-        # Database stations
-        try:
-            db_stations = db.query(Station).all()
-            for s in db_stations:
-                stations_overzicht.append({
-                    "naam": s.naam,
-                    "fietsen": s.parked_bikes,
-                    "vrij": s.free_slots
-                })
-        except:
-            # Fallback naar simulation stations als database faalt
-            for s in simulation.stations:
-                stations_overzicht.append({
-                    "naam": s["name"],
-                    "fietsen": s["free_bikes"],
-                    "vrij": s["free_slots"]
-                })
+        for s in simulation.stations:
+            stations_overzicht.append({
+                "naam": s["name"],
+                "fietsen": s["free_bikes"],
+                "vrij": s["free_slots"]
+            })
 
     return render_template(
         "admin_simulatie.html",
@@ -887,8 +862,9 @@ def admin_simulatie():
         meest_gebruikte_fiets=meest_gebruikte_fiets,
         populairst_station=populairst_station,
         drukste_per_station=drukste_per_station,
-        data_bron=data_bron,  # Nieuwe variabele voor template
+        data_bron=data_bron
     )
+
 
 @routes.route("/admin/download_csv")
 @admin_required
