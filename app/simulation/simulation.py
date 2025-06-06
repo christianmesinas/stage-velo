@@ -494,15 +494,15 @@ def sla_geschiedenis_op_in_db(geschiedenis):
         session.close()
 
 
-if __name__ == "__main__":
-    gebruikers = genereer_gebruikers(100)
-    fietsen = genereer_fietsen(50, stations)
-    geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
-    sla_stations_op_in_db(stations)
-    sla_fietsen_op_in_db(fietsen)
-    sla_gebruikers_op_in_db(gebruikers)
-    sla_geschiedenis_op_in_db(geschiedenis)
-
-    buffer = geschiedenis_to_csv_buffer(geschiedenis)
-    with open("simulatie_output.csv", "w") as f:
-        f.write(buffer.getvalue())
+# if __name__ == "__main__":
+#     gebruikers = genereer_gebruikers(100)
+#     fietsen = genereer_fietsen(50, stations)
+#     geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
+#     sla_stations_op_in_db(stations)
+#     sla_fietsen_op_in_db(fietsen)
+#     sla_gebruikers_op_in_db(gebruikers)
+#     sla_geschiedenis_op_in_db(geschiedenis)
+#
+#     buffer = geschiedenis_to_csv_buffer(geschiedenis)
+#     with open("simulatie_output.csv", "w") as f:
+#         f.write(buffer.getvalue())
