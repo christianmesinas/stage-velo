@@ -25,6 +25,13 @@ from collections import Counter
 from functools import wraps
 from werkzeug.utils import secure_filename
 from app.utils.email import send_abonnement_email
+from flask import request, render_template, session
+import copy
+import csv
+import uuid
+from datetime import datetime
+import pytz
+from collections import Counter
 
 
 def admin_required(f):
@@ -279,7 +286,7 @@ def dagpas():
             "Jaarkaart": 3000
         }
 
-        try:
+        try: #stripe checkout sessie aanmaken
             stripe_session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
                 line_items=[{
@@ -777,6 +784,8 @@ def admin_simulatie():
     populairst_station = None
     drukste_per_station = []
 
+    stations_copy = None
+
     if request.method == "POST":
         actie = request.form.get("actie", "")
 
@@ -789,7 +798,7 @@ def admin_simulatie():
                 gebruikers = simulation.genereer_gebruikers(gebruikers_aantal)
                 stations_copy = copy.deepcopy(simulation.stations)
                 fietsen = simulation.genereer_fietsen(fietsen_aantal, stations_copy)
-                ritten = simulation.simulatie(stations_copy, gebruikers, fietsen, dagen)
+                ritten = simulation.genereer_geschiedenis(gebruikers, fietsen, stations_copy, dagen)
 
                 aantal_ritten = len(ritten)
                 gemiddelde_duur = round(sum(r["duur_minuten"] for r in ritten) / aantal_ritten, 2) if ritten else 0
@@ -875,6 +884,7 @@ def admin_simulatie():
         data_bron=data_bron
     )
 
+
 @routes.route("/admin/download_csv")
 @admin_required
 def download_csv():
@@ -936,6 +946,7 @@ def admin_filter():
         ritten=ritten,
         ritten_per_dag=ritten_per_dag
     )
+
 
 
 
@@ -1041,6 +1052,7 @@ def betaling_succes():
         einddatum_tekst = "Zolang je abonnement actief is"
 
     return render_template("tarieven/bedankt.html", gebruiker=gebruiker, data=data, einddatum=einddatum_tekst)
+
 
 @routes.route("/betaling-annulatie")
 def betaling_annulatie():
