@@ -24,6 +24,8 @@ class Usertable(Base):
     taal = Column(String, default="nl")
     darkmode = Column(String, default="False")
 
+    passen = relationship("Pas", back_populates="gebruiker", cascade="all, delete-orphan")
+
     @classmethod
     def get_or_create(cls, db, user_id, email, name, profile_picture):
         user = db.query(cls).filter_by(user_id=user_id).first()
@@ -149,7 +151,7 @@ class Pas(Base):
     start_datum = Column(DateTime, default=datetime.utcnow)
     eind_datum = Column(DateTime, nullable=True)
 
-    gebruiker = relationship("Usertable", backref="passen")
+    gebruiker = relationship("Usertable", back_populates="passen")
 
 
 
