@@ -65,11 +65,11 @@ oauth.register(
 app.register_blueprint(routes)
 
 #zorg dat de databasetabellen automatisch worden aangemaakt bij het opstarten van de app
-with app.app_context():
-    db = SessionLocal()
-    Base.metadata.create_all(bind=db.bind)
-    db.close()
-    print("✅ Tabellen automatisch aangemaakt bij opstart!")
+# with app.app_context():
+#     db = SessionLocal()
+#     Base.metadata.create_all(bind=db.bind)
+#     db.close()
+#     print("✅ Tabellen automatisch aangemaakt bij opstart!")
 
 
 @app.context_processor
