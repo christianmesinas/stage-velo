@@ -14,13 +14,17 @@
 <body>
 <!-- ✅ Header blok – overschrijfbaar in child templates -->
 {% block header %}
-<script src="../static/js/hamburger.js"></script>
 <header>
   <a href="/">
     <div class="logo">
       <img src="{{ url_for('static', filename='images/LOGO2.png') }}" alt="vrouw op fiets" width="100" height="50">
     </div>
   </a>
+
+  <input type="checkbox" id="nav-toggle" class="menu-toggle" />
+  <label for="nav-toggle" class="hamburger" aria-label="Menu openen">
+    ☰
+  </label>
 
   <nav class="nav-links">
     <a href="#">Hoe het werkt</a>
@@ -48,7 +52,6 @@
   </nav>
 
   <div class="nav-buttons">
-  <button class="hamburger" aria-label="Menu openen">☰</button>
     <button id="darkModeToggle" class="dark-toggle-btn" style="right: 0.5rem;">🌗</button>
     {% if user or session.get('Gebruiker') %}
       <a href="{{ url_for('routes.profile') }}" class="profile">{{ _('Profiel') }}</a>

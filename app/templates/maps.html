@@ -67,6 +67,11 @@
     <!-- Load maps.js -->
     <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
     <script>
+    let selectedStationNaam = null;
+    let selectedEndStationNaam = null;
+    let pincodeValue = null;
+    let choosingEndStation = false;
+
         // Function to choose the correct icon
         function createCustomIcon(status, freeBikes, emptySlots) {
             let iconUrl;
@@ -108,6 +113,7 @@
                     <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> ${marker['empty-slots']} ${window.translations['lege plaatsen']}
                     <br>
                     <button class="btn-huren">Fiets Inhuren</button>
+                    <button class="btn-eindstation" style="display:none;">Kies als eindstation</button>
                 `;
             }
 
@@ -185,7 +191,6 @@
 
         updateStationCount();
 
-        // Cache DOM elementen
 const popupOverlay = document.getElementById("pincode-popup");
 const closeBtn = document.getElementById("close-popup");
 const submitBtn = document.getElementById("submit-pincode");
@@ -194,30 +199,11 @@ const errorMsg = document.getElementById("pincode-error");
 
 let selectedStation = null;
 
-// Open popup wanneer "Fiets Inhuren" knop wordt aangeklikt
-map.on('popupopen', function (e) {
-    const popupNode = e.popup.getElement();
-    const huurBtn = popupNode.querySelector('.btn-huren');
-
-    if (huurBtn) {
-        huurBtn.addEventListener('click', function () {
-            selectedStation = e.popup.getContent();
-            popupOverlay.style.display = "flex";
-            pincodeInput.value = ""; // reset vorige invoer
-            pincodeInput.focus();
-            errorMsg.textContent = ""; // reset fout
-            pincodeInput.focus();
-        });
-    }
-});
-
-// Sluiten van popup
 closeBtn.addEventListener("click", function () {
     popupOverlay.style.display = "none";
     errorMsg.textContent = "";
 });
 
-// Bevestigen van pincode
 submitBtn.addEventListener("click", function () {
     const pincode = pincodeInput.value.trim();
 
@@ -226,13 +212,45 @@ submitBtn.addEventListener("click", function () {
         return;
     }
 
-    errorMsg.textContent = ""; // weeral resetten
-
-    // Hier kun je een fetch naar backend doen als je wilt
-    console.log("Pincode ingevoerd:", pincode);
-    console.log("Voor station:", selectedStation);
-
+    pincodeValue = pincode;
     popupOverlay.style.display = "none";
+    choosingEndStation = true;
+
+    alert("Klik op een ander station en druk op 'Kies als eindstation'.");
+});
+
+map.on('popupopen', function (e) {
+    const popupNode = e.popup.getElement();
+    const huurBtn = popupNode.querySelector('.btn-huren');
+    const eindBtn = popupNode.querySelector('.btn-eindstation');
+
+    if (choosingEndStation) {
+        // Verberg huur-knop, toon eindstation-knop
+        if (huurBtn) huurBtn.style.display = "none";
+        if (eindBtn) {
+            eindBtn.style.display = "inline-block";
+            eindBtn.addEventListener("click", function () {
+                selectedEndStationNaam = getStationNameFromPopup(popupNode);
+                choosingEndStation = false;
+
+                huurFiets(pincodeValue, selectedStationNaam, selectedEndStationNaam);
+            });
+        }
+        return;
+    }
+
+    if (huurBtn) {
+        huurBtn.style.display = "inline-block";
+        huurBtn.addEventListener("click", function () {
+            selectedStationNaam = getStationNameFromPopup(popupNode);
+            popupOverlay.style.display = "flex";
+            pincodeInput.value = "";
+            errorMsg.textContent = "";
+            pincodeInput.focus();
+        });
+    }
+
+    if (eindBtn) eindBtn.style.display = "none";
 });
 
 pincodeInput.addEventListener("input", function () {
@@ -240,6 +258,37 @@ pincodeInput.addEventListener("input", function () {
         errorMsg.textContent = "";
     }
 });
+
+function huurFiets(pincode, startStation, endStation) {
+    fetch("/verhuur_fiets", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            pincode: pincode,
+            station_naam: startStation,
+            eind_station_naam: endStation
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            alert("Fout: " + data.error);
+        } else {
+            alert("Fiets succesvol gehuurd van " + startStation + " naar " + endStation);
+            location.reload(); // of update UI handmatig
+        }
+    })
+    .catch(err => {
+        console.error("Fout tijdens huren:", err);
+    });
+}
+
+function getStationNameFromPopup(popupNode) {
+    const title = popupNode.querySelector("div.leaflet-popup-content").innerText.split("\n")[0];
+    return title.trim();
+}
 
     </script>
 {% endblock %}
