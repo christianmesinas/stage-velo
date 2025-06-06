@@ -661,7 +661,7 @@ def admin_simulatie():
     boodschap = None
     ritten = []
     csv_bestand = None
-    data_bron = "database"  # Standaard database data tonen
+    data_bron = "database" # Standaard database data tonen
 
     aantal_ritten = 0
     gemiddelde_duur = 0
@@ -669,10 +669,29 @@ def admin_simulatie():
     meest_gebruikte_fiets = 0
     populairst_station = None
     drukste_per_station = []
-    db = SessionLocal()
-
     stations_copy = None
 
+    db = SessionLocal()
+
+    # reset de vorige simulatie stats voor nieuwe
+    reset = request.args.get("reset")
+    if request.method == "GET" and reset == "1":
+        # Return lege simulatiepagina zonder gegevens
+        return render_template(
+            "admin_simulatie.html",
+            boodschap=None,
+            ritten=[],
+            csv_bestand=None,
+            stations_overzicht=[],
+            aantal_ritten=0,
+            gemiddelde_duur=0,
+            langste_rit=0,
+            meest_gebruikte_fiets=None,
+            populairst_station=None,
+            drukste_per_station=[],
+            data_bron=data_bron,
+        )
+    # Knop doorgaan: Altijd de db data nemen
     # Haal altijd eerst de database data op
     try:
         # Database ritten ophalen uit Geschiedenis tabel

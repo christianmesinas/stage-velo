@@ -25,4 +25,35 @@
   </div>
 
 </div>
+
+<!-- pop-up -->
+<div id="admin-popup-overlay">
+    <div id="admin-popup">
+        <h3>{{  _('Verder gaan met de huidige simulatie of een nieuwe starten?') }}</h3>
+        <button class="button-popup" id="doorgaan-button">{{ _('Doorgaan') }}</button>
+        <button class="button-popup" id="nieuwe-button">{{ _('Nieuwe simulatie') }}</button>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+  window.onload = function() {
+    if (!sessionStorage.getItem("adminPromptShown")) {
+      const overlay = document.getElementById("admin-popup-overlay");
+      overlay.style.display = "flex";
+
+      document.getElementById("doorgaan-button").onclick = function() {
+        sessionStorage.setItem("adminPromptShown", "true");
+        window.location.href = "{{ url_for('routes.admin_simulatie') }}";
+      };
+
+      document.getElementById("nieuwe-button").onclick = function() {
+        sessionStorage.setItem("adminPromptShown", "true");
+        window.location.href = "{{ url_for('routes.admin_simulatie') }}?reset=1";
+      };
+    }
+  };
+</script>
 {% endblock %}
