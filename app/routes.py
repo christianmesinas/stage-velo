@@ -226,9 +226,14 @@ def verhuur_fiets():
     station_naam = data.get("station_naam")
     eind_station_naam = data.get("eind_station_naam")
 
-    gebruiker = db.query(Gebruiker).join(Pas).filter(Pas.pincode == pincode).first()
-    if not gebruiker:
+    # 1. Check pincode en haal pas op
+    pas = db.query(Pas).filter(Pas.pincode == pincode).first()
+    if not pas:
         return jsonify({"error": "Ongeldige pincode"}), 400
+
+    gebruiker = db.query(Gebruiker).filter(Gebruiker.id == pas.gebruiker_id).first()
+    if not gebruiker:
+        return jsonify({"error": "Geen gebruiker gekoppeld aan deze pas"}), 400
 
     start_station = db.query(Station).filter(Station.naam == station_naam).first()
     eind_station = db.query(Station).filter(Station.naam == eind_station_naam).first()
@@ -241,7 +246,11 @@ def verhuur_fiets():
     if eind_station.free_slots == 0:
         return jsonify({"error": "Geen vrije plaatsen in het gekozen eindstation."}), 400
 
-    fiets = db.query(Fiets).filter(Fiets.station_naam == station_naam, Fiets.status == "beschikbaar").first()
+    fiets = db.query(Fiets).filter(
+        Fiets.station_naam == station_naam,
+        Fiets.status == "beschikbaar"
+    ).first()
+
     if not fiets:
         return jsonify({"error": "Geen beschikbare fiets gevonden."}), 400
 
@@ -257,7 +266,6 @@ def verhuur_fiets():
     )
     db.add(rit)
 
-    # Update stationcapaciteit
     start_station.parked_bikes -= 1
     start_station.free_slots += 1
     eind_station.parked_bikes += 1
