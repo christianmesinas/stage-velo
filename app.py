@@ -64,12 +64,12 @@ oauth.register(
 # ✅ Registreer je Blueprint-routes
 app.register_blueprint(routes)
 
-# #zorg dat de databasetabellen automatisch worden aangemaakt bij het opstarten van de app
-# with app.app_context():
-#     db = SessionLocal()
-#     Base.metadata.create_all(bind=db.bind)
-#     db.close()
-#     print("✅ Tabellen automatisch aangemaakt bij opstart!")
+#zorg dat de databasetabellen automatisch worden aangemaakt bij het opstarten van de app
+with app.app_context():
+    db = SessionLocal()
+    Base.metadata.create_all(bind=db.bind)
+    db.close()
+    print("✅ Tabellen automatisch aangemaakt bij opstart!")
 
 
 @app.context_processor
@@ -79,6 +79,13 @@ def inject_user(): #voeg ingelogde gebruiker toe aan elke template
 @app.context_processor
 def inject_datetime():
     return dict(datetime=datetime)
+
+@app.context_processor
+def inject_language():
+    # Ensure the current locale is always available to templates as {{ language }}
+    return {
+        'language': str(get_locale())  # Convert Locale object to string like "en", "fr", etc.
+    }
 
 #opstart app
 if __name__ == "__main__":
