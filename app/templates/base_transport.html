@@ -29,7 +29,18 @@
         </ul>
 
         <div class="bottom-content">
-            <!-- 🌙 Donker/lichtmodus-knop -->
+
+<ul>
+    {% if session.get('Gebruiker') and session['Gebruiker']['email'] == 'admin_velo@veloapp.be' %}
+        <li class="nav-link">
+            <a href="{{ url_for('routes.admin') }}">
+                <i class='bx bxs-dashboard icon'></i>
+                 <span class="text nav-text">{{ _('Admin Dashboard') }}</span>
+            </a>
+        </li>
+    {% endif %}
+</ul>
+                <!-- 🌙 Donker/lichtmodus-knop -->
             <button id="darkModeToggle" class="dark-toggle-btn">🌗</button>
 
             <!-- Logout -->
