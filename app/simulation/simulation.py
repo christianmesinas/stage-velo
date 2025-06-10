@@ -84,6 +84,24 @@ def genereer_gebruikers(aantal):
         })
     return gebruikers
 
+#helper functie voor validatei
+def valideer_station_capaciteit(station):
+    total_bikes = station["free_bikes"]
+    total_slots = station["free_slots"]
+    capaciteit = station["capaciteit"]
+
+    # Corrigeer als totaal de capaciteit overschrijdt
+    if total_bikes + total_slots > capaciteit:
+        # Prioriteer fietsen, pas slots aan
+        station["free_slots"] = max(0, capaciteit - station["free_bikes"])
+    elif total_bikes + total_slots < capaciteit:
+        # Vul ontbrekende slots aan
+        station["free_slots"] = capaciteit - station["free_bikes"]
+
+    # Zorg dat geen negatieve waarden mogelijk zijn
+    station["free_bikes"] = max(0, station["free_bikes"])
+    station["free_slots"] = max(0, station["free_slots"])
+
 
 # Genereer fietsen en wijs ze toe aan stations
 def genereer_fietsen(aantal, stations):
@@ -94,7 +112,7 @@ def genereer_fietsen(aantal, stations):
     random.shuffle(station_ids)
 
     totaal = len(station_ids)
-    n_vol = round(totaal * 0.1)
+    n_vol = round(totaal * 0.0001)
     n_leeg = max(1, round(totaal * 0.000001))
     n_partial = totaal - n_vol - n_leeg
 
@@ -102,7 +120,7 @@ def genereer_fietsen(aantal, stations):
     stations_leeg = station_ids[n_vol:n_vol + n_leeg]
     stations_partial = station_ids[n_vol + n_leeg:]
 
-    extra_vol_kans = 0.10
+    extra_vol_kans = 0.0001
     max_per_station = {}
     for sid in stations_vol:
         max_per_station[sid] = station_slots[sid]
@@ -124,7 +142,8 @@ def genereer_fietsen(aantal, stations):
         s["free_slots"] = s["capaciteit"]
 
     for sid in station_ids:
-        toewijsbaar = min(max_per_station[sid], aantal - len(fietsen))
+        station = station_lookup[sid]
+        toewijsbaar = min(max_per_station[sid], aantal - len(fietsen), station["free_slots"])
         for _ in range(toewijsbaar):
             status = random.choices(["beschikbaar", "onderhoud"], weights=[0.8, 0.2])[0]
             fietsen.append({
@@ -137,10 +156,16 @@ def genereer_fietsen(aantal, stations):
             })
             if status == "beschikbaar":
                 station_lookup[sid]["free_bikes"] += 1
-            station_lookup[sid]["free_slots"] = max(station_lookup[sid]["free_slots"] - 1, 0)
+            station["free_slots"] -= 1
+            # Valideer na elke toevoeging
+            valideer_station_capaciteit(station)
             fiets_id += 1
+
         if len(fietsen) >= aantal:
             break
+
+    # Voeg overige fietsen toe als "onderweg"
+
     while len(fietsen) < aantal:
         fietsen.append({
             "id": fiets_id,
@@ -158,40 +183,78 @@ def genereer_fietsen(aantal, stations):
 def herverdeel_fietsen(stations, fietsen):
     if not any(s["free_bikes"] <= s["capaciteit"] * 0.1 or s["free_bikes"] >= s["capaciteit"] * 0.9 for s in stations):
         return
+
     station_lookup = {s["name"]: s for s in stations}
     volle_stations = [s for s in stations if s["free_bikes"] >= s["capaciteit"] * 0.9]
-    lege_stations = [s for s in stations if s["free_bikes"] <= s["capaciteit"] * 0.1]
+    lege_stations = [s for s in stations if s["free_bikes"] <= s["capaciteit"] * 0.1 and s["free_slots"] > 0]
 
     for vol_station in volle_stations:
         te_verplaatsen = int(vol_station["free_bikes"] * 0.3)
         if not lege_stations:
             continue
+
         doel_station = random.choice(lege_stations)
-        for fiets in [f for f in fietsen if
-                      f["station_naam"] == vol_station["name"] and f["status"] == "beschikbaar" and f[
-                          "in_gebruik_tot"] is None][:te_verplaatsen]:
-            if doel_station["free_slots"] > 0:
+        beschikbare_fietsen = [f for f in fietsen if
+                               f["station_naam"] == vol_station["name"] and
+                               f["status"] == "beschikbaar" and
+                               f["in_gebruik_tot"] is None]
+
+        verplaatst = 0
+        for fiets in beschikbare_fietsen:
+            if verplaatst >= te_verplaatsen or doel_station["free_slots"] <= 0:
+                break
+
+            # Controleer capaciteit voordat je verplaatst
+            if doel_station["free_bikes"] < doel_station["capaciteit"]:
                 fiets["station_naam"] = doel_station["name"]
                 vol_station["free_bikes"] -= 1
                 vol_station["free_slots"] += 1
                 doel_station["free_bikes"] += 1
                 doel_station["free_slots"] -= 1
+                verplaatst += 1
 
+                # Valideer beide stations
+                valideer_station_capaciteit(vol_station)
+                valideer_station_capaciteit(doel_station)
+
+
+# Fix voor de rit simulatie in genereer_geschiedenis
+def update_station_na_rit(begin_station, eind_station):
+    # Update begin station (fiets weggegaan)
+    begin_station["free_bikes"] = max(0, begin_station["free_bikes"] - 1)
+    begin_station["free_slots"] = min(begin_station["capaciteit"], begin_station["free_slots"] + 1)
+
+    # Update eind station (fiets aangekomen) - alleen als er ruimte is
+    if eind_station["free_bikes"] < eind_station["capaciteit"]:
+        eind_station["free_bikes"] += 1
+        eind_station["free_slots"] = max(0, eind_station["free_slots"] - 1)
+
+    # Valideer beide stations
+    valideer_station_capaciteit(begin_station)
+    valideer_station_capaciteit(eind_station)
 
 # Batch-update voor onderhoudsfietsen
 def update_onderhoud_fietsen(fietsen, stations, beschikbare_fietsen_per_station, stations_met_fietsen):
     beschikbare_stations = [s for s in stations if s["free_slots"] > 0]
     for fiets in [f for f in fietsen if f["status"] == "onderhoud" and random.random() < 0.1]:
         if beschikbare_stations:
-            nieuw_station = random.choice(beschikbare_stations)
+            # Filter stations die nog daadwerkelijk ruimte hebben
+            echt_beschikbare = [s for s in beschikbare_stations if s["free_bikes"] < s["capaciteit"]]
+            if not echt_beschikbare:
+                continue
+
+            nieuw_station = random.choice(echt_beschikbare)
             fiets["status"] = "beschikbaar"
             fiets["station_naam"] = nieuw_station["name"]
             nieuw_station["free_bikes"] += 1
-            nieuw_station["free_slots"] -= 1
+            nieuw_station["free_slots"] = max(0, nieuw_station["free_slots"] - 1)
             fiets["in_gebruik_tot"] = None
+
+            # Valideer station capaciteit
+            valideer_station_capaciteit(nieuw_station)
+
             beschikbare_fietsen_per_station[nieuw_station["name"]].append(fiets)
             stations_met_fietsen.add(nieuw_station["name"])
-
 
 # Gewogen starttijd met weersfactor
 def gewogen_starttijd(datum):
@@ -346,10 +409,7 @@ def genereer_geschiedenis(gebruikers, fietsen, stations, dagen=28):
                 })
 
                 # Update stationstatus
-                begin_station["free_bikes"] = max(0, begin_station["free_bikes"] - 1)
-                begin_station["free_slots"] = begin_station["free_slots"] + 1
-                eind_station["free_bikes"] = eind_station["free_bikes"] + 1
-                eind_station["free_slots"] = max(0, eind_station["free_slots"] - 1)
+                update_station_na_rit(begin_station, eind_station)
 
                 # Update fietsstatus
                 fiets["station_naam"] = eind_station["name"]
@@ -493,10 +553,10 @@ def sla_geschiedenis_op_in_db(geschiedenis):
     finally:
         session.close()
 
-
+#
 # if __name__ == "__main__":
-#     gebruikers = genereer_gebruikers(100)
-#     fietsen = genereer_fietsen(50, stations)
+#     gebruikers = genereer_gebruikers(5000)
+#     fietsen = genereer_fietsen(5800, stations)
 #     geschiedenis = genereer_geschiedenis(gebruikers, fietsen, stations)
 #     sla_stations_op_in_db(stations)
 #     sla_fietsen_op_in_db(fietsen)
