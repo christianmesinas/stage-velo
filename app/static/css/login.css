@@ -20,6 +20,14 @@
 
 }
 
+
+#auth0-login-box {
+
+
+
+
+}
+
 body.dark-mode .background{
     background: url(../images/Group7@2x.png), url(../images/MaskGroup6@2x.png), url(../images/Group9.png);
     background-size: contain, contain, 47%;

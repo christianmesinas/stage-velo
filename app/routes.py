@@ -927,34 +927,97 @@ def admin_data():
     )
 
 
-
 @routes.route("/admin/user_filter", methods=["GET", "POST"])
 @admin_required
 def admin_filter():
     from sqlalchemy.orm import aliased
+    from collections import defaultdict
+    from datetime import datetime
+
     db = SessionLocal()
-    gebruikers = db.query(Gebruiker).all()
-    print("DEBUG: gebruikers list =", gebruikers)  # <--- voeg dit toe
 
-    geselecteerde_gebruiker = None
-    ritten = []
-    ritten_per_dag = {}
+    try:
+        gebruikers = db.query(Gebruiker).all()
+        print("DEBUG: aantal gebruikers =", len(gebruikers))
 
-    if request.method == "POST":
-        gebruiker_id = request.form.get("gebruiker_id")
-        geselecteerde_gebruiker = db.query(Gebruiker).filter_by(id=gebruiker_id).first()
-        if geselecteerde_gebruiker:
-            # … je bestaande logic …
-            pass
+        geselecteerde_gebruiker = None
+        ritten = []
+        ritten_per_dag = {}
 
-    db.close()
-    return render_template(
-        "user_filter.html",
-        gebruikers=gebruikers,
-        geselecteerde_gebruiker=geselecteerde_gebruiker,
-        ritten=ritten,
-        ritten_per_dag=ritten_per_dag
-    )
+        if request.method == "POST":
+            gebruiker_id = request.form.get("gebruiker_id")
+            print(f"DEBUG: geselecteerde gebruiker_id = {gebruiker_id}")
+
+            if gebruiker_id:
+                # Converteer naar int als het een string is
+                try:
+                    gebruiker_id = int(gebruiker_id)
+                except (ValueError, TypeError):
+                    print(f"DEBUG: Ongeldige gebruiker_id: {gebruiker_id}")
+                    gebruiker_id = None
+
+                if gebruiker_id:
+                    geselecteerde_gebruiker = db.query(Gebruiker).filter_by(id=gebruiker_id).first()
+                    print(f"DEBUG: geselecteerde gebruiker gevonden = {geselecteerde_gebruiker is not None}")
+
+                    if geselecteerde_gebruiker:
+                        # Haal alle ritten op voor deze gebruiker
+                        ritten = db.query(Geschiedenis).filter(
+                            Geschiedenis.gebruiker_id == geselecteerde_gebruiker.id
+                        ).order_by(Geschiedenis.starttijd.desc()).all()
+
+                        print(f"DEBUG: aantal ritten gevonden = {len(ritten)}")
+
+                        # Bereken ritten per dag
+                        ritten_per_dag_count = defaultdict(int)
+                        for rit in ritten:
+                            if rit.starttijd:
+                                try:
+                                    # Converteer naar datetime als het een string is
+                                    if isinstance(rit.starttijd, str):
+                                        datum = datetime.strptime(rit.starttijd, "%Y-%m-%d %H:%M:%S").date()
+                                    else:
+                                        datum = rit.starttijd.date()
+
+                                    datum_str = datum.strftime("%Y-%m-%d")
+                                    ritten_per_dag_count[datum_str] += 1
+                                except Exception as e:
+                                    print(f"DEBUG: Fout bij datum conversie: {e}")
+                                    continue
+
+                        # Sorteer op datum (nieuwste eerst)
+                        ritten_per_dag = dict(sorted(ritten_per_dag_count.items(), reverse=True))
+                        print(f"DEBUG: ritten_per_dag = {len(ritten_per_dag)} dagen")
+
+        return render_template(
+            "user_filter.html",
+            gebruikers=gebruikers,
+            geselecteerde_gebruiker=geselecteerde_gebruiker,
+            ritten=ritten,
+            ritten_per_dag=ritten_per_dag
+        )
+
+    except Exception as e:
+        print(f"ERROR in admin_filter: {e}")
+        import traceback
+        traceback.print_exc()
+
+        # Return lege data bij fout, maar wel de gebruikers
+        try:
+            gebruikers = db.query(Gebruiker).all()
+        except:
+            gebruikers = []
+
+        return render_template(
+            "user_filter.html",
+            gebruikers=gebruikers,
+            geselecteerde_gebruiker=None,
+            ritten=[],
+            ritten_per_dag={}
+        )
+
+    finally:
+        db.close()
 
 
 
