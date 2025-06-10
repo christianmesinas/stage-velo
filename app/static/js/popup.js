@@ -40,10 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener('click', () => {
       const stationId = button.dataset.stationId;
       const stationCard = button.closest('.station-card');
-      const stationName = stationCard ? stationCard.querySelector('.station-card-header').textContent : _('Onbekend');
+      let stationName = button.dataset.stationName || _('Onbekend');
+      // Fallback: haal naam uit tabelrij als data-station-name leeg is
+      if (stationName === _('Onbekend')) {
+        const stationRow = button.closest('tr');
+        stationName = stationRow ? stationRow.cells[0].textContent : _('Onbekend');
+      }
       const fietsen = stationFietsen[stationId] || [];
 
-      console.log(_('Open popup voor station:'), { stationId, stationName, fietsen });
+  console.log(_('Open popup voor station:'), { stationId, stationName, fietsen });
+      console.log(_('Stationnaam ingesteld op:'), stationName); // Extra debug
 
       // Vul popup
       popupStationName.textContent = stationName;
