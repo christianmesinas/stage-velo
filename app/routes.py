@@ -1,9 +1,13 @@
 from datetime import datetime
 import stripe
 from flask import jsonify
+from werkzeug.security import check_password_hash
+from flask import request, jsonify
+
+
 import psycopg2
 import pytz
-from app.database.models import Usertable, Gebruiker, Station
+from app.database.models import Usertable, Gebruiker, Station, Pas
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
@@ -228,6 +232,64 @@ def markers():
     conn.close()
     return render_template("maps.html", markers=markers)
 
+@routes.route("/verhuur_fiets", methods=["POST"])
+def verhuur_fiets():
+    if "Gebruiker" not in session or "id" not in session["Gebruiker"]:
+        return jsonify({"error": "Gebruiker moet ingelogd zijn om een fiets te huren."}), 401
+
+    db = SessionLocal()
+    data = request.get_json()
+    pincode = data.get("pincode")
+    station_naam = data.get("station_naam")
+    eind_station_naam = data.get("eind_station_naam")
+
+    # 1. Check pincode en haal pas op
+    pas = db.query(Pas).filter(Pas.pincode == pincode).first()
+    if not pas:
+        return jsonify({"error": "Ongeldige pincode"}), 400
+
+    gebruiker = db.query(Usertable).filter(Gebruiker.id == pas.gebruiker_id).first()
+    if not gebruiker:
+        return jsonify({"error": "Geen gebruiker gekoppeld aan deze pas"}), 400
+
+    start_station = db.query(Station).filter(Station.naam == station_naam).first()
+    eind_station = db.query(Station).filter(Station.naam == eind_station_naam).first()
+    if not start_station or not eind_station:
+        return jsonify({"error": "Station niet gevonden"}), 404
+
+    if start_station.parked_bikes == 0:
+        return jsonify({"error": "Geen fietsen beschikbaar in dit station."}), 400
+
+    if eind_station.free_slots == 0:
+        return jsonify({"error": "Geen vrije plaatsen in het gekozen eindstation."}), 400
+
+    fiets = db.query(Fiets).filter(
+        Fiets.station_naam == station_naam,
+        Fiets.status == "beschikbaar"
+    ).first()
+
+    if not fiets:
+        return jsonify({"error": "Geen beschikbare fiets gevonden."}), 400
+
+    fiets.status = "gereserveerd"
+    db.commit()
+
+    rit = Geschiedenis(
+        gebruiker_id=gebruiker.id,
+        fiets_id=fiets.id,
+        start_station_naam=station_naam,
+        eind_station_naam=eind_station_naam,
+        starttijd=datetime.utcnow()
+    )
+    db.add(rit)
+
+    start_station.parked_bikes -= 1
+    start_station.free_slots += 1
+    eind_station.parked_bikes += 1
+    eind_station.free_slots -= 1
+    db.commit()
+
+    return jsonify({"message": "Fiets succesvol gehuurd."}), 200
 
 @routes.route("/tarieven")
 def tarieven():
