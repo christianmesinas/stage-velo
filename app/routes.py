@@ -1,9 +1,13 @@
 from datetime import datetime
 import stripe
 from flask import jsonify
+from werkzeug.security import check_password_hash
+from flask import request, jsonify
+
+
 import psycopg2
 import pytz
-from app.database.models import Usertable, Gebruiker, Station
+from app.database.models import Usertable, Gebruiker, Station, Pas
 from flask import Blueprint, send_file, session, redirect, url_for, request, render_template,flash
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv, find_dotenv
@@ -228,6 +232,64 @@ def markers():
     conn.close()
     return render_template("maps.html", markers=markers)
 
+@routes.route("/verhuur_fiets", methods=["POST"])
+def verhuur_fiets():
+    if "Gebruiker" not in session or "id" not in session["Gebruiker"]:
+        return jsonify({"error": "Gebruiker moet ingelogd zijn om een fiets te huren."}), 401
+
+    db = SessionLocal()
+    data = request.get_json()
+    pincode = data.get("pincode")
+    station_naam = data.get("station_naam")
+    eind_station_naam = data.get("eind_station_naam")
+
+    # 1. Check pincode en haal pas op
+    pas = db.query(Pas).filter(Pas.pincode == pincode).first()
+    if not pas:
+        return jsonify({"error": "Ongeldige pincode"}), 400
+
+    gebruiker = db.query(Usertable).filter(Gebruiker.id == pas.gebruiker_id).first()
+    if not gebruiker:
+        return jsonify({"error": "Geen gebruiker gekoppeld aan deze pas"}), 400
+
+    start_station = db.query(Station).filter(Station.naam == station_naam).first()
+    eind_station = db.query(Station).filter(Station.naam == eind_station_naam).first()
+    if not start_station or not eind_station:
+        return jsonify({"error": "Station niet gevonden"}), 404
+
+    if start_station.parked_bikes == 0:
+        return jsonify({"error": "Geen fietsen beschikbaar in dit station."}), 400
+
+    if eind_station.free_slots == 0:
+        return jsonify({"error": "Geen vrije plaatsen in het gekozen eindstation."}), 400
+
+    fiets = db.query(Fiets).filter(
+        Fiets.station_naam == station_naam,
+        Fiets.status == "beschikbaar"
+    ).first()
+
+    if not fiets:
+        return jsonify({"error": "Geen beschikbare fiets gevonden."}), 400
+
+    fiets.status = "gereserveerd"
+    db.commit()
+
+    rit = Geschiedenis(
+        gebruiker_id=gebruiker.id,
+        fiets_id=fiets.id,
+        start_station_naam=station_naam,
+        eind_station_naam=eind_station_naam,
+        starttijd=datetime.utcnow()
+    )
+    db.add(rit)
+
+    start_station.parked_bikes -= 1
+    start_station.free_slots += 1
+    eind_station.parked_bikes += 1
+    eind_station.free_slots -= 1
+    db.commit()
+
+    return jsonify({"message": "Fiets succesvol gehuurd."}), 200
 
 @routes.route("/tarieven")
 def tarieven():
@@ -927,34 +989,97 @@ def admin_data():
     )
 
 
-
 @routes.route("/admin/user_filter", methods=["GET", "POST"])
 @admin_required
 def admin_filter():
     from sqlalchemy.orm import aliased
+    from collections import defaultdict
+    from datetime import datetime
+
     db = SessionLocal()
-    gebruikers = db.query(Gebruiker).all()
-    print("DEBUG: gebruikers list =", gebruikers)  # <--- voeg dit toe
 
-    geselecteerde_gebruiker = None
-    ritten = []
-    ritten_per_dag = {}
+    try:
+        gebruikers = db.query(Gebruiker).all()
+        print("DEBUG: aantal gebruikers =", len(gebruikers))
 
-    if request.method == "POST":
-        gebruiker_id = request.form.get("gebruiker_id")
-        geselecteerde_gebruiker = db.query(Gebruiker).filter_by(id=gebruiker_id).first()
-        if geselecteerde_gebruiker:
-            # … je bestaande logic …
-            pass
+        geselecteerde_gebruiker = None
+        ritten = []
+        ritten_per_dag = {}
 
-    db.close()
-    return render_template(
-        "user_filter.html",
-        gebruikers=gebruikers,
-        geselecteerde_gebruiker=geselecteerde_gebruiker,
-        ritten=ritten,
-        ritten_per_dag=ritten_per_dag
-    )
+        if request.method == "POST":
+            gebruiker_id = request.form.get("gebruiker_id")
+            print(f"DEBUG: geselecteerde gebruiker_id = {gebruiker_id}")
+
+            if gebruiker_id:
+                # Converteer naar int als het een string is
+                try:
+                    gebruiker_id = int(gebruiker_id)
+                except (ValueError, TypeError):
+                    print(f"DEBUG: Ongeldige gebruiker_id: {gebruiker_id}")
+                    gebruiker_id = None
+
+                if gebruiker_id:
+                    geselecteerde_gebruiker = db.query(Gebruiker).filter_by(id=gebruiker_id).first()
+                    print(f"DEBUG: geselecteerde gebruiker gevonden = {geselecteerde_gebruiker is not None}")
+
+                    if geselecteerde_gebruiker:
+                        # Haal alle ritten op voor deze gebruiker
+                        ritten = db.query(Geschiedenis).filter(
+                            Geschiedenis.gebruiker_id == geselecteerde_gebruiker.id
+                        ).order_by(Geschiedenis.starttijd.desc()).all()
+
+                        print(f"DEBUG: aantal ritten gevonden = {len(ritten)}")
+
+                        # Bereken ritten per dag
+                        ritten_per_dag_count = defaultdict(int)
+                        for rit in ritten:
+                            if rit.starttijd:
+                                try:
+                                    # Converteer naar datetime als het een string is
+                                    if isinstance(rit.starttijd, str):
+                                        datum = datetime.strptime(rit.starttijd, "%Y-%m-%d %H:%M:%S").date()
+                                    else:
+                                        datum = rit.starttijd.date()
+
+                                    datum_str = datum.strftime("%Y-%m-%d")
+                                    ritten_per_dag_count[datum_str] += 1
+                                except Exception as e:
+                                    print(f"DEBUG: Fout bij datum conversie: {e}")
+                                    continue
+
+                        # Sorteer op datum (nieuwste eerst)
+                        ritten_per_dag = dict(sorted(ritten_per_dag_count.items(), reverse=True))
+                        print(f"DEBUG: ritten_per_dag = {len(ritten_per_dag)} dagen")
+
+        return render_template(
+            "user_filter.html",
+            gebruikers=gebruikers,
+            geselecteerde_gebruiker=geselecteerde_gebruiker,
+            ritten=ritten,
+            ritten_per_dag=ritten_per_dag
+        )
+
+    except Exception as e:
+        print(f"ERROR in admin_filter: {e}")
+        import traceback
+        traceback.print_exc()
+
+        # Return lege data bij fout, maar wel de gebruikers
+        try:
+            gebruikers = db.query(Gebruiker).all()
+        except:
+            gebruikers = []
+
+        return render_template(
+            "user_filter.html",
+            gebruikers=gebruikers,
+            geselecteerde_gebruiker=None,
+            ritten=[],
+            ritten_per_dag={}
+        )
+
+    finally:
+        db.close()
 
 
 

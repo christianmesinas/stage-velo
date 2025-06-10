@@ -14,7 +14,6 @@
 <body>
 <!-- ✅ Header blok – overschrijfbaar in child templates -->
 {% block header %}
-<script src="../static/js/hamburger.js"></script>
 <header>
   <a href="/">
     <div class="logo">
@@ -22,7 +21,10 @@
     </div>
   </a>
 
-  <button class="hamburger" aria-label="Menu openen">☰</button>
+  <input type="checkbox" id="nav-toggle" class="menu-toggle" />
+  <label for="nav-toggle" class="hamburger" aria-label="Menu openen">
+    ☰
+  </label>
 
   <nav class="nav-links">
     <a href="/tarieven">{{ _('Tarieven') }}</a>
@@ -42,7 +44,12 @@
     </div>
   </nav>
 
-  <div class="nav-buttons">
+  <input type="checkbox" id="nav-button-toggle" class="menu-toggle" />
+  <label for="nav-button-toggle" class="hamprofile a-toggle" aria-label="Knoppenmenu openen">
+    A
+  </label>
+
+  <div class="nav-buttons slideout">
     <button id="darkModeToggle" class="dark-toggle-btn" style="right: 0.5rem;">🌗</button>
     {% if user or session.get('Gebruiker') %}
       <a href="{{ url_for('routes.profile') }}" class="profile">{{ _('Profiel') }}</a>

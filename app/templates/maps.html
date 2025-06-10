@@ -21,6 +21,16 @@
 
     <div id="map"></div>
 
+    <div id="pincode-popup" style="display: none;">
+        <div id="pincode-box">
+            <button id="close-popup">✖</button>
+            <h3>Voer je pincode in</h3>
+            <input type="password" id="pincode-input" placeholder="****" maxlength="10" />
+            <p id="pincode-error" style="color: red; margin-top: 5px; height: 1em;"></p>
+            <button id="submit-pincode">Bevestigen</button>
+        </div>
+    </div>
+
     <div id="show-all-container">
         <button onclick="showAvailableStations()">{{ _('Toon alle beschikbare stations') }}</button>
         <div id="station-count" style="text-align: center; font-size: 18px; font-weight: bold; margin-top: 10px;"></div>
@@ -57,6 +67,11 @@
     <!-- Load maps.js -->
     <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
     <script>
+    let selectedStationNaam = null;
+    let selectedEndStationNaam = null;
+    let pincodeValue = null;
+    let choosingEndStation = false;
+
         // Function to choose the correct icon
         function createCustomIcon(status, freeBikes, emptySlots) {
             let iconUrl;
@@ -96,6 +111,9 @@
                     ${marker.name}<br>
                     <img src='/static/images/bike.png' alt='bike' style='height: 16px; vertical-align: middle;'> ${marker['free-bikes']} ${window.translations['vrije fietsen']}
                     <img src='/static/images/lock-icon.png' alt='lock' style='height: 16px; vertical-align: middle;'> ${marker['empty-slots']} ${window.translations['lege plaatsen']}
+                    <br>
+                    <button class="btn-huren">Fiets Inhuren</button>
+                    <button class="btn-eindstation" style="display:none;">Kies als eindstation</button>
                 `;
             }
 
@@ -172,5 +190,105 @@
         }
 
         updateStationCount();
+
+const popupOverlay = document.getElementById("pincode-popup");
+const closeBtn = document.getElementById("close-popup");
+const submitBtn = document.getElementById("submit-pincode");
+const pincodeInput = document.getElementById("pincode-input");
+const errorMsg = document.getElementById("pincode-error");
+
+let selectedStation = null;
+
+closeBtn.addEventListener("click", function () {
+    popupOverlay.style.display = "none";
+    errorMsg.textContent = "";
+});
+
+submitBtn.addEventListener("click", function () {
+    const pincode = pincodeInput.value.trim();
+
+    if (pincode.length < 4) {
+        errorMsg.textContent = "Pincode moet minstens 4 cijfers bevatten.";
+        return;
+    }
+
+    pincodeValue = pincode;
+    popupOverlay.style.display = "none";
+    choosingEndStation = true;
+
+    alert("Klik op een ander station en druk op 'Kies als eindstation'.");
+});
+
+map.on('popupopen', function (e) {
+    const popupNode = e.popup.getElement();
+    const huurBtn = popupNode.querySelector('.btn-huren');
+    const eindBtn = popupNode.querySelector('.btn-eindstation');
+
+    if (choosingEndStation) {
+        // Verberg huur-knop, toon eindstation-knop
+        if (huurBtn) huurBtn.style.display = "none";
+        if (eindBtn) {
+            eindBtn.style.display = "inline-block";
+            eindBtn.addEventListener("click", function () {
+                selectedEndStationNaam = getStationNameFromPopup(popupNode);
+                choosingEndStation = false;
+
+                huurFiets(pincodeValue, selectedStationNaam, selectedEndStationNaam);
+            });
+        }
+        return;
+    }
+
+    if (huurBtn) {
+        huurBtn.style.display = "inline-block";
+        huurBtn.addEventListener("click", function () {
+            selectedStationNaam = getStationNameFromPopup(popupNode);
+            popupOverlay.style.display = "flex";
+            pincodeInput.value = "";
+            errorMsg.textContent = "";
+            pincodeInput.focus();
+        });
+    }
+
+    if (eindBtn) eindBtn.style.display = "none";
+});
+
+pincodeInput.addEventListener("input", function () {
+    if (pincodeInput.value.trim().length >= 4) {
+        errorMsg.textContent = "";
+    }
+});
+
+function huurFiets(pincode, startStation, endStation) {
+    fetch("/verhuur_fiets", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            pincode: pincode,
+            station_naam: startStation,
+            eind_station_naam: endStation
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            alert("Fout: " + data.error);
+        } else {
+            alert("Fiets succesvol gehuurd van " + startStation + " naar " + endStation);
+            location.reload(); // of update UI handmatig
+        }
+    })
+    .catch(err => {
+        console.error("Fout tijdens huren:", err);
+    });
+}
+
+function getStationNameFromPopup(popupNode) {
+    const title = popupNode.querySelector("div.leaflet-popup-content").innerText.split("\n")[0];
+    return title.trim();
+}
+
     </script>
 {% endblock %}
