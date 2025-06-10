@@ -164,3 +164,7 @@ body.dark-mode .dark-toggle-btn:hover {
 .button-pu-startpagina:hover {
   background-color: darkgrey;
 }
+
+body.dark-mode #admin-popup {
+  background: #1a1a1a;
+}
