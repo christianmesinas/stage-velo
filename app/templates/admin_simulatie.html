@@ -20,6 +20,10 @@
   <button type="submit">{{ _('Start simulatie') }}</button>
 </form>
 
+  {% if csv_bestand %}
+    <a href="{{ url_for('routes.download_csv') }}" download class="download-btn">📥 {{ _('Download CSV-bestand') }}</a>
+  {% endif %}
+
 {# Alleen tonen als er al eens op “Start simulatie” is gedrukt #}
 {% if aantal_ritten is not none %}
   <div class="stats">
@@ -62,10 +66,6 @@
 
 {# Resultaten-tabel: alleen tonen als er ritten zijn #}
 {% if ritten %}
-  {% if csv_bestand %}
-    <a href="{{ url_for('routes.download_csv') }}" download class="download-btn">📥 {{ _('Download CSV-bestand') }}</a>
-  {% endif %}
-
   <h2>{{ _('Resultaten') }}</h2>
   <div class="table-container">
     <table class="fixed-header-table">
