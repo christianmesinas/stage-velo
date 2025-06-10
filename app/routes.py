@@ -234,6 +234,9 @@ def markers():
 
 @routes.route("/verhuur_fiets", methods=["POST"])
 def verhuur_fiets():
+    if "Gebruiker" not in session or "id" not in session["Gebruiker"]:
+        return jsonify({"error": "Gebruiker moet ingelogd zijn om een fiets te huren."}), 401
+
     db = SessionLocal()
     data = request.get_json()
     pincode = data.get("pincode")
@@ -245,7 +248,7 @@ def verhuur_fiets():
     if not pas:
         return jsonify({"error": "Ongeldige pincode"}), 400
 
-    gebruiker = db.query(Gebruiker).filter(Gebruiker.id == pas.gebruiker_id).first()
+    gebruiker = db.query(Usertable).filter(Gebruiker.id == pas.gebruiker_id).first()
     if not gebruiker:
         return jsonify({"error": "Geen gebruiker gekoppeld aan deze pas"}), 400
 
