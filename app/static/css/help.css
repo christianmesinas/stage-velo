@@ -46,8 +46,10 @@ body.dark-mode .container {
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-content: flex-end;
   width: auto;
-  min-height: 80vh;
+  height: 80vh;
+  background-repeat: no-repeat;
   margin: 20px;
   background-color: white;
   color: black;
@@ -73,8 +75,9 @@ body.dark-mode .container {
   transition: transform 0.2s ease;
 }
 
-.faq-category:hover {
-  transform: translateY(-5px);
+.wrapper {
+  width: 60%;
+  margin: 0 auto;
 }
 
 body.dark-mode .faq-category {
@@ -168,5 +171,14 @@ body.dark-mode details p {
   html {
     font-size: 14px;
   }
+}
 
+body.dark-mode .faq-category h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+body.dark-mode .faq-category h2 {
+  color: white;
 }
