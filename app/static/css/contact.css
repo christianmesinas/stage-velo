@@ -3,7 +3,7 @@ body {
 }
 
 body.dark-mode {
-  background-color: #1e1e1e;
+  background-color: #1a1a1a;
   color: white;
 }
 
@@ -22,7 +22,7 @@ body.dark-mode {
 }
 
 body.dark-mode .card-item {
-  background-color: #2a2a2a;
+  background-color: #1f1f1f;
   color: white;
 }
 
@@ -186,7 +186,7 @@ body.dark-mode .footerwrapper{
   height: 80vh;
   background-repeat: no-repeat;
   margin: 20px;
-  background-color: #1e1e1e;
+  background-color: #1f1f1f;
   border-radius: 20px;
 }
 .socials {

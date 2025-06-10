@@ -1,29 +1,15 @@
 {% extends 'base_admin.html' %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/base_admin.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_simulatie.css') }}">
 {% endblock %}
 
 {% block content %}
 
-<h2>🛠 {{ _('Simulatie starten') }}</h2>
-{% if boodschap %}
-  <div class="alert">{{ boodschap }}</div>
-{% endif %}
-
-<form method="post" action="{{ url_for('routes.admin_simulatie') }}" class="inline-form">
-<input type="hidden" name="actie" value="simulatie">
-  <label>{{ _('Aantal gebruikers') }}<input type="number" name="gebruikers" value="58000"></label>
-  <label>{{ _('Aantal fietsen') }}<input type="number" name="fietsen" value="10000"></label>
-  <label>{{ _('Aantal dagen') }}<input type="number" name="dagen" value="30"></label>
-  <button type="submit">{{ _('Start simulatie') }}</button>
-</form>
-
 {# Alleen tonen als er al eens op “Start simulatie” is gedrukt #}
 {% if aantal_ritten is not none %}
   <div class="stats">
-    <h2>📈 {{ _('Simulatie-inzichten') }}</h2>
+    <h2>📈 {{ _('Live data inzichten') }}</h2>
     <ul>
       <li>{{ _('Aantal ritten') }}: {{ aantal_ritten }}</li>
       <li>{{ _('Gemiddelde ritduur') }}: {{ gemiddelde_duur }} {{ _('min') }}</li>

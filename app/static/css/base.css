@@ -240,7 +240,7 @@ a {
 
 /* ✅ Donkere modus */
 body.dark-mode {
-  background-color: #121212;
+  background-color: #1a1a1a;
   color: #f0f0f0;
 }
 body.dark-mode header {
@@ -327,16 +327,16 @@ body.dark-mode .dark-toggle-btn {
 /* ✅ Theme-icon vliegt omhoog vanaf knop */
 .theme-icon {
   position: fixed;
-  font-size: 3.5rem;
+  font-size: 16px;
   z-index: 10000;
   pointer-events: none;
   opacity: 0;
-  transform: translateY(0) scale(1);
+  transform: translateX(35px) translateY(10px) scale(1);
   transition: transform 0.8s ease-out, opacity 0.5s ease-in;
 }
 .theme-icon.show {
   opacity: 1;
-  transform: translateY(120px) scale(1.4); /* ← Verplaats naar beneden */
+  transform: translateX(35px) translateY(50px) scale(1.2); /* ← Verplaats naar beneden */
 }
 
 

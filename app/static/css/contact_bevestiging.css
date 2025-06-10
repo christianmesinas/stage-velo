@@ -60,13 +60,13 @@ body.dark-mode .terug-btn:hover {
 
 /* Achtergrondkleur in dark-mode */
 body.dark-mode {
-  background-color: #1e1e1e; /* ↳ of kies een andere egale grijstint */
+  background-color: #1a1a1a; /* ↳ of kies een andere egale grijstint */
   color: white;
 }
 
 /* Kaderkleur van de bevestigingskaart */
 body.dark-mode .card-item {
-  background-color: #2a2a2a;  /* dezelfde als in jouw kader */
+  background-color: #1f1f1f;  /* dezelfde als in jouw kader */
   color: white;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   border-radius: 20px;

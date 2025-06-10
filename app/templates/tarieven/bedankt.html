@@ -23,8 +23,7 @@
       <p style="padding: 14px;">{{ _('Je gekozen pincode is veilig opgeslagen. Je kunt nu gebruik maken van je pas!') }}</p><br>
 
       <a href="/" class="terug-btn">{{ _('Ga terug naar startpagina') }}</a>
-      <a href="/" class="terug-btn">Ga terug naar startpagina</a>
-      <a href="{{ url_for('routes.profile') }}" class="terug-btn">👤 Ga naar profiel</a>
+      <a href="{{ url_for('routes.profile') }}" class="terug-btn">{{ _('👤 Ga naar profiel') }}</a>
     </div>
 </div>
 {% endblock %}

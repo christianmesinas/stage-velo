@@ -135,3 +135,15 @@
     text-align: center;
   }
 }
+
+body.dark-mode .home {
+  background: #1a1a1a;
+}
+
+body.dark-mode .sidebar {
+  background: #1e1e1e;
+}
+
+body.dark-mode .inline-form label  {
+  color: whitesmoke;
+}

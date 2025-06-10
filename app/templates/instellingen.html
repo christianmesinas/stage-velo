@@ -94,7 +94,6 @@
              pattern="^(0|\+)[1-9][0-9]{7,14}$"
              title="{{ _('Voer een geldig telefoonnummer in. Begin met 0 of +, gevolgd door 8 tot 15 cijfers. Geen spaties of symbolen.') }}"
              autocomplete="tel"
-             required
              value="{{ user.telefoonnummer or '' }}">
       <div class="form-text text-danger">
         {{ _('Bijv. 0478123456 of +32478123456 (geen spaties of leestekens)') }}
@@ -140,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const requiredFields = [
       { id: 'voornaam', label: '{{ _("voornaam") }}' },
       { id: 'achternaam', label: '{{ _("achternaam") }}' },
-      { id: 'telefoonnummer', label: '{{ _("telefoonnummer") }}' },
       { id: 'email', label: '{{ _("e-mailadres") }}' }
     ];
 

@@ -13,7 +13,7 @@ body {
 
 /* Donkere modus body-achtergrond (milder zwart) */
 body.dark-mode {
-  background-color: #202020;
+  background-color: #1a1a1a;
   color: white;
 }
 
