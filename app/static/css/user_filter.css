@@ -28,6 +28,17 @@
   border-color: #D1003C;
 }
 
+.gebruiker_filter{
+  background: #f0f0f0;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;">
+}
+
+body.dark-mode .gebruiker_filter {
+  background: #1e1e1e;
+}
+
 .inline-form button {
   padding: 8px 14px;
   font-size: 1rem;
@@ -143,5 +154,23 @@ body.dark-mode .sidebar {
 }
 
 body.dark-mode .inline-form label  {
+  color: whitesmoke;
+}
+
+body.dark-mode .stats{
+  background: #1e1e1e;
+  color: black;
+}
+
+.stats h3 {
+  color: white;
+}
+
+body.dark-mode .stats ul li {
+  color: white;
+}
+
+body.dark-mode .fixed-header-table tbody td {
+  background: #1e1e1e;
   color: whitesmoke;
 }

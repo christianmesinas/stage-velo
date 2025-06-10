@@ -33,9 +33,7 @@
 <ul>
     {% if session.get('Gebruiker') and session['Gebruiker']['email'] == 'admin_velo@veloapp.be' %}
         <li class="nav-link">
-            <a href="{{ url_for('routes.admin') }}">
-                <i class='bx bxs-dashboard icon'></i>
-                 <span class="text nav-text">{{ _('Admin Dashboard') }}</span>
+            <li class="nav-link"><a href="{{ url_for('routes.admin') }}"><i class='bx bx-home-alt icon'></i><span class="text nav-text">{{ _('Admin Dashboard') }}</span></a></li>
             </a>
         </li>
     {% endif %}
