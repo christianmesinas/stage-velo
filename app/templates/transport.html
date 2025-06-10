@@ -101,6 +101,7 @@ console.log('{{ _("station_fietsen vanuit template:") }}', {{ station_fietsen | 
   <!-- Popup voor fietsen -->
   <div class="popup" id="fiets-popup">
     <div class="popup-content">
+
       <h3 class="popup-title">{{ _('Fietsen verplaatsen vanaf') }} <span id="popup-station-name"></span></h3>
       <form method="post" action="{{ url_for('routes.verplaats_geselecteerde_fietsen') }}" class="inline-form">
         <input type="hidden" name="from_station_id" id="from_station_id">
