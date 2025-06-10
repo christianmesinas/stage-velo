@@ -52,7 +52,7 @@ def transport_required(f):
         gebruiker = session.get("Gebruiker")
         if not gebruiker:
             return redirect(url_for("routes.login", next=request.path))
-        if gebruiker.get("email") != os.getenv("TRANSPORT_EMAIL"):
+        if gebruiker.get("email") not in [os.getenv("ADMIN_EMAIL"), os.getenv("TRANSPORT_EMAIL")]:
             return "❌ Geen toegang: je bent geen transporteur", 403
         return f(*args, **kwargs)
     return decorated_function
