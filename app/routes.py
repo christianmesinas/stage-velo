@@ -311,7 +311,6 @@ def tarieven():
 
 @routes.route("/tarieven/dagpas", methods=["GET", "POST"])
 def dagpas():
-    # Controleer of gebruiker is ingelogd
     if "Gebruiker" not in session:
         return redirect(url_for("routes.login", next="/tarieven/dagpas"))
 
@@ -319,8 +318,14 @@ def dagpas():
     gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
     if request.method == "POST":
-        if gebruiker and gebruiker.abonnement != "Geen abonnement":
-            foutmelding = f"Je hebt al een {gebruiker.abonnement.lower()}."
+        from datetime import datetime
+        actieve_pas = db.query(Pas).filter(
+            Pas.gebruiker_id == gebruiker.id,
+            Pas.eind_datum > datetime.utcnow()
+        ).first()
+
+        if actieve_pas:
+            foutmelding = f"Je hebt al een actieve {actieve_pas.soort}-pas tot {actieve_pas.eind_datum.strftime('%d/%m/%Y %H:%M')}."
             db.close()
             return render_template("tarieven/dagpas.html", foutmelding=foutmelding, formdata=request.form)
 
@@ -342,22 +347,16 @@ def dagpas():
             "pincode": pincode
         }
 
-        prijzen = {
-            "Dagpas": 500,
-            "Weekpas": 1500,
-            "Jaarkaart": 3000
-        }
+        prijzen = {"Dagpas": 500}
 
-        try: #stripe checkout sessie aanmaken
+        try:
             stripe_session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
                 line_items=[{
                     "price_data": {
                         "currency": "eur",
                         "unit_amount": prijzen["Dagpas"],
-                        "product_data": {
-                            "name": "Dagpas"
-                        }
+                        "product_data": {"name": "Dagpas"}
                     },
                     "quantity": 1
                 }],
@@ -374,10 +373,8 @@ def dagpas():
     db.close()
     return render_template("tarieven/dagpas.html", formdata={})
 
-
 @routes.route("/tarieven/weekpas", methods=["GET", "POST"])
 def weekpass():
-    # Controleer of gebruiker is ingelogd
     if "Gebruiker" not in session:
         return redirect(url_for("routes.login", next="/tarieven/weekpas"))
 
@@ -385,8 +382,14 @@ def weekpass():
     gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
     if request.method == "POST":
-        if gebruiker and gebruiker.abonnement != "Geen abonnement":
-            foutmelding = f"Je hebt al een {gebruiker.abonnement.lower()}."
+        from datetime import datetime
+        actieve_pas = db.query(Pas).filter(
+            Pas.gebruiker_id == gebruiker.id,
+            Pas.eind_datum > datetime.utcnow()
+        ).first()
+
+        if actieve_pas:
+            foutmelding = f"Je hebt al een actieve {actieve_pas.soort}-pas tot {actieve_pas.eind_datum.strftime('%d/%m/%Y %H:%M')}."
             db.close()
             return render_template("tarieven/weekpas.html", foutmelding=foutmelding, formdata=request.form)
 
@@ -398,7 +401,6 @@ def weekpass():
             db.close()
             return render_template("tarieven/weekpas.html", foutmelding=foutmelding, formdata=request.form)
 
-        # 🔐 Bewaar formulierdata tijdelijk in sessie
         session["abonnement_data"] = {
             "type": "Weekpas",
             "voornaam": request.form.get("voornaam"),
@@ -409,14 +411,8 @@ def weekpass():
             "pincode": pincode
         }
 
-        # 💳 Stripe prijzen (centen)
-        prijzen = {
-            "Dagpas": 500,
-            "Weekpas": 1500,
-            "Jaarkaart": 3000
-        }
+        prijzen = {"Weekpas": 1500}
 
-        # 🎯 Start een Stripe checkout sessie
         try:
             stripe_session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
@@ -451,8 +447,14 @@ def jaarkaart():
     gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
 
     if request.method == "POST":
-        if gebruiker and gebruiker.abonnement != "Geen abonnement":
-            foutmelding = f"Je hebt al een {gebruiker.abonnement.lower()}."
+        from datetime import datetime
+        actieve_pas = db.query(Pas).filter(
+            Pas.gebruiker_id == gebruiker.id,
+            Pas.eind_datum > datetime.utcnow()
+        ).first()
+
+        if actieve_pas:
+            foutmelding = f"Je hebt al een actieve {actieve_pas.soort}-pas tot {actieve_pas.eind_datum.strftime('%d/%m/%Y %H:%M')}."
             db.close()
             return render_template("tarieven/jaarkaart.html", foutmelding=foutmelding, formdata=request.form)
 
@@ -1135,20 +1137,15 @@ def betaling_succes():
     from app.database import SessionLocal
     from app.database.models import Usertable, Pas
     from datetime import datetime, timedelta
-    from app.utils.email import send_abonnement_email
+    import calendar
 
     db = SessionLocal()
 
-    # Check of gebruiker ingelogd is
-    gebruiker = None
-    if "Gebruiker" in session and "id" in session["Gebruiker"]:
-        gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
-    else:
+    gebruiker = db.query(Usertable).filter_by(user_id=session["Gebruiker"]["id"]).first()
+    if not gebruiker:
         db.close()
         return "Je moet ingelogd zijn om een abonnement aan te maken.", 403
 
-
-    # Bepaal soort en einddatum
     soort = data["type"].lower()
     start_datum = datetime.utcnow()
 
@@ -1159,7 +1156,11 @@ def betaling_succes():
         eind_datum = start_datum + timedelta(weeks=1)
         soort = "week"
     elif soort in ["jaar", "jaarkaart"]:
-        eind_datum = None
+        try:
+            eind_datum = start_datum.replace(year=start_datum.year + 1)
+        except ValueError:
+            # 29 feb → 28 feb als volgend jaar geen schrikkeljaar
+            eind_datum = start_datum.replace(month=2, day=28, year=start_datum.year + 1)
         soort = "jaar"
     else:
         db.close()
@@ -1179,10 +1180,7 @@ def betaling_succes():
     db.commit()
     db.close()
 
-    if soort in ["dag", "week"]:
-        einddatum_tekst = eind_datum.strftime("%d/%m/%Y")
-    else:
-        einddatum_tekst = "Zolang je abonnement actief is"
+    einddatum_tekst = eind_datum.strftime("%d/%m/%Y")
 
     return render_template("tarieven/bedankt.html", gebruiker=gebruiker, data=data, einddatum=einddatum_tekst)
 
