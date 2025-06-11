@@ -68,7 +68,6 @@ de app bestaat uit meerdere componenten
         - Javascript wordt gebruikt aan de frontend zijde voor dynamisch gedrag in de browser. bevoorbeeld: knoppen, modals, grafieken
 
 
-
 # Database:
     PostgreSQL
         - Relationele SQL-database waarin gegevens zoals de gebruikers, fietsen, stations en geschiedenis worden opgeslagen.
@@ -89,5 +88,11 @@ de app bestaat uit meerdere componenten
 
 # Authenticatie:
     Auth0
-        - Auth0 is een externe provider van authenticatie voor je webapp. dit zorgt voor aanmelden met google , facebook.
+        - Auth0 is een externe provider van authenticatie voor je webapp. dit zorgt voor aanmelden met google , facebook. etc...
+
+
+## FUNCTIES DIE ER NIET BIJ ZIJN:
+    Simulatie starten via terminal
+        - We hebben dit geprobeerd te implementeren in de 2de sprint. Na een paar onsuccesvolle pogingen hadden we besloten om deze functie uit te stellen voor later.
+          We zijn het hierna vergeten om het te implementeren op het einde.
     

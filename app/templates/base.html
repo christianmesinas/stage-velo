@@ -150,5 +150,24 @@
   }, 2000);
 </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.getElementById('nav-toggle');
+    const profileToggle = document.getElementById('nav-button-toggle');
+
+    navToggle.addEventListener('change', () => {
+      if (navToggle.checked) {
+        profileToggle.checked = false;
+      }
+    });
+
+    profileToggle.addEventListener('change', () => {
+      if (profileToggle.checked) {
+        navToggle.checked = false;
+      }
+    });
+  });
+</script>
+
 </body>
 </html>

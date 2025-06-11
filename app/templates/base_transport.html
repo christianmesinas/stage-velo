@@ -17,7 +17,7 @@
         <div class="image-text">
             <span class="image"></span>
             <div class="text logo-text">
-                <span class="name">Transport</span>
+                <span class="name">{{ _('Transport') }}</span>
             </div>
         </div>
         <i class='bx bx-chevron-right toggle'></i>
@@ -29,6 +29,13 @@
         </ul>
 
         <div class="bottom-content">
+
+
+<ul>
+    {% if session.get('Gebruiker') and session['Gebruiker']['email'] == 'admin_velo@veloapp.be' %}
+            <li class="nav-link"><a href="{{ url_for('routes.admin') }}"><i class='bx bx-home-alt icon'></i><span class="text nav-text">{{ _('Admin Dashboard') }}</span></a></li>
+    {% endif %}
+</ul>
             <!-- 🌙 Donker/lichtmodus-knop -->
             <button id="darkModeToggle" class="dark-toggle-btn">🌗</button>
 
@@ -36,7 +43,7 @@
             <li>
                 <a href="{{ url_for('routes.logout') }}">
                     <i class='bx bx-log-out icon'></i>
-                    <span class="text nav-text">Logout</span>
+                    <span class="text nav-text">{{ _('Logout') }}</span>
                 </a>
             </li>
         </div>
