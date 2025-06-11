@@ -42,7 +42,7 @@
 /* Tabelstijl */
 
 .table-container {
-  overflow-x: auto;
+  margin-bottom: 3vw;
 }
 
 table {
@@ -73,20 +73,27 @@ tr:hover {
 
 
 .scrollbox {
-  max-height: 400px;
+  max-height: 300px;
   overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 0 0 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 0 0 8px 8px;
+  padding: 10px;
+  background-color: #fff;
+  margin-top: 10px;
+  margin-bottom: 3vw;
+  padding-bottom: 20vw;
 }
 
 .fixed-header-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .fixed-header-table th,
 .fixed-header-table td {
   padding: 12px 15px;
+  text-align: left;
   border-bottom: 1px solid #eee;
   background-color: #fff;
 }
@@ -99,10 +106,9 @@ tr:hover {
   z-index: 2;
 }
 
-.scrollbox tr:hover {
+.fixed-header-table tbody tr:hover {
   background-color: #f9f9f9;
 }
-
 
 .stat-card5 {
 

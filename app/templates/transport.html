@@ -25,8 +25,8 @@ console.log('{{ _("station_fietsen vanuit template:") }}', {{ station_fietsen | 
   {% endif %}
 
   <!-- Lege stations -->
+<h2>{{ _('Lege stations (bijvullen nodig)') }}</h2>
   <div class="table-container">
-    <h2><i class="fas fa-exclamation-circle"></i> {{ _('Lege stations (bijvullen nodig)') }}</h2>
     <table class="fixed-header-table">
       <thead>
         <tr>
@@ -48,7 +48,7 @@ console.log('{{ _("station_fietsen vanuit template:") }}', {{ station_fietsen | 
             <td>{{ station.status or _('Onbekend') }}</td>
           </tr>
           {% endfor %}
-          {% if not lege_stations %}
+        {% if not lege_stations %}
           <tr>
             <td colspan="4" class="no-data">{{ _('Geen lege stations gevonden.') }}</td>
           </tr>
@@ -57,6 +57,7 @@ console.log('{{ _("station_fietsen vanuit template:") }}', {{ station_fietsen | 
       </table>
     </div>
   </div>
+
 
   <!-- Volle stations -->
   <div class="table-container">

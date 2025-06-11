@@ -39,13 +39,18 @@ h2 {
   overflow-y: auto;
   border: 1px solid #ccc;
   border-radius: 0 0 8px 8px;
+  padding: 10px;
   background-color: #fff;
+  margin-top: 10px;
+  margin-bottom: 3vw;
+  padding-bottom: 20vw; /* keeps space when scrolling */
 }
 
 /* Tabellen */
 .fixed-header-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .fixed-header-table th,
@@ -64,7 +69,7 @@ h2 {
   z-index: 2;
 }
 
-.scrollbox tr:hover {
+.fixed-header-table tbody tr:hover {
   background-color: #f9f9f9;
 }
 

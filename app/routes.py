@@ -1038,7 +1038,6 @@ def admin_data():
         total_capacity=total_capacity
     )
 
-
 @routes.route("/admin/user_filter", methods=["GET", "POST"])
 @admin_required
 def admin_filter():
@@ -1223,6 +1222,33 @@ def betaling_succes():
     gebruiker.abonnement = soort_kort.capitalize()
 
     db.commit()
+    # email bevestiging na de dbcommit
+    ontvanger_email = gebruiker.email if gebruiker else data["email"]
+    ontvanger_voornaam = gebruiker.voornaam if gebruiker else data["voornaam"]
+    soort = data["type"].lower()
+    start_datum = datetime.utcnow()
+
+    if soort in ["dag", "dagpas"]:
+        eind_datum = start_datum + timedelta(days=1)
+        soort = "dag"
+    elif soort in ["week", "weekpas"]:
+        eind_datum = start_datum + timedelta(weeks=1)
+        soort = "week"
+    elif soort in ["jaar", "jaarkaart"]:
+        eind_datum = start_datum + timedelta(weeks=365)
+        soort = "jaar"
+    else:
+        db.close()
+        return "Ongeldig abonnementstype.", 400
+
+    # Bevestigingsmail
+    send_abonnement_email(
+        to_email=session["Gebruiker"]["email"],
+        voornaam=session["Gebruiker"]["name"],
+        abonnement_type=session["Gebruiker"]["abonnement"],
+        einddatum=eind_datum.strftime("%d-%m-%Y") + " 23:59",
+    )
+    ##########################################################
     db.close()
 
     # Wis sessiedata
