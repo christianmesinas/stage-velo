@@ -988,7 +988,6 @@ def admin_data():
         total_capacity=total_capacity
     )
 
-
 @routes.route("/admin/user_filter", methods=["GET", "POST"])
 @admin_required
 def admin_filter():

@@ -476,14 +476,13 @@ body.dark-mode .dark-toggle-btn:hover {
 
   #nav-button-toggle:checked + .a-toggle + .nav-buttons {
     max-height: 500px;
-    padding: 1rem 0;
+    padding: 1rem 3rem;
     border-top: 1px solid #444;
   }
 
   .nav-buttons a,
   .nav-buttons button {
-    padding: 1rem;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #ddd;
     background: transparent;
     width: 100%;
