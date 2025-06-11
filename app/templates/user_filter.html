@@ -5,26 +5,44 @@
 {% endblock %}
 
 {% block content %}
-<h2>👤 {{ _('Gebruiker filteren') }}</h2>
+<h2 class="top_body">👤 {{ _('Gebruiker filteren') }}</h2>
 
+<!-- Debug info (verwijder later) -->
+<div class="gebruiker_filter">
+  <strong>Debug Info:</strong><br>
+  Aantal gebruikers: {{ gebruikers|length }}<br>
+  Geselecteerde gebruiker: {{ geselecteerde_gebruiker.voornaam if geselecteerde_gebruiker else 'Geen' }}<br>
+  Aantal ritten: {{ ritten|length }}<br>
+  Ritten per dag: {{ ritten_per_dag|length }} dagen
+</div>
+
+{% if gebruikers|length > 0 %}
 <form method="POST" class="inline-form">
   <label for="gebruiker_id">{{ _('Kies een gebruiker:') }}
     <select name="gebruiker_id" id="gebruiker_id">
+      <option value="">-- Selecteer een gebruiker --</option>
       {% for g in gebruikers %}
         <option value="{{ g.id }}"
           {% if geselecteerde_gebruiker and g.id == geselecteerde_gebruiker.id %}selected{% endif %}>
-          {{ g.voornaam }} {{ g.achternaam }}
+          {{ g.voornaam }} {{ g.achternaam }} (ID: {{ g.id }})
         </option>
       {% endfor %}
     </select>
   </label>
   <button type="submit">{{ _('Toon ritten') }}</button>
 </form>
+{% else %}
+<div class="alert alert-warning">
+  <strong>Geen gebruikers gevonden!</strong><br>
+  Controleer of je simulatie data heeft gegenereerd.
+</div>
+{% endif %}
 
 {% if geselecteerde_gebruiker %}
   <div class="stats">
     <h3>{{ _('Info over') }} {{ geselecteerde_gebruiker.voornaam }} {{ geselecteerde_gebruiker.achternaam }}</h3>
     <ul>
+      <li><strong>{{ _('ID:') }}</strong> {{ geselecteerde_gebruiker.id }}</li>
       <li><strong>{{ _('Email:') }}</strong> {{ geselecteerde_gebruiker.email }}</li>
       <li><strong>{{ _('Abonnement:') }}</strong> {{ geselecteerde_gebruiker.abonnementstype }}</li>
       <li><strong>{{ _('Postcode:') }}</strong> {{ geselecteerde_gebruiker.postcode }}</li>
@@ -36,14 +54,16 @@
     <ul>
       <li><strong>{{ _('Totaal aantal ritten:') }}</strong> {{ ritten|length }}</li>
       <li><strong>{{ _('Totaal aantal minuten:') }}</strong>
-        {{ ritten | sum(attribute='duur_minuten') | round(1) if ritten else 0 }}
+        {% set totaal_minuten = ritten | sum(attribute='duur_minuten') %}
+        {{ totaal_minuten | round(1) if totaal_minuten else 0 }}
       </li>
       <li><strong>{{ _('Geschat totaal aantal km:') }}</strong>
         {{ (ritten|length * 2) if ritten else 0 }} km
       </li>
       <li><strong>{{ _('Gemiddelde ritduur:') }}</strong>
-        {% if ritten %}
-          {{ (ritten | sum(attribute='duur_minuten') / (ritten|length)) | round(1) }} {{ _('min') }}
+        {% if ritten|length > 0 %}
+          {% set totaal_minuten = ritten | sum(attribute='duur_minuten') %}
+          {{ (totaal_minuten / (ritten|length)) | round(1) }} {{ _('min') }}
         {% else %}
           0 {{ _('min') }}
         {% endif %}
@@ -56,7 +76,7 @@
     {% if ritten_per_dag %}
       <ul>
         {% for dag, aantal in ritten_per_dag.items() %}
-          <li>{{ dag }}: {{ aantal }} {{ _('ritten') }}</li>
+          <li><strong>{{ dag }}</strong>: {{ aantal }} {{ _('ritten') }}</li>
         {% endfor %}
       </ul>
     {% else %}
@@ -81,13 +101,35 @@
           <tbody>
             {% for rit in ritten %}
               <tr>
-                <td>{{ rit.starttijd.strftime("%Y-%m-%d %H:%M") if rit.starttijd else "" }}</td>
-                <td>{{ rit.eindtijd.strftime("%Y-%m-%d %H:%M") if rit.eindtijd else "" }}</td>
-                <td>{{ rit.start_station_naam }}</td>
-                <td>{{ rit.eind_station_naam }}</td>
+                <td>
+                  {% if rit.starttijd %}
+                    {% if rit.starttijd is string %}
+                      {{ rit.starttijd }}
+                    {% else %}
+                      {{ rit.starttijd.strftime("%Y-%m-%d %H:%M") }}
+                    {% endif %}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td>
+                  {% if rit.eindtijd %}
+                    {% if rit.eindtijd is string %}
+                      {{ rit.eindtijd }}
+                    {% else %}
+                      {{ rit.eindtijd.strftime("%Y-%m-%d %H:%M") }}
+                    {% endif %}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td>{{ rit.start_station_naam or '-' }}</td>
+                <td>{{ rit.eind_station_naam or '-' }}</td>
                 <td>
                   {% if rit.duur_minuten is not none %}
                     {{ "%.1f"|format(rit.duur_minuten) }}
+                  {% else %}
+                    -
                   {% endif %}
                 </td>
               </tr>
@@ -96,8 +138,19 @@
         </table>
       </div>
     {% else %}
-      <em>{{ _('Geen ritten om te tonen.') }}</em>
+      <div class="alert alert-info">
+        <em>{{ _('Geen ritten om te tonen.') }}</em><br>
+        <small>Controleer of de simulatie ritten heeft gegenereerd voor deze gebruiker.</small>
+      </div>
     {% endif %}
   </div>
 {% endif %}
+
+<!-- Quick debug: Toon eerste gebruiker info -->
+{% if gebruikers|length > 0 and not geselecteerde_gebruiker %}
+<div style="background: #e8f4fd; padding: 10px; margin: 20px 0; border-radius: 5px;">
+  <strong>Test Tip:</strong> Selecteer bijvoorbeeld: {{ gebruikers[0].voornaam }} {{ gebruikers[0].achternaam }}
+</div>
+{% endif %}
+
 {% endblock %}

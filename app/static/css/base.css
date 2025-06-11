@@ -187,6 +187,18 @@ a {
   cursor: pointer;
 }
 
+.hamprofile{
+  display: none; /* Verberg standaard */
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.menu-toggle {
+  display: none;
+}
+
 /* ✅ Flash meldingen */
 .alert {
   padding: 1rem 1.25rem;
@@ -323,16 +335,16 @@ body.dark-mode .dark-toggle-btn {
 /* ✅ Theme-icon vliegt omhoog vanaf knop */
 .theme-icon {
   position: fixed;
-  font-size: 3.5rem;
+  font-size: 16px;
   z-index: 10000;
   pointer-events: none;
   opacity: 0;
-  transform: translateY(0) scale(1);
+  transform: translateX(35px) translateY(10px) scale(1);
   transition: transform 0.8s ease-out, opacity 0.5s ease-in;
 }
 .theme-icon.show {
   opacity: 1;
-  transform: translateY(120px) scale(1.4); /* ← Verplaats naar beneden */
+  transform: translateX(35px) translateY(50px) scale(1.2); /* ← Verplaats naar beneden */
 }
 
 
@@ -377,11 +389,10 @@ body.dark-mode .dark-toggle-btn:hover {
 }
 
 /* ====== Responsive Design ======= */
-@media (max-width: 1135px) {
+@media (max-width: 1175px) {
   .nav-links {
-    position: fixed;
-    top: 56px;
-    left: 0;
+    position: absolute;
+    top: 92px;
     right: 0;
     background: #2c2c2c;
     flex-direction: column;
@@ -391,8 +402,17 @@ body.dark-mode .dark-toggle-btn:hover {
     transition: max-height 0.3s ease-out;
   }
 
+  .menu-toggle:checked + .hamburger + .nav-links {
+    max-height: 500px;
+    width: 20rem;
+    padding: 1rem 0;
+    border-top: 1px solid #444;
+    z-index: 10;
+  }
+
   .nav-links.open {
     max-height: 500px;
+    width: 20rem;
     transition: max-height 0.3s ease-in;
   }
 
@@ -414,7 +434,74 @@ body.dark-mode .dark-toggle-btn:hover {
     padding-left: 2rem;
   }
 
+  /* Hamburger zichtbaar maken */
   .hamburger {
     display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: white;
+    margin-left: auto;
+    margin-right: 10px;
+    z-index: 1000;
+  }
+
+  .hamprofile{
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: white;
+    margin-right: 10px;
+    z-index: 1000;
+  }
+
+  .nav-buttons {
+    position: absolute;
+    top: 92px;
+    right: 0;
+    background: #2c2c2c;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+    z-index: 999;
+    width: 20rem;
+    padding: 0;
+  }
+
+  #nav-button-toggle:checked + .a-toggle + .nav-buttons {
+    max-height: 500px;
+    padding: 1rem 0;
+    border-top: 1px solid #444;
+  }
+
+  .nav-buttons a,
+  .nav-buttons button {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    width: 100%;
+  }
+
+  .dark-toggle-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-weight: bold;
+  }
+
+  body.dark-mode .nav-buttons {
+    background-color: #1f1f1f;
+  }
+
+  body.dark-mode .nav-buttons a,
+  body.dark-mode .dark-toggle-btn {
+    color: white;
   }
 }

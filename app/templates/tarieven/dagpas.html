@@ -11,10 +11,6 @@
 {% set today = datetime.utcnow().date() %}
 {% set max_date = today.replace(year=today.year - 18).isoformat() %}
 
-{% if foutmelding %}
-  <p style="color: red;">{{ foutmelding }}</p>
-{% endif %}
-
 <div class="card-slider">
     <div class="card-item">
     <h2 style="margin:auto; width:fit-content">{{ _('Dagpas Aanvragen') }}</h2>
