@@ -1,6 +1,5 @@
 /* Algemene container */
 .container {
-  max-width: 1200px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
@@ -105,6 +104,7 @@ h2 {
   border-radius: 5px;
   font-size: 0.95rem;
   transition: border-color 0.2s ease;
+  max-width: 215px;
 }
 
 .form-control:focus {
@@ -289,4 +289,10 @@ body.dark-mode .inline-form {
 body.dark-mode .form-control {
   background: #1e1e1e;
   color: whitesmoke;
+}
+
+body.dark-mode .scrollbox {
+    background: #1e1e1e;
+    border:none;
+    color:black;
 }

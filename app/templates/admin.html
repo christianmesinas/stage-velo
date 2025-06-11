@@ -18,10 +18,10 @@
   </div>
 
   <div class="quick-links">
-    <a href="{{ url_for('routes.admin_simulatie') }}" class="link-card">🚴 {{ _('Start Simulatie') }}</a>
-    <a href="{{ url_for('routes.admin_data') }}" class="link-card">📡 {{ _('Bekijk Live Data') }}</a>
-    <a href="#" class="link-card">👥 {{ _('Gebruikersoverzicht') }}</a>
-    <a href="#" class="link-card">📄 {{ _('CSV-overzicht') }}</a>
+      <a href="{{ url_for('routes.admin_livedata') }}" class="link-card">📄 {{ _('Bekijk Live Data') }}</a>
+      <a href="{{ url_for('routes.admin_simulatie') }}" class="link-card">🚴 {{ _('Start Simulatie') }}</a>
+      <a href="{{ url_for('routes.admin_data') }}" class="link-card">📡 {{ _('Data Fietsstations') }}</a>
+      <a href="{{ url_for('routes.admin_filter') }}" class="link-card">👥 {{ _('Gebruikersoverzicht') }}</a>
   </div>
 
 </div>
