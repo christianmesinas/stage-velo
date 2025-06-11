@@ -2,10 +2,6 @@
     background: url(../images/Group7@2x.png), url(../images/MaskGroup6@2x.png), url(../images/Group9.png);
     background-size: contain, contain, 47%;
     background-position: -3px center, calc(100% + 30px) calc(100% + 20px), calc(80%) ;
-
-
-
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,9 +13,7 @@
     margin: 20px;
     background-color: white;
     border-radius: 20px;
-
 }
-
 
 #auth0-login-box {
 
@@ -32,10 +26,6 @@ body.dark-mode .background{
     background: url(../images/Group7@2x.png), url(../images/MaskGroup6@2x.png), url(../images/Group9.png);
     background-size: contain, contain, 47%;
     background-position: -3px center, calc(100% + 30px) calc(100% + 20px), calc(80%) ;
-
-
-
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,9 +38,6 @@ body.dark-mode .background{
     background-color: #1e1e1e;
     border-radius: 20px;
 }
-
-
-
 
 #auth0-login-box {
   width: 80%;
@@ -65,12 +52,10 @@ body.dark-mode .background{
 .auth0-lock-content-wrapper{
         border: solid 5px;
         border-color: #2b2d42;
-
 }
 
 .auth0-lock-header{
     background-color: #1e1e1e !important;
-
 }
 
 
@@ -128,4 +113,17 @@ body.dark-mode,
 .auth0-lock-alternative,
 .auth0-lock-alternative-link{
     color: white !important;
+}
+
+@media (max-width: 615px){
+    .background {
+        background: white;
+    }
+}
+
+@media (max-width: 480px){
+    .auth0-lock.auth0-lock .auth0-lock-cred-pane {
+        height: 40rem !important;
+        justify-content: center;
+    }
 }
