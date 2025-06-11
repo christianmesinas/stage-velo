@@ -216,6 +216,7 @@ def markers():
         port="5433"
     )
     cur = conn.cursor()
+
     cur.execute("SELECT * FROM stations")
     stations = cur.fetchall()
     markers = []
