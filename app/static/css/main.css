@@ -32,6 +32,10 @@ body.dark-mode .div1{
   margin-top: calc(0.3vw + 1.5vw);
 }
 
+.div3 .text-spot .smoltext{
+  width: calc(5vw + 45vw);
+}
+
 .div2{
   height: 35rem;
 }
