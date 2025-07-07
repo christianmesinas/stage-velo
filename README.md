@@ -1,56 +1,230 @@
-# Opdracht Vélo
+# Velo Fietsdeelsysteem
 
-## Projectbeschrijving
+Een webapplicatie voor het beheren van het Velo fietsdeelsysteem in Antwerpen, ontwikkeld als onderdeel van een stageopdracht. De applicatie ondersteunt fietsverhuur, stationsbeheer, gebruikersbeheer en een simulatiemodus voor fietsverplaatsingen, gebaseerd op de [Open Data Stad Antwerpen - Velo's](https://www.antwerpen.be/nl/info/5203a7147a8a3b9d1e000042/Velo-Antwerpen) dataset.
 
-Dit project is gericht op het bouwen van een reeks applicaties voor het beheren van een gedeeld fietssysteem. De applicatie moet in staat zijn om fietsen te registreren, verhuren en retourneren, en ook om klantgegevens bij te houden.
+## Inhoudsopgave
+- [Projectoverzicht](#projectoverzicht)
+- [Functionaliteiten](#functionaliteiten)
+- [Technische Stack](#technische-stack)
+- [Installatie](#installatie)
+- [Omgevingsvariabelen](#omgevingsvariabelen)
+- [Docker Configuratie](#docker-configuratie)
+- [Gebruik](#gebruik)
+- [Mappenstructuur](#mappenstructuur)
+- [Ontwikkelingsnotities](#ontwikkelingsnotities)
+- [Inlevering](#inlevering)
+- [Licentie](#licentie)
 
-Je bouwt een simulatietool voor het fietsdeelsysteem "Velo" van de stad Antwerpen. Je vindt een JSON-dataset met startinformatie op deze locatie: [Open Data Stad Antwerpen - Velo's](https://portaal-stadantwerpen.opendata.arcgis.com/datasets/velo/explore).
+## Projectoverzicht
+De Velo-applicatie beheert een fietsdeelsysteem voor Antwerpen, met functionaliteiten voor gebruikers om fietsen te huren en terug te brengen, en voor beheerders om stations, fietsen en transportvoertuigen te beheren. Het systeem simuleert realistische fietsverplaatsingen met ongeveer 4.200 fietsen, 309 stations en 55.000+ gebruikers, gebaseerd op openbare Velo-data. Een webinterface biedt een gebruiksvriendelijke ervaring, met extra functies zoals meertalige ondersteuning en betalingen via Stripe.
 
-Een basisuitleg over het deelsysteel vind je op [Wikipedia](https://nl.wikipedia.org/wiki/Velo_Antwerpen) en op de [officiële website](https://www.velo-antwerpen.be/).
+## Functionaliteiten
+- **Gebruikersbeheer**: Registratie en beheer van gebruikers met willekeurig gegenereerde gegevens.
+- **Fiets- en Stationsbeheer**: Beheer van fietsen, stations en slots, inclusief huren en retourneren.
+- **Fietstransporteurs**: Modelleren van vrachtwagens die fietsen herverdelen tussen stations.
+- **Simulatiemodus**: Automatische fietsverplaatsingen met versnelde tijd, startbaar via webinterface.
+- **Meertaligheid**: Ondersteuning voor Nederlands, Engels, Frans, Duits en Spaans.
+- **Datapersistentie**: Gegevensopslag in PostgreSQL met keuze tussen reset of voortzetten.
+- **Gebruiksvriendelijke UI**: Responsieve webinterface met interactieve kaarten.
+- **Extra's**: Gebruikersprofielen, contactformulieren, defectmeldingen, live datavisualisatie en Stripe-betalingen.
 
-## Technische vereisten
+## Technische Stack
+- **Backend**: Python, Flask
+- **Database**: PostgreSQL, SQLAlchemy, Alembic
+- **Frontend**: HTML, CSS, JavaScript
+- **Lokalisatie**: Flask-Babel
+- **Authenticatie**: Auth0
+- **Betalingen**: Stripe
+- **E-mail**: Gmail
+- **Containerisatie**: Docker, Docker Compose
+- **Afhankelijkheden**: Zie `requirements.txt`
 
-1. De applicatie moet worden ontwikkeld met Python, met behulp van het Flask-framework.
-2. De applicatie moet een PostgreSQL-database gebruiken om gegevens op te slaan.
-3. De applicatie moet een gebruikersvriendelijke interface hebben.
+## Installatie
 
-### Taken
+### Vereisten
+- Python 3.13
+- PostgreSQL
+- Docker (optioneel, voor containerized deployment)
+- Virtuele omgeving (aanbevolen)
+- Accounts voor Auth0, Stripe en Gmail
 
-1. Analyseer de huidige bedrijfsprocessen om de vereisten voor de applicatie te begrijpen.
-2. Ontwerp de database en de applicatiearchitectuur.
-3. Implementeer de applicatie volgens het ontwerp.
-4. Test de applicatie grondig om ervoor te zorgen dat deze correct werkt.
-5. Documenteer uw code en het gebruik van de applicatie.
+### Stappen
+1. **Kloon de repository**:
+   ```bash
+   git clone <repository-url>
+   cd velo-app
+   ```
 
-### Functionele vereisten
+2. **Maak een virtuele omgeving**:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # Windows: .venv\Scripts\activate
+   ```
 
-- Je bouwt een realistisch model bestaande uit objecten van minstens de volgende elementen: (fiets-)stations, slots (ook plaatsen genoemd), fietsen, gebruikers, fietstransporteurs, loggen van fietsgebruik.
-    - Stations bevatten een aantal plaatsen of slots, fietsen kunnen gekoppeld zijn aan een slot enz...
-    - Fietstransporteurs zijn de vrachtwagens die rondrijden door de stad en in bulk fietsen verdelen van volle stations naar legere stations. Je modelleert ze als een bijzondere soort gebruikers.
-    - Je logt alle verplaatsingen en houdt ze bij in objecten die je via compositie bindt aan de juiste objecten.
-- Bij de eerste start van je toepassing creëer je aan de hand van de JSON-dataset een “reële” situatie (er zijn bvb. ca. 4200 fietsen, 309 stations en +55000 gebruikers).
-    - Je vult deze set aan met eigen data, je genereert bvb random namen en familienamen voor gebruikers.
-    - Je zorgt ervoor dat de data wordt opgeslagen en bijgehouden in één of meerdere bestanden. Start je de toepassing opnieuw dan geef je de keuze om opnieuw te beginnen of om verder te gaan vanaf de bestaande situatie. 
-- De interface is een webapplicatie. Je zorgt er voor dat de toepassing relatief gebruiksvriendelijk is.
-    - Acties die manueel moeten kunnen geïnitieerd worden zijn het ontlenen van (een) fiets(en), het terug inchecken van (een) fiets(en) voor zowel gebruikers als transporteurs.
-    - Je zorgt ook voor een simulatiemodus waarbij je de tijd kan versnellen en het registreren van verplaatsingen doorheen de stad kan automatiseren. De simulatiemodus kan worden gestart vanuit de terminal-interface, maar ook door de applicatie te starten met “-s” argument.
-- Je mag uiteraard extra functionaliteit toevoegen bovenop het gevraagde en gebruik maken van Python/web-libraries.
+3. **Installeer afhankelijkheden**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## Tijdlijn
+4. **Configureer omgevingsvariabelen**:
+   - Maak een `.env`-bestand (zie [Omgevingsvariabelen](#omgevingsvariabelen)).
+   - Voeg benodigde sleutels en credentials toe.
 
-De verwachte tijdlijn voor dit project is 8 weken. We verwachten dat je regelmatig updates geeft over uw voortgang.
+5. **Configureer de database**:
+   - Start PostgreSQL.
+   - Werk `config.py` of `.env` bij met databasegegevens.
+   - Initialiseer en migreer:
+     ```bash
+     flask db init
+     flask db migrate
+     flask db upgrade
+     ```
 
-## Hoe en wat dien je in?
+6. **Laad initiële data**:
+   - Plaats de Velo JSON-dataset in `app/api/stations.csv`.
+   - Voer uit:
+     ```bash
+     python app.py --init-data
+     ```
 
-- Je dient een .zip-bestand in met als naam `AchternaamVoornaam_stageopdracht.zip`
-- Je werkt met een virtual environment (.venv) en lijst gebruikte libraries op in een requirements.txt bestand.
-- Je stuurt de .venv-folder zelf niet mee!
-- Je maakt ook een folder reflectie aan met daarin een markdown (.md) bestand waarin je een reflectieverslag maakt over je toepassing. Je beschrijft de werking, de features en de keuzes die je hebt gemaakt. Je beschrijft tot slot ook kort de eventuele moeilijkheden die je hebt ervaren, en eventuele problemen die je niet hebt kunnen oplossen.
+## Omgevingsvariabelen
+Configureer de volgende variabelen in een `.env`-bestand in de hoofdmap:
 
-## Hulpmiddelen
+- **PostgreSQL**:
+  - `POSTGRES_USER`: Database-gebruikersnaam
+  - `POSTGRES_PASSWORD`: Database-wachtwoord
+  - `POSTGRES_DB`: Databasenaam
+  - `DATABASE_URL`: Verbindingsstring (bijv. `postgresql://<user>:<password>@<host>:<port>/<database>`)
 
-Je kan vragen stellen en er worden tips en bijkomende uitleg gegeven tijdens de contactmomenten voorzien in de planning. Zorg dus zeker dat je er telkens bij bent.
+- **pgAdmin**:
+  - `PGADMIN_DEFAULT_EMAIL`: E-mail voor pgAdmin
+  - `PGADMIN_DEFAULT_PASSWORD`: Wachtwoord voor pgAdmin
 
-## Deadline
+- **Flask & Auth0**:
+  - `SECRET_KEY`: Geheime sleutel voor Flask
+  - `AUTH0_CLIENT_ID`: Auth0 client-ID
+  - `AUTH0_CLIENT_SECRET`: Auth0 client-geheim
+  - `AUTH0_DOMAIN`: Auth0-domein
+  - `AUTH0_CALLBACK_URL`: Callback-URL voor login
+  - `AUTH0_LOGOUT_URL`: URL voor uitloggen
 
-Je dient deze opdracht in uiterlijk op de laatste datum van jouw stageperiode.
+- **E-mail**:
+  - `ADMIN_EMAIL`: Beheerders-e-mail
+  - `TRANSPORT_EMAIL`: E-mail voor transport
+  - `GMAIL_EMAIL`: Gmail-adres voor notificaties
+  - `GMAIL_APP_PASSWORD`: Gmail app-specifiek wachtwoord
+
+- **Stripe**:
+  - `STRIPE_SECRET_KEY`: Stripe geheime sleutel
+  - `STRIPE_PUBLIC_KEY`: Stripe publieke sleutel
+
+**Opmerking**: Voeg `.env` toe aan `.gitignore` om gevoelige gegevens te beschermen.
+
+## Docker Configuratie
+De applicatie kan worden uitgevoerd met Docker Compose, dat de volgende services definieert:
+
+- **db**: PostgreSQL-database (image: `postgres:15`)
+  - Container: `velo_db`
+  - Poort: `5433:5432`
+  - Volume: `postgres_data` voor persistente opslag
+  - Omgevingsvariabelen: Geladen uit `.env`
+  - Tijdzone: Europe/Amsterdam
+
+- **pgadmin**: pgAdmin4 voor databasebeheer
+  - Container: `velo_pgadmin`
+  - Poort: `80:80`
+  - Volume: `pgadmin_data` voor configuratie
+  - Afhankelijk van: `db`
+
+- **web**: Flask-webapplicatie
+  - Container: `velo_web`
+  - Poort: `8000:8000`
+  - Volume: Projectmap gesynchroniseerd met `/app` voor live reload
+  - Commando: `python app.py`
+  - Afhankelijk van: `db`
+
+- **app**: Simulatiemodus
+  - Bouwt vanuit dezelfde Dockerfile als `web`
+  - Werkt in: `/app/app/simulation`
+  - Commando: `python simulation.py`
+  - Afhankelijk van: `db`
+
+7. **Starten met Docker**:
+```bash
+docker-compose up --build
+```
+- Bezoek `http://localhost:8000` voor de webinterface.
+- Bezoek `http://localhost` voor pgAdmin.
+- Simulatiemodus draait automatisch in de `app`-container.
+
+## Gebruik
+- **Webinterface**:
+  - **Startpagina**: Toont beschikbare fietsen en stations.
+  - **Gebruikers**: Registreer, log in (via Auth0), huur/lever fietsen, meld defecten, neem contact op.
+  - **Beheerders**: Beheer stations, fietsen, gebruikers; bekijk live data of simulaties.
+  - **Simulatiemodus**: Start via admininterface.
+- **Datapersistentie**: Kies bij opstarten voor reset of voortzetting van gegevens.
+- **Talen**: Schakel tussen Nederlands, Engels, Frans, Duits en Spaans.
+- **Betalingen**: Koop passen (dag, week, jaar) via Stripe.
+
+## Mappenstructuur
+```
+velo-app/
+├── Dockerfile                # Docker-configuratie
+├── LICENSE                   # Licentie
+├── README.md                 # Documentatie
+2├── docker-compose.yml       # Docker Compose-configuratie
+├── alembic/                  # Database-migraties
+│   ├── env.py                # Alembic-configuratie
+│   ├── script.py.mako        # Migratiesjabloon
+│   └── versions/             # Migratiescripts
+├── alembic.ini               # Alembic-instellingen
+├── app/                      # Applicatiecode
+│   ├── api/                  # API en gegevensverwerking
+│   │   ├── api.py            # API-eindpunten
+│   │   ├── stations.csv      # Velo-dataset
+│   │   └── stations.py       # Stationsverwerking
+│   ├── database/             # Database-modellen
+│   │   ├── models.py         # SQLAlchemy-modellen
+│   │   └── session.py        # Sessiebeheer
+│   ├── profiel_pagina/       # Gebruikersprofielen
+│   ├── routes.py             # Flask-routes
+│   ├── simulation/           # Simulatiemodus
+│   │   ├── simulation.py     # Simulatielogica
+│   │   ├── simulatie_output.csv  # Simulatie-uitvoer
+│   │   └── velo.csv          # Simulatiegegevens
+│   ├── static/               # Statische bestanden
+│   │   ├── css/              # Stijlbladen
+│   │   ├── images/           # Afbeeldingen/iconen
+│   │   ├── img/              # Extra afbeeldingen
+│   │   ├── js/               # JavaScript (kaarten, popups)
+│   │   └── uploads/          # Geüploade bestanden
+│   ├── templates/            # HTML-sjablonen
+│   ├── translations/         # Vertaalbestanden
+│   └── utils/                # Hulpscripts (e-mail)
+├── app.py                    # Hoofdscript
+├── config.py                 # Configuratie
+├── reflectie/                # Reflectiedocumenten
+│   ├── Verslag-project.md    # Reflectieverslag
+│   ├── Verslag Velo Stageopdracht.odt  # Stageverslag
+│   └── stage logboek.docx    # Logboek
+├── requirements.txt          # Afhankelijkheden
+└── stage esemte logo.jpeg    # Logo
+```
+
+## Ontwikkelingsnotities
+- **Migraties**: Alembic beheert databasewijzigingen (bijv. gastpas, contactberichten).
+- **Simulatie**: `simulation.py` modelleert fietsverplaatsingen, uitvoer in `simulatie_output.csv`.
+- **Integraties**: Auth0 voor authenticatie, Stripe voor betalingen, Gmail voor e-mails.
+- **Uitdagingen**:
+  - Nauwkeurige fietsherverdeling door transporteurs.
+  - Optimalisatie van queries voor grote datasets.
+  - Integratie van externe diensten (Auth0, Stripe).
+  - Responsieve, meertalige UI.
+- **Toekomstige verbeteringen**:
+  - Real-time fietstracking op kaarten.
+  - Geavanceerde stationsanalyse.
+  - Simulatieverbetering met verkeersgegevens.
+
+## Licentie
+Zie `LICENSE` voor licentievoorwaarden.
